@@ -1,0 +1,11 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(404|404\/)$ ./404.html [L]
+
+# Make sure to avoid loops. 
+# Ignore rewrite rules for the files and directories that
+# exist (such as index.php)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9\-\_\/\#]*)$ ./index.php?path=$1 [L]
