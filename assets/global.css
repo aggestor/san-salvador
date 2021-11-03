@@ -1,0 +1,58 @@
+
+:root{
+    
+}
+html{
+    scroll-behavior: smooth;
+}
+.primary_bg{
+    background-color: #010e29;
+}
+.secondary_bg{
+    background-color: #020c22;
+}
+._green_text{
+    color:#39e293;
+}
+._green_btn{
+    color: #050525;
+    background: #32e491;
+    padding:10px;
+    font-weight: 500;
+    transition: all ease-in 300ms ;
+}
+._green_btn:hover{
+    transform: scaleX(100);
+    background: #3ce495;
+    color:#050525;
+    border-radius: 3px;
+    transition: all ease-in 300ms ;
+}
+span a:hover{
+    color: #39e293;
+}
+.h-landing-3{
+    height: 630px
+}
+.pack_title{
+    letter-spacing: 3px;
+    font-size: 18px;
+    font-weight:500;
+}
+._space_text_l3{
+    letter-spacing: 2px;
+}
+.button_white_border{
+    border: 1px solid #fefefe;
+    padding: 10px;
+    font-weight: 400;
+    transition: all ease-in 300ms ;
+    margin: 10px 0;
+}
+.button_white_border:hover{
+    border-radius: 4px;
+    transition: all ease-in 300ms ;
+}
+.button_white_border a:hover{
+    color: #fefefe;
+}
