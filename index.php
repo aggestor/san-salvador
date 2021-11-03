@@ -21,16 +21,12 @@ include("Autoloader.php");
 </head>
 <body class="w-screen secondary_bg h-screen overflow-x-hidden overflow-y-scroll grid grid-cols-12">
     <!-- header page beginning-->
-    <?php HTMLLoader::load("includes/HeaderBar.php") ?>
-    <!--header  page end-->
-    <!--Landing page one beginning -->
-    <?php HTMLLoader::load("includes/LandingOne.php") ?>
-    <!--Landing page one end -->
-    <!--Landing page two beginning -->
-    <?php HTMLLoader::load("includes/LandingTwo.php") ?>
-    <!--Landing page two end -->
-    <!--Landing page three beginning -->
-    <?php HTMLLoader::load("includes/LandingThree.php") ?>
-    <!--Landing page three end -->
+    <?php 
+        HTMLLoader::load("includes/HeaderBar.php");
+        HTMLLoader::load("includes/LandingOne.php");
+        HTMLLoader::load("includes/LandingTwo.php");
+        HTMLLoader::load("includes/LandingThree.php"); 
+        HTMLLoader::load("includes/Footer.php") 
+    ?>
 </body>
 </html>
