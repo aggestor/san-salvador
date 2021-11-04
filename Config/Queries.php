@@ -70,7 +70,7 @@
          * @return void retourne le resultat de la requette
          */
         protected function getAll(string $table,string $whereField,array $args){
-            return $this->myQuery("SELECT * FROM {$table} WHERE {$whereField}=?",$args);
+            return $this->myQuery("SELECT * FROM {$table} WHERE {$whereField}",$args);
         }
         /**
         * la fonction getSpecificField permet la selection des elements specific dans une table 
@@ -94,7 +94,7 @@
                 $fields_array[]=$value ;                     
             }
             $fields_list= implode(',',$fields_array);        
-            return $this->myQuery("SELECT {$fields_list} FROM {$table} WHERE {$whereField}=?",$args);
+            return $this->myQuery("SELECT {$fields_list} FROM {$table} WHERE {$whereField}",$args);
         }        
      }
 ?>

@@ -35,8 +35,9 @@
             "timeRecord"=>"record_time",
         }
         public $databaseSchema={
-            "userId"=>"users",
-            "investissement"="investissements",
+            "user"=>"users",
+            "investissement"=>"investissements",
+            "admin"=>"admins",
         }
     }     
 ?>
