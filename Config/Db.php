@@ -1,7 +1,7 @@
 <?php 
     namespace App\Config;    
 
-    class Database extends PDO{   
+    class Db extends PDO{   
         private static $instance;    
         private const host = "localhost";
         private const user = "root";
