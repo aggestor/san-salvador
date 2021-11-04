@@ -19,9 +19,9 @@
             "timeRecord"=>"time_record",
             "accountStatus"=>"account_status",
         }
-        public $insvestementSchema={
+        public $investmentSchema={
             "id"=>"id",
-            "name"=>"insvestement_name",
+            "name"=>"investment_name",
             "dateRecord"=>"record_date",
             "timeRecord"=>"record_time",
             "color"=>"color",
@@ -36,7 +36,7 @@
         }
         public $databaseSchema={
             "user"=>"users",
-            "insvestement"=>"insvestements",
+            "investment"=>"investments",
             "admin"=>"admins",
         }
     }     
