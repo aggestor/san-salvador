@@ -6,5 +6,6 @@
     HTMLLoader::load("includes/LandingOne.php");
     HTMLLoader::load("includes/LandingTwo.php");
     HTMLLoader::load("includes/LandingThree.php");
+    HTMLLoader::load("includes/LandingFour.php");
     HTMLLoader::load("includes/Footer.php");
 ?>
