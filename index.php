@@ -22,11 +22,30 @@ include("Autoloader.php");
 <body class="w-screen secondary_bg h-screen overflow-x-hidden overflow-y-scroll grid grid-cols-12">
     <!-- header page beginning-->
     <?php 
-        HTMLLoader::load("includes/HeaderBar.php");
-        HTMLLoader::load("includes/LandingOne.php");
-        HTMLLoader::load("includes/LandingTwo.php");
-        HTMLLoader::load("includes/LandingThree.php"); 
-        HTMLLoader::load("includes/Footer.php") 
+        if(isset($_GET['path'])){
+            $path = htmlspecialchars($_GET['path']);
+            switch($path){
+                case "home":
+                    HTMLLoader::load("pages/indexContent.php");
+                    break;
+                case "packages":
+                    HTMLLoader::load("pages/packs.php");
+                    break;
+                case "products":
+                    HTMLLoader::load("pages/products.php");
+                    break;
+                case "services":
+                    HTMLLoader::load("pages/services.php");
+                    break;
+                default:
+                    include("index.php");
+                    break;
+
+            }
+        }
+        else{
+                HTMLLoader::load("pages/indexContent.php");
+            }
     ?>
 </body>
 </html>
