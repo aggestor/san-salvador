@@ -46,8 +46,10 @@ include("../Autoloader.php");
             }
     ?>
     <script src="assets/js/aos.min.js"></script>
+    <script src="assets/js/app.js"></script>
     <script>
             AOS.init()
+            
     </script>
 </body>
 </html>

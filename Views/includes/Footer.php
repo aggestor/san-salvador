@@ -1,7 +1,7 @@
-<div class="col-span-12 h-96 pt-2 secondary_bg">
+<div data-aos="slide-up" data-aos-duration="1000" class="col-span-12 h-96 pt-2 secondary_bg">
     <div class="flex w-11/12 mx-auto justify-around">
     <div class="w-3/12 flex">
-        <span class="text-gray-100 text-5xl font-semibold">Aggestor</span>
+        <span class="text-gray-100 text-4xl font-semibold">Usalvagetrade</span>
     </div>
     <div class="w-3/12 flex flex-col ">
         <p class=" w-11/12 mt-4 text-xl text-white font-bold">Platforme</p>
@@ -63,7 +63,7 @@
     </div>
     </div>
     <div class="flex text-gray-400 border-t pt-2 mt-3 border-gray-400 w-11/12 mx-auto flex-col">
-    <span>&#169; 2021 Aggestor LLC. All rights reserved</span>
+    <span>&#169; 2021 Usalvagetrade LLC. All rights reserved</span>
     <span>California, 523 Palace avenue</span>
     </div>
 
