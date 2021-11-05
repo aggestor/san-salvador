@@ -1,5 +1,5 @@
 <?php
-     use App\Helpers\MenuHighlighter;
+     use Root\App\Helpers\MenuHighlighter;
 ?>
 <div class="p-1 col-span-12 z-50 h-20 flex items-center sticky top-0 primary_bg">
     <div class="flex w-11/12 mx-auto">

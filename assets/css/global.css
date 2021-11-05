@@ -6,10 +6,10 @@ html{
     scroll-behavior: smooth;
 }
 .primary_bg{
-    background-color: #010e29;
+    background-color: #020a24;
 }
 .secondary_bg{
-    background-color: #020c22;
+    background-color: #01081a;
 }
 ._green_text{
     color:#39e293;
@@ -28,7 +28,7 @@ html{
     border-radius: 3px;
     transition: all ease-in 300ms ;
 }
-span a:hover{
+span:not(._green_btn) a:hover{
     color: #39e293;
 }
 .h-landing-3{
@@ -41,6 +41,9 @@ span a:hover{
 }
 ._space_text_l3{
     letter-spacing: 2px;
+}
+._space_letter_pack{
+    letter-spacing: 1.4px;
 }
 .button_white_border{
     border: 1px solid #fefefe;
@@ -55,4 +58,7 @@ span a:hover{
 }
 .button_white_border a:hover{
     color: #fefefe;
+}
+.h-landing{
+    height: calc(100vh - 80px)
 }

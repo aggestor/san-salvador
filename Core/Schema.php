@@ -1,5 +1,5 @@
 <?php 
-    namespace App\Config;
+    namespace Root\Core;
     class Schema{
         /**
          * userSchema est une variable de type  liste qui retrace le schema de la table user. il pour clé le nom qui sera utiliser et pou valeur la valeur sql

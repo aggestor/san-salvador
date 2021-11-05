@@ -56,6 +56,9 @@
             <span class="mt-3">
                 <a href="/linkedIn">LinkedIn</a>
             </span>
+            <span class="mt-3">
+                <a href="/youtube">YouTube</a>
+            </span>
         </div>   
     </div>
     </div>
