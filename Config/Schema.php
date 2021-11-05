@@ -6,7 +6,7 @@
          *
          * @var [type] list des clés et des valeur
          */
-        public $userSchema={
+        public $userSchema=[
             "id"=>"id",
             "name"=>"user_name",
             "email"=>"email",
@@ -18,26 +18,26 @@
             "dateRecord"=>"date_record",
             "timeRecord"=>"time_record",
             "accountStatus"=>"account_status",
-        }
-        public $investmentSchema={
+        ]
+        public $investmentSchema=[
             "id"=>"id",
             "name"=>"investment_name",
             "dateRecord"=>"record_date",
             "timeRecord"=>"record_time",
             "color"=>"color",
             "userId"=>"user_id",
-        }
-        public $adminSchema={
+        ]
+        public $adminSchema=[
             "id"=>"id",
             "name"=>"admin_name",
             "password"=>"admin_password",
             "dateRecord"=>"record_date",
             "timeRecord"=>"record_time",
-        }
-        public $databaseSchema={
+        ]
+        public $databaseSchema=[
             "user"=>"users",
             "investment"=>"investments",
             "admin"=>"admins",
-        }
+        ]
     }     
 ?>
