@@ -1,7 +1,7 @@
 <div class="col-span-12 bg-gray-200">
     <div class="flex flex-col h-screen relative  w-11/12 mx-auto">
-        <img height="450"  src="assets/logos/join.jpg" class="w-8/12 z-0 top-10 left-4 absolute" alt="Packages"/>
-        <div class="w-5/12 absolute pt-8 px-4 py-12 top-24 right-48 primary_bg">
+        <img data-aos="slide-left" data-aos-duration="1000" height="450"  src="assets/logos/join.jpg" class="w-8/12 z-0 top-10 left-4 absolute" alt="Packages"/>
+        <div data-aos="slide-right" data-aos-duration="1000" class="w-5/12 absolute pt-8 px-4 py-12 top-24 right-48 primary_bg">
             <h3 class="pack_title mb-2 text-gray-400">NOS SERVICES</h3>
             <p  class="text-gray-200 text-5xl my-3 w-8/12 font-bold">Joignez gratuitement</p>
             <p class="text-gray-400 my-3 _space_text_l3 w-11/12 ">Étant prestataire de services sur les actifs          numériques, usalvagetrade, est une entreprise de

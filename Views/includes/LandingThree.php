@@ -1,7 +1,7 @@
 <div class="col-span-12 h-landing-3 bg-gray-200">
-    <div class="flex flex-col relative  w-11/12 mx-auto">
-        <img height="450"  src="assets/logos/packages.jpg" class="w-8/12 z-0 top-10 right-4 absolute" alt="Packages"/>
-        <div class="w-5/12 absolute py-8 px-4 top-24 left-48 primary_bg">
+    <div  class="flex flex-col relative  w-11/12 mx-auto">
+        <img data-aos="slide-right" data-aos-duration="1000" height="450"  src="assets/logos/packages.jpg" class="w-8/12 z-0 top-10 right-4 absolute" alt="Packages"/>
+        <div data-aos="slide-left" data-aos-duration="1000" class="w-5/12 absolute py-8 px-4 top-24 left-48 primary_bg">
             <h3 class="pack_title mb-2 text-gray-400">AVEC NOUS</h3>
             <p  class="text-gray-200 text-3xl w-8/12 font-bold">Booster votre business avec nous</p>
             <p class="text-gray-400 my-3 _space_text_l3 w-10/12 ">Tout ce que vous découvrirez est une puissante plate-forme de trading qui vous permettra
@@ -17,7 +17,7 @@
                 vous réveiller ayant des gains en fonction du montant de la crypto-monnaie investi et nous
                 déposons ces bénéfices quotidiens dans votre portefeuille. -->
             </p>
-            <span class="button_white_border text-gray-200"><a href="#">Lire plus</a></span>
+            <span data-aos="fade-up" data-aos-duration="2500" class="button_white_border text-gray-200"><a href="#">Lire plus</a></span>
         </div>
     </div>
 </div>

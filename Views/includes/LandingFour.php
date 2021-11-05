@@ -22,11 +22,11 @@
 </div> -->
 
 <div class="col-span-12 primary_bg">
-    <div class="flex w-11/12 h-screen items-center mx-auto justify-around">
+    <div data-aos="zoom-in" data-aos-duration="1500" class="flex w-11/12 h-screen items-center mx-auto justify-around">
     <div class="w-6/12 flex justify-center">
         <img src="assets/logos/work.png" class="h-96 w-96" alt="Joining image" />
     </div>
-    <div class="w-6/12 flex flex-col mt-6 ">
+    <div data-aos="zoom-out" data-aos-duration="1500" class="w-6/12 flex flex-col mt-6 ">
         <h3 class="pack_title mb-2 text-gray-400">INVESTIR DANS USALVAGETTRADE</h3>
         <p class="w-8/12 text-lg mt-6 text-gray-400">Nos valeurs sont: l'efficacité, la transparence et l'honnêteté.
             Faites un pas aujourd'hui vers votre vie de rêve :

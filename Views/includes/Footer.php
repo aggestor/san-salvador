@@ -1,4 +1,4 @@
-<div class="col-span-12 h-96 pt-2 secondary_bg">
+<div data-aos="slide-up" data-aos-duration="1000" class="col-span-12 h-96 pt-2 secondary_bg">
     <div class="flex w-11/12 mx-auto justify-around">
     <div class="w-3/12 flex">
         <span class="text-gray-100 text-5xl font-semibold">Aggestor</span>
