@@ -1,8 +1,8 @@
 <?php 
     namespace Root\App\Models;
-    use App\Config\Queries ;
-    use App\Config\Schema ;
-    class InvestissementModel extends Queries{
+    use Root\Core\Queries ;
+    use Root\Core\Schema ;
+    class investmentModel extends Queries{
         /**
          * cette methode insert permet d'enregistrer les informations sur le type d'investissement
          *
@@ -11,17 +11,17 @@
          */
         public function insert(array $params){
             $schema=new Schema();
-            $investissement=$schema->investissement;
+            $investment=$schema->investment;
             $table=$schema->DatabaseSchema;                       
             $this->addData(
-               $table["investissement"],
+               $table["investment"],
                [                  
-                  $investissement["id"],
-                  $investissement["name"],
-                  $investissement["dateRecord"],
-                  $investissement["timeRecord"],
-                  $investissement["color"],
-                  $investissement["userId"],
+                  $investment["id"],
+                  $investment["name"],
+                  $investment["dateRecord"],
+                  $investment["timeRecord"],
+                  $investment["color"],
+                  $investment["userId"],
                ],
                $params
             );
