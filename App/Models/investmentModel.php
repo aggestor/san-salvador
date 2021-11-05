@@ -1,7 +1,7 @@
 <?php 
     namespace Root\App\Models;
-    use App\Config\Queries ;
-    use App\Config\Schema ;
+    use Root\Core\Queries ;
+    use Root\Core\Schema ;
     class investmentModel extends Queries{
         /**
          * cette methode insert permet d'enregistrer les informations sur le type d'investissement

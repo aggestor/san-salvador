@@ -18,7 +18,7 @@
             "dateRecord"=>"date_record",
             "timeRecord"=>"time_record",
             "accountStatus"=>"account_status",
-        ]
+        ];
         public $investmentSchema=[
             "id"=>"id",
             "name"=>"investment_name",
@@ -26,18 +26,18 @@
             "timeRecord"=>"record_time",
             "color"=>"color",
             "userId"=>"user_id",
-        ]
+        ];
         public $adminSchema=[
             "id"=>"id",
             "name"=>"admin_name",
             "password"=>"admin_password",
             "dateRecord"=>"record_date",
             "timeRecord"=>"record_time",
-        ]
+        ];
         public $databaseSchema=[
             "user"=>"users",
             "investment"=>"investments",
             "admin"=>"admins",
-        ]
+        ];
     }     
 ?>
