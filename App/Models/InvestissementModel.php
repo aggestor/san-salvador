@@ -1,5 +1,5 @@
 <?php 
-    namespace App\Models;
+    namespace Root\App\Models;
     use App\Config\Queries ;
     use App\Config\Schema ;
     class InvestissementModel extends Queries{

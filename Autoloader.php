@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Root;
 /**
  * This It autoloads name spaces and classes
  */
