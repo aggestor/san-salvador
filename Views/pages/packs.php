@@ -5,7 +5,7 @@ require("../Views/includes/HeaderBar.php");
 <div class="col-span-12">
     <div class="w-11/12 h-screen mx-auto flex mt-6 flex-col">
         <h1 class="text-5xl text-gray-200 font-bold _space_text_l3">Forfaits de démarrage </h1>
-        <p class="text-xl w-8/12 my-3 text-gray-400">Pour commencer avec Aggestor en tant qu'affilié, voici les différents forfaits de démarrage parmi lesquels choisir.</p> 
+        <p class="text-xl w-8/12 my-3 text-gray-400">Pour commencer avec Usalvagetrade en tant qu'affilié, voici les différents forfaits de démarrage parmi lesquels choisir.</p> 
         <div class="w-full flex mt-9 justify-between">
             <div class="w-4/12 p-2 m-4 primary_bg rounded-xl shadow border border-gray-200 h-96">
                 <div class="text-gray-400">

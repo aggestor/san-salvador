@@ -1,10 +1,10 @@
 <?php
      use Root\App\Helpers\MenuHighlighter;
 ?>
-<div class="p-1 col-span-12 z-50 h-20 flex items-center sticky top-0 primary_bg">
+<div data-aos="slide-down" data-aos-duration="1000" class="p-1 col-span-12 z-50 h-20 flex items-center sticky top-0 primary_bg">
     <div class="flex w-11/12 mx-auto">
         <div class="w-4/12">
-            <span class="text-gray-100 text-5xl font-semibold">Aggestor</span>
+            <span class="text-gray-100 text-5xl font-semibold">Usalvagetrade</span>
         </div>
         <div class="w-7/12 h-16 items-center text-gray-200 flex justify-around">
                 <span class ="<?= MenuHighlighter::get_path()->high_light("Acceuil") ?>">
