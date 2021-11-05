@@ -1,6 +1,5 @@
 <?php
-use App\Helpers\HTMLLoader;
-HTMLLoader::load("includes/HeaderBar.php");
+require("../Views/includes/HeaderBar.php");
 ?>
 
 <div class="col-span-12">
@@ -65,4 +64,4 @@ HTMLLoader::load("includes/HeaderBar.php");
     </div>
 
 </div>
-<?php HTMLLoader::load("includes/Footer.php");?>
+<?php require("../Views/includes/Footer.php");?>

@@ -1,10 +1,11 @@
 <div class="col-span-12">
     <div class="flex w-11/12 h-screen items-center mx-auto justify-around">
-    <div class="w-6/12 flex justify-center">
-        <img src="assets/logos/work.png" class="h-96 w-96" alt="Joining image" />
+    <div data-aos="fade-up"
+    data-aos-duration="1500" class="w-6/12 flex justify-center">
+        <img src="assets/logos/join-free.png" class="h-96 w-96" alt="Joining image" />
     </div>
-    <div class="w-6/12 flex flex-col mt-6 ">
-        <h1 class=" w-11/12 text-2xl text-white font-bold">REJOIGNEZ LA RÉVOLUTION DU COMMERCE DE LA CRYPTOMONNAIE AVEC
+    <div data-aos="fade-down" data-aos-duration="1500" class="w-6/12 flex flex-col mt-6 ">
+        <h1 class=" w-11/12 text-3xl text-white font-bold">REJOIGNEZ LA RÉVOLUTION DU COMMERCE DE LA CRYPTOMONNAIE AVEC
         <br> <span class="_green_text">UNIVERSAL SALVAGE TRADE (Usalvagetrade)</span></h1>
         <p class="w-8/12 text-lg mt-6 text-gray-400">Il s'agit d'un protocole de taux d'intérêt algorithmique et autonome conçu pour que les
         investisseurs débloquent un univers de contrats à terme ouverts sur les bénéfices.

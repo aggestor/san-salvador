@@ -1,5 +1,5 @@
 <?php
-    namespace App\Helpers;
+    namespace Root\App\Helpers;
 
     class MenuHighlighter{
         public static array $paths = ['home','packages', 'register', 'login','products', 'services'];
