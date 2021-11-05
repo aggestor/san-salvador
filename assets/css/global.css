@@ -20,6 +20,8 @@ html{
     padding:10px;
     font-weight: 500;
     transition: all ease-in 300ms ;
+    position:static;
+    
 }
 ._green_btn:hover{
     transform: scaleX(100);
@@ -27,6 +29,7 @@ html{
     color:#050525;
     border-radius: 3px;
     transition: all ease-in 300ms ;
+    
 }
 span:not(._green_btn) a:hover{
     color: #39e293;

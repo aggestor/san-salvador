@@ -7,19 +7,19 @@
             <span class="text-gray-100 text-5xl font-semibold">Usalvagetrade</span>
         </div>
         <div class="w-7/12 h-16 items-center text-gray-200 flex justify-around">
-                <span class ="<?= MenuHighlighter::get_path()->high_light("Acceuil") ?>">
+                <span class ="">
                     <a href="home">Acceuil</a>
                 </span>
                 <span>
                     <a href="helps">Aide</a>
                 </span>
-                <span class ="<?= MenuHighlighter::get_path()->high_light("Packs") ;?>">
+                <span class ="">
                     <a href="packages">Packs</a>
                 </span>
-                <span class ="<?= MenuHighlighter::get_path()->high_light("Produits") ;?>">
+                <span class ="">
                     <a href="products">Produits</a>
                 </span>
-                <span class ="<?= MenuHighlighter::get_path()->high_light("Services") ;?>">
+                <span class ="">
                     <a href="services">Services</a>
                 </span>
                 <span>

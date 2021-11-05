@@ -1,6 +1,6 @@
 <div class="col-span-12 h-landing-3 bg-gray-200">
     <div  class="flex flex-col relative  w-11/12 mx-auto">
-        <img data-aos="slide-right" data-aos-duration="1000" height="450"  src="assets/logos/packages.jpg" class="w-8/12 z-0 top-10 right-4 absolute" alt="Packages"/>
+        <img data-aos="slide-right" data-aos-duration="1000" height="450"  src="assets/logos/pkg.jpg" class="w-8/12 z-0 top-10 right-4 absolute" alt="Packages"/>
         <div data-aos="slide-left" data-aos-duration="1000" class="w-5/12 absolute py-8 px-4 top-24 left-48 primary_bg">
             <h3 class="pack_title mb-2 text-gray-400">AVEC NOUS</h3>
             <p  class="text-gray-200 text-3xl w-8/12 font-bold">Booster votre business avec nous</p>

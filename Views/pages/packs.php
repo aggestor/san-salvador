@@ -1,11 +1,17 @@
 <?php
 require("../Views/includes/HeaderBar.php");
 ?>
-
+<div style="background-image: url(assets/logos/pack.jpg); background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;" id="pack" class="col-span-12 flex bg-opacity-10 items-center z-10 h-96">
+    <div class="flex flex-col h-36 bg-black blur-lg w-10/12 p-4 mx-auto bg-opacity-70">
+        <h1 class="text-5xl _green_text font-bold _space_text_l3">Forfaits de démarrage </h1>
+        <p class="text-xl w-8/12 my-3 text-gray-100">Pour commencer avec Usalvagetrade en tant qu'affilié, voici les différents forfaits de démarrage parmi lesquels choisir.</p> 
+    </div>
+</div>
 <div class="col-span-12">
     <div class="w-11/12 h-screen mx-auto flex mt-6 flex-col">
-        <h1 class="text-5xl text-gray-200 font-bold _space_text_l3">Forfaits de démarrage </h1>
-        <p class="text-xl w-8/12 my-3 text-gray-400">Pour commencer avec Usalvagetrade en tant qu'affilié, voici les différents forfaits de démarrage parmi lesquels choisir.</p> 
         <div class="w-full flex mt-9 justify-between">
             <div class="w-4/12 p-2 m-4 primary_bg rounded-xl shadow border border-gray-200 h-96">
                 <div class="text-gray-400">

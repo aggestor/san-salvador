@@ -1,7 +1,4 @@
 <?php
-
-    use Root\App\Helpers\HTMLLoader;
-
     require("../Views/includes/HeaderBar.php");
     require("../Views/includes/LandingOne.php");
     require("../Views/includes/LandingTwo.php");
