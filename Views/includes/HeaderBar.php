@@ -12,16 +12,16 @@ use Root\App\Helpers\MenuHighlighter;
                 <a href="/">Acceuil</a>
             </span>
             <span>
-                <a href="helps">Aide</a>
+                <a href="/helps">Aide</a>
             </span>
             <span class="">
                 <a href="/packages">Packs</a>
             </span>
             <span class="">
-                <a href="products">Produits</a>
+                <a href="/products">Produits</a>
             </span>
             <span class="">
-                <a href="services">Services</a>
+                <a href="/services">Services</a>
             </span>
             <span>
                 |

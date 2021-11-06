@@ -2,6 +2,7 @@
 
 use Root\Autoloader;
 use Root\routes\Router;
+use Root\App\Exceptions\NotFoundException;
 
 include("../Autoloader.php");
 Autoloader::register();
@@ -14,4 +15,8 @@ $routes = new Router($_GET['url']);
 $routes->get('/', 'Root\App\Controllers\HomeController@index');
 $routes->get('/packages', 'Root\App\Controllers\HomeController@packages');
 
-$routes->run();
+try {
+    $routes->run();
+} catch (NotFoundException $e) {
+    return $e->error404();
+}

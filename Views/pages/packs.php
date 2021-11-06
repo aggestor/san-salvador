@@ -1,4 +1,3 @@
-<title>Packages</title>
 <div style="background-image: url(assets/logos/pack.jpg); background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;

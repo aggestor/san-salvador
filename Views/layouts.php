@@ -21,6 +21,7 @@
     echo $content;
     require(VIEWS . "includes/Footer.php");
     ?>
+
     <script src="assets/js/aos.min.js"></script>
     <script src="assets/js/app.js"></script>
     <script>

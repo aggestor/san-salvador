@@ -2,6 +2,9 @@
 
 namespace Root\routes;
 
+use Root\App\Exceptions\NotFoundException;
+
+
 class Router
 {
     public $url;
@@ -33,11 +36,9 @@ class Router
     {
         foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
             if ($route->matches($this->url)) {
-                $route->execute();
-                die();
+                return $route->execute();
             }
         }
-
-        return header('HTTP/1.0 404 Not found');
+        throw new NotFoundException("La page demandée n'a pas été trouvé");
     }
 }
