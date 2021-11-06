@@ -1,11 +1,5 @@
 RewriteEngine On
-
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(404|404\/)$ ./404.html [L]
+#RewriteCond %{REQUEST_FILENAME} !-d
 
-# Make sure to avoid loops. 
-# Ignore rewrite rules for the files and directories that
-# exist (such as index.php)
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ public/index.php?path=$1 [L]
+RewriteRule ^(.*)$ public/index.php?url=$1 [QSA,L]

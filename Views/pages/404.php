@@ -1,17 +1,19 @@
+<title>Packages</title>
+<?php require(VIEWS . "includes/HeaderBar.php"); ?>
 <div class="col-span-12 h-screen grid place-items-center">
     <div class="w-11/12 mx-auto flex justify-around">
-    <div class="w-6/12 flex justify-center">
-        <img class="h-96" src="assets/logos/404.png"/>
-    </div>
-    <div class="w-6/12">
-        <p class="text-3xl font-semibold _green_text">404 - Page non trouvée</p>
-        <p class="text-gray-400 _space_text_l3 mt-2 w-8/12">Nous avons pas pu répondre à votre réquette. Cette erreur peut être dûe à : <br/>
+        <div class="w-6/12 flex justify-center">
+            <img class="h-96" src="assets/logos/404.png" />
+        </div>
+        <div class="w-6/12">
+            <p class="text-3xl font-semibold _green_text">404 - Page non trouvée</p>
+            <p class="text-gray-400 _space_text_l3 mt-2 w-8/12">Nous avons pas pu répondre à votre réquette. Cette erreur peut être dûe à : <br />
             <ul class="list-disc _space_text_l3 mt-2 ml-8 text-gray-400">
                 <li>Mauvaise addresse entrée par l'utilisateur</li>
                 <li>URL expirée, du coup non trouvée sur le serveur</li>
                 <li>Une erreur sur le serveur lors du rendu</li>
             </ul>
-        </p>
-    </div>
+            </p>
+        </div>
     </div>
 </div>

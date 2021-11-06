@@ -1,7 +1,7 @@
 <?php
-    namespace Root\App\Controller;
+    namespace Root\App\Controllers;
     use Root\App\Models\userModel;
-    use Root\App\Controller\Validator;
+    use Root\App\Controllers\Validator;
     if(isset($_POST['Action'])){
         class UserController extends userModel {
             public function add(){
