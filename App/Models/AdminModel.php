@@ -3,7 +3,7 @@
     use Root\Core\Queries ;
     use Root\Core\Schema ;
 
-    class Admin extends Queries{
+    class AdminModel extends Queries{
         public function insert(array $params) {
             $schema=new Schema();
             $admin=$schema->admin;
