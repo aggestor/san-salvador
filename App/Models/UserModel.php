@@ -40,6 +40,7 @@
                 $user["email"],
                 $param
             );
+            return $query()->rowCount();
         }
         public function checkPhone(array $param){
             $schema=new Schema();
@@ -50,6 +51,7 @@
                 $user["phone"],
                 $param
             );
+            return $query()->rowCount();
         }
         public function checkId(array $param){
             $schema=new Schema();
@@ -60,6 +62,7 @@
                 $user["id"],
                 $param
             );
+            return $query()->rowCount();
         }
         public function login(array $params){
             $schema=new Schema();
