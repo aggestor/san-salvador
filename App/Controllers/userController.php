@@ -40,7 +40,7 @@
                                                 0
                                             ]
                                         )){
-                                           echo json_encode(["type"=>"Success","message"=>"Enregistrement effectuer"]); 
+                                           echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]); 
                                         }else{echo json_encode(["type"=>"Failure","message"=>"Echec d'enregistrement"]);}
                                     }else{echo json_encode(["type"=>"Failure","message"=>"Ce numéro est dèjà utiliser"]);}                                   
                                 }else{echo json_encode(["type"=>"Failure","message"=>"Cette adresse email est dèjà utiliser"]);}

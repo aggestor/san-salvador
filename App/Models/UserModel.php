@@ -75,6 +75,7 @@
                     $user["name"],
                     $user["email"],
                     $user["phone"],                  
+                    $user["password"],                  
                     $user["status"],                  
                     $user["accountStatus"],
                 ],

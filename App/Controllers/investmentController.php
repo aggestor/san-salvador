@@ -30,7 +30,7 @@
                                   $adminId,
                                   $currency 
                                 ])){
-                                    echo json_encode(["type"=>"Success","message"=>"Enregistrement effectuer"]);
+                                    echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]);
                                }else{echo json_encode(["type"=>"Failure","message"=>"Echec d'enregistrement"]);}
                             }else{echo json_encode(["type"=>"Failure","message"=>"Veillez specicier la couleur"]);}
                         }else{echo json_encode(["type"=>"Failure","message"=>"Veillez specicier la couleur"]);}                    

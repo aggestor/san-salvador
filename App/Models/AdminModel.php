@@ -31,5 +31,22 @@
             );
             return $query()->rowCount();
         }
+        public function login(array $params){
+            $schema=new Schema();
+            $admin=$schema->admin;
+            $table=$schema->DatabaseSchema;
+            $query= $this->getSpecificFields(
+                $table["admin"],
+                [                  
+                    $admin["id"],
+                    $admin["name"],,                  
+                    $admin["password"],
+                ],
+                `{$admin['name']}=? `,
+               $params
+            );
+            $count=$query()->rowCount();
+            return[$count,$query];
+        } 
     }
 ?>

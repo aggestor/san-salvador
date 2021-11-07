@@ -18,10 +18,32 @@
                             $id= $uuid->uuid();
                         }
                         if($this->insert([$id,$name,$password,`now()`,`now()`])){
-                            echo json_encode(["type"=>"Success","message"=>"Enregistrement effectuer"]);
+                            echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]);
                         }else{echo json_encode(["type"=>"Failure","message"=>"Echec d'enregistrement"]);}
                     }else{echo json_encode(["type"=>"Failure","message"=>"Les mot de pass sont pas identique"]);}                
                 }else{echo json_encode(["type"=>"Failure","message"=>"Le nom doit être un texte et non nul"]);}
+            }
+            public function signin(){
+                $adminName=htmlspecialchars($_POST['adminName']);
+                $password=htmlspecialchars(sha1($_POST['password']));
+                if($adminName){
+                    if($password){
+                        $getUser=$this->login([$adminName]);
+                        if($getUser[0]==0){
+                            echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
+                        }else{
+                            $res=$getUser[1]->fetch();
+                            if($res['password']!=$password){
+                                echo json_encode(["type"=>"Failure","message"=>"Mot de passe incorrect"]);
+                            }else{
+                                session_start();
+                                $_SESSION['user']['id'] = $res['id'];
+                                $_SESSION['user']['nama'] = $res['name'];                                
+                                echo json_encode(["type"=>"success","message"=>"utilisateur connecter"]);
+                            }
+                        }
+                    }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre mot de passe"]);}
+                }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre pseudo"]);} 
             }
         }
     }
