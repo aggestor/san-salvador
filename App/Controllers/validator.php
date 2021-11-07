@@ -1,5 +1,5 @@
 <?php
-    namespace Root\App\Controller;
+    namespace Root\App\Controllers;
     class Validator{
         public $regexs=[
             'alpha'         => '[\p{L}]+',

@@ -21,7 +21,8 @@
                   $investment["dateRecord"],
                   $investment["timeRecord"],
                   $investment["color"],
-                  $investment["userId"],
+                  $investment["adminId"],
+                  $investment["currency"],
                ],
                $params
             );

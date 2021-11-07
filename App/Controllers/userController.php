@@ -1,7 +1,7 @@
 <?php
-    namespace Root\App\Controller;
+    namespace Root\App\Controllers;
     use Root\App\Models\userModel;
-    use Root\App\Controller\Validator;
+    use Root\App\Controllers\Validator;
     if(isset($_POST['Action'])){
         class UserController extends userModel {
             public function add(){
@@ -14,11 +14,11 @@
                 $sponsor=htmlspecialchars($_POST['Sponsor']);
                 $side=htmlspecialchars($_POST['Side']);
                 $validation=new Validator();
-                if($validation->isString($name)){                   
-                    if($validation->isEmail($email)){
-                        if($validation->isPhone($phone)){ 
-                            if($password==$verifPassword){
-                                $this->insert(
+                if($validation->isString($name)&& $name !=""){                   
+                    if($validation->isEmail($email)&& $email !=""){
+                        if($validation->isPhone($phone)&& $phone !=""){ 
+                            if(($password==$verifPassword)&& $password !=""){
+                               if( $this->insert(
                                     [
                                         $id,
                                         $name,
@@ -32,8 +32,10 @@
                                         `now()`,
                                         0
                                     ]
-                                );
-                                echo json_encode(["type"=>"Success","message"=>"Enregistrement effectuer"]);
+                                )){
+                                   echo json_encode(["type"=>"Success","message"=>"Enregistrement effectuer"]); 
+                                }else{echo json_encode(["type"=>"Failure","message"=>"Echec d'enregistrement"]);}
+                                
                             }else{
                                 echo json_encode(["type"=>"Failure","message"=>"les deux mot de passe ne sont pas identique"]);
                             }
