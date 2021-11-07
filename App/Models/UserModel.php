@@ -31,6 +31,36 @@
                $params
             );
         }
+        public function checkEmail(array $param){
+            $schema=new Schema();
+            $user=$schema->user;
+            $table=$schema->DatabaseSchema;
+            $query=$this->getAll(
+                $table["user"],
+                $user["email"],
+                $param
+            );
+        }
+        public function checkPhone(array $param){
+            $schema=new Schema();
+            $user=$schema->user;
+            $table=$schema->DatabaseSchema;
+            $query=$this->getAll(
+                $table["user"],
+                $user["phone"],
+                $param
+            );
+        }
+        public function checkId(array $param){
+            $schema=new Schema();
+            $user=$schema->user;
+            $table=$schema->DatabaseSchema;
+            $query=$this->getAll(
+                $table["user"],
+                $user["id"],
+                $param
+            );
+        }
         public function login(array $params){
             $schema=new Schema();
             $user=$schema->user;
