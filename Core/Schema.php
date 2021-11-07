@@ -25,7 +25,8 @@
             "dateRecord"=>"record_date",
             "timeRecord"=>"record_time",
             "color"=>"color",
-            "userId"=>"user_id",
+            "admin"=>"admin_Id",
+            "currency"=>"currency"
         ];
         public $adminSchema=[
             "id"=>"id",

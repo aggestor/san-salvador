@@ -31,6 +31,39 @@
                $params
             );
         }
+        public function checkEmail(array $param){
+            $schema=new Schema();
+            $user=$schema->user;
+            $table=$schema->DatabaseSchema;
+            $query=$this->getAll(
+                $table["user"],
+                $user["email"],
+                $param
+            );
+            return $query()->rowCount();
+        }
+        public function checkPhone(array $param){
+            $schema=new Schema();
+            $user=$schema->user;
+            $table=$schema->DatabaseSchema;
+            $query=$this->getAll(
+                $table["user"],
+                $user["phone"],
+                $param
+            );
+            return $query()->rowCount();
+        }
+        public function checkId(array $param){
+            $schema=new Schema();
+            $user=$schema->user;
+            $table=$schema->DatabaseSchema;
+            $query=$this->getAll(
+                $table["user"],
+                $user["id"],
+                $param
+            );
+            return $query()->rowCount();
+        }
         public function login(array $params){
             $schema=new Schema();
             $user=$schema->user;
@@ -42,6 +75,7 @@
                     $user["name"],
                     $user["email"],
                     $user["phone"],                  
+                    $user["password"],                  
                     $user["status"],                  
                     $user["accountStatus"],
                 ],
