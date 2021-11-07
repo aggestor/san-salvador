@@ -6,7 +6,7 @@
     use Root\App\Controllers\Generate;
     if(isset($_POST['Action'])){
         class investmentController extends investmentModel{
-            public function add(){
+            static function add(){
                 $uuid=new Generate;
                 $id= $uuid->uuid();
                 $name=htmlspecialchars($_POST['Name']);
@@ -18,10 +18,11 @@
                     if($validation->isString($name) && $name !=""){
                         if($validation->isString($color) && $color !=""){
                             if($validation->isFloat($currency) && $currency !=""){
-                                while($this->checkId([$id])!=0){
+                                $invest=new InvestmentModel();
+                                while($invest->checkId([$id])!=0){
                                     $id= $uuid->uuid();
                                 }
-                               if($this->insert([
+                               if($invest->insert([
                                   $id,
                                   $name,
                                   `now()`,
@@ -36,7 +37,19 @@
                         }else{echo json_encode(["type"=>"Failure","message"=>"Veillez specicier la couleur"]);}                    
                     }else{echo json_encode(["type"=>"Failure","message"=>"Le nom doit être un texte et non nul"]);} 
                 }else{echo json_encode(["type"=>"Failure","message"=>"Vous n'etait pas habilité a éffectuer cette operation"]);}            
-            }            
+            } 
+            static  function verifyAction(){
+                $postAction = htmlspecialchars($_POST['action']);
+                switch ($postAction) {
+                  case 'add':
+                    AdminController::add();
+                    break;                  
+                  default:
+                    # code...
+                    break;
+                }
+            }           
         }
+        investmentController::verifyAction();
     }
 ?>
