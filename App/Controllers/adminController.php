@@ -2,16 +2,21 @@
     namespace Root\App\Controllers;
     use Root\App\Models\AdminModel;
     use Root\App\Controllers\Validator;
+    use Root\App\Controllers\Generate;
     if(isset($_POST['Action'])){
         class AdminController extends adminModel{
             public function add(){
-                $id="";
+                $uuid=new Generate;
+                $id= $uuid->uuid();
                 $name=htmlspecialchars($_POST['name']);
                 $password=htmlspecialchars(sha1($_POST['password']));
                 $confirmPassword=htmlspecialchars(sha1($_POST['confirmPassword']));
                 $validatotion=new Validator();
                 if($validatotion->isString($name)){
                     if(($password==$confirmPassword)&&$validatotion->isNotEmpty($name)){
+                        while($this->checkId([$id])!=0){
+                            $id= $uuid->uuid();
+                        }
                         if($this->insert([$id,$name,$password,`now()`,`now()`])){
                             echo json_encode(["type"=>"Success","message"=>"Enregistrement effectuer"]);
                         }else{echo json_encode(["type"=>"Failure","message"=>"Echec d'enregistrement"]);}

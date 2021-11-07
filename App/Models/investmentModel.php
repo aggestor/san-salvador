@@ -27,5 +27,16 @@
                $params
             );
         }
+        public function checkId(array $param){
+            $schema=new Schema();
+            $investment=$schema->investment;
+            $table=$schema->DatabaseSchema;
+            $query=$this->getAll(
+                $table["investment"],
+                $investment["id"],
+                $param
+            );
+            return $query()->rowCount();
+        }
     }
 ?>

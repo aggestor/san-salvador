@@ -52,7 +52,29 @@
                 }else{echo json_encode(["type"=>"Failure","message"=>"Le nom doit être est texte"]);}
             }
             public function signin(){
-                
+                $userName=htmlspecialchars($_POST['userName']);
+                $password=htmlspecialchars(sha1($_POST['password']));
+                if($userName){
+                    if($password){
+                        $getUser=$this->login([$userName,0]);
+                        if($getUser[0]==0){
+                            echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
+                        }else{
+                            $res=$getUser[1]->fetch();
+                            if($res['password']!=$password){
+                                echo json_encode(["type"=>"Failure","message"=>"Mot de passe incorrect"]);
+                            }else{
+                                session_start();
+                                $_SESSION['user']['id'] = $res['id'];
+                                $_SESSION['user']['nama'] = $res['name'];
+                                $_SESSION['user']['email'] = $res['email'];
+                                $_SESSION['user']['phone'] = $res['phone'];
+                                $_SESSION['user']['side'] = $res['side'];
+                                echo json_encode(["type"=>"success","message"=>"utilisateur connecter"]);
+                            }
+                        }
+                    }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre mot de passe"]);}
+                }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre pseudo"]);} 
             }
         } 
     }

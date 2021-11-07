@@ -20,5 +20,16 @@
                 $params
             );
         }
+        public function checkId(array $param){
+            $schema=new Schema();
+            $admin=$schema->admin;
+            $table=$schema->DatabaseSchema;
+            $query=$this->getAll(
+                $table["admin"],
+                $admin["id"],
+                $param
+            );
+            return $query()->rowCount();
+        }
     }
 ?>

@@ -3,10 +3,12 @@
     namespace Root\App\Controllers;
     use Root\App\Models\investmentModel;
     use Root\App\Controllers\Validator;
+    use Root\App\Controllers\Generate;
     if(isset($_POST['Action'])){
         class investmentController extends investmentModel{
             public function add(){
-                $id="";
+                $uuid=new Generate;
+                $id= $uuid->uuid();
                 $name=htmlspecialchars($_POST['Name']);
                 $color=htmlspecialchars($_POST['color']);
                 $currency=htmlspecialchars($_POST['currency']);
@@ -16,6 +18,9 @@
                     if($validation->isString($name) && $name !=""){
                         if($validation->isString($color) && $color !=""){
                             if($validation->isFloat($currency) && $currency !=""){
+                                while($this->checkId([$id])!=0){
+                                    $id= $uuid->uuid();
+                                }
                                if($this->insert([
                                   $id,
                                   $name,
@@ -31,7 +36,7 @@
                         }else{echo json_encode(["type"=>"Failure","message"=>"Veillez specicier la couleur"]);}                    
                     }else{echo json_encode(["type"=>"Failure","message"=>"Le nom doit être un texte et non nul"]);} 
                 }else{echo json_encode(["type"=>"Failure","message"=>"Vous n'etait pas habilité a éffectuer cette operation"]);}            
-            }
+            }            
         }
     }
 ?>
