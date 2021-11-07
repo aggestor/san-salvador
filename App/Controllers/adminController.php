@@ -60,7 +60,7 @@
                     # code...
                     break;
                 }
-              }
+            }
         }
         AdminController::verifyAction();
     }

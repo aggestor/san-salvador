@@ -5,7 +5,7 @@
     use Root\App\Controllers\Generate;
     if(isset($_POST['Action'])){
         class UserController extends userModel {
-            public function add(){
+            static function add(){
                 $uuid=new Generate;
                 $id= $uuid->uuid();
                 $name=htmlspecialchars($_POST['Name']);
@@ -19,13 +19,14 @@
                 if($validation->isString($name)&& $name !=""){                   
                     if($validation->isEmail($email)&& $email !=""){
                         if($validation->isPhone($phone)&& $phone !=""){ 
-                            if(($password==$verifPassword)&& $password !=""){                                
-                                if($this->checkEmail([$email])==0){
-                                    if($this->checkPhone([$phone])==0){
-                                        while($this->checkId([$id])!=0){
+                            if(($password==$verifPassword)&& $password !=""){
+                                $user=new UserModel();                                
+                                if($user->checkEmail([$email])==0){
+                                    if($user->checkPhone([$phone])==0){
+                                        while($user->checkId([$id])!=0){
                                             $id= $uuid->uuid();
                                         }
-                                        if( $this->insert(
+                                        if( $user->insert(
                                             [
                                                 $id,
                                                 $name,
@@ -51,12 +52,13 @@
                     }else{echo json_encode(["type"=>"Failure","message"=>"Address email invalide"]);} 
                 }else{echo json_encode(["type"=>"Failure","message"=>"Le nom doit être est texte"]);}
             }
-            public function signin(){
+            static function signin(){
                 $userName=htmlspecialchars($_POST['userName']);
                 $password=htmlspecialchars(sha1($_POST['password']));
                 if($userName){
                     if($password){
-                        $getUser=$this->login([$userName,0]);
+                        $user=new UserModel();
+                        $getUser=$user->login([$userName,0]);
                         if($getUser[0]==0){
                             echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
                         }else{
@@ -76,6 +78,21 @@
                     }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre mot de passe"]);}
                 }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre pseudo"]);} 
             }
+            static  function verifyAction(){
+                $postAction = htmlspecialchars($_POST['action']);
+                switch ($postAction) {
+                  case 'add':
+                    userController::add();
+                    break;
+                  case 'signin':
+                    userController::signin();
+                    break;                  
+                  default:
+                    # code...
+                    break;
+                }
+            }
         } 
+        UserController::verifyAction();
     }
 ?>
