@@ -1,5 +1,5 @@
 <head>
-    <title>Home</title>
+    <title>Usalvagetrade | Home</title>
 </head>
 <?php
 require(VIEWS . "includes/LandingOne.php");

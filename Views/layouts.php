@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="assets/css/tailwind.min.css" />
     <link rel="stylesheet" href="assets/css/aos.min.css" />
     <link rel="stylesheet" href="assets/css/global.css" />
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css" />
     <!--
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     -->
 </head>
 
-<body class="w-screen secondary_bg  h-screen overflow-x-hidden overflow-y-scroll ">
+<body class="w-screen secondary_bg grid grid-cols-12 h-screen overflow-x-hidden overflow-y-scroll ">
     <!-- header page beginning-->
 
     <?php
@@ -21,8 +22,9 @@
     echo $content;
     require(VIEWS . "includes/Footer.php");
     ?>
+    <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/aos.min.js"></script>
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/main.js"></script>
     <script>
         AOS.init()
     </script>

@@ -1,67 +1,71 @@
-
-:root{
-    
+:root {
 }
-html{
-    scroll-behavior: smooth;
+html {
+  scroll-behavior: smooth;
 }
-.primary_bg{
-    background-color: #020a24;
+.primary_bg {
+  background-color: #060f2c;
 }
-.secondary_bg{
-    background-color: #01081a;
+.secondary_bg {
+  background-color: #020714cc;
 }
-._green_text{
-    color:#39e293;
+._green_text {
+  color: #39e293;
 }
-._green_btn{
-    color: #050525;
-    background: #32e491;
-    padding:10px;
-    font-weight: 500;
-    transition: all ease-in 300ms ;
-    position:static;
-    
+._green_btn {
+  color: #050525;
+  background: #32e491;
+  padding: 10px;
+  font-weight: 500;
+  transition: all ease-in 300ms;
+  position: static;
 }
-._green_btn:hover{
-    transform: scaleX(100);
-    background: #3ce495;
-    color:#050525;
-    border-radius: 3px;
-    transition: all ease-in 300ms ;
-    
+._green_btn:hover {
+  transform: scaleX(100);
+  background: #3ce495;
+  color: #050525;
+  border-radius: 3px;
+  transition: all ease-in 300ms;
 }
-span:not(._green_btn) a:hover{
-    color: #39e293;
+span:not(._green_btn) a:hover {
+  color: #39e293;
 }
-.h-landing-3{
-    height: 630px
+.h-landing-3 {
+  height: 630px;
 }
-.pack_title{
-    letter-spacing: 3px;
-    font-size: 18px;
-    font-weight:500;
+.pack_title {
+  letter-spacing: 3px;
+  font-size: 18px;
+  font-weight: 500;
 }
-._space_text_l3{
-    letter-spacing: 2px;
+._space_text_l3 {
+  letter-spacing: 2px;
 }
-._space_letter_pack{
-    letter-spacing: 1.4px;
+._space_letter_pack {
+  letter-spacing: 1.4px;
 }
-.button_white_border{
-    border: 1px solid #fefefe;
-    padding: 10px;
-    font-weight: 400;
-    transition: all ease-in 300ms ;
-    margin: 10px 0;
+.button_white_border {
+  border: 1px solid #fefefe;
+  padding: 10px;
+  font-weight: 400;
+  transition: all ease-in 300ms;
+  margin: 10px 0;
 }
-.button_white_border:hover{
-    border-radius: 4px;
-    transition: all ease-in 300ms ;
+.button_white_border:hover {
+  border-radius: 4px;
+  transition: all ease-in 300ms;
 }
-.button_white_border a:hover{
-    color: #fefefe;
+.button_white_border a:hover {
+  color: #fefefe;
 }
-.h-landing{
-    height: calc(100vh - 80px)
+.h-landing {
+  height: calc(100vh - 80px);
+}
+#img_l1 {
+  height: 300px !important;
+}
+@media (max-width: 768px) {
+  .h-landing {
+    height: 60vh;
+  }
 }
