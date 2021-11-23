@@ -1,6 +1,6 @@
 body{overflow-x:hidden!important}
 html{scroll-behavior:smooth}
-.primary_bg{background-color:#060f2c}
+.primary_bg{background-color:#020613}
 .secondary_bg{background-color:#020714}
 ._green_text{color:#39e293}
 ._green_btn{color:#050525;background:#32e491;padding:10px;font-weight:500;transition:all ease-in .3s;position:static}
@@ -22,4 +22,7 @@ span:not(._green_btn) a:hover{color:#39e293}
 }
 .heighten{
   padding: 30px;
+}
+.disc{
+  list-style-type:  disc !important;
 }

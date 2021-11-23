@@ -18,6 +18,10 @@ class StaticController extends Controller
     }
     public function service()
     {
-        return $this->view('pages.service');
+        return $this->view('pages.services');
+    }
+    public function with_us()
+    {
+        return $this->view('pages.with_us');
     }
 }

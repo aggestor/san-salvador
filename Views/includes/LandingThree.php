@@ -9,16 +9,8 @@
                 d'accéder à votre plein potentiel pour gagner un revenu passif stable.</br>
                 En tirant partie de Universal Salvage Trade, les entreprises ou les particuliers qui ont la difficulté
                 de faire ce genre de trading, peuvent facilement participer sans compétences ni connaissances...
-                <!-- appropriées pour qu'ils commencent à gagner de la crypto-monnaie. 
-                Étant donné que cette
-                forme de commerce se fait via des outils( équipements) spécifiques, innovés suivant la dernière
-                technologie.
-                Ainsi, vous n'avez pas besoin d'être en ligne tout le temps devant votre ordinateur ou
-                smartphone ouvert. Vous pouvez vous endormir pendant que nous le faisons à votre place et
-                vous réveiller ayant des gains en fonction du montant de la crypto-monnaie investi et nous
-                déposons ces bénéfices quotidiens dans votre portefeuille. -->
             </p>
-            <span data-aos="fade-up" data-aos-duration="2000" class="button_white_border text-gray-200"><a href="#">Lire plus</a></span>
+            <span data-aos="fade-up" data-aos-duration="1000" class="button_white_border text-gray-200"><a href="/with-us">Lire plus</a></span>
         </div>
     </div>
 </div>
