@@ -12,4 +12,12 @@ class StaticController extends Controller
     {
         return $this->view('pages.packs');
     }
+    public function help()
+    {
+        return $this->view('pages.help');
+    }
+    public function service()
+    {
+        return $this->view('pages.service');
+    }
 }

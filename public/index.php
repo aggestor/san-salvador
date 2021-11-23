@@ -11,9 +11,11 @@ define('VIEWS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEP
 
 $routes = new Router($_GET['url']);
 
+//les routes pour les pages statics
 $routes->get('/', 'Root\App\Controllers\StaticController@home');
 $routes->get('/packages', 'Root\App\Controllers\StaticController@packages');
-
+$routes->get('/help', 'Root\App\Controllers\StaticController@help');
+$routes->get('/services', 'Root\App\Controllers\StaticController@service');
 try {
     $routes->run();
 } catch (NotFoundException $e) {
