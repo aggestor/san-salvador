@@ -32,8 +32,8 @@
             Faites un pas aujourd'hui vers votre vie de rêve :
             Suivez notre croissance extraordinaire, restez au courant des nouvelles et autres informations,
             que vous trouverez dans notre back-office et restez à jour avec Usalvagetrade sur notre
-            Instagram, Facebook, YouTube, Twitter et groupe WhatsAp...</p>
-        <span class="button_white_border  md:w-2/12 w-3/12 text-gray-200"><a href="/invest">Lire plus</a></span>
+            Instagram, Facebook, YouTube, Twitter et groupe WhatsApp</p>
+       
     </div>
     </div>
 
