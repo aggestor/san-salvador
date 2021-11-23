@@ -1,13 +1,12 @@
 <?php
     namespace Root\App\Controllers;
     use Root\App\Models\userModel;
-    use Root\App\Controllers\Validator;
-    use Root\App\Controllers\Generate;
+    use Root\App\Controllers\{Validator,Generate};
     if(isset($_POST['Action'])){
         class UserController extends userModel {
             static function add(){
                 $uuid=new Generate;
-                $id= $uuid->uuid();
+                $id= Generate::uuid();
                 $name=htmlspecialchars($_POST['Name']);
                 $email=htmlspecialchars($_POST['Email']);
                 $phone=htmlspecialchars($_POST['Phone']);
@@ -15,18 +14,17 @@
                 $verifPassword=htmlspecialchars(sha1($_POST['VerifPassword']));
                 $sponsor=htmlspecialchars($_POST['Sponsor']);
                 $side=htmlspecialchars($_POST['Side']);
-                $validation=new Validator();
-                if($validation->isString($name)&& $name !=""){                   
-                    if($validation->isEmail($email)&& $email !=""){
-                        if($validation->isPhone($phone)&& $phone !=""){ 
+                if(Validator::isString($name)&& $name !=""){                   
+                    if(Validator::isEmail($email)&& $email !=""){
+                        if(Validator::isPhone($phone)&& $phone !=""){ 
                             if(($password==$verifPassword)&& $password !=""){
                                 $user=new UserModel();                                
-                                if($user->checkEmail([$email])==0){
-                                    if($user->checkPhone([$phone])==0){
-                                        while($user->checkId([$id])!=0){
-                                            $id= $uuid->uuid();
+                                if(UserModel::checkEmail([$email])==0){
+                                    if(UserModel::checkPhone([$phone])==0){
+                                        while(UserModel::checkId([$id])!=0){
+                                            $id= Generate::uuid();
                                         }
-                                        if( $user->insert(
+                                        if( UserModel::insert(
                                             [
                                                 $id,
                                                 $name,
@@ -58,7 +56,7 @@
                 if($userName){
                     if($password){
                         $user=new UserModel();
-                        $getUser=$user->login([$userName,0]);
+                        $getUser=UserModel::login([$userName,0]);
                         if($getUser[0]==0){
                             echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
                         }else{
@@ -82,10 +80,10 @@
                 $postAction = htmlspecialchars($_POST['action']);
                 switch ($postAction) {
                   case 'add':
-                    userController::add();
+                    UserController::add();
                     break;
                   case 'signin':
-                    userController::signin();
+                    UserController::signin();
                     break;                  
                   default:
                     # code...

@@ -1,24 +1,20 @@
 <?php
     namespace Root\App\Controllers;
     use Root\App\Models\AdminModel;
-    use Root\App\Controllers\Validator;
-    use Root\App\Controllers\Generate;
+    use Root\App\Controllers\{Validator,Generate};
     if(isset($_POST['Action'])){
         class AdminController extends adminModel{
             static function add(){
-                $uuid=new Generate;
-                $id= $uuid->uuid();
+                $id= Generate::uuid();
                 $name=htmlspecialchars($_POST['name']);
                 $password=htmlspecialchars(sha1($_POST['password']));
                 $confirmPassword=htmlspecialchars(sha1($_POST['confirmPassword']));
-                $validatotion=new Validator();
-                if($validatotion->isString($name)){
-                    if(($password==$confirmPassword)&&$validatotion->isNotEmpty($name)){
-                        $admin=new AdminModel();
-                        while($admin->checkId([$id])!=0){
-                            $id= $uuid->uuid();
+                if(Validator::isString($name)){
+                    if(($password==$confirmPassword)&&Validator::isNotEmpty($name)){                       
+                        while(AdminModel::checkId([$id])!=0){
+                            $id= Generate::uuid();
                         }
-                        if($admin->insert([$id,$name,$password,`now()`,`now()`])){
+                        if(AdminModel::insert([$id,$name,$password,`now()`,`now()`])){
                             echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]);
                         }else{echo json_encode(["type"=>"Failure","message"=>"Echec d'enregistrement"]);}
                     }else{echo json_encode(["type"=>"Failure","message"=>"Les mot de pass sont pas identique"]);}                
@@ -29,8 +25,7 @@
                 $password=htmlspecialchars(sha1($_POST['password']));
                 if($adminName){
                     if($password){
-                        $admin=new AdminModel();
-                        $getUser=$admin->login([$adminName]);
+                        $getUser=AdminModel::login([$adminName]);
                         if($getUser[0]==0){
                             echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
                         }else{
