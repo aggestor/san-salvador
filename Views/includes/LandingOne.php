@@ -1,10 +1,10 @@
-<div class="col-span-12">
+<div class="col-span-12 bg-black">
     <div class="flex flex-col md:flex-row w-11/12 md:h-screen h-auto md:items-center mx-auto md:justify-around">
-    <div data-aos="fade-up"
-    data-aos-duration="1500" class="md:w-6/12 w-full flex justify-center">
+    <div data-aos="fade-down"
+    data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
         <img src="assets/logos/join-free.png" class="md:h-96 h-80 w-80 md:w-96" alt="Joining image" />
     </div>
-    <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 w-full flex flex-col mt-6 ">
+    <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 overflow-x-hidden w-full flex flex-col mt-6 ">
         <h1 class="md:w-11/12 md:text-3xl text-xl text-white font-bold">REJOIGNEZ LA RÉVOLUTION DU COMMERCE DE LA CRYPTOMONNAIE AVEC
         <br> <span class="_green_text">UNIVERSAL SALVAGE TRADE (Usalvagetrade)</span></h1>
         <p class="md:w-8/12 text-lg mt-6 text-gray-400">Il s'agit d'un protocole de taux d'intérêt algorithmique et autonome conçu pour que les

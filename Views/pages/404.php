@@ -1,5 +1,3 @@
-<title>Packages</title>
-<?php require(VIEWS . "includes/HeaderBar.php"); ?>
 <div class="col-span-12 h-screen grid place-items-center">
     <div class="w-11/12 mx-auto flex justify-around">
         <div class="w-6/12 flex justify-center">

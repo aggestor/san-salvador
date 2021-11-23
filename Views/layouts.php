@@ -14,7 +14,7 @@
     -->
 </head>
 
-<body class="w-screen secondary_bg grid grid-cols-12 h-screen overflow-x-hidden overflow-y-scroll ">
+<body class="w-screen primary_bg bg-opacity-100 grid grid-cols-12 h-screen overflow-y-scroll ">
     <!-- header page beginning-->
 
     <?php

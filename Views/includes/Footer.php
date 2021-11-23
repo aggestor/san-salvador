@@ -1,4 +1,4 @@
-<div data-aos="slide-up" data-aos-duration="1000" class="col-span-12 h-96 pt-2 secondary_bg">
+<div data-aos="slide-up" data-aos-duration="1000" class="col-span-12 md:h-96 pt-2 bg-black">
     <div class="flex md:flex-row flex-col w-11/12 mx-auto justify-around">
     <div class="w-3/12 flex">
         <span class="text-gray-100 md:text-4xl font-semibold">Usalvagetrade</span>
@@ -25,13 +25,16 @@
                 <a href="#"><i class="fab fa-2x fa-facebook "></i></a>
             </span>
             <span>
-                <a href="#"><i class="fab fa-2x fa-instagram    "></i></a>
+                <a href="https: //www.instagram.com/usalvage_trade/"><i class="fab fa-2x fa-instagram    "></i></a>
             </span>
             <span>
                 <a href="https://bit.ly/3qaM9KV"><i class="fab fa-2x fa-twitter    "></i></a>
             </span>
             <span>
                 <a href="https://youtube.com/channel/UCJamYlht8bYE1CVOAKgA_tQ"><i class="fab fa-2x fa-youtube    "></i></a>
+            </span>
+            <span>
+                <a href="https://wa.me/13236785503"><i class="fab fa-2x fa-whatsapp    "></i></a>
             </span>
             
         </div>
