@@ -2,6 +2,9 @@
 
 namespace Root\routes;
 
+use Root\App\Exceptions\NotFoundException;
+
+
 class Router
 {
     public $url;
@@ -17,8 +20,8 @@ class Router
     /**
      * La methode get de notre routeur
      *
-     * @param string $path La methode de notre routeur
-     * @param string $action L'action de notre routeur
+     * @param string $path L'url de notre routeut
+     * @param string $action La methode a executer par le routeur
      * @return void
      */
     public function get(string $path, string $action)
@@ -26,18 +29,27 @@ class Router
         $this->routes['GET'][] = new Route($path, $action);
     }
     /**
-     * La methode run de notre routeur
+     * La methode post de notre routeur 
+     *
+     * @param string $path $path L'url de notre routeut
+     * @param string $action $action La methode a executer par le routeur
+     * @return void
+     */
+    public function post(string $path, string $action)
+    {
+        $this->routes['POST'][] = new Route($path, $action);
+    }
+    /**
+     * La methode run de notre routeur pour l'execution de nos differentes routes 
      * @return void
      */
     public function run()
     {
         foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
             if ($route->matches($this->url)) {
-                $route->execute();
-                die();
+                return $route->execute();
             }
         }
-
-        return header('HTTP/1.0 404 Not found');
+        throw new NotFoundException("La page demandée n'a pas été trouvé");
     }
 }
