@@ -6,14 +6,13 @@ use Root\App\Exceptions\NotFoundException;
 
 include("../Autoloader.php");
 Autoloader::register();
-//les constantes
-
+//les constantes pour acceder a la repertoire View
 define('VIEWS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR);
 
 $routes = new Router($_GET['url']);
 
-$routes->get('/', 'Root\App\Controllers\HomeController@index');
-$routes->get('/packages', 'Root\App\Controllers\HomeController@packages');
+$routes->get('/', 'Root\App\Controllers\StaticController@home');
+$routes->get('/packages', 'Root\App\Controllers\StaticController@packages');
 
 try {
     $routes->run();

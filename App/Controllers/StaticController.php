@@ -2,9 +2,9 @@
 
 namespace Root\App\Controllers;
 
-class HomeController extends Controller
+class StaticController extends Controller
 {
-    public function index()
+    public function home()
     {
         return $this->view('Home.HomePage');
     }
