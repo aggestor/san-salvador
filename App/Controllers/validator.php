@@ -54,5 +54,14 @@
         public static function isString($value){
             if(filter_var($value, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => "/^[a-zA-Z]+$/")))) return true;
         }
+        /**
+         * isNotEmpty permet la verification d'une valeur si elle est nulle
+         *
+         * @param [type] $value $value valeur a verifier
+         * @return boolean retourne trou si la valeur n'est pas vide
+         */
+        public static function  isNotEmpty($value){
+            if($value!="")return true;
+        }
     }
 ?>
