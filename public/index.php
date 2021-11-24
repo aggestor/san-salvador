@@ -16,6 +16,9 @@ $routes->get('/', 'Root\App\Controllers\StaticController@home');
 $routes->get('/packages', 'Root\App\Controllers\StaticController@packages');
 $routes->get('/help', 'Root\App\Controllers\StaticController@help');
 $routes->get('/services', 'Root\App\Controllers\StaticController@service');
+$routes->get('/test', function () {
+    echo "ca marche";
+});
 try {
     $routes->run();
 } catch (NotFoundException $e) {

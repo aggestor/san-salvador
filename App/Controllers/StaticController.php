@@ -18,6 +18,6 @@ class StaticController extends Controller
     }
     public function service()
     {
-        return $this->view('pages.service');
+        return $this->view('pages.services');
     }
 }
