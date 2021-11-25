@@ -26,3 +26,6 @@ span:not(._green_btn) a:hover{color:#39e293}
 .disc{
   list-style-type:  disc !important;
 }
+._green_bg{
+  background: #32e491;
+}
