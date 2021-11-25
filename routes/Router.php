@@ -24,7 +24,7 @@ class Router
      * @param string $action La methode a executer par le routeur
      * @return void
      */
-    public function get(string $path, string $action)
+    public function get(string $path, $action)
     {
         $this->routes['GET'][] = new Route($path, $action);
     }

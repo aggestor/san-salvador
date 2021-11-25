@@ -1,3 +1,4 @@
+
 <div class="col-span-12 bg-secondary">
     <div class="flex flex-col w-11/12 mx-auto  h-auto md:items-center">
     <div class="flex w-full flex-col sm:flex-row md:items-center mx-auto md:justify-around">
@@ -12,7 +13,6 @@
                 qui joue l'intermédiaire en proposant les différents services relatifs à l’investissement en
                 crypto-actifs.
             </p>
-        
     </div>
     </div>
     <div class="w-11/12 flex justify-around">
