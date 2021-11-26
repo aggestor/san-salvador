@@ -6,7 +6,7 @@ use Root\App\Exceptions\NotFoundException;
 
 include("../Autoloader.php");
 Autoloader::register();
-//les constantes pour acceder a la repertoire View
+//les constantes pour acceder au repertoire View
 define('VIEWS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR);
 
 $routes = new Router($_GET['url']);
