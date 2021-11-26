@@ -14,10 +14,7 @@
                 Étant donné que cette
                 forme de commerce se fait via des outils( équipements) spécifiques, innovés suivant la dernière
                 technologie.
-                Ainsi, vous n'avez pas besoin d'être en ligne tout le temps devant votre ordinateur ou
-                smartphone ouvert. Vous pouvez vous endormir pendant que nous le faisons à votre place et
-                vous réveiller ayant des gains en fonction du montant de la crypto-monnaie investi et nous
-                déposons ces bénéfices quotidiens dans votre portefeuille.
+                
         </div>
     </div>
     </div>
