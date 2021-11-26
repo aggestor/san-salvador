@@ -4,7 +4,7 @@ namespace Root\App\Controllers;
 
 class Controller
 {
-    public function view(string $path, string $template = 'layouts', array $params = null)
+    public function view(string $path, array $params = null, string $template = 'layouts')
     {
         ob_start();
         $path = str_replace('.', DIRECTORY_SEPARATOR, $path);
