@@ -3,18 +3,13 @@ var $: any;
 ((): void => {
   const handler: HTMLElement | null = document.querySelector("#menuHandler");
   const menu: HTMLDivElement | null = document.querySelector("#menu");
-  if (handler !== null) {
+  handler &&
       handler.addEventListener("click", (): void => {
         $("#menuContainer").css("height", "350px")
         $("#menuContainer").css("padding", "15px")
         $(menu).slideToggle()
 
     });
-  } else {
-    console.warn(
-      `impossibleClickEvent :  document.querySelector("#menuHandler") returns a null value, this maybe due to a wrong selectedElement or and undefined element `
-    );
-  }
 })()
 
 $("[data-aos]").parent().addClass("hideOverflowOnMobile");
