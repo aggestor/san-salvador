@@ -22,18 +22,18 @@
 </div> -->
 
 <div class="col-span-12 primary_bg">
-    <div data-aos="zoom-in" data-aos-duration="1500" class="flex w-11/12 h-screen items-center mx-auto justify-around">
-    <div class="w-6/12 flex justify-center">
+    <div data-aos="zoom-in" data-aos-duration="1500" class="flex w-11/12 overflow-x-hidden flex-col md:flex-row md:h-screen h-auto items-center mx-auto justify-around">
+    <div class="md:w-6/12 flex justify-center">
         <img src="assets/logos/invest.png" class="h-96 w-96" alt="Joining image" />
     </div>
-    <div data-aos="zoom-out" data-aos-duration="1500" class="w-6/12 flex flex-col mt-6 ">
+    <div data-aos="zoom-out" data-aos-duration="1500" class="md:w-6/12 flex overflow-x-hidden flex-col mt-6 ">
         <h3 class="pack_title mb-2 text-gray-400">INVESTIR DANS USALVAGETRADE</h3>
-        <p class="w-8/12 text-lg mt-6 text-gray-400">Nos valeurs sont: l'efficacité, la transparence et l'honnêteté.
+        <p class="md:w-8/12 text-lg mt-6 text-gray-400">Nos valeurs sont: l'efficacité, la transparence et l'honnêteté.
             Faites un pas aujourd'hui vers votre vie de rêve :
             Suivez notre croissance extraordinaire, restez au courant des nouvelles et autres informations,
             que vous trouverez dans notre back-office et restez à jour avec Usalvagetrade sur notre
-            Instagram, Facebook, YouTube, Twitter et groupe WhatsAp...</p>
-        <span class="button_white_border  w-2/12 text-gray-200"><a href="#">Lire plus</a></span>
+            Instagram, Facebook, YouTube, Twitter et groupe WhatsApp</p>
+       
     </div>
     </div>
 
