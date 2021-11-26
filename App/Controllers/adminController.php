@@ -2,6 +2,7 @@
     namespace Root\App\Controllers;
     use Root\App\Models\AdminModel;
     use Root\App\Controllers\{Validator,Generate};
+    use Exception;
     if(isset($_POST['Action'])){
         class AdminController extends adminModel{
             static function add(){
@@ -10,13 +11,18 @@
                 $password=htmlspecialchars(sha1($_POST['password']));
                 $confirmPassword=htmlspecialchars(sha1($_POST['confirmPassword']));
                 if(Validator::isString($name)){
-                    if(($password==$confirmPassword)&&Validator::isNotEmpty($name)){                       
-                        while(AdminModel::checkId([$id])!=0){
-                            $id= Generate::uuid();
-                        }
-                        if(AdminModel::insert([$id,$name,$password,`now()`,`now()`])){
+                    if(($password==$confirmPassword)&&Validator::isNotEmpty($name)){
+                         try{
+                            while(AdminModel::checkId([$id])!=0){
+                                $id= Generate::uuid();
+                            }
+                            AdminModel::insert([$id,$name,$password,"now()","now()"]);
                             echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]);
-                        }else{echo json_encode(["type"=>"Failure","message"=>"Echec d'enregistrement"]);}
+                        }
+                        catch(Exception $e){
+                            echo json_encode(["type"=>"Failure","message"=>"Quelque chose s'est mal passé"]);
+                         }                      
+                        
                     }else{echo json_encode(["type"=>"Failure","message"=>"Les mot de pass sont pas identique"]);}                
                 }else{echo json_encode(["type"=>"Failure","message"=>"Le nom doit être un texte et non nul"]);}
             }

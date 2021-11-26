@@ -3,6 +3,7 @@
     namespace Root\App\Controllers;
     use Root\App\Models\investmentModel;
     use Root\App\Controllers\{Validator,Generate};
+    use Exception;
     if(isset($_POST['Action'])){
         class investmentController extends investmentModel{
             static function add(){
@@ -15,21 +16,19 @@
                     if(Validator::isString($name) && $name !=""){
                         if(Validator::isString($color) && $color !=""){
                             if(Validator::isFloat($currency) && $currency !=""){
-                                $invest=new InvestmentModel();
-                                while($invest->checkId([$id])!=0){
-                                    $id= Generate::uuid();
-                                }
-                               if($invest->insert([
-                                  $id,
-                                  $name,
-                                  `now()`,
-                                  `now()`,
-                                  $color,
-                                  $adminId,
-                                  $currency 
-                                ])){
+                                
+                                try{
+                                    $invest=new InvestmentModel();
+                                    while($invest->checkId([$id])!=0){
+                                        $id= Generate::uuid();
+                                    }
+                                    $invest->insert([$id,$name,"now()","now()",$color,$adminId,$currency]);
                                     echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]);
-                               }else{echo json_encode(["type"=>"Failure","message"=>"Echec d'enregistrement"]);}
+                                }catch(Exception $e){
+                                    echo json_encode(["type"=>"Failure","message"=>" Quelque chose s'est mal passé"]);
+                                }
+                               
+                              
                             }else{echo json_encode(["type"=>"Failure","message"=>"Veillez specicier la couleur"]);}
                         }else{echo json_encode(["type"=>"Failure","message"=>"Veillez specicier la couleur"]);}                    
                     }else{echo json_encode(["type"=>"Failure","message"=>"Le nom doit être un texte et non nul"]);} 

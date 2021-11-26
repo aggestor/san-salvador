@@ -2,6 +2,7 @@
     namespace Root\App\Controllers;
     use Root\App\Models\userModel;
     use Root\App\Controllers\{Validator,Generate};
+    use Exception;
     if(isset($_POST['Action'])){
         class UserController extends userModel {
             static function add(){
@@ -21,26 +22,15 @@
                                 $user=new UserModel();                                
                                 if(UserModel::checkEmail([$email])==0){
                                     if(UserModel::checkPhone([$phone])==0){
-                                        while(UserModel::checkId([$id])!=0){
-                                            $id= Generate::uuid();
-                                        }
-                                        if( UserModel::insert(
-                                            [
-                                                $id,
-                                                $name,
-                                                $email,
-                                                $phone,
-                                                $password,
-                                                $sponsor,
-                                                $side,
-                                                0,
-                                                `now()`,
-                                                `now()`,
-                                                0
-                                            ]
-                                        )){
-                                           echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]); 
-                                        }else{echo json_encode(["type"=>"Failure","message"=>"Echec d'enregistrement"]);}
+                                        try{
+                                            while(UserModel::checkId([$id])!=0){
+                                                $id= Generate::uuid();
+                                            }
+                                            UserModel::insert( [ $id,$name,$email,$phone,$password, $sponsor, $side,0,"now()", "now()", 0]); 
+                                                echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]); 
+                                        }catch(Exception $e){
+                                            echo json_encode(["type"=>"Failure","message"=>"Quelque chose s'est mal passé"]);
+                                        }                                        
                                     }else{echo json_encode(["type"=>"Failure","message"=>"Ce numéro est dèjà utiliser"]);}                                   
                                 }else{echo json_encode(["type"=>"Failure","message"=>"Cette adresse email est dèjà utiliser"]);}
                               }else{
