@@ -13,7 +13,7 @@
             $schema=new Schema();
             $investment=$schema->investment;
             $table=$schema->DatabaseSchema;                       
-            $this->addData(
+            $this->create(
                $table["investment"],
                [                  
                   $investment["id"],
@@ -31,12 +31,13 @@
             $schema=new Schema();
             $investment=$schema->investment;
             $table=$schema->DatabaseSchema;
-            $query=$this->getAll(
+            $query=$this->find(
                 $table["investment"],
-                $investment["id"],
+                "*",
+               "{$investment['id']}=?" ,
                 $param
             );
-            return $query()->rowCount();
+            return $query->rowCount();
         }
     }
 ?>
