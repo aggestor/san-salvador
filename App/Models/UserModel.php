@@ -13,7 +13,7 @@
             $schema=new Schema();
             $user=$schema->user;
             $table=$schema->DatabaseSchema;                       
-            $this->addData(
+            $this->create(
                $table["user"],
                 [                  
                     $user["id"],
@@ -35,40 +35,43 @@
             $schema=new Schema();
             $user=$schema->user;
             $table=$schema->DatabaseSchema;
-            $query=$this->getAll(
+            $query=$this->find(
                 $table["user"],
-                $user["email"],
+                "*",
+               "{$user["email"]}=?" ,
                 $param
             );
-            return $query()->rowCount();
+            return $query->rowCount();
         }
         public function checkPhone(array $param){
             $schema=new Schema();
             $user=$schema->user;
             $table=$schema->DatabaseSchema;
-            $query=$this->getAll(
+            $query=$this->find(
                 $table["user"],
-                $user["phone"],
+                "*",
+               "{$user["phone"]}=?" ,
                 $param
             );
-            return $query()->rowCount();
+            return $query->rowCount();
         }
         public function checkId(array $param){
             $schema=new Schema();
             $user=$schema->user;
             $table=$schema->DatabaseSchema;
-            $query=$this->getAll(
+            $query=$this->find(
                 $table["user"],
-                $user["id"],
+                "*",
+               "{$user["id"]}=?" ,
                 $param
             );
-            return $query()->rowCount();
+            return $query->rowCount();
         }
         public function login(array $params){
             $schema=new Schema();
             $user=$schema->user;
             $table=$schema->DatabaseSchema;
-            $query= $this->getSpecificFields(
+            $query= $this->find(
                 $table["user"],
                 [                  
                     $user["id"],
@@ -79,10 +82,10 @@
                     $user["status"],                  
                     $user["accountStatus"],
                 ],
-                `{$user['name']}=? AND {$user['status']}=?`,
+                "{$user['name']}=? AND {$user['status']}=?",
                $params
             );
-            $count=$query()->rowCount();
+            $count=$query->rowCount();
             return[$count,$query];
         }        
     }
