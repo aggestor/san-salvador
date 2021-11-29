@@ -38,7 +38,7 @@
             $query=$this->find(
                 $table["user"],
                 "*",
-               "{$user['email']}=?" ,
+               "{$user["email"]}=?" ,
                 $param
             );
             return $query->rowCount();
@@ -50,7 +50,7 @@
             $query=$this->find(
                 $table["user"],
                 "*",
-               "{$user['phone']}=?" ,
+               "{$user["phone"]}=?" ,
                 $param
             );
             return $query->rowCount();
@@ -62,12 +62,12 @@
             $query=$this->find(
                 $table["user"],
                 "*",
-               "{$user['id']}=?" ,
+               "{$user["id"]}=?" ,
                 $param
             );
             return $query->rowCount();
         }
-        public function login(array $params){
+        public function getLogin(array $params){
             $schema=new Schema();
             $user=$schema->user;
             $table=$schema->DatabaseSchema;

@@ -23,6 +23,11 @@ class Route
             return false;
         }
     }
+    /**
+     * La methode execute de notre route 
+     *
+     * @return void
+     */
     public function execute()
     {
         if (is_string($this->action)) {

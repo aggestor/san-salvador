@@ -27,7 +27,7 @@
             $query=$this->find(
                 $table["admin"],
                 "*",
-                "{$admin['id']}=?",
+                "{$admin["id"]}=?",
                 $param
             );
             return $query->rowCount();
