@@ -20,12 +20,33 @@ class Controller
      *
      * @param string $destination Le destinataire du courrier
      * @param string $sujet Le sujet de courrier
-     * @param string $message  Le contenu du courrier
      * @param string $replay L'adresse email de reponse par defaut "contact@usalvaget.com"
      * @return mail();
      */
-    public function envoieMail(string $destination, string $sujet, string $message, string $replay = "contact@usalvaget.com")
+    public function envoieMail(string $destination, string $sujet, string $replay = "contact@usalvaget.com")
     {
+        $message = '
+        <html lang="en" style="box-sizing: border-box;font-family: sans-serif;">
+        <head>
+          <meta charset="UTF-8">
+        </head>
+        <body style="margin: 0;padding: 0;color: #fff;">
+            <center style="background-color: rgb(24, 188, 156);padding-top: 25px;padding-bottom: 25px;">
+              <h1>Usalvagetrade</h1>
+            </center>
+            <center style="background-color: rgb(44, 62, 80);padding-top: 10px;padding-bottom: 25px;">
+              <div style="padding: 20px;width: 94%;">
+                <h2>Usalvage</h2>
+                <p>
+                  Pour confirmer l\'inscription de votre compte sur notre plateforme <br/>
+                  Veuillez cliquer sur le lien afficher ci-dessous qui vous redirigerant vers une autre page <br/> 
+                </p>
+                <a href="<?php echo $lien;?>" style="display: block;color: inherit;text-decoration: none;background-color: rgb(44, 62, 80);">Lien d\'activation</a>
+              </div>
+            </center>
+        </body>
+        </html>
+        ';
         $header = "NIME Version 1.0 \r\n";
         $header .= "Content-type: text/html; charset=UTF-8\r\n";
         $header .= "From: no-replay@usalvagetrade.com" . "\r\n" . "Replay-To: $replay" . "\r\n" . "X-Mailer: PHP/" . phpversion();
