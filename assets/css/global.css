@@ -29,3 +29,13 @@ span:not(._green_btn) a:hover{color:#39e293}
 ._green_bg{
   background: #32e491;
 }
+.forms_btn{
+  width: 100%;
+  height: 20px;
+  background: #32e491;
+  color: #050525;
+  display: flex;
+  justify-content: center;
+  padding: 5px 10px;
+  font-weight: 500;
+}

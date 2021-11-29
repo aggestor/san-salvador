@@ -29,10 +29,34 @@
             $query=$this->find(
                 $table["investment"],
                 "*",
-               "{$investment['id']}=?" ,
+               "{$investment["id"]}=?" ,
                 $param
             );
             return $query->rowCount();
+        }
+        public function getById(array $param){
+            $schema=new Schema();
+            $investment=$schema->investment;
+            $table=$schema->DatabaseSchema;
+            $query=$this->find(
+                $table["investment"],
+                "*",
+               "{$investment["id"]}=?" ,
+                $param
+            );
+            return $query;
+        }
+        public function get(){
+            $schema=new Schema();
+            $investment=$schema->investment;
+            $table=$schema->DatabaseSchema;
+            $query=$this->find(
+                $table["investment"],
+                "*",
+               "{$investment["id"]}!=?" ,
+                ["@#$%^&**&^&^%$%#"]
+            );
+            return $query;
         }
     }
 ?>
