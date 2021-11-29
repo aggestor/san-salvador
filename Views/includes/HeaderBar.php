@@ -1,4 +1,4 @@
-<header class="px-7 col-span-12 py-5 bg-black">
+<header class="px-7 col-span-12 sticky top-0 z-50 py-5 bg-black">
   <div class="flex justify-between items-center w-11/12 mx-auto">
     <h1 class="z-20">
       <a href="#" class="uppercase text-gray-100 font-bold  text-base md:text-2xl relative z-10">Usalvagetrade</a>

@@ -39,3 +39,6 @@ span:not(._green_btn) a:hover{color:#39e293}
   padding: 5px 10px;
   font-weight: 500;
 }
+header{
+  z-index: 9999 !important;
+}
