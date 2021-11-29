@@ -10,7 +10,6 @@ class UserController extends Controller
 {
     public function register()
     {
-        $this->envoieMail('amaninyumu1@gmail.com', 'test');
     }
     public function login(int $id)
     {
