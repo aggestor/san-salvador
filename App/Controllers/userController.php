@@ -1,85 +1,65 @@
 <?php
-    namespace Root\App\Controllers;
-    use Root\App\Models\userModel;
-    use Root\App\Controllers\Validator;
-    use Root\App\Controllers\Generate;
-    use Exception;
- 
-    class UserController extends Controller {
-        static function add($userName,$userEmail,$userPhoneNumber,$userPassword,$userConfirmPassword,$useSponsor,$userSide){
-            try{
-                $uuid=new Generate;
-                $id= $uuid->uuid();
-                $name=htmlspecialchars($userName);
-                $email=htmlspecialchars($userEmail);
-                $phone=htmlspecialchars($userPhoneNumber);
-                $password=htmlspecialchars(sha1($userPassword));
-                $verifPassword=htmlspecialchars(sha1($userConfirmPassword));
-                $sponsor=htmlspecialchars($useSponsor);
-                $side=htmlspecialchars($userSide);
-                $validation=new Validator();
-                if($validation->isString($name)){                   
-                    if($validation->isEmail($email)){
-                        if($validation->isPhone($phone)){ 
-                            if($password==$verifPassword){
-                                $user=new UserModel();                                
-                                if($user->checkEmail([$email])==0){
-                                    if($user->checkPhone([$phone])==0){
-                                        while($user->checkId([$id])!=0){
-                                            $id= $uuid->uuid();
-                                        }
-                                        $user->insert(
-                                            [
-                                                $id,
-                                                $name,
-                                                $email,
-                                                $phone,
-                                                $password,
-                                                $sponsor,
-                                                $side,
-                                                0,
-                                                "now()",
-                                                "now()",
-                                                0
-                                            ]
-                                            );
-                                            echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]); 
-                                    }else{echo json_encode(["type"=>"Failure","message"=>"Ce numéro est dèjà utiliser"]);}                                   
-                                }else{echo json_encode(["type"=>"Failure","message"=>"Cette adresse email est dèjà utiliser"]);}
-                                }else{
-                                echo json_encode(["type"=>"Failure","message"=>"les deux mot de passe ne sont pas identique"]);
+namespace Root\App\Controllers;
+
+use Root\App\Models\userModel;
+use Root\App\Controllers\Validator;
+use Root\App\Controllers\Generate;
+
+class UserController extends Controller
+{
+    public function register()
+    {
+    }
+    public function login(int $id)
+    {
+    }
+
+    static function add()
+    {
+        $uuid = new Generate;
+        $id = $uuid->uuid();
+        $name = htmlspecialchars($_POST['Name']);
+        $email = htmlspecialchars($_POST['Email']);
+        $phone = htmlspecialchars($_POST['Phone']);
+        $password = htmlspecialchars(sha1($_POST['Password']));
+        $verifPassword = htmlspecialchars(sha1($_POST['VerifPassword']));
+        $sponsor = htmlspecialchars($_POST['Sponsor']);
+        $side = htmlspecialchars($_POST['Side']);
+        $validation = new Validator();
+        if ($validation->isString($name) && $name != "") {
+            if ($validation->isEmail($email) && $email != "") {
+                if ($validation->isPhone($phone) && $phone != "") {
+                    if (($password == $verifPassword) && $password != "") {
+                        $user = new UserModel();
+                        if ($user->checkEmail([$email]) == 0) {
+                            if ($user->checkPhone([$phone]) == 0) {
+                                while ($user->checkId([$id]) != 0) {
+                                    $id = $uuid->uuid();
+                                }
+                                if ($user->insert(
+                                    [
+                                        $id,
+                                        $name,
+                                        $email,
+                                        $phone,
+                                        $password,
+                                        $sponsor,
+                                        $side,
+                                        0,
+                                        `now()`,
+                                        `now()`,
+                                        0
+                                    ]
+                                )) {
+                                    echo json_encode(["type" => "success", "message" => "Enregistrement effectuer"]);
+                                } else {
+                                    echo json_encode(["type" => "Failure", "message" => "Echec d'enregistrement"]);
+                                }
+                            } else {
+                                echo json_encode(["type" => "Failure", "message" => "Ce numéro est dèjà utiliser"]);
                             }
-                        }else{echo json_encode(["type"=>"Failure","message"=>"Le numéro de téléphone est invalide"]);} 
-                    }else{echo json_encode(["type"=>"Failure","message"=>"Address email invalide"]);} 
-                }else{echo json_encode(["type"=>"Failure","message"=>"Le nom doit être est texte"]);}
-            }catch(Exception $e){
-                echo json_encode(["type"=>"Failure","message"=>"Quelque chose s'est mal passé"]);
-            }
-            
-        }
-        static function signin($userName,$userPassword){
-            try{
-                $userName1=htmlspecialchars($userName);
-                $password=htmlspecialchars(sha1($userPassword));
-                if($userName){
-                    if($password){
-                        $user=new UserModel();
-                        $getUser=$user->login([$userName1,0]);
-                        if($getUser[0]==0){
-                            echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
-                        }else{
-                            $res=$getUser[1]->fetch();
-                            if($res['password']!=$password){
-                                echo json_encode(["type"=>"Failure","message"=>"Mot de passe incorrect"]);
-                            }else{
-                                session_start();
-                                $_SESSION['user']['id'] = $res['id'];
-                                $_SESSION['user']['nama'] = $res['name'];
-                                $_SESSION['user']['email'] = $res['email'];
-                                $_SESSION['user']['phone'] = $res['phone'];
-                                $_SESSION['user']['side'] = $res['side'];
-                                echo json_encode(["type"=>"success","message"=>"utilisateur connecter"]);
-                            }
+                        } else {
+                            echo json_encode(["type" => "Failure", "message" => "Cette adresse email est dèjà utiliser"]);
                         }
                     }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre mot de passe"]);}
                 }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre pseudo"]);}
