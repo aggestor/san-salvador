@@ -1,5 +1,4 @@
 <?php
-
 namespace Root\App\Controllers;
 
 use Root\App\Models\userModel;
@@ -62,63 +61,13 @@ class UserController extends Controller
                         } else {
                             echo json_encode(["type" => "Failure", "message" => "Cette adresse email est dèjà utiliser"]);
                         }
-                    } else {
-                        echo json_encode(["type" => "Failure", "message" => "les deux mot de passe ne sont pas identique"]);
-                    }
-                } else {
-                    echo json_encode(["type" => "Failure", "message" => "Le numéro de téléphone est invalide"]);
-                }
-            } else {
-                echo json_encode(["type" => "Failure", "message" => "Address email invalide"]);
+                    }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre mot de passe"]);}
+                }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre pseudo"]);}
             }
-        } else {
-            echo json_encode(["type" => "Failure", "message" => "Le nom doit être est texte"]);
-        }
-    }
-    static function signin()
-    {
-        $userName = htmlspecialchars($_POST['userName']);
-        $password = htmlspecialchars(sha1($_POST['password']));
-        if ($userName) {
-            if ($password) {
-                $user = new UserModel();
-                $getUser = $user->getLogin([$userName, 0]);
-                if ($getUser[0] == 0) {
-                    echo json_encode(["type" => "Failure", "message" => "Idendifiant incorrect"]);
-                } else {
-                    $res = $getUser[1]->fetch();
-                    if ($res['password'] != $password) {
-                        echo json_encode(["type" => "Failure", "message" => "Mot de passe incorrect"]);
-                    } else {
-                        session_start();
-                        $_SESSION['user']['id'] = $res['id'];
-                        $_SESSION['user']['nama'] = $res['name'];
-                        $_SESSION['user']['email'] = $res['email'];
-                        $_SESSION['user']['phone'] = $res['phone'];
-                        $_SESSION['user']['side'] = $res['side'];
-                        echo json_encode(["type" => "success", "message" => "utilisateur connecter"]);
-                    }
-                }
-            } else {
-                echo json_encode(["type" => "Failure", "message" => "Veillez donné votre mot de passe"]);
-            }
-        } else {
-            echo json_encode(["type" => "Failure", "message" => "Veillez donné votre pseudo"]);
-        }
-    }
-    static  function verifyAction()
-    {
-        $postAction = htmlspecialchars($_POST['action']);
-        switch ($postAction) {
-            case 'add':
-                userController::add();
-                break;
-            case 'signin':
-                userController::signin();
-                break;
-            default:
-                # code...
-                break;
-        }
-    }
-}
+            catch(Exception $e){
+                echo json_encode(["type"=>"Failure","message"=>"Quelque chose s'est mal passé"]);
+            }             
+        }        
+    } 
+      
+?>
