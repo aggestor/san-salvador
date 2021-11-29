@@ -3,17 +3,12 @@
     use Root\Core\Queries ;
     use Root\Core\Schema ;
     class investmentModel extends Queries{
-        /**
-         * cette methode insert permet d'enregistrer les informations sur le type d'investissement
-         *
-         * @param array $param le param c'est un tableau de valeur des informations
-         * @return void retourne le resultat de l'execution de la requette
-         */
+       
         public function insert(array $params){
             $schema=new Schema();
             $investment=$schema->investment;
             $table=$schema->DatabaseSchema;                       
-            $this->addData(
+            $this->create(
                $table["investment"],
                [                  
                   $investment["id"],
@@ -31,12 +26,13 @@
             $schema=new Schema();
             $investment=$schema->investment;
             $table=$schema->DatabaseSchema;
-            $query=$this->getAll(
+            $query=$this->find(
                 $table["investment"],
-                $investment["id"],
+                "*",
+               "{$investment['id']}=?" ,
                 $param
             );
-            return $query()->rowCount();
+            return $query->rowCount();
         }
     }
 ?>

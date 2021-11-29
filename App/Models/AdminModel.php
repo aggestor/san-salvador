@@ -8,7 +8,7 @@
             $schema=new Schema();
             $admin=$schema->admin;
             $table=$schema->DatabaseSchema;
-            $this->addData(
+            $this->create(
                 $table['admmin'],
                 [
                     $admin['id'],
@@ -24,28 +24,29 @@
             $schema=new Schema();
             $admin=$schema->admin;
             $table=$schema->DatabaseSchema;
-            $query=$this->getAll(
+            $query=$this->find(
                 $table["admin"],
-                $admin["id"],
+                "*",
+                "{$admin["id"]}=?",
                 $param
             );
-            return $query()->rowCount();
+            return $query->rowCount();
         }
         public function login(array $params){
             $schema=new Schema();
             $admin=$schema->admin;
             $table=$schema->DatabaseSchema;
-            $query= $this->getSpecificFields(
+            $query= $this->find(
                 $table["admin"],
                 [                  
                     $admin["id"],
                     $admin["name"],,                  
                     $admin["password"],
                 ],
-                `{$admin['name']}=? `,
+                "{$admin['name']}=? ",
                $params
             );
-            $count=$query()->rowCount();
+            $count=$query->rowCount();
             return[$count,$query];
         } 
     }
