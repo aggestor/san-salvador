@@ -5,12 +5,13 @@
     use Root\App\Controllers\Generate;
     use Exception;
     class AdminController extends Controller{
-        static function add($name,$password,$confirmPassword){
+        static function create(){
             try{
                 $uuid=new Generate;
                 $id= $uuid->uuid();
-                $name1=htmlspecialchars($name);
-                $password1=htmlspecialchars(sha1($password));           
+                $name=htmlspecialchars($_POST['adminName']);
+                $password=htmlspecialchars(sha1($_POST['adminPassword']));           
+                $confirmPassword=htmlspecialchars(sha1($_POST['adminConfirmPassword']));           
                 $validatotion=new Validator();
                 if($validatotion->isString($name)){
                     if(($password==$confirmPassword)&&$validatotion->isNotEmpty($name)){
@@ -18,7 +19,7 @@
                         while($admin->checkId([$id])!=0){
                             $id= $uuid->uuid();
                         }
-                        $admin->insert([$id,$name1,$password1,"now()","now()"]);
+                        $admin->insert([$id,$name,$password,"now()","now()"]);
                         echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]);                        
                     }else{echo json_encode(["type"=>"Failure","message"=>"Les mot de pass sont pas identique"]);}                
                 }else{echo json_encode(["type"=>"Failure","message"=>"Le nom doit être un texte et non nul"]);}
@@ -28,18 +29,17 @@
             }
             
         }
-        static function signin($name,$password){
-            $adminName=htmlspecialchars($name);
-            $adminPassword=htmlspecialchars(sha1($password));
+        static function signin(){
+            $adminName=htmlspecialchars($_POST["adminName"]);
+            $adminPassword=htmlspecialchars(sha1($_POST['adminPassword']));
             if($adminName){
                 if($adminPassword){
                     $admin=new AdminModel();
                     $getUser=$admin->login([$adminName]);
-                  if($getUser[0]==0){
+                    if($getUser[0]==0){
                         echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
                     }else{
                         $res=$getUser[1]->fetch();
-
                         if($res['password']!=$adminPassword){
                             echo json_encode(["type"=>"Failure","message"=>"Mot de passe incorrect"]);
                         }else{
@@ -51,9 +51,7 @@
                     }
                 }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre mot de passe"]);}
             }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre pseudo"]);} 
-
         }
     }
      
-
 ?>

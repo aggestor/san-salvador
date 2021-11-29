@@ -21,11 +21,15 @@ $routes->get('/services', 'Root\App\Controllers\StaticController@service');
 $routes->get('/with-us', 'Root\App\Controllers\StaticController@with_us');
 
 //les routes en get pour la page login et register
-$routes->get('/login/:id', 'Root\App\Controllers\userController@login');
-$routes->get('/register', 'Root\App\Controllers\userController@register');
+$routes->get('/login', 'Root\App\Controllers\UserController@login');
+$routes->get('/register', 'Root\App\Controllers\UserController@register');
 //la routes en post pour la page login et register
-$routes->post('/login', 'Root\App\Controllers\userController@signin');
-$routes->post('/register', 'Root\App\Controllers\userController@add');
+$routes->post('/login', 'Root\App\Controllers\UserController@sign_in');
+$routes->post('/register', 'Root\App\Controllers\UserController@add');
+//reset password & confirm password 
+$routes->get('/reset-password', 'Root\App\Controllers\UserController@pwd_reset');
+$routes->get('/verify-email', 'Root\App\Controllers\UserController@verify_mail');
+
 
 try {
     $routes->run();

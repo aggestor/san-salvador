@@ -67,7 +67,7 @@
             );
             return $query->rowCount();
         }
-        public function getLogin(array $params){
+        public function login(array $params){
             $schema=new Schema();
             $user=$schema->user;
             $table=$schema->DatabaseSchema;
