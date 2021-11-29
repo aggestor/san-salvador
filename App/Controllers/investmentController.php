@@ -21,7 +21,7 @@
                             if($validation->isFloat($currency) && $currency !=""){
                                 $invest=new InvestmentModel();
                                 while($invest->checkId([$id])!=0){
-                                    $id= $uuid->uuid();
+                                    $id= Generate::uuid();
                                 }
                                 $invest->insert([
                                     $id,
@@ -45,5 +45,4 @@
         } 
                   
     }
-    
 ?>

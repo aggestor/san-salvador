@@ -29,7 +29,7 @@
             $query=$this->find(
                 $table["investment"],
                 "*",
-               "{$investment["id"]}=?" ,
+               "{$investment['id']}=?" ,
                 $param
             );
             return $query->rowCount();

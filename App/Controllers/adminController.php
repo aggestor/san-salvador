@@ -35,10 +35,11 @@
                 if($adminPassword){
                     $admin=new AdminModel();
                     $getUser=$admin->login([$adminName]);
-                    if($getUser[0]==0){
+                  if($getUser[0]==0){
                         echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
                     }else{
                         $res=$getUser[1]->fetch();
+
                         if($res['password']!=$adminPassword){
                             echo json_encode(["type"=>"Failure","message"=>"Mot de passe incorrect"]);
                         }else{
@@ -50,7 +51,9 @@
                     }
                 }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre mot de passe"]);}
             }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre pseudo"]);} 
+
         }
     }
      
+
 ?>
