@@ -6,17 +6,17 @@
     use Exception;
  
     class UserController extends Controller {
-        static function add($userName,$userEmail,$userPhoneNumber,$userPassword,$userConfirmPassword,$useSponsor,$userSide){
+        static function create(){
             try{
                 $uuid=new Generate;
                 $id= $uuid->uuid();
-                $name=htmlspecialchars($userName);
-                $email=htmlspecialchars($userEmail);
-                $phone=htmlspecialchars($userPhoneNumber);
-                $password=htmlspecialchars(sha1($userPassword));
-                $verifPassword=htmlspecialchars(sha1($userConfirmPassword));
-                $sponsor=htmlspecialchars($useSponsor);
-                $side=htmlspecialchars($userSide);
+                $name=htmlspecialchars($_POST['userName']);
+                $email=htmlspecialchars($_POST['userEmail']);
+                $phone=htmlspecialchars($_POST['userPhoneNumber']);
+                $password=htmlspecialchars(sha1($_POST['userPassword']));
+                $verifPassword=htmlspecialchars(sha1($_POST['userConfirmPassword']));
+                $sponsor=htmlspecialchars($_POST['userSponsor']);
+                $side=htmlspecialchars($_POST['userSide']);
                 $validation=new Validator();
                 if($validation->isString($name)){                   
                     if($validation->isEmail($email)){
@@ -57,14 +57,14 @@
             }
             
         }
-        static function signin($userName,$userPassword){
+        static function signin(){
             try{
-                $userName1=htmlspecialchars($userName);
-                $password=htmlspecialchars(sha1($userPassword));
+                $userName=htmlspecialchars($_POST['userName']);
+                $password=htmlspecialchars(sha1($_POST['password']));
                 if($userName){
                     if($password){
                         $user=new UserModel();
-                        $getUser=$user->login([$userName1,0]);
+                        $getUser=$user->login([$userName,0]);
                         if($getUser[0]==0){
                             echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
                         }else{
