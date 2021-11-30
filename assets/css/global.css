@@ -18,8 +18,6 @@ span:not(._green_btn) a:hover{color:#39e293}
 @media (max-width:768px){
 .h-landing{height:85vh}
 #img_l1{height:300px!important}
-.hideOverflowOnMobile{overflow:hidden}
-}
 .heighten{
   padding: 30px;
 }

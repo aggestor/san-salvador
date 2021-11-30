@@ -5,14 +5,13 @@ var $: any;
   const menu: HTMLDivElement | null = document.querySelector("#menu");
   handler &&
       handler.addEventListener("click", (): void => {
-        $("#menuContainer").css("height", "350px")
         $("#menuContainer").css("padding", "15px")
         $(menu).slideToggle()
 
     });
 })()
 
-$("[data-aos]").parent().addClass("hideOverflowOnMobile");
+///$("[data-aos]").parent().addClass("hideOverflowOnMobile");
 const toggleButton: Element | null = document.getElementById("toggle-button");
 if (toggleButton) {
   const iconButton: Element | null = toggleButton.querySelector(".fas");
