@@ -18,9 +18,16 @@
     <!-- header page beginning-->
 
     <?php
-    require(VIEWS . "includes/HeaderBar.php");
-    echo $content;
-    require(VIEWS . "includes/Footer.php");
+    require(VIEWS . "includes/LeftBar.php");
+    ?>
+    <div class="col-span-10">
+        <?php require(VIEWS."includes/HeadBarMenu.php");
+        echo $content;
+
+        ?>
+    </div>
+    
+    
     ?>
 
     <script src="assets/js/jquery.min.js"></script>
