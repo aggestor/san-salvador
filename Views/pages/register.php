@@ -11,6 +11,88 @@
             </div>
             <h2 class="text-gray-500 font-semibold text-base my-4 text-left">Remplissez ce formulaire ci-bas pour vous inscrire sur notre plateforme !</h2>
         </div>
+<!--mine-->
+        <form method="POST" action="/register" class="w-10/12  mx-auto p-3">
+            <div class="w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
+                <input type="text" name="userName" id="username" placeholder="Nom d'utilisateur" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none" value="<?php if (isset($_POST['enregister']) && empty($_SESSION["message"]["userName"])) {
+                                                                                                                                                                                                echo $_POST['userName'];
+                                                                                                                                                                                            } ?>">
+            </div>
+            <span class="-mt-2 text-red-500 text-xs ml-7 mb-3 w-11/12">
+                <?php
+                if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["userName"])) {
+                    echo $_SESSION["message"]["userName"];
+                }
+                ?>
+            </span>
+            <div class="w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
+                <input type="text" name="userEmail" id="email" placeholder="Addresse mail" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none" value="<?php if (isset($_POST['enregister']) && empty($_SESSION["message"]["userEmail"])) {
+                                                                                                                                                                                            echo $_POST['userEmail'];
+                                                                                                                                                                                        } ?>">
+            </div>
+            <span class="-mt-2 text-red-500 text-xs ml-7 mb-3 w-11/12">
+                <?php
+                if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["userEmail"])) {
+                    echo $_SESSION["message"]["userEmail"];
+                }
+                ?>
+            </span>
+            <div class="w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
+                <input type="text" name="PhoneNumber" id="phone" placeholder="Numéro de téléphone" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none" value="<?php if (isset($_POST['enregister']) && empty($_SESSION["message"]["PhoneNumber"])) {
+                                                                                                                                                                                                    echo $_POST['PhoneNumber'];
+                                                                                                                                                                                                } ?>">
+            </div>
+            <span class="-mt-2 text-red-500 text-xs ml-7 mb-3 w-11/12">
+                <?php
+                if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["PhoneNumber"])) {
+                    echo $_SESSION["message"]["PhoneNumber"];
+                }
+                ?>
+            </span>
+            <div class="w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
+                <input type="password" name="Password" id="password" placeholder="Mot de passe" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
+            </div>
+            <span class="-mt-2 text-red-500 text-xs ml-7 mb-3 w-11/12">
+                <?php
+                if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["Password"])) {
+                    echo $_SESSION["message"]["Password"];
+                }
+                ?>
+            </span>
+            <div class="w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
+                <input type="password" name="ConfirmPassword" id="confirm_password" placeholder="Confirmer mot de passe" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
+            </div>
+            <span class="-mt-2 text-red-500 text-xs ml-7 mb-3 w-11/12">
+                <?php
+                if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["Password"])) {
+                    echo $_SESSION["message"]["Password"];
+                }
+                ?>
+            </span>
+            <div class="w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
+                <input type="text" name="userSponsor" id="sponsor" readonly placeholder="Sponsor" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none" value="usalavatrade">
+            </div>
+            <span class="-mt-2 text-gray-500 text-xs ml-7 w-11/12"></span>
+            <div class="w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
+                <select name="userSide" id="side" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
+                    <option>Côté de parrainnage</option>
+                    <option value="left">Gauche</option>
+                    <option value="right">Droite</option>
+                </select>
+            </div>
+            <span class="-mt-2 text-gray-500 text-xs ml-7 w-11/12"></span>
+            <div class="w-11/12 flex justify-between mt-5 mx-auto">
+                <div class="w-6/12 flex text-gray-500 justify-left">
+                    <input class="w-4 h-4 mx-2" type="checkbox" name="remember" id="remember">
+                    <label class="text-sm" for="remember">Se souvenir de moi</label>
+                </div>
+                <div class="w-6/12 text-gray-500">
+                    <span class="flex justify-end"><a href="/reset-password">Mot de passe oublié ?</a></span>
+                </div>
+            </div>
+            <div class="w-11/12 mx-auto mt-4">
+                <button type="submit" name="enregister" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-save    "></i> Enregistrer</button>
+<!-- conf 2-->
         <form method="POST" action="/sign_in" class="md:w-11/12 w-full  mx-auto p-3">
             <div class="md:w-7/12 mx-auto md:ml-5 border border-gray-400 rounded-lg h-10">
                 <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
@@ -77,6 +159,7 @@
             </div>
             <div class="md:w-11/12 mx-auto mt-4">
                 <button type="submit" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-save    "></i> Enregistrer</button>
+<!--end conflict-->
             </div>
             <div class="md:w-11/12 mx-auto ">
                 <span class="flex ml-1 text-gray-400">Déjà inscrit(e)? &#160;<a class="_green_text" href="/login">Se connecter</a></span>

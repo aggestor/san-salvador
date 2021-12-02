@@ -1,102 +1,97 @@
 <?php
-    namespace Root\App\Controllers;
-    use Root\App\Models\userModel;
-    use Root\App\Controllers\Validator;
-    use Root\App\Controllers\Generate;
-    use Exception;
- 
-    class UserController extends Controller {
-        public function login(){
-            return $this->view("pages.login","layout_");
-        }
-        public function pwd_reset(){
-            return $this->view("pages.reset_pwd","layout_");
-        }
-        public function register(){
-            return $this->view("pages.register","layout_");
-        }
-        static function create(){
-            try{
-                $uuid=new Generate;
-                $id= $uuid->uuid();
-                $name=htmlspecialchars($_POST['userName']);
-                $email=htmlspecialchars($_POST['userEmail']);
-                $phone=htmlspecialchars($_POST['userPhoneNumber']);
-                $password=htmlspecialchars(sha1($_POST['userPassword']));
-                $verifPassword=htmlspecialchars(sha1($_POST['userConfirmPassword']));
-                $sponsor=htmlspecialchars($_POST['userSponsor']);
-                $side=htmlspecialchars($_POST['userSide']);
-                $validation=new Validator();
-                if($validation->isString($name)){                   
-                    if($validation->isEmail($email)){
-                        if($validation->isPhone($phone)){ 
-                            if($password==$verifPassword){
-                                $user=new UserModel();                                
-                                if($user->checkEmail([$email])==0){
-                                    if($user->checkPhone([$phone])==0){
-                                        while($user->checkId([$id])!=0){
-                                            $id= $uuid->uuid();
-                                        }
-                                        $user->insert(
-                                            [
-                                                $id,
-                                                $name,
-                                                $email,
-                                                $phone,
-                                                $password,
-                                                $sponsor,
-                                                $side,
-                                                0,
-                                                "now()",
-                                                "now()",
-                                                0
-                                            ]
-                                            );
-                                            echo json_encode(["type"=>"success","message"=>"Enregistrement effectuer"]); 
-                                    }else{echo json_encode(["type"=>"Failure","message"=>"Ce numéro est dèjà utiliser"]);}                                   
-                                }else{echo json_encode(["type"=>"Failure","message"=>"Cette adresse email est dèjà utiliser"]);}
-                                }else{
-                                echo json_encode(["type"=>"Failure","message"=>"les deux mot de passe ne sont pas identique"]);
-                            }
-                        }else{echo json_encode(["type"=>"Failure","message"=>"Le numéro de téléphone est invalide"]);} 
-                    }else{echo json_encode(["type"=>"Failure","message"=>"Address email invalide"]);} 
-                }else{echo json_encode(["type"=>"Failure","message"=>"Le nom doit être est texte"]);}
-            }catch(Exception $e){
-                echo json_encode(["type"=>"Failure","message"=>"Quelque chose s'est mal passé"]);
+
+namespace Root\App\Controllers;
+
+use Root\App\Models\UserModel;
+use Root\App\Controllers\Validator;
+use Root\App\Controllers\Generate;
+use Exception;
+
+class UserController extends Controller
+{
+    public function login()
+    {
+        return $this->view("pages.login", "layout_");
+    }
+    public function pwd_reset()
+    {
+        return $this->view("pages.reset_pwd", "layout_");
+    }
+    public function register()
+    {
+        return $this->view("pages.register", "layout_");
+    }
+    public function create()
+    {
+        $error = [];
+        $id = $this->generate_id(11);
+        $name = strip_tags($_POST['userName']);
+        $mail = strip_tags($_POST['userEmail']);
+        $phone = strip_tags($_POST['PhoneNumber']);
+        $pass = strip_tags($_POST['Password']);
+        $side = strip_tags($_POST['userSide']);
+        $sposor = strip_tags($_POST['userSponsor']);
+        $pass_Confirm = strip_tags($_POST['ConfirmPassword']);
+        if (!empty($id)) {
+            $userMode = new UserModel();
+            $ids = $userMode->find($id);
+            while ($ids) {
+                $id = $this->generate_id(11);
             }
-            
         }
-        static function signin(){
-            try{
-                $userName=htmlspecialchars($_POST['userName']);
-                $password=htmlspecialchars(sha1($_POST['password']));
-                if($userName){
-                    if($password){
-                        $user=new UserModel();
-                        $getUser=$user->login([$userName,0]);
-                        if($getUser[0]==0){
-                            echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
-                        }else{
-                            $res=$getUser[1]->fetch();
-                            if($res['password']!=$password){
-                                echo json_encode(["type"=>"Failure","message"=>"Mot de passe incorrect"]);
-                            }else{
-                                session_start();
-                                $_SESSION['user']['id'] = $res['id'];
-                                $_SESSION['user']['nama'] = $res['name'];
-                                $_SESSION['user']['email'] = $res['email'];
-                                $_SESSION['user']['phone'] = $res['phone'];
-                                $_SESSION['user']['side'] = $res['side'];
-                                echo json_encode(["type"=>"success","message"=>"utilisateur connecter"]);
-                            }
-                        }
-                    }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre mot de passe"]);}
-                }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre pseudo"]);}
+        if (empty($name)) {
+            $error['userName'] = "Veuillez renseigner ce champs!!";
+        } else {
+            $userModel = new UserModel();
+            $user = $userModel->findByName($name);
+            if ($user) {
+                $error['userName'] = "Ce nom d'utilisateur est deja utiliser pour une autre personne!!";
             }
-            catch(Exception $e){
-                echo json_encode(["type"=>"Failure","message"=>"Quelque chose s'est mal passé"]);
-            }             
-        }        
-    } 
-      
-?>
+        }
+        if (empty($mail)) {
+            $error['userEmail'] = "Veuillez renseigner ce champs!!";
+        } else {
+            $userModel = new UserModel();
+            $user = $userModel->findByMail($mail);
+            if ($user) {
+                $error['userEmail'] = "Cet email est deja utiliser pour une autre personne!!";
+            } elseif (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+                $error['userEmail'] = "Cet email est invalide!!";
+            }
+        }
+        if (empty($phone)) {
+            $error['PhoneNumber'] = "Veuillez renseigner ce champs!!";
+        } else {
+            $userModel = new UserModel();
+            $user = $userModel->findByPhone($phone);
+            if ($user) {
+                $error['PhoneNumber'] = "Ce numero de telephone est deja utiliser pour une autre personne!!";
+            }
+        }
+        if (empty($pass) || empty($pass_Confirm)) {
+            $error['Password'] = "Veuillez renseigner ce champs!!";
+        } elseif ($pass != $pass_Confirm) {
+            $error['Password'] = "Les deux mot de passe doivent etre identique!!";
+        }
+        if (!empty($error)) {
+            $_SESSION['message'] = $error;
+            return $this->view("pages.register", "layout_");
+        } else {
+            unset($_SESSION["message"]);
+            $userModel = new UserModel();
+            $passhas = password_hash($pass, PASSWORD_ARGON2I);
+            $add = $userModel->setId($id)->setUser_name($name)
+                ->setEmail($mail)->setPhone($phone)
+                ->setUser_password($passhas)->setSponsor($sposor)->setSide($side);
+            $add->create();
+            // creation de la session user
+            $idUser = $userModel->find($id);
+            $donnees = $userModel->hydrate($idUser);
+            $donnees->setSession();
+            var_dump($_SESSION['users']);
+        }
+    }
+    static function signin()
+    {
+    }
+}

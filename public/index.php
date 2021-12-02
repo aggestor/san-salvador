@@ -3,6 +3,7 @@
 use Root\Autoloader;
 use Root\routes\Router;
 use Root\App\Exceptions\NotFoundException;
+use Root\App\Models\UserModel;
 
 include("../Autoloader.php");
 Autoloader::register();
@@ -25,12 +26,17 @@ $routes->get('/login', 'Root\App\Controllers\UserController@login');
 $routes->get('/register', 'Root\App\Controllers\UserController@register');
 //la routes en post pour la page login et register
 $routes->post('/login', 'Root\App\Controllers\UserController@sign_in');
-$routes->post('/register', 'Root\App\Controllers\UserController@add');
+$routes->post('/register', 'Root\App\Controllers\UserController@create');
 //reset password & confirm password 
 $routes->get('/reset-password', 'Root\App\Controllers\UserController@pwd_reset');
 $routes->get('/verify-email', 'Root\App\Controllers\UserController@verify_mail');
 $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@dashboard');
 $routes->get('/admin', 'Root\App\Controllers\AdminController@dashboard');
+
+$routes->get('/test', function () {
+    $user = new UserModel();
+    
+});
 
 
 try {
