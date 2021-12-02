@@ -5,6 +5,9 @@
     use Root\App\Controllers\Generate;
     use Exception;
     class AdminController extends Controller{
+        public function dashboard(){
+            return $this->view("pages.admin.dashboard", "layout_admin");
+        }
         static function create(){
             try{
                 $uuid=new Generate;

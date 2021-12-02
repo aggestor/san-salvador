@@ -5,12 +5,11 @@ var $;
     var menu = document.querySelector("#menu");
     handler &&
         handler.addEventListener("click", function () {
-            $("#menuContainer").css("height", "350px");
             $("#menuContainer").css("padding", "15px");
             $(menu).slideToggle();
         });
 })();
-$("[data-aos]").parent().addClass("hideOverflowOnMobile");
+///$("[data-aos]").parent().addClass("hideOverflowOnMobile");
 var toggleButton = document.getElementById("toggle-button");
 if (toggleButton) {
     var iconButton_1 = toggleButton.querySelector(".fas");
