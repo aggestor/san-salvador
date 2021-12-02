@@ -14,10 +14,7 @@
             <span class="-mt-2 text-red-500 text-xs ml-7 mb-3 w-11/12">
                 <?php
                 if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["userName"])) {
-                    $error_name = explode("/", $_SESSION["message"]["userName"]);
-                    foreach ($error_name as $name) {
-                        echo $name;
-                    }
+                    echo $_SESSION["message"]["userName"];
                 }
                 ?>
             </span>
@@ -29,10 +26,7 @@
             <span class="-mt-2 text-red-500 text-xs ml-7 mb-3 w-11/12">
                 <?php
                 if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["userEmail"])) {
-                    $error_mail = explode("/", $_SESSION["message"]["userEmail"]);
-                    foreach ($error_mail as $mail) {
-                        echo $mail;
-                    }
+                    echo $_SESSION["message"]["userEmail"];
                 }
                 ?>
             </span>
@@ -44,10 +38,7 @@
             <span class="-mt-2 text-red-500 text-xs ml-7 mb-3 w-11/12">
                 <?php
                 if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["PhoneNumber"])) {
-                    $error_phone = explode("/", $_SESSION["message"]["PhoneNumber"]);
-                    foreach ($error_phone as $phone) {
-                        echo $phone;
-                    }
+                    echo $_SESSION["message"]["PhoneNumber"];
                 }
                 ?>
             </span>
@@ -57,10 +48,7 @@
             <span class="-mt-2 text-red-500 text-xs ml-7 mb-3 w-11/12">
                 <?php
                 if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["Password"])) {
-                    $error_pass = explode("/", $_SESSION["message"]["Password"]);
-                    foreach ($error_pass as $pass) {
-                        echo $pass;
-                    }
+                    echo $_SESSION["message"]["Password"];
                 }
                 ?>
             </span>
@@ -70,10 +58,7 @@
             <span class="-mt-2 text-red-500 text-xs ml-7 mb-3 w-11/12">
                 <?php
                 if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["Password"])) {
-                    $error_pass = explode("/", $_SESSION["message"]["Password"]);
-                    foreach ($error_pass as $pass) {
-                        echo $pass;
-                    }
+                    echo $_SESSION["message"]["Password"];
                 }
                 ?>
             </span>
