@@ -6,7 +6,7 @@
        
         public function insert(array $params){
             $schema=new Schema();
-            $investment=$schema->investment;
+            $investment=$schema->investmentSchema;
             $table=$schema->DatabaseSchema;                       
             $this->create(
                $table["investment"],
@@ -24,7 +24,7 @@
         }
         public function checkId(array $param){
             $schema=new Schema();
-            $investment=$schema->investment;
+            $investment=$schema->investmentSchema;
             $table=$schema->DatabaseSchema;
             $query=$this->find(
                 $table["investment"],
@@ -36,7 +36,7 @@
         }
         public function getById(array $param){
             $schema=new Schema();
-            $investment=$schema->investment;
+            $investment=$schema->investmentSchema;
             $table=$schema->DatabaseSchema;
             $query=$this->find(
                 $table["investment"],
@@ -48,7 +48,7 @@
         }
         public function get(){
             $schema=new Schema();
-            $investment=$schema->investment;
+            $investment=$schema->investmentSchema;
             $table=$schema->DatabaseSchema;
             $query=$this->find(
                 $table["investment"],
