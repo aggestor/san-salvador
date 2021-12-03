@@ -11,7 +11,9 @@ var $: any;
     });
 })()
 
-///$("[data-aos]").parent().addClass("hideOverflowOnMobile");
+/**
+ * All these lines bellow concern menu humberger
+ */
 const toggleButton: Element | null = document.getElementById("toggle-button");
 if (toggleButton) {
   const iconButton: Element | null = toggleButton.querySelector(".fas");
@@ -29,5 +31,20 @@ toggleButton.addEventListener("click", () => {
     }
 });
 }
+//End of menu humberger code
+/**
+ * This function handles the admin time each minutes.
+ */
+const timeHandler = (): void => {
+  const time: Date = new Date
+  const adminTimer: Element | null = document.querySelector("#adminTimer");
+  console.log(adminTimer)
+  if (adminTimer) {
+      adminTimer.textContent = `${time.getHours()} : ${time.getMinutes()}`;
+  }
+}
+$(document).ready(() => {
+  setInterval(() => timeHandler(), 10000);
+})
 
 

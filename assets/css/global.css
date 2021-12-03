@@ -8,7 +8,7 @@ html{
   background-color:#020613
 }
 .primary_bg_{
-  background-color:#4b5c6842
+  background-color:#262f3554
 }
 .secondary_bg{
   background-color:#020714
@@ -99,4 +99,16 @@ span:not(._green_btn) a:hover{
 }
 header{
   z-index: 9999 !important;
+}
+
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scroll-bar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(226, 226, 226, 0.801);
+}
+
+.hide-scroll-bar::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
 }
