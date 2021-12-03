@@ -100,3 +100,15 @@ span:not(._green_btn) a:hover{
 header{
   z-index: 9999 !important;
 }
+
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scroll-bar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(226, 226, 226, 0.801);
+}
+
+.hide-scroll-bar::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+}
