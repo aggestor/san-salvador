@@ -14,7 +14,7 @@
     -->
 </head>
 
-<body class="w-screen primary_bg bg-opacity-100 grid grid-cols-12 overflow-y-auto ">
+<body class="w-screen primary_bg bg-opacity-100 grid grid-cols-12 overflow-y-hidden ">
     <!-- header page beginning-->
 
     <?php
@@ -23,7 +23,6 @@
     <div class="col-span-10">
         <?php require(VIEWS."includes/HeadBarMenu.php");
         echo $content;
-
         ?>
     </div>
     
