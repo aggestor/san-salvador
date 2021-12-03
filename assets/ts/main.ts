@@ -30,4 +30,16 @@ toggleButton.addEventListener("click", () => {
 });
 }
 
+const timeHandler = (): void => {
+  const time: Date = new Date
+  const adminTimer = document.querySelector("#adminTimer");
+  console.log(adminTimer)
+  if (adminTimer) {
+      adminTimer.textContent = `${time.getHours()} : ${time.getMinutes()}`;
+  }
+}
+$(document).ready(() => {
+  setInterval(() => timeHandler(), 10000);
+})
+
 
