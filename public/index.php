@@ -31,6 +31,7 @@ $routes->get('/reset-password', 'Root\App\Controllers\UserController@pwd_reset')
 $routes->get('/verify-email', 'Root\App\Controllers\UserController@verify_mail');
 $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@dashboard');
 $routes->get('/admin', 'Root\App\Controllers\AdminController@dashboard');
+$routes->get('/profile', 'Root\App\Controllers\UserController@profile');
 
 
 try {

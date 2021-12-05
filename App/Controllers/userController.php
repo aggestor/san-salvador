@@ -9,6 +9,9 @@
         public function login(){
             return $this->view("pages.login","layout_");
         }
+        public function profile(){
+            return $this->view("pages.user.profile","layout_");
+        }
         public function pwd_reset(){
             return $this->view("pages.reset_pwd","layout_");
         }
