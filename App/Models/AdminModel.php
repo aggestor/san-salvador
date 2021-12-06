@@ -6,7 +6,7 @@
     class AdminModel extends Queries{
         public function insert(array $params) {
             $schema=new Schema();
-            $admin=$schema->admin;
+            $admin=$schema->adminSchema;
             $table=$schema->DatabaseSchema;
             $this->create(
                 $table['admmin'],
@@ -22,7 +22,7 @@
         }
         public function checkId(array $param){
             $schema=new Schema();
-            $admin=$schema->admin;
+            $admin=$schema->adminSchema;
             $table=$schema->DatabaseSchema;
             $query=$this->find(
                 $table["admin"],
@@ -34,7 +34,7 @@
         }
         public function login(array $params){
             $schema=new Schema();
-            $admin=$schema->admin;
+            $admin=$schema->adminSchema;
             $table=$schema->DatabaseSchema;
             $query= $this->find(
                 $table["admin"],

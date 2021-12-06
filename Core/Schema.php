@@ -35,7 +35,7 @@
             "dateRecord"=>"record_date",
             "timeRecord"=>"record_time",
         ];
-        public $databaseSchema=[
+        public $DatabaseSchema=[
             "user"=>"users",
             "investment"=>"investments",
             "admin"=>"admins",

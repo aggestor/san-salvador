@@ -17,7 +17,7 @@
 <body class="w-screen primary_bg bg-opacity-100 scroll grid grid-cols-12 overflow-y-auto ">
     <!-- header page beginning-->
 
-    <?= $content?>
+    <?= $content ?>
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/aos.min.js"></script>

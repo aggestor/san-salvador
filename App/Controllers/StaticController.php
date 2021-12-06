@@ -6,7 +6,7 @@ class StaticController extends Controller
 {
     public function home()
     {
-        return $this->view('Home.HomePage');
+        return $this->view('Home.HomePage', 'layouts');
     }
     public function packages()
     {

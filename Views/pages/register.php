@@ -15,47 +15,76 @@
             <h2 class="text-gray-500 font-semibold text-base my-4 text-left">Remplissez ce formulaire ci-bas pour vous inscrire sur notre plateforme !</h2>
         </div>
         <form method="POST" action="/sign_in" class="md:w-11/12 w-full  mx-auto p-3">
+            <!--USERNAME BEGIN-->
             <div class="md:w-11/12 mx-auto w-full mb-2">
                 <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
                     <input id="username" type="text" placeholder="Nom d'utilisateur" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                 </div>
-                <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
+                <?php
+                    if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["userName"])) { ?>
+                        <span class="-mt-2 text-red-500 text-xs"><?= $_SESSION["message"]["userName"]?></span>
+                   <?php }
+                ?>
             </div>
+            <!--USERNAME END-->
             <div class="md:w-11/12 md:flex md:justify-between mb-2 mx-auto">
+                <!--EMAIL BEGIN-->
                 <div class="md:w-1/2 w-full mr-1">
                     <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                        <input id="mail" name="mail" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                        <input id="userEmail" name="userEmail" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                     </div>
-                    <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
+                    <?php
+                        if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["userEmail"])) { ?>
+                        <span class="-mt-2 text-gray-500 text-xs"><?=$_SESSION["message"]["userEmail"]?></span>
+                    <?php } ?>
                 </div>
+                <!--EMAIL END-->
+
+                <!--PHONE NUMBER BEGIN-->
                 <div class="md:w-1/2 w-full mr-1">
                     <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                        <input id="phone" name="phone" type="text" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                        <input id="PhoneNumber" name="PhoneNumber" type="text" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                     </div>
-                    <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
+                    <?php
+                        if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["PhoneNumber"])) { ?>
+                            <span class="-mt-2 text-gray-500 text-xs"><?= $_SESSION["message"]["PhoneNumber"]?></span>
+                       <?php } ?>
                 </div>
+                <!--PHONE NUMBER END-->
             </div>
+
             <!--PASSWORDS BEGIN-->
             <div class="md:w-11/12 md:flex md:justify-between mb-2 mx-auto">
                 <div class="md:w-1/2 w-full mr-1">
                     <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                        <input id="password" name="password" type="password" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                        <input id="password" name="Password" type="password" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                     </div>
-                    <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
+                    <?php
+                        if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["PhoneNumber"])) {?>
+                            <span class="-mt-2 text-red-500 text-xs"><?=$_SESSION["message"]["Password"]?></span>
+                       <?php }?>
                 </div>
                 <div class="md:w-1/2 w-full mr-1">
                     <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
                         <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirmer mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                     </div>
-                    <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
+                    <?php
+                        if (isset($_POST['enregister']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["PhoneNumber"])) {?>
+                            <span class="-mt-2 text-red-500 text-xs"><?=$_SESSION["message"]["Password"]?></span>
+                       <?php }?>
                 </div>
             </div>
+            <!--PASSWORD END-->
+
+            <!--SPONSOR BEGIN-->
             <div class="md:w-11/12 mx-auto w-full mb-2">
                 <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
                     <input id="sponsor" readonly type="text" placeholder="Sponsor" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                 </div>
                 <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
             </div>
+            <!--SPONSOR END-->
+            <!--PARING SIDE BEGIN-->
             <div class="md:w-8/12 h-24 p-2 mx-auto md:ml-5 border border-gray-400 rounded-lg h-10">
                <span class="text-gray-400">Coté de parainnage</span>
                <div class="w-full flex mt-3 justify-between">
@@ -63,13 +92,14 @@
                    <span data-side="right" class="p-1 flex text-gray-400 cursor-pointer side border rounded border-gray-400"> <i class="fas mr-2 mt-1 fa-circle    "></i> Droit</span>
                </div>
             </div>
+            <!--PARING SIDE END-->
             <div class="md:w-11/12 flex justify-between mt-3 mx-auto">
                 <div class="w-full text-gray-500 text-sm">
                     En cliquant sur <i>Enregistrer</i>, vous acceptez nos <a class="hover:text-green-500 font-semibold" href="/terms">conditions générales d'utilisation</a> nos <a class="hover:text-green-500 font-semibold" href="/politics"> politiques de fonctionnements et de confidentialités </a>.
                 </div>
             </div>
             <div class="md:w-11/12 mx-auto mt-4">
-                <button type="submit" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
+                <button type="submit" name="enregistrer" class="_green_bg text-gray-900 p-2 md:w-9/12 w-full h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
             </div>
             <div class="md:w-11/12 mx-auto ">
                 <span class="flex ml-1 text-gray-400">Déjà inscrit(e)? &#160;<a class="hover:text-green-500 font-semibold" href="/login">Se connecter</a></span>
