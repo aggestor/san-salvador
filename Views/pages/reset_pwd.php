@@ -5,22 +5,31 @@
         </div>
         <h2 class="text-gray-400 w-10/12 mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
     </div>
-    <div class="md:w-6/12 mt-12 border border-gray-900 mx-auto primary_bg shadow rounded p-12">
-        <div class="md:w-9/12 mx-auto ">
-            <div class="w-full md:hidden h-48 mx-auto grid place-items-center">
-                <i class="fas fa-6x text-gray-400 fa-envelope"></i>
+    <div class="md:w-6/12 mt-12 border border-gray-900 mx-auto primary_bg shadow rounded md:p-12 p-6">
+        <div class="md:w-9/12 w-11/12 mx-auto ">
+            <div class="w-full md:hidden mx-auto grid place-items-center">
+                <span class="w-24 h-24 rounded-full bg-gray-300 grid place-items-center"><i class="fas fa-3x text-gray-900 fa-key"></i></span>
             </div>
             <h2 class="text-gray-400 font-semibold text-base my-4 text-left"> Entrer votre addresse mail dans le champs ci-bas pour reinitialiser votre mot de passe</h2>
         </div>
         
-        <form method="POST" action="/sign_in" class="md:w-10/12  mx-auto md:p-3">
-            <div class="md:w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
-                <input type="mail" name="mail" id="mail" placeholder="Entrer votre addresse mail" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
+        <form method="POST" action="/sign_in" class="md:w-10/12 w-11/12  mx-auto md:p-3">
+            <div class="md:w-11/12 w-full mx-auto">
+                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                    <input id="mail" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                </div>
+                <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
             </div>
-            <span class="-mt-2 text-gray-500 text-xs ml-7 mb-3 w-11/12">Le champ ci-haut est obligatoire !</span>
             <div class="md:w-11/12 mx-auto mt-4">
                 <button type="submit" name="submit" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"> <i class="fas fa-check-circle    "></i> Reinitialiser mot de passe</button>
             </div>
         </form>
+    </div>
+    <div class="md:w-6/12 w-11/12 md:p-0 p-3  mx-auto mt-12 flex flex-col md:flex-row justify-between">
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/politics">Politiques</a>
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/terms">Conditions d'utilisations</a>
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/contracts">Contracts</a>
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/help">Aide</a>
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/contact">Contact</a>
     </div>
 </div>
