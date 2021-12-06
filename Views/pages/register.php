@@ -1,11 +1,14 @@
 <div class="col-span-12 primary_bg">
+    <div class="w-full h-20 flex  flex flex-col items-center border-b border-gray-900">
+        <div class="flex w-10/12 mx-auto mt-5">
+            <a href="history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a><h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
+        </div>
+        <h2 class="text-gray-400 w-10/12 mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
+    </div>
     <div class="flex flex-col md:flex-row md:w-11/12 w-full md:h-screen h-auto md:items-center mx-auto md:justify-around justify-center">
-    
     <div class="md:w-6/12 md:p-0 p-4 primary_bg">
     <div class="w-full flex justify-center flex-col primary_bg">
         <div class="md:w-10/12 w-11/12 mx-auto ">
-            <h1 class="_green_text font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
-            <h2 class="text-gray-400 font-semibold text-xl my-4 text-left">Bienvenu(e) sur universal salvage trade</h2>
             <div class="w-full md:hidden h-48 mx-auto grid place-items-center">
                 <i class="fas fa-7x text-gray-400 fa-user-circle"></i>
             </div>
@@ -86,7 +89,7 @@
 </div>
     <div data-aos="fade-down"
     data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden md:flex hidden justify-center">
-        <img src="assets/logos/add-user.png" style="height: 400px;" alt="Joining image" />
+        <img src="assets/logos/add-user.png" style="height: 500px;" alt="Joining image" />
     </div>
     </div>
 

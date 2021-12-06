@@ -1,7 +1,12 @@
-<div class="col-span-12 h-screen primary_bg flex justify-center items-center">
-    <div class="md:w-6/12  md:border border-gray-500 mx-auto primary_bg shadow rounded md:p-6 p-2">
+<div class="col-span-12 h-screen primary_bg ">
+        <div class="w-full h-20 flex  flex flex-col items-center border-b border-gray-900">
+        <div class="flex w-10/12 mx-auto mt-5">
+            <a href="history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a><h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
+        </div>
+        <h2 class="text-gray-400 w-10/12 mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
+    </div>
+    <div class="md:w-6/12 flex flex-col justify-center items-center border mt-16 border-gray-900 mx-auto primary_bg shadow rounded p-12">
         <div class="md:w-9/12 w-full mx-auto ">
-            <h1 class="_green_text font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
             <h2 class="text-gray-400 font-semibold text-xl my-4 text-left"> Connectez-vous sur votre compte</h2>
         </div>
         <form method="POST" action="/sign_in" class="md:w-10/12  mx-auto md:p-3">
