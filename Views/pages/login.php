@@ -1,18 +1,27 @@
-<div class="col-span-12 h-screen primary_bg flex justify-center items-center">
-    <div class="md:w-6/12  md:border border-gray-500 mx-auto primary_bg shadow rounded md:p-6 p-2">
-        <div class="md:w-9/12 w-full mx-auto ">
-            <h1 class="_green_text font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
+<div class="col-span-12 h-screen primary_bg ">
+    <div class="w-full h-20 flex  flex flex-col items-center border-b border-gray-900">
+        <div class="flex w-10/12 mx-auto mt-5">
+            <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a><h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
+        </div>
+        <h2 class="text-gray-400 w-10/12 mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
+    </div>
+    <div class="md:w-6/12 flex flex-col justify-center items-center border mt-16 border-gray-900 mx-auto primary_bg shadow rounded md:p-12 p-4">
+        <div class="md:w-9/12 w-11/12 mx-auto ">
             <h2 class="text-gray-400 font-semibold text-xl my-4 text-left"> Connectez-vous sur votre compte</h2>
         </div>
-        <form method="POST" action="/sign_in" class="md:w-10/12  mx-auto md:p-3">
-            <div class="md:w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
-                <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
+        <form method="POST" action="/sign_in" class="md:w-10/12 w-11/12  mx-auto md:p-3">
+            <div class="md:w-11/12 w-full mx-auto mb-2">
+                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                    <input id="identifier" name="identifier" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                </div>
+                <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
             </div>
-            <span class="-mt-2 text-gray-500 text-xs ml-7 mb-3 w-11/12">Le champ ci-haut est obligatoire !</span>
-            <div class="md:w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
-                <input type="password" name="password" id="password" placeholder="Mot de passe" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
+            <div class="md:w-11/12 w-full mx-auto mb-2">
+                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                    <input id="password" type="password" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                </div>
+                <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
             </div>
-            <span class="-mt-2 text-gray-500 text-xs ml-7 w-11/12">Le champ ci-haut est obligatoire !</span>
             <div class="md:w-11/12 flex justify-between mt-5 mx-auto">
                 <div class="w-6/12 flex text-gray-500 justify-left">
                     <input class="w-4 h-4 mx-2" type="checkbox" name="remember" id="remember">
@@ -29,5 +38,12 @@
                 <span class="flex justify-end">Pas encore inscrit(e) ? <a class="font-semibold" href="/register"> &#160; Créer un compte</a></span>
             </div>
         </form>
+    </div>
+      <div class="md:w-6/12 w-11/12 md:p-0 p-3  mx-auto mt-12 flex flex-col md:flex-row justify-between">
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/politics">Politiques</a>
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/terms">Conditions d'utilisations</a>
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/contracts">Contracts</a>
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/help">Aide</a>
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/contact">Contact</a>
     </div>
 </div>

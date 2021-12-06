@@ -1,9 +1,9 @@
-<header class="px-7 col-span-12 sticky top-0 z-50 py-5 bg-black">
+<header class="px-7 col-span-12 sticky top-0 z-50 py-5 secondary_bg">
   <div class="flex justify-between items-center w-11/12 mx-auto">
     <h1 class="z-20">
       <a href="#" class="uppercase text-gray-100 font-bold  text-base md:text-2xl relative z-10">Usalvagetrade</a>
     </h1>
-    <nav class="hidden text-gray-100 absolute z-30  sm:relative bg-black  top-0 left-0 right-0 bottom-0 grid sm:block place-items-center text-center sm:text-left" id="navbar">
+    <nav class="hidden text-gray-100 absolute z-30  sm:relative  top-0 left-0 right-0 bottom-0 grid sm:block place-items-center text-center sm:text-left" id="navbar">
       <ul>
         <li class="block sm:inline-block sm:ml-4 my-3 sm:my-0 hover:text-white"><span><a href="/">Acceuil</a></span></li>
         <li class="block sm:inline-block sm:ml-4 my-3 sm:my-0 hover:text-white"><span><a href="/help">Aide</a></span></li>
