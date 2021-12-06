@@ -1,4 +1,4 @@
-<div class="col-span-12 bg-black">
+<div class="col-span-12 secondary_bg">
     <div class="flex flex-col md:flex-row w-11/12 md:h-screen h-auto md:items-center mx-auto md:justify-around">
     <div data-aos="fade-down"
     data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
