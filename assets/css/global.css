@@ -1,3 +1,6 @@
+:root{
+  --primary:#32e491
+}
 body{
   overflow-x:hidden!important
 }
@@ -173,7 +176,7 @@ header{
     cursor: pointer;
     height: 5px;
     width: 100%;
-    background: #008ecc;
+    background: #32e491;
     border: none
 }
 
@@ -198,12 +201,12 @@ header{
 }
 
 .slider[type='range']::-ms-fill-lower {
-    background: #008ecc;
+    background: #32e491;
     border: none
 }
 
 .slider[type='range']::-ms-fill-upper {
-    background: #008ecc;
+    background: #32e491;
     border: none
 }
 
@@ -258,6 +261,6 @@ header{
     display: inline-block;
     width: 1em;
     height: 1em;
-    fill: rgba(0, 0, 0, .54);
+    fill: rgba(0, 0, 0, .6);
     vertical-align: middle;
 }
