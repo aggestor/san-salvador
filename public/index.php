@@ -48,6 +48,7 @@ $routes->post('/admin/pack', 'Root\App\Controllers\adminController@addPack');
 $routes->post('/signIn', 'Root\App\Controllers\UserController@signIn');
 $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@dashboard');
 $routes->get('/admin', 'Root\App\Controllers\AdminController@dashboard');
+$routes->get('/profile', 'Root\App\Controllers\UserController@profile');
 
 $routes->get('/test', function () {
 });

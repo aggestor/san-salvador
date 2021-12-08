@@ -27,3 +27,14 @@ if (toggleButton) {
             }
     });
 }
+var timeHandler = function () {
+    var time = new Date;
+    var adminTimer = document.querySelector("#adminTimer");
+    console.log(adminTimer);
+    if (adminTimer) {
+        adminTimer.textContent = time.getHours() + " : " + time.getMinutes();
+    }
+};
+$(document).ready(function () {
+    setInterval(function () { return timeHandler(); }, 10000);
+});
