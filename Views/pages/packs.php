@@ -1,4 +1,4 @@
-<div style="background-image: url(assets/logos/pack.jpg); background-attachment: fixed;
+<div style="background-image: url(/assets/logos/pack.jpg); background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;" id="pack" class="col-span-12 flex bg-opacity-10 items-center z-10 h-96">
