@@ -24,6 +24,27 @@ class Route
         }
     }
     /**
+     * La fonction qui permet d'enlever le / a la fin de l'url
+     * @return void
+     */
+    private function verify()
+    {
+        $uri = $_SERVER['REQUEST_URI'];
+
+        //on verifie si $uri n'est pas vide et si elle se termine par /
+
+        if (!empty($uri) && $uri != '/' && $uri[-1] === '/') {
+            //on enleve /
+            $uri = substr($uri, 0, -1);
+
+            // on envoie un code de reedirection permenante
+            http_response_code(301);
+            //on redirige vers l'URL sans /
+
+            header('Location: ' . $uri);
+        }
+    }
+    /**
      * La methode execute de notre route 
      *
      * @return void
@@ -31,6 +52,7 @@ class Route
     public function execute()
     {
         if (is_string($this->action)) {
+            $this->verify();
             $params = explode('@', $this->action);
             $controller = new $params[0]();
             $methode = $params[1];

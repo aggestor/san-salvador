@@ -1,4 +1,17 @@
 <?php
+<<<<<<< HEAD
+
+namespace Root\App\Controllers;
+
+use Root\Core\Validator;
+
+class adminController extends Controller
+{
+    public function index()
+    {
+        if ($this->isAdmin()) {
+            return $this->view('pages.dashbord', 'layout_admin');
+=======
     namespace Root\App\Controllers;
     use Root\App\Models\AdminModel;
     use Root\App\Controllers\Validator;
@@ -31,30 +44,36 @@
                 echo json_encode(["type"=>"Failure","message"=>"Quelque chose s'est mal passé"]);
             }
             
-        }
-        static function signin(){
-            $adminName=htmlspecialchars($_POST["adminName"]);
-            $adminPassword=htmlspecialchars(sha1($_POST['adminPassword']));
-            if($adminName){
-                if($adminPassword){
-                    $admin=new AdminModel();
-                    $getUser=$admin->login([$adminName]);
-                    if($getUser[0]==0){
-                        echo json_encode(["type"=>"Failure","message"=>"Idendifiant incorrect"]);
-                    }else{
-                        $res=$getUser[1]->fetch();
-                        if($res['password']!=$adminPassword){
-                            echo json_encode(["type"=>"Failure","message"=>"Mot de passe incorrect"]);
-                        }else{
-                            session_start();
-                            $_SESSION['user']['id'] = $res['id'];
-                            $_SESSION['user']['nama'] = $res['name'];                                
-                            echo json_encode(["type"=>"success","message"=>"utilisateur connecter"]);
-                        }
-                    }
-                }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre mot de passe"]);}
-            }else{echo json_encode(["type"=>"Failure","message"=>"Veillez donné votre pseudo"]);} 
+>>>>>>> 81dd657c09e9d85795fe0213be409f25fe61753f
         }
     }
-     
-?>
+    public function create()
+    {
+
+    }
+    private function isAdmin()
+    {
+        if (Validator::sessionExist($_SESSION['admin'])) {
+            return true;
+        } else {
+            $_SESSION['errorAdmin'] = "Impossible d'acceder a cette partie du site";
+            header('Location: /login');
+            exit();
+        }
+    }
+    public function delete(int $id)
+    {
+    }
+    public function destroy()
+    {
+        
+    }
+    public function addPacket(int $id)
+    {
+
+    }
+    public function signIn()
+    {
+
+    }
+}
