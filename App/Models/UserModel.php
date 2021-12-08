@@ -1,264 +1,424 @@
 <?php
+namespace Root\Models;
 
-namespace Root\App\Models;
+use Root\Models\Objects\User;
 
-class UserModel extends Models
+/**
+ *
+ * @author Esaie MUHASA
+ *        
+ */
+class UserModel extends AbstractMemberModel
 {
-    protected $id;
-    protected $user_name;
-    protected $email;
-    protected $phone;
-    protected $user_password;
-    protected $sponsor;
-    protected $side;
-    protected $status;
-    protected $record_date;
-    protected $record_time;
-    protected $accountStatus;
-
-    public function __construct()
+    /**
+     * {@inheritDoc}
+     * @see \Root\Models\AbstractDbOccurenceModel::create()
+     * @param User $object
+     */
+    public function create($object): void
     {
-        $this->table = "users";
-    }
-
-    public function findByName(string $nom)
-    {
-        return $this->requete("SELECT * FROM {$this->table} WHERE user_name=?", [$nom])->fetch();
-    }
-    public function findByMail(string $mail)
-    {
-        return $this->requete("SELECT * FROM {$this->table} WHERE email=?", [$mail])->fetch();
-    }
-    public function findByPhone(string $phone)
-    {
-        return $this->requete("SELECT * FROM {$this->table} WHERE phone=?", [$phone])->fetch();
-    }
-    public function setSession()
-    {
-        $_SESSION['users'] = [
-            'id' => $this->id,
-            'name' => $this->user_name,
-            'mail' => $this->email
-        ];
+        Queries::addData(
+            $this->getTableName(),
+            [
+                Schema::USER['id'],
+                Schema::USER['name'],
+                Schema::USER['sponsor'],
+                Schema::USER['parent'],
+                Schema::USER['email'],
+                Schema::USER['phone'],
+                Schema::USER['password'],
+                Schema::USER['side'],
+                Schema::USER['status'],
+                Schema::USER['validationEmail'],
+                Schema::USER['dateRecord'],
+                Schema::USER['timeRecord'],
+                Schema::USER['photo'],
+            ],
+            
+            [
+                $object->getId(),
+                $object->getName(),
+                $object->getSponsor()->getId(),
+                $object->getParent()->getId(),
+                $object->getEmail(),
+                $object->getPhone(),
+                $object->getPassword(),
+                $object->getStatus()? 1 : 0,
+                $object->getValidationMail()? 1 : 0,
+                $object->getRecordDate()->format('Y-m-d'),
+                $object->getRecordTime()->format('H:i:s'),
+                $object->getPhoto()
+            ]
+        );
     }
 
     /**
-     * Get the value of id
+     * {@inheritDoc}
+     * @see \Root\Models\AbstractDbOccurenceModel::update()
+     * @param User $object
      */
-    public function getId()
+    public function update($object, $id): void
     {
-        return $this->id;
+        Queries::updateData(
+            $this->getTableName(),
+            [
+                Schema::USER['name'],
+                Schema::USER['phone'],
+                Schema::USER['lastModifDate'],
+                Schema::USER['lastModifTime'],
+            ],
+            "id = ?",
+            [
+                $object->getName(),
+                $object->getPhone(),
+                $object->getLastModifDate()->format('Y-m-d'),
+                $object->getLastModifTime()->format('H:i:s'),
+                $object->getId()
+            ]
+        );
+    }
+
+
+    /**
+     * {@inheritDoc}
+     * @see \Root\Models\AbstractDbOccurenceModel::getDBOccurence()
+     * @return User
+     */
+    protected function getDBOccurence(array $keyValue)
+    {
+        $data = array();
+        foreach (Schema::USER as $key => $value) {
+            if (key_exists($value, $keyValue)) {
+                $data[$key] = $keyValue[$value];
+            }
+        }
+        return new User($data);
     }
 
     /**
-     * Set the value of id
-     *
-     * @return  self
+     * {@inheritDoc}
+     * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
      */
-    public function setId($id)
+    protected function getTableName() : string
     {
-        $this->id = $id;
-
-        return $this;
+        return Schema::TABLE_SCHEMA['user'];
     }
-
+    
     /**
-     * Get the value of user_name
+     * @param string $userId
+     * @return int
      */
-    public function getUser_name()
-    {
-        return $this->user_name;
+    public function countLeftRightSides (string $userId) : int {
+        $count = 0;
+        
+        if ($this->hasSides($userId)) {
+            $count += $this->countLeftSide($userId);
+            $count += $this->countRightSide($userId);
+        }
+        
+        return $count;
     }
-
+    
     /**
-     * Set the value of user_name
-     *
-     * @return  self
+     * comptage des nombre des 
+     * @param string $userId
+     * @param int $side
+     * @throws ModelException
+     * @return int
      */
-    public function setUser_name($user_name)
-    {
-        $this->user_name = $user_name;
-
-        return $this;
+    public function countSide (string $userId, int $side) : int {
+        $count = 0;
+        switch ($side) {
+            case User::FOOT_LEFT:{                
+                if ($this->hasLeftSide($userId)) {
+                    $user = $this->findLeftSide($userId);
+                    $count++;
+                    
+                    if ($this->hasSides($user->getId())) {
+                        $count += $this->countLeftRightSides($user->getId());
+                    }
+                }
+            } break;
+            
+            case User::FOOT_RIGHT: {                
+                if ($this->hasRightSide($userId)) {
+                    $user = $this->findRightSide($userId);
+                    $count++;
+                    
+                    if ($this->hasSides($user->getId())) {
+                        $count += $this->countLeftRightSides($user->getId());
+                    }
+                }
+                return 0;
+            } break;
+            
+            default : {                
+                throw new ModelException("Side inconue => {$side}");
+            }
+        }
+        
+        return $count;
     }
-
+    
     /**
-     * Get the value of email
+     * comptage des anfants d'un utilisateur sur son pied droid
+     * @param string $userId
+     * @return int
      */
-    public function getEmail()
-    {
-        return $this->email;
+    public function countRightSide (string $userId) : int {
+        return $this->countSide($userId, User::FOOT_RIGHT);
     }
-
+    
     /**
-     * Set the value of email
-     *
-     * @return  self
+     * comptage des anfant d'un utilisateur sur le pied gauche
+     * @param string $userId
+     * @return int
      */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
+    public function countLeftSide (string $userId) : int {
+        return $this->countSide($userId, User::FOOT_LEFT);
     }
-
+    
     /**
-     * Get the value of phone
+     * revoie une collection des piles des utilisateurs en dessous d'un utilisateur 
+     * @param string $userId
+     * @return array
      */
-    public function getPhone()
-    {
-        return $this->phone;
+    public function findDownlineLeftRightSides (string $userId) : array {
+        $data = array();
+        if ($this->hasLeftSide($userId)) {
+            $data[] = $this->findDownlineRightSide($userId);
+        }
+        
+        if ($this->hasRightSide($userId)) {
+            $data[] = $this->findDownlineLeftSide($userId);
+        }
+        return $data;
     }
-
+    
+    public function findRoot ($userId) : User {
+        
+    }
+    
     /**
-     * Set the value of phone
-     *
-     * @return  self
+     * 
+     * @param string $userId
+     * @param int $side
+     * @return User
      */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
+    public function findDownlineSide (string $userId, int $side) : User {
+        $user = null;
+        switch ($side) {
+            case User::FOOT_LEFT:{
+                if ($this->hasLeftSide($userId)) {
+                    $user = $this->findLeftSide($userId);
+                }else {
+                    throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
+                }
+            } break;
+            
+            case User::FOOT_RIGHT: {
+                if ($this->hasRightSide($userId)) {
+                    $user = $this->findRightSide($userId);                    
+                } else {
+                    throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
+                }
+            } break;
+            
+            default : {
+                throw new ModelException("Side inconue => {$side}");
+            }
+        }
+        
+        if ($this->hasSides($user->getId())) {
+            $user->setSides($this->findDownlineLeftRightSides($user->getId()));
+        }
+        return $user;
     }
-
+    
     /**
-     * Get the value of sponsor
+     * renvoie l'enfant sur le pied gauche de l'utiilisateur en parametre
+     * @param string $userId
+     * @return User
      */
-    public function getSponsor()
-    {
-        return $this->sponsor;
+    public function findDownlineLeftSide (string $userId) : User {
+        return $this->findDownlineSide($userId, User::FOOT_LEFT);
     }
-
+    
     /**
-     * Set the value of sponsor
-     *
-     * @return  self
+     * Renvoie la pile des enfant en droit de l'utilisateur en parametre 
+     * @param string $userId
+     * @return User
      */
-    public function setSponsor($sponsor)
-    {
-        $this->sponsor = $sponsor;
-
-        return $this;
+    public function findDownlineRightSide (string $userId) : User {
+        return $this->findDownlineSide($userId, User::FOOT_RIGHT);
     }
-
+    
     /**
-     * Get the value of side
+     * revoie tout les anfants en dessous d'un utilisateur
+     * @param string $userId
+     * @throws ModelException
+     * @return array
      */
-    public function getSide()
-    {
-        return $this->side;
+    public function findLeftRightSides (string $userId) : array {
+        $return = array();
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE ".Schema::USER['sponsor']."=? ", array($userId));
+            if ($row = $statement->fetch()) {
+                $return[] = new User($row);
+                while ($row = $statement->fetch()) {
+                    $return[] = new User($row);
+                }
+                $statement->closeCursor();
+            }else {
+                $statement->closeCursor();
+                throw new ModelException("aucun utilisateur sponsoriser par {$userId}");
+            }
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        
+        return $return;
     }
-
+    
     /**
-     * Set the value of side
-     *
-     * @return  self
+     * REvoei l'anfant qui est sur le pied d'un utilsateur
+     * @param string $userId
+     * @param int $side
+     * @throws ModelException
+     * @return User
      */
-    public function setSide($side)
-    {
-        $this->side = $side;
-
-        return $this;
+    public function findSide (string $userId, int $side) : User {
+        $return = null;
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE ".Schema::USER['sponsor']."=? AND ".Schema::USER['side']." = ?", array($userId, $side));
+            if ($row = $statement->fetch()) {
+                $return = new User($row);
+                $statement->closeCursor();
+            }else {
+                $statement->closeCursor();
+                throw new ModelException("aucun utilisateur sponsoriser par {$userId} sur le pied {$side}");
+            }
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        
+        return $return;
     }
-
+    
     /**
-     * Get the value of status
+     * revoie l'anfant sur le pied gauche de l'utilisateur en parametre
+     * @param string $userId
+     * @return User
      */
-    public function getStatus()
-    {
-        return $this->status;
+    public function findLeftSide (string $userId) : User {
+        return $this->findSide($userId, User::FOOT_LEFT);
     }
-
+    
     /**
-     * Set the value of status
-     *
-     * @return  self
+     * revoie l'anfant sur le pied droit d'un utilisateur
+     * @param string $userId
+     * @return User
      */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
+    public function findRightSide (string $userId) : User {
+        return $this->findSide($userId, User::FOOT_RIGHT);        
     }
-
+    
     /**
-     * Get the value of record_date
+     * revoir le sponsor directe d'un utilisateur
+     * @param string $userId
+     * @return User
      */
-    public function getRecord_date()
-    {
-        return $this->record_date;
+    public function findSponsor (string $userId) : User {
+        $user = $this->findById($userId);
+        return $this->findById($user->getSponsort()->getId());
     }
-
+    
     /**
-     * Set the value of record_date
-     *
-     * @return  self
+     * revoie le parent le parent de l'utilisateur en parametre
+     * @param string $userId
+     * @return User
      */
-    public function setRecord_date($record_date)
-    {
-        $this->record_date = $record_date;
-
-        return $this;
+    public function findParent (string $userId) : User {
+        $user = $this->findById($userId);
+        return $this->findById($user->getParent()->getId());
     }
-
+    
     /**
-     * Get the value of record_time
+     * verifcation si un utilisateur deja sposoriser aumoin une personne
+     * @param string $userId
+     * @return bool
      */
-    public function getRecord_time()
-    {
-        return $this->record_time;
+    public function hasSides (string $userId) : bool {
+        return  $this->check("sponsor", $userId);
     }
-
+    
     /**
-     * Set the value of record_time
-     *
-     * @return  self
+     * est-ce que cet utilisateur a un utilisateur sur le pied en parametre??
+     * @param string $userId
+     * @param int $side
+     * @throws ModelException
+     * @return bool
      */
-    public function setRecord_time($record_time)
-    {
-        $this->record_time = $record_time;
-
-        return $this;
+    public function hasSide (string $userId, int $side) : bool {
+        $return = false;
+        try {
+            $statement = Queries::executeQuery("SELECT ".Schema::USER['sponsor']." FROM {$this->getTableName()} WHERE ".Schema::USER['sponsor']."=? AND ".Schema::USER['side']." = ?", array($userId, $side));
+            if ($statement->fetch()) {
+                $return = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        
+        return $return;
     }
-
+    
     /**
-     * Get the value of accountStatus
+     * verification si l'utilisateur a un afant su le pied gauche
+     * @param string $userId
+     * @return bool
      */
-    public function getAccountStatus()
-    {
-        return $this->accountStatus;
+    public function hasLeftSide (string $userId) : bool {
+        return $this->hasSide($userId, User::FOOT_LEFT);
     }
-
+    
     /**
-     * Set the value of accountStatus
-     *
-     * @return  self
+     * verfication si un utilisateur a un afant su le pied droit
+     * @param string $userId
+     * @return bool
      */
-    public function setAccountStatus($accountStatus)
-    {
-        $this->accountStatus = $accountStatus;
-
-        return $this;
+    public function hasRightSide (string $userId) : bool {
+        return $this->hasSide($userId, User::FOOT_RIGHT);
     }
-
+    
     /**
-     * Get the value of user_password
+     * Verification si la personne a un parent
+     * @param string $userId
+     * @return bool
      */
-    public function getUser_password()
-    {
-        return $this->user_password;
+    public function hasParent (string $userId) : bool {
+        $user = $this->findById($userId);
+        
+        if ($user->getParent() != null) {
+            return true;
+        }
+        return false;
     }
-
+    
     /**
-     * Set the value of user_password
-     *
-     * @return  self
+     * verification si la personne a un sponsor
+     * @param string $userId
+     * @return bool
      */
-    public function setUser_password($user_password)
-    {
-        $this->user_password = $user_password;
-
-        return $this;
+    public function hasSponsor (string $userId) : bool {
+        $user = $this->findById($userId);
+        
+        if ($user->getParent() != null) {
+            return true;
+        }
+        return false;
     }
+
 }
+
