@@ -24,7 +24,7 @@
                 </div>
 
             </div>
-            <div class="w-4/12 p-2 m-4 primary_bg rounded-xl shadow border border-gray-200 h-96">
+            <div class="md:w-4/12 w-11/12 p-2 m-4 primary_bg rounded-xl shadow border border-gray-200 h-96">
                 <span><img src="/assets/logos/gold.jpeg" alt="gold illustration" class="w-36 h-36 mx-auto"></span>
                 <div class="text-gray-400">
                     <p class="text-center _green_text font-semibold">Gold pack</p>
@@ -38,7 +38,7 @@
                 </div>
 
             </div>
-            <div class="w-4/12 p-2 m-4 primary_bg rounded-xl shadow border border-gray-200 h-96">
+            <div class="md:w-4/12 w-11/12 p-2 m-4 primary_bg rounded-xl shadow border border-gray-200 h-96">
                 <span><img src="/assets/logos/diamond.jpeg" alt="gold illustration" class="w-36 h-36 mx-auto"></span>
                 <div class="text-gray-400">
                     <p class="text-center _green_text font-semibold">Diamond pack</p>
@@ -52,7 +52,7 @@
                 </div>
 
             </div>
-            <div class="w-4/12 p-2 m-4 primary_bg rounded-xl shadow border border-gray-200 h-96">
+            <div class="md:w-4/12 w-11/12 p-2 m-4 primary_bg rounded-xl shadow border border-gray-200 h-96">
                 <span><img src="/assets/logos/sd.jpeg" alt="gold illustration" class="w-36 h-36 mx-auto"></span>
                 <div class="text-gray-400">
                     <p class="text-center _green_text font-semibold">Super Diamond pack</p>

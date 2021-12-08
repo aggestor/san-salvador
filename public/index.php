@@ -34,6 +34,7 @@ $routes->post('/register', 'Root\App\Controllers\UserController@create');
 //reset password & confirm password 
 $routes->get('/reset-password', 'Root\App\Controllers\UserController@pwd_reset');
 $routes->get('/verify-email', 'Root\App\Controllers\UserController@verify_mail');
+
 $routes->post('/pwd_reset', 'Root\App\Controllers\UserController@reset');
 //les routes pour l'admin en get
 $routes->get('/admin', 'Root\App\Controllers\adminController@index');
@@ -45,10 +46,8 @@ $routes->post('/admin/signIn', 'Root\App\Controllers\adminController@signIn');
 $routes->post('/admin/pack', 'Root\App\Controllers\adminController@addPack');
 //route pour l'authentification de l'utilisateur
 $routes->post('/signIn', 'Root\App\Controllers\UserController@signIn');
-
-
-
-
+$routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@dashboard');
+$routes->get('/admin', 'Root\App\Controllers\AdminController@dashboard');
 
 $routes->get('/test', function () {
 });
