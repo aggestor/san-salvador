@@ -4,23 +4,13 @@
             <h1 class="_green_text font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
             <h2 class="text-gray-400 font-semibold text-xl my-4 text-left"> Connectez-vous sur votre compte</h2>
         </div>
-<<<<<<< HEAD
-        <form method="POST" action="/signIn" class="w-10/12  mx-auto p-3" enctype="multipart/form-data">
-            <div class="w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
-                <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
-            </div>
-            <span class="-mt-2 text-gray-500 text-xs ml-7 mb-3 w-11/12">Le champ ci-haut est obligatoire !</span>
-            <div class="w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
-                <input type="file" name="password" id="password" placeholder="Mot de passe" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
-=======
-        <form method="POST" action="/sign_in" class="md:w-10/12  mx-auto md:p-3">
+        <form method="POST" action="/login" class="md:w-10/12  mx-auto md:p-3" enctype="multipart/form-data">
             <div class="md:w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
                 <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
             </div>
             <span class="-mt-2 text-gray-500 text-xs ml-7 mb-3 w-11/12">Le champ ci-haut est obligatoire !</span>
             <div class="md:w-11/12 mx-auto border border-gray-400 rounded-lg h-10">
                 <input type="password" name="password" id="password" placeholder="Mot de passe" class="w-11/12 ml-4 border-none h-full text-gray-400  bg-transparent outline-none">
->>>>>>> 81dd657c09e9d85795fe0213be409f25fe61753f
             </div>
             <span class="-mt-2 text-gray-500 text-xs ml-7 w-11/12">Le champ ci-haut est obligatoire !</span>
             <div class="md:w-11/12 flex justify-between mt-5 mx-auto">

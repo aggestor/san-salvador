@@ -20,14 +20,13 @@ $routes = new Router($_GET['url']);
 
 //les routes pour les pages statics
 $routes->get('/', 'Root\App\Controllers\StaticController@home');
-$routes->get('/packages', 'Root\App\Controllers\StaticController@packages');
+//$routes->get('/packages-([0-9]+)/(add|update).php', "id,option", 'Root\App\Controllers\StaticController@packages');
 $routes->get('/help', 'Root\App\Controllers\StaticController@help');
 $routes->get('/services', 'Root\App\Controllers\StaticController@service');
 $routes->get('/with-us', 'Root\App\Controllers\StaticController@with_us');
 
 //les routes en get pour la page login et register
-$routes->get('/login', 'Root\App\Controllers\UserController@login');
-$routes->get('/register', 'Root\App\Controllers\UserController@register');
+
 //la routes en post pour la page login et register
 $routes->post('/login', 'Root\App\Controllers\UserController@signIn');
 $routes->post('/register', 'Root\App\Controllers\UserController@create');
@@ -42,12 +41,19 @@ $routes->get('/admin/destroy', 'Root\App\Controllers\adminController@destroy');
 //les routes pour l'admin en post
 $routes->post('/admin/add', 'Root\App\Controllers\adminController@create');
 $routes->post('/admin/signIn', 'Root\App\Controllers\adminController@signIn');
+//route pour l'admin en get
+$routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@index');
+
 //route pour ajouter un packet
 $routes->post('/admin/pack', 'Root\App\Controllers\adminController@addPack');
-//route pour l'authentification de l'utilisateur
-$routes->post('/signIn', 'Root\App\Controllers\UserController@signIn');
-$routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@dashboard');
-$routes->get('/admin', 'Root\App\Controllers\AdminController@dashboard');
+//route pour l'authentification de l'utilisateur en post
+$routes->post('/login', 'Root\App\Controllers\UserController@signIn');
+$routes->post('/register', 'Root\App\Controllers\UserController@create');
+
+//route pour l'utilisateur en get
+$routes->get('/login', 'Root\App\Controllers\UserController@login');
+$routes->get('/register', 'Root\App\Controllers\UserController@register');
+
 
 $routes->get('/test', function () {
 });
