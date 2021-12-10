@@ -1,4 +1,4 @@
-<div  class="col-span-12 md:h-96 pt-2 bg-black">
+<div  class="col-span-12 md:h-96 pt-2 primary_bg_">
     <div class="flex md:flex-row flex-col w-11/12 mx-auto justify-around">
     <div class="w-3/12 flex">
         <span class="text-gray-100 md:text-4xl font-semibold">Usalvagetrade</span>

@@ -8,7 +8,10 @@ html{
   background-color:#020613
 }
 .primary_bg_{
-  background-color:#4b5c6842
+  background-color:#262c3054
+}
+.primary_bg_home{
+  background-color:#232c33
 }
 .secondary_bg{
   background-color:#020714
@@ -99,4 +102,40 @@ span:not(._green_btn) a:hover{
 }
 header{
   z-index: 9999 !important;
+}
+
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scroll-bar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(226, 226, 226, 0.801);
+}
+
+.hide-scroll-bar::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+}
+
+.scroll::-webkit-scrollbar-track
+{
+	background-color: #020613;
+}
+
+.scroll::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+.scroll::-webkit-scrollbar-thumb
+{
+	background-color: #c9c8c8;
+}
+.scroll::-webkit-scrollbar-thumb:hover
+{
+	background-color: #b3b2b2;
+}
+*::selection{
+  background: #32e491;
+  color: #020613;
 }

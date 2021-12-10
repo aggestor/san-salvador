@@ -1,5 +1,4 @@
 <?php
-
 namespace Root\App\Controllers;
 
 use Root\Core\Validator;
@@ -56,6 +55,10 @@ class UserController extends Controller
     public function register()
     {
         return $this->view("pages.register", "layout_");
+    }
+   public function profile()
+    {
+        return $this->view("pages.profile", "layout_");
     }
     public function create()
     {

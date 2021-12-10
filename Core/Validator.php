@@ -11,6 +11,7 @@ abstract class Validator
     public function createAfterValidation()
     {
 
+      
     }
     public function deleteAfterValidation()
     {
