@@ -127,23 +127,14 @@ class Controller
      */
     public function addImage($nom)
     {
-        // $path=[];
-        if (isset($nom) && !empty($nom)) {
-            $image = $_FILES[$nom]['name'];
-            $extension = strrchr($image, ".");
-            $taille = $_FILES[$nom]['size'];
-            $temporaire = $_FILES[$nom]['tmp_name'];
-            $directory = $this->createFolder((string) $this->generate(10, '123450ABCDEabcde'));
-            $destination = $directory . $image;
-            $extensions_autorisees = array('.jpg', '.JPG', '.png', '.PNG');
-            if (in_array($extension, $extensions_autorisees)) {
-                if (move_uploaded_file($temporaire, $destination)) {
-                    $imgOrginal = $destination;
-                    $imgRedi = $this->convertImage($imgOrginal, $directory, 'x320', 96, 96);
-                    return $imgOrginal . " AND " . $imgRedi;
-                }
-            }
-            return $_REQUEST['message'] = "Echec de l'image";
+        $image = $_FILES[$nom]['name'];
+        $temporaire = $_FILES[$nom]['tmp_name'];
+        $directory = $this->createFolder((string) $this->generate(10, '123450ABCDEabcde'));
+        $destination = $directory . $image;
+        if (move_uploaded_file($temporaire, $destination)) {
+            $imgOrginal = $destination;
+            $imgRedi = $this->convertImage($imgOrginal, $directory, 'x320', 96, 96);
+            return $imgOrginal . " AND " . $imgRedi;
         }
     }
 }
