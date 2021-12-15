@@ -1,6 +1,5 @@
 <?php
-namespace Root\Models;
-
+namespace Root\App\Models;
 /**
  *
  * @author Esaie MUHASA
@@ -15,8 +14,8 @@ abstract class AbstractMemberModel extends AbstractDbOccurenceModel
      * @return bool
      * @throws ModelException s'il y a erreur lors la communication avec ladd
      */
-    public function chekByMail (string $email) : bool {
-        return $this->check(Schema::USER['email'], $email);
+    public function checkByMail (string $email) : bool {
+         return $this->check(Schema::USER['email'], $email);
     }
     
     /**

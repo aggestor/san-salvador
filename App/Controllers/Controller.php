@@ -27,9 +27,9 @@ class Controller
      *
      * @param integer $length. La longueur de la chaine de caractere a genener
      * @param string $carateres. Les caracteres a melanger
-     * @return void
+     * @return string
      */
-    public function generate(int $length, string $carateres)
+    public static function generate(int $length, string $carateres)
     {
         return substr(str_shuffle(str_repeat($carateres, $length)), 0, $length);
     }
@@ -129,12 +129,27 @@ class Controller
     {
         $image = $_FILES[$nom]['name'];
         $temporaire = $_FILES[$nom]['tmp_name'];
-        $directory = $this->createFolder((string) $this->generate(10, '123450ABCDEabcde'));
+        $directory = $this->createFolder($this->generate(20, '123450ABCDEabcde'));
         $destination = $directory . $image;
         if (move_uploaded_file($temporaire, $destination)) {
             $imgOrginal = $destination;
             $imgRedi = $this->convertImage($imgOrginal, $directory, 'x320', 96, 96);
             return $imgOrginal . " AND " . $imgRedi;
+        }
+    }
+    /**
+     * Undocumented function
+     *
+     * @param array $errors. Le tableau des erreurs
+     * @param string $keys. La 
+     * @return void
+     */
+    public function errorsViews(array $errors, string $keys)
+    {
+        if ((isset($errors) && !empty($errors) && key_exists($keys, $errors))) {
+            foreach ($errors as $keys => $value) {
+                return $value;
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
 <?php
+
 namespace Root\App\Controllers;
 
-use Root\Core\Validator;
-use Root\App\Models\UserModel;
+use Root\App\Controllers\Validators\UserValidator;
 
 class UserController extends Controller
 {
@@ -13,6 +13,9 @@ class UserController extends Controller
      */
     public function login()
     {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            die("ok");
+        }
         return $this->view("pages.login", "layout_");
     }
     /**
@@ -56,27 +59,31 @@ class UserController extends Controller
     {
         return $this->view("pages.register", "layout_");
     }
-   public function profile()
+    public function profile()
     {
         return $this->view("pages.profile", "layout_");
     }
     public function create()
     {
-        
-        $name = strip_tags($_POST['userName']);
-        $mail = strip_tags($_POST['userEmail']);
-        $phone = strip_tags($_POST['PhoneNumber']);
-        $pass = strip_tags($_POST['Password']);
-        $side = strip_tags($_POST['userSide']);
-        $sposor = strip_tags($_POST['userSponsor']);
-        $pass_Confirm = strip_tags($_POST['ConfirmPassword']);
-
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $validator = new UserValidator();
+            $user = $validator->createAfterValidation();
+            $user->getEmail();
+            if ($validator->hasError() || $validator->getMessage() != null) {
+                $errors = $validator->getErrors();
+                $mail = $this->errorsViews($errors, 'userEmail');
+                var_dump($errors);
+                die();
+                return $this->view("pages.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+            }
+        }
+        return $this->view("pages.register", "layout_");
     }
     public function signIn()
     {
+        var_dump($_SERVER['REQUEST_METHOD']);
     }
     public function suscribPack(int $id)
     {
-        
     }
 }

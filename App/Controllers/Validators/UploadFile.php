@@ -1,5 +1,5 @@
 <?php
-namespace Root\Controllers\Validators;
+namespace Root\App\Controllers\Validators;
 
 /**
  *

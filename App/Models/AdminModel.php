@@ -1,7 +1,8 @@
 <?php
-namespace Root\Models;
 
-use Root\Models\Objects\Admin;
+namespace Root\App\Models;
+
+use Root\App\Models\Objects\Admin;
 
 /**
  *
@@ -29,7 +30,7 @@ class AdminModel extends AbstractMemberModel
                 Schema::USER['validationEmail'],
                 Schema::USER['status'],
             ],
-            
+
             [
                 $object->getId(),
                 $object->getName(),
@@ -37,10 +38,10 @@ class AdminModel extends AbstractMemberModel
                 $object->getPassword(),
                 $object->getRecordDate()->format('Y-m-d'),
                 $object->getRecordTime()->format('H:i:s'),
-                $object->getValidationMail()? 1 : 0,
-                $object->getStatus()? 1 : 0
+                $object->getValidationMail() ? 1 : 0,
+                $object->getStatus() ? 1 : 0
             ]
-            );
+        );
     }
 
     /**
@@ -74,8 +75,6 @@ class AdminModel extends AbstractMemberModel
     public function update($object, $id): void
     {
         // TODO Auto-generated method stub
-        
+
     }
-
 }
-
