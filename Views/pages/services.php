@@ -16,7 +16,7 @@
     </div>
     </div>
     <div class="w-11/12 flex justify-around">
-        <div class="md:w-3/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all w-11/12 overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
+        <div class="md:w-3/12 hover:z-50 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all w-11/12 overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/exchange.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">
                     <div>

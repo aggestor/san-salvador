@@ -58,7 +58,7 @@ class UserController extends Controller
     }
    public function profile()
     {
-        return $this->view("pages.profile", "layout_");
+        return $this->view("pages.user.profile", "layout_");
     }
     public function create()
     {

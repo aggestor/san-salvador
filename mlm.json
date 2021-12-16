@@ -1,0 +1,55 @@
+{
+	"tree": {
+		"name": "MASIKA SAPATA Louise",
+		"icon": "img/user.png",
+		"foot": 3,
+		"childs": [
+			{
+				"name": "MASIKA MBAFUTA NEEMA",
+				"icon": "img/user.png",
+				"foot": 1
+			},
+			{
+				"name": "KASOKI MWANAWAVENE PROGEURIE",
+				"icon": "img/user.png",
+				"foot": 2,
+				"childs": [
+					{
+						"name": "MUMBERE JEAN BOSCO KIGHUSU",
+						"icon": "img/user.png",
+						"foot": 3
+					}
+				]
+			},
+			{
+				"name": "NZYAVAKE KATAKA Nyava",
+				"icon": "img/user.png",
+				"foot": 3,
+				"childs": [
+					{
+						"name": "MUHINDO SANGALA JACKSON",
+						"icon": "img/user.png",
+						"foot": 1
+					},
+					{
+						"name": "KASOKI  MBAHIKA  Dessange",
+						"icon": "img/user.png",
+						"foot": 2,
+						"childs": [
+							{
+								"name": "KAVUTYA MBAHIKA Neema",
+								"icon": "img/user.png",
+								"foot": 3
+							}
+						]
+					},
+					{
+						"name": "KYAKIMWA  KATAKA MICHELINE",
+						"icon": "img/user.png",
+						"foot": 3
+					}
+				]
+			}
+		]
+	}
+}

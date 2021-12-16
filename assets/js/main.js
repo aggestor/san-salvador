@@ -42,6 +42,15 @@ var timeHandler = function () {
 };
 $(document).ready(function () {
     setInterval(function () { return timeHandler(); }, 10000);
+    $("#hamburger").on("click", function () {
+        $("#other").slideUp("slow");
+        $("#mobile").slideDown("slow");
+    });
+    $("#times").on("click", function () {
+        $("#mobile").slideUp("slow");
+        $("#other").slideDown("slow");
+    });
+    $("#year").text(new Date().getFullYear().toString());
 });
 /**
  * Initializing cropper class

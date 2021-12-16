@@ -44,6 +44,15 @@ const timeHandler = (): void => {
 }
 $(document).ready(() => {
   setInterval(() => timeHandler(), 10000);
+     $("#hamburger").on("click", () => {
+       $("#other").slideUp("slow");
+       $("#mobile").slideDown("slow");
+     });
+     $("#times").on("click", () => {
+       $("#mobile").slideUp("slow");
+       $("#other").slideDown("slow");
+     });
+     $("#year").text(new Date().getFullYear().toString());
 })
 
 /**

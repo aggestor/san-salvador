@@ -1,17 +1,4 @@
 <?php
-<<<<<<< HEAD
-
-namespace Root\App\Controllers;
-
-use Root\Core\Validator;
-
-class adminController extends Controller
-{
-    public function index()
-    {
-        if ($this->isAdmin()) {
-            return $this->view('pages.dashbord', 'layout_admin');
-=======
     namespace Root\App\Controllers;
     use Root\App\Models\AdminModel;
     use Root\App\Controllers\Validator;
@@ -44,36 +31,30 @@ class adminController extends Controller
                 echo json_encode(["type"=>"Failure","message"=>"Quelque chose s'est mal passé"]);
             }
             
->>>>>>> 81dd657c09e9d85795fe0213be409f25fe61753f
         }
-    }
-    public function create()
-    {
-
-    }
-    private function isAdmin()
-    {
-        if (Validator::sessionExist($_SESSION['admin'])) {
-            return true;
-        } else {
-            $_SESSION['errorAdmin'] = "Impossible d'acceder a cette partie du site";
-            header('Location: /login');
-            exit();
+        private function isAdmin()
+        {
+            if (Validator::sessionExist($_SESSION['admin'])) {
+                return true;
+            } else {
+                $_SESSION['errorAdmin'] = "Impossible d'acceder a cette partie du site";
+                header('Location: /login');
+                exit();
+            }
         }
-    }
-    public function delete(int $id)
-    {
-    }
-    public function destroy()
-    {
-        
-    }
-    public function addPacket(int $id)
-    {
+        public function delete(int $id)
+        {
+        }
+        public function destroy()
+        {
+            
+        }
+        public function addPacket(int $id)
+        {
 
-    }
-    public function signIn()
-    {
+        }
+        public function signIn()
+        {
 
-    }
+        }
 }

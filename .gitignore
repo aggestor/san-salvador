@@ -2,4 +2,5 @@
 *.lock
 
 /assets/fontawesome
+/assets/tailwind.css
 /cpanel.txt
