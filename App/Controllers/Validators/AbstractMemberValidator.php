@@ -39,6 +39,13 @@ abstract class AbstractMemberValidator extends AbstractValidator
     /**
      * Undocumented function
      *
+     * @return Member
+     */
+    public abstract function resetPassword();
+
+    /**
+     * Undocumented function
+     *
      * @param string $mail
      * @param boolean $onConnection
      * @param Member $member
@@ -59,7 +66,7 @@ abstract class AbstractMemberValidator extends AbstractValidator
         $model = $fac->getModel($ref->getShortName());
         if ($onConnection) {
             if (!$model->checkByMail($mail)) {
-                throw new \RuntimeException("Cet e-mail est introuvable ");
+                throw new \RuntimeException("Votre adresse e-mail est incorrect");
             }
         } else {
             if ($model->checkByMail($mail)) {
@@ -122,21 +129,23 @@ abstract class AbstractMemberValidator extends AbstractValidator
             }
         } else {
             //pour la connexion;
+            if ($this->isNull($password)) {
+                throw new \RuntimeException("Ce champs est obligatoire");
+            }
+            if (strlen($password) < self::MIN_LENGHT_PSW || strlen($password) > self::MAX_LENGHT_PSW) {
+                throw new \RuntimeException("Mot de passe invalide");
+            }
             $fac = ModelFactory::getInstance();
             $ref = new ReflectionClass($member);
             /**
              * @var AbstractMemberModel $model
              */
             $model = $fac->getModel($ref->getShortName());
-            if ($this->isNull($password)) {
-                throw new \RuntimeException("Entrez et confirmez votre mot de passe");
-            }
 
-            if (strlen($password) < self::MIN_LENGHT_PSW || strlen($password) > self::MAX_LENGHT_PSW) {
-                throw new \RuntimeException("Mot de passe invalide");
-            }
-            if ($model->check(Schema::USER['user_password'], $password)) {
-                throw new \RuntimeException("Mot de passe incorrect");
+            $mail = $model->findByMail($member->getEmail());
+            $pass_has = $mail->getPassword();
+            if (!password_verify($password, $pass_has)) {
+                throw new \RuntimeException("L'adresse e-mail et/ou le mot de passe est incorrect");
             }
         }
     }

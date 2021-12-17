@@ -1,7 +1,8 @@
 <div class="col-span-12 h-screen primary_bg flex flex-col">
     <div class="w-full h-20 flex  flex flex-col items-center border-b border-gray-900">
         <div class="flex w-10/12 mx-auto mt-5">
-            <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a><h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
+            <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a>
+            <h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
         </div>
         <h2 class="text-gray-400 w-10/12 mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
     </div>
@@ -12,11 +13,11 @@
             </div>
             <h2 class="text-gray-400 font-semibold text-base my-4 text-left"> Entrer votre addresse mail dans le champs ci-bas pour reinitialiser votre mot de passe</h2>
         </div>
-        
-        <form method="POST" action="/sign_in" class="md:w-10/12 w-11/12  mx-auto md:p-3">
+
+        <form method="POST" class="md:w-10/12 w-11/12  mx-auto md:p-3">
             <div class="md:w-11/12 w-full mx-auto">
                 <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="mail" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                    <input id="mail" type="email" name="userEmail" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                 </div>
                 <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
             </div>

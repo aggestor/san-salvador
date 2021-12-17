@@ -162,7 +162,7 @@ abstract class AbstractValidator
      * @param DBOccurence $object
      * @param string $id
      */
-    protected function processingId(DBOccurence $object, $id, bool $onCreate=false): void
+    protected function processingId(DBOccurence $object, $id, bool $onCreate = false): void
     {
         if (!$onCreate) {
             try {
@@ -188,7 +188,6 @@ abstract class AbstractValidator
     protected function validationImage($image, bool $nullable = false): void
     {
         $img = new UploadFile($image);
-
         if (!$nullable && !$img->isFile()) {
             throw new \RuntimeException("Assurez-vous d'avoir uploader une image");
         }

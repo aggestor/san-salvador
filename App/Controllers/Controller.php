@@ -114,16 +114,13 @@ class Controller
         while (!is_dir($directory)) {
             mkdir($path);
             return $path . DIRECTORY_SEPARATOR;
-            exit();
         }
         return false;
     }
     /**
-     * Pour uploader les fichiers images 
-     * @param mixed $nom. Le nom du fichier a uploader
-     * @param mixed $destination. Le chemin de destination du fichier
-     * @param integer $taille_max. La taille maximal du fichier a uploader
-     *@return void|bool
+     * Undocumented function
+     *
+     * @param mixed $nom
      */
     public function addImage($nom)
     {
@@ -144,7 +141,7 @@ class Controller
      * @param string $keys. La 
      * @return void
      */
-    public function errorsViews(array $errors, string $keys)
+    public static function errorsViews(array $errors, string $keys)
     {
         if ((isset($errors) && !empty($errors) && key_exists($keys, $errors))) {
             foreach ($errors as $keys => $value) {

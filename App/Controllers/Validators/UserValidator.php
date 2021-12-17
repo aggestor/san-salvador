@@ -44,31 +44,31 @@ class UserValidator extends AbstractMemberValidator
         $phone = $_POST[self::FIELD_TELEPHONE];
         $password = $_POST[self::FIELD_PASSWORD];
         $password_confirm = $_POST[self::FIELD_PASSWORD_CONFIRM];
-        //$image = $_FILES[self::FIELD_IMAGE];
+        $image = $_FILES[self::FIELD_IMAGE];
 
         $side = isset($_GET[self::FIELD_SIDE]) ? $_GET[self::FIELD_SIDE] : null;
         $parent = isset($_GET[self::FIELD_PARENT]) ? $_GET[self::FIELD_PARENT] : null;
-        $sponsor = isset($_GET[self::FIELD_SPONSOR]) ? $_GET[self::FIELD_SPONSOR] : null ;
+        $sponsor = isset($_GET[self::FIELD_SPONSOR]) ? $_GET[self::FIELD_SPONSOR] : null;
 
         $id = Controller::generate(11, "1234567890ABCDEFabcdef");
-        $this->processingId($user,$id,true);
+        $this->processingId($user, $id, true);
         $this->processingEmail($user, $mail);
         $this->processingName($user, $name);
         $this->processingTelephone($user, $phone);
         $this->processingPassword($user, $password, true, $password_confirm);
-        //$this->processingImage($user, $image);
+        $this->processingImage($user, $image, false);
         $this->processingParent($user, $parent);
         $this->processingSponsor($user, $sponsor, $side);
-
         if (!$this->hasError()) {
+            $controller = new Controller();
+            $chemin = $controller->addImage(self::FIELD_IMAGE);
+            $user->setPhoto($chemin);
             $user->setRecordDate(new \DateTime());
             $user->setRecordTime(new \DateTime());
             try {
                 $this->userModel->create($user);
             } catch (ModelException $e) {
                 $this->setMessage($e->getMessage());
-                var_dump($e->getMessage());
-                exit();
             }
         }
 
@@ -83,27 +83,47 @@ class UserValidator extends AbstractMemberValidator
     public function updateAfterValidation()
     {
     }
+    /**
+     * Login de l'utilisateur apres validation
+     * {@inheritDoc}
+     * @return User
+     */
     public function loginProcess()
     {
         $user = new User();
-        $mail = $_POST[self::FIELD_NAME];
+        $mail = $_POST[self::FIELD_EMAIL];
         $password = $_POST[self::FIELD_PASSWORD];
-
-        $this->processingEmail($user, $mail, true);
-        $this->processingPassword($user, $password);
         if (!$this->hasError()) {
             try {
-                $this->userModel->create($user);
+                $this->processingEmail($user, $mail, true);
+                $this->processingPassword($user, $password);
             } catch (ModelException $e) {
                 $this->setMessage($e->getMessage());
             }
         }
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec de la connexion" : "Connexion faite avec success";
+        return $user;
     }
     public function changeStatusAfterValidation()
     {
     }
-
+    /**
+     * Reinitialisation du compte apres validation
+     * @return User
+     */
+    public function resetPassword()
+    {
+        $user = new User();
+        $mail = $_POST[self::FIELD_EMAIL];
+        $this->processingEmail($user, $mail, true);
+        if (!$this->hasError()) {
+            try {
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+        return $user;
+    }
     /**
      * Pour la validation du numero de telephone
      * @param string $telephone
@@ -142,14 +162,13 @@ class UserValidator extends AbstractMemberValidator
      * @param boolean $nullable
      * @return void
      */
-    protected function processingImage(User $user, $image): void
+    protected function processingImage(User $user, $image, $nullable = false): void
     {
         try {
-            $this->validationImage($image);
+            $this->validationImage($image, $nullable);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_IMAGE, $e->getMessage());
         }
-        $user->setPhoto($image);
     }
 
     /**
@@ -161,7 +180,6 @@ class UserValidator extends AbstractMemberValidator
     protected function validationParent($Idparent): void
     {
         if (empty($Idparent) || $Idparent == null) {
-            //$Idparent = $this->userModel->findRoot()->getId();
             $Idparent = $this->userModel->findRoot()->getId();
         }
 

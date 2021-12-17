@@ -36,7 +36,7 @@ class UserModel extends AbstractMemberModel
                     Schema::USER['timeRecord'],
                     Schema::USER['photo'],
                 ],
-    
+
                 [
                     $object->getId(),
                     $object->getName(),
@@ -79,12 +79,53 @@ class UserModel extends AbstractMemberModel
                 $object->getPhone(),
                 $object->getLastModifDate()->format('Y-m-d'),
                 $object->getLastModifTime()->format('H:i:s'),
-                $object->getId()
+                $id
             ]
         );
     }
+    /**
+     * modification de la photo d'un utilisateur
+     * @param string $id
+     * @param string $photoName
+     */
+    public function updatePhoto($id, string $photoName): void
+    {
+        Queries::updateData(
+            $this->getTableName(),
+            [Schema::USER['photo']],
+            "id = ?",
+            [$photoName, $id]
+        );
+    }
 
+    /**
+     * mis en jour du mot de passe d'un utilisateur
+     * @param string $id
+     * @param string $password
+     */
+    public function updatePassword($id, string $password): void
+    {
+        Queries::updateData(
+            $this->getTableName(),
+            [Schema::USER['password']],
+            "id = ?",
+            [$password, $id]
+        );
+    }
 
+    /**
+     * demande de valisation du compte d'un utiilsateur
+     * @param string $id
+     */
+    public function validateAccount($id): void
+    {
+        Queries::updateData(
+            $this->getTableName(),
+            [Schema::USER['validationEmail']],
+            "id = ?",
+            [1, $id]
+        );
+    }
     /**
      * {@inheritDoc}
      * @see \Root\App\Models\AbstractDbOccurenceModel::getDBOccurence()

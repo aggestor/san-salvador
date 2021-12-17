@@ -109,7 +109,8 @@ class Queries
             $fields_array[] = "$value=?";
         }
         $fields_list = implode(',', $fields_array);
-        $whereField_list = "$whereCloseField=?";
+        $whereField_list = "$whereCloseField";
+
 
         return self::executeQueryInTransaction($pdo, "UPDATE {$table} SET {$fields_list} WHERE {$whereField_list}", $args);
     }
@@ -158,7 +159,7 @@ class Queries
      */
     public static function executeQueryInTransaction(\PDO $pdo, string $sql, array $attribut = null)
     {
-       
+
         if ($attribut !== null) {
             $query = $pdo->prepare($sql);
             $query->execute($attribut);

@@ -15,7 +15,7 @@
                     </div>
                     <h2 class="text-gray-500 font-semibold text-base my-4 text-left">Remplissez ce formulaire ci-bas pour vous inscrire sur notre plateforme !</h2>
                 </div>
-                <form method="POST" class="md:w-11/12 w-full  mx-auto p-3">
+                <form method="POST" class="md:w-11/12 w-full  mx-auto p-3" enctype="multipart/form-data">
                     <!--USERNAME BEGIN-->
                     <div class="md:w-11/12 mx-auto w-full mb-2">
                         <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
@@ -85,6 +85,14 @@
                         <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
                     </div>
                     <!--SPONSOR END-->
+                    <!--PHOTO-->
+                    <div class="md:w-11/12 mx-auto w-full mb-2">
+                        <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                            <input id="image" name="image" type="file" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                        </div>
+                        <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
+                    </div>
+                    <!--PHOTOS-->
 
                     <!--PARING SIDE BEGIN-->
                     <div class="md:w-8/12 h-24 p-2 mx-auto md:ml-5 border border-gray-400 rounded-lg h-10">

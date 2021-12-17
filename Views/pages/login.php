@@ -10,18 +10,22 @@
         <div class="md:w-9/12 w-11/12 mx-auto ">
             <h2 class="text-gray-400 font-semibold text-xl my-4 text-left"> Connectez-vous sur votre compte</h2>
         </div>
-        <form method="POST" action="/login" class="md:w-10/12 w-11/12  mx-auto md:p-3">
+        <form method="POST" class="md:w-10/12 w-11/12  mx-auto md:p-3">
             <div class="md:w-11/12 w-full mx-auto mb-2">
                 <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="identifier" name="identifier" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                    <input id="identifier" name="userEmail" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['connexion']) && empty($params['errors']['userEmail'])) ? $_POST['userEmail'] : ""; ?>" />
                 </div>
-                <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
+                <?php if (isset($_POST['connexion']) && !empty($params['errors']['userEmail'])) : ?>
+                    <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['userEmail']; ?></span>
+                <?php endif; ?>
             </div>
             <div class="md:w-11/12 w-full mx-auto mb-2">
                 <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="password" type="password" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                    <input id="password" name="password" type="password" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                 </div>
-                <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
+                <?php if (isset($_POST['connexion']) && !empty($params['errors']['password'])) : ?>
+                    <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['password']; ?></span>
+                <?php endif; ?>
             </div>
             <div class="md:w-11/12 flex justify-between mt-5 mx-auto">
                 <div class="w-6/12 flex text-gray-500 justify-left">
@@ -33,7 +37,7 @@
                 </div>
             </div>
             <div class="md:w-11/12 mx-auto mt-4">
-                <button type="submit" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-lock"></i> Connexion</button>
+                <button type="submit" name="connexion" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-lock"></i> Connexion</button>
             </div>
             <div class="md:w-11/12 flex text-gray-500 justify-between mt-5 mx-auto">
                 <span class="flex justify-end">Pas encore inscrit(e) ? <a class="font-semibold" href="/register"> &#160; Créer un compte</a></span>

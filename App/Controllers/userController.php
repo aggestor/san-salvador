@@ -3,18 +3,42 @@
 namespace Root\App\Controllers;
 
 use Root\App\Controllers\Validators\UserValidator;
+use Root\App\Models\ModelFactory;
+use Root\App\Models\Objects\User;
+use Root\App\Models\UserModel;
+use RuntimeException;
 
 class UserController extends Controller
 {
     /**
-     * render view pour la page login
+     * Undocumented variable
+     *
+     * @var UserModel
+     */
+    private $userModel;
+
+    const FIELD_IMAGE = 'image';
+
+    public function __construct()
+    {
+        $this->userModel = ModelFactory::getInstance()->getModel('User');
+    }
+    /**
+     * traitement du login post et get
      *
      * @return void
      */
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            die("ok");
+            $validator = new UserValidator();
+            $user = $validator->loginProcess();
+            if ($validator->hasError() || $validator->getMessage() != null) {
+                $errors = $validator->getErrors();
+                return $this->view("pages.login", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+            }
+            $_SESSION['users'] = $user;
+            header('Location: /user/dashboard');
         }
         return $this->view("pages.login", "layout_");
     }
@@ -26,14 +50,7 @@ class UserController extends Controller
     public function logout()
     {
     }
-    /**
-     * Pour la connection de l'utilisateur post
-     *
-     * @return void
-     */
-    public function authentification()
-    {
-    }
+
     /**
      * render view pour la page de recuperation du mot de passe
      *
@@ -41,7 +58,30 @@ class UserController extends Controller
      */
     public function pwd_reset()
     {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $validator = new UserValidator();
+            $user = $validator->resetPassword();
+            if ($validator->hasError() || $validator->getMessage() != null) {
+                $errors = $validator->getErrors();
+                return $this->view("pages.reset_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+            } else {
+                /**
+                 * @var User
+                 */
+                $object = $this->userModel->findByMail($user->getEmail());
+                $mail = $user->getEmail();
+                $token = Controller::generate(60, "QWERTYUIOPASDFGHJKLZXCVBNMqweryuiopasdfghjklzxcvbnm1234567890");
+                $id = $object->getId();
+                $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
+                $lien = $domaineName . "reset-$id-$token";
+                $this->envoieMail($mail, $lien);
+            }
+        }
         return $this->view("pages.reset_pwd", "layout_");
+    }
+
+    public function resetPassword()
+    {
     }
     /**
      * pour recuperer le mot de passe 
@@ -52,38 +92,79 @@ class UserController extends Controller
     {
     }
     /**
-     * pour render view de la page d'enregistrement un utilisateur
+     * creation du compte des utilisateurs
+     *
      * @return void
      */
-    public function register()
-    {
-        return $this->view("pages.register", "layout_");
-    }
-    public function profile()
-    {
-        return $this->view("pages.profile", "layout_");
-    }
     public function create()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $validator = new UserValidator();
             $user = $validator->createAfterValidation();
-            $user->getEmail();
             if ($validator->hasError() || $validator->getMessage() != null) {
                 $errors = $validator->getErrors();
-                $mail = $this->errorsViews($errors, 'userEmail');
                 var_dump($errors);
-                die();
+                exit();
                 return $this->view("pages.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             }
+            $mail = $user->getEmail();
+            $token = Controller::generate(60, "QWERTYUIOPASDFGHJKLZXCVBNMqweryuiopasdfghjklzxcvbnm1234567890");
+            $id = $user->getId();
+            $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
+            $lien = $domaineName . "activation-$id-$token";
+            $_SESSION['users'] = $user;
+            $_SESSION['token'] = $token;
+            $this->envoieMail($mail, $lien);
         }
         return $this->view("pages.register", "layout_");
     }
-    public function signIn()
+    public function dashboard()
     {
-        var_dump($_SERVER['REQUEST_METHOD']);
+        if ($this->isUsers()) {
+            return $this->view("pages.user.profile", "layout_");
+        }
     }
     public function suscribPack(int $id)
     {
+    }
+    /**
+     * Activation du compte utilisateur
+     *
+     * @return void
+     */
+    public function accountActivation()
+    {
+        try {
+            if (isset($_GET['id']) && isset($_GET['token'])) {
+                //on recupere le get de l'url
+                $getId = $_GET['id'];
+                $getToken = $_GET['token'];
+                //on recupere les session entre autre id et le token
+                /**
+                 * @var User
+                 */
+                $user = $_SESSION['users'];
+                $sessionToken = $_SESSION['token'];
+                //on compare les information du session avec du get
+                if (($sessionToken == $getToken) && ($getId == $user->getId()) && ($this->userModel->checkById($getId))) {
+                    $this->userModel->validateAccount($user->getId());
+                    unset($_SESSION['token']);
+                    var_dump('ok');
+                    exit();
+                } else {
+                    return $this->view('pages.404');
+                }
+            }
+        } catch (\RuntimeException $e) {
+            die($e->getMessage());
+        }
+    }
+    private function isUsers()
+    {
+        if (isset($_SESSION['users']) && !empty($_SESSION['users'])) {
+            return true;
+        } else {
+            header('Location:/login');
+        }
     }
 }

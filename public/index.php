@@ -19,31 +19,28 @@ $routes = new Router($_SERVER['REQUEST_URI']);
 //les routes pour les pages statics
 $routes->get('/', 'Root\App\Controllers\StaticController@home');
 //$routes->get('/packages-([0-9]+)/(add|update).php', "id,option", 'Root\App\Controllers\StaticController@packages');
-$routes->get('/help/(fr|en|sw)/([0-9]{1,100})', "lang,page", 'Root\App\Controllers\StaticController@help');
+$routes->get('/help', 'Root\App\Controllers\StaticController@help');
 $routes->get('/services', 'Root\App\Controllers\StaticController@service');
 $routes->get('/with-us', 'Root\App\Controllers\StaticController@with_us');
 
 //les routes en get pour la page login et register
 
 //la routes en post pour la page login et register
-//$routes->post('/login', 'Root\App\Controllers\UserController@signIn');
-$routes->post('/register', 'Root\App\Controllers\UserController@create');
 //reset password & confirm password 
 $routes->get('/reset-password', 'Root\App\Controllers\UserController@pwd_reset');
-$routes->get('/verify-email', 'Root\App\Controllers\UserController@verify_mail');
+$routes->post('/reset-password', 'Root\App\Controllers\UserController@pwd_reset');
 
-$routes->post('/pwd_reset', 'Root\App\Controllers\UserController@reset');
 //les routes pour l'admin en get
-$routes->get('/admin', 'Root\App\Controllers\adminController@index');
-$routes->get('/admin/destroy', 'Root\App\Controllers\adminController@destroy');
+$routes->get('/admin', 'Root\App\Controllers\AdminController@index');
+$routes->get('/admin/destroy', 'Root\App\Controllers\AdminController@destroy');
 //les routes pour l'admin en post
-$routes->post('/admin/add', 'Root\App\Controllers\adminController@create');
-$routes->post('/admin/signIn', 'Root\App\Controllers\adminController@signIn');
+$routes->post('/admin/register', 'Root\App\Controllers\AdminController@create');
+$routes->post('/admin/login', 'Root\App\Controllers\AdminController@login');
 //route pour l'admin en get
 $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@index');
 
 //route pour ajouter un packet
-$routes->post('/admin/pack', 'Root\App\Controllers\adminController@addPack');
+$routes->post('/admin/pack', 'Root\App\Controllers\AdminController@addPack');
 //route pour l'authentification de l'utilisateur en post
 
 $routes->post('/register', 'Root\App\Controllers\UserController@create');
@@ -54,7 +51,16 @@ $routes->get('/register-(1|2)-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})/', 'Root\App\C
 $routes->post('/login', 'Root\App\Controllers\UserController@login');
 $routes->get('/login', 'Root\App\Controllers\UserController@login');
 
+$routes->get('/user/dashboard', 'Root\App\Controllers\UserController@dashboard');
+
+//route d'activation du compte utilisateur
+$routes->get('/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@accountActivation', 'id;token');
+//routes pour la reinitialisation du mot de passe
+$routes->get('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@resetPassword', 'id;token');
+$routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@resetPassword', 'id;token');
+
 $routes->get('/test', function () {
+    unset($_SESSION['token']);
 });
 
 

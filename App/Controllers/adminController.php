@@ -1,14 +1,14 @@
 <?php
 
 namespace Root\App\Controllers;
-
-use Root\Core\Validator;
-
 class adminController extends Controller
 {
+    public function index()
+    {
+        return $this->view('pages.admin.dashboard', 'layout_admin');
+    }
     public function create()
     {
-
     }
     private function isAdmin()
     {
@@ -25,14 +25,11 @@ class adminController extends Controller
     }
     public function destroy()
     {
-        
     }
-    public function addPacket(int $id)
+    public function addPacket()
     {
-
     }
-    public function signIn()
+    public function login()
     {
-
     }
 }
