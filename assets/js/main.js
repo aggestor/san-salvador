@@ -52,6 +52,8 @@ $(document).ready(function () {
     });
     $("#year").text(new Date().getFullYear().toString());
 });
+var imageUpload = document.querySelector("#image");
+$(".hide-b4-save").hide();
 /**
  * Initializing cropper class
  */
@@ -60,7 +62,12 @@ var cropper = new Cropper({
     height: 320,
     onChange: function () {
         var image = this.getCroppedImage();
-        var file = dataURLtoFile(image, "test");
+        var file = dataURLtoFile(image, "user");
+        if (imageUpload && file && imageUpload.files) {
+            var dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            imageUpload.files = dataTransfer.files;
+        }
     },
 });
 /**
@@ -91,11 +98,21 @@ function dataURLtoFile(dataUrl, filename) {
         }
     }
 }
-var imageUploader = document.querySelector("#image");
-imageUploader !== null && imageUploader.addEventListener("change", function (evt) {
+var imageUploader = document.querySelector("#imageToCrop");
+imageUploader && imageUploader.addEventListener("change", function (evt) {
     if (evt.target !== null) {
         var target = evt.target;
         var image = target.files[0];
+        if (image) {
+            var fileReader_1 = new FileReader();
+            fileReader_1.onload = function () {
+                cropper.loadImage(fileReader_1.result).then(function () { });
+                $("#crop").slideDown();
+                $("#crop").removeClass(".hidden");
+                $(".hide-b4-save").slideDown();
+            };
+            fileReader_1.readAsDataURL(image);
+        }
     }
 });
 cropper.render("#crop");
@@ -107,17 +124,23 @@ formStepsButtons && formStepsButtons.forEach(function (button) {
         e.preventDefault();
         useFormButtons(buttonName);
     });
+    var cameraBtn = document.querySelector("#camera");
+    if (cameraBtn && imageUploader)
+        cameraBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            imageUploader.click();
+            e.stopImmediatePropagation();
+        });
     function useFormButtons(name) {
         switch (name) {
             case "2":
                 $(".form-1").slideUp();
+                $("#register-title").text("Ajouter votre photo en cliquant sur le bouton ci-bas");
                 $(".form-2").slideDown();
-                $(".form-3").slideUp();
                 break;
             case "-2":
                 $(".form-1").slideDown();
                 $(".form-2").slideUp();
-                $(".form-3").slideUp();
                 break;
         }
     }

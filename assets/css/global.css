@@ -156,7 +156,7 @@ header{
     cursor: pointer;
     height: 5px;
     width: 100%;
-    background: #008ecc;
+    background: #32e491;
     border: none
 }
 
@@ -223,7 +223,8 @@ header{
 
 
 .cropper {
-    display: inline-block
+    display: inline-block;
+    margin: 0 auto;
 }
 
 .cropper canvas {
