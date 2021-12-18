@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas{
+            background-color: #f7f5f5;
+            border-radius: 1rem;
+            color: #28b4ff;
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+        const canvas = document.querySelector("canvas")
+        canvas.height = window.innerHeight 
+        canvas.width = window.innerWidth
+        const x = canvas.width, y = canvas.height
+        const context = canvas.getContext("2d")
+        context.fillStyle = "#28ffb7"
+        context.fillRect(x/2-30,50, 60,60)
+        //left line
+        context.beginPath()
+        context.moveTo(x/2,80)
+        context.lineTo(x/2+150,80)
+        context.lineTo(x/2-150,80)
+        context.lineTo(x/2,40)
+        //context.lineTo(x/6,140)
+        context.strokeStyle = "#28ffb7"
+        context.stroke()
+        // //right line
+        // context.beginPath()
+        // context.moveTo(350,80)
+        // context.lineTo(560,80)
+        // context.lineTo(560,140)
+        // context.strokeStyle = "#28ffb7"
+        // context.stroke()
+
+        context.fillStyle = "#28ffb7"
+        context.fillRect(70,140, 60,60)
+        // context.fillStyle = "#28ffb7"
+        // context.fillRect(530,140, 60,60)
+    </script>
+</body>
+</html>

@@ -35,12 +35,12 @@ class UserController extends Controller
             $user = $validator->loginProcess();
             if ($validator->hasError() || $validator->getMessage() != null) {
                 $errors = $validator->getErrors();
-                return $this->view("pages.login", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                return $this->view("pages.user.login", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             }
             $_SESSION['users'] = $user;
             header('Location: /user/dashboard');
         }
-        return $this->view("pages.login", "layout_");
+        return $this->view("pages.user.login", "layout_");
     }
     /**
      * pour la deconnection de l'utilisateur
@@ -63,7 +63,7 @@ class UserController extends Controller
             $user = $validator->resetPassword();
             if ($validator->hasError() || $validator->getMessage() != null) {
                 $errors = $validator->getErrors();
-                return $this->view("pages.reset_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                return $this->view("pages.password.reset_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             } else {
                 /**
                  * @var User
@@ -77,7 +77,7 @@ class UserController extends Controller
                 $this->envoieMail($mail, $lien);
             }
         }
-        return $this->view("pages.reset_pwd", "layout_");
+        return $this->view("pages.password.reset_pwd", "layout_");
     }
 
     public function resetPassword()
@@ -105,7 +105,7 @@ class UserController extends Controller
                 $errors = $validator->getErrors();
                 var_dump($errors);
                 exit();
-                return $this->view("pages.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                return $this->view("pages.static.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             }
             $mail = $user->getEmail();
             $token = Controller::generate(60, "QWERTYUIOPASDFGHJKLZXCVBNMqweryuiopasdfghjklzxcvbnm1234567890");
@@ -116,7 +116,7 @@ class UserController extends Controller
             $_SESSION['token'] = $token;
             $this->envoieMail($mail, $lien);
         }
-        return $this->view("pages.register", "layout_");
+        return $this->view("pages.user.register", "layout_");
     }
     public function dashboard()
     {
@@ -152,7 +152,7 @@ class UserController extends Controller
                     var_dump('ok');
                     exit();
                 } else {
-                    return $this->view('pages.404');
+                    return $this->view('pages.static.404');
                 }
             }
         } catch (\RuntimeException $e) {

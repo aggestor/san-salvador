@@ -44,17 +44,34 @@ const timeHandler = (): void => {
 }
 $(document).ready(() => {
   setInterval(() => timeHandler(), 10000);
+     $("#hamburger").on("click", () => {
+       $("#other").slideUp("slow");
+       $("#mobile").slideDown("slow");
+     });
+     $("#times").on("click", () => {
+       $("#mobile").slideUp("slow");
+       $("#other").slideDown("slow");
+     });
+     $("#year").text(new Date().getFullYear().toString());
 })
 
+const imageUpload: HTMLInputElement | null = document.querySelector("#image");
+$(".hide-b4-save").hide()
 /**
  * Initializing cropper class
  */
+
 const cropper = new Cropper({
   width: 320,
   height: 320,
   onChange: function () {
     const image = this.getCroppedImage();
-    const file = dataURLtoFile(image, "test");
+    const file = dataURLtoFile(image, "user");
+    if (imageUpload && file && imageUpload.files) {
+      const dataTransfer = new DataTransfer()
+      dataTransfer.items.add(file)
+      imageUpload.files = dataTransfer.files
+    }
   },
 });
 type stringable = string | null
@@ -92,15 +109,26 @@ function dataURLtoFile(dataUrl:string, filename:string) : File | undefined {
     }
   }
 }
-const imageUploader: HTMLInputElement | null = document.querySelector("#image")
-imageUploader !== null && imageUploader.addEventListener("change", (evt) => {
+const imageUploader: HTMLInputElement | null = document.querySelector("#imageToCrop")
+imageUploader && imageUploader.addEventListener("change", (evt) => {
   if (evt.target !== null) {
     const target : any = evt.target
-    
     const image = target.files[0];
+    if (image) {
+      const fileReader = new FileReader()
+      fileReader.onload = function () {
+        cropper.loadImage(fileReader.result).then(() : void =>{})
+        $("#crop").slideDown()
+        $("#crop").removeClass(".hidden")
+        $(".hide-b4-save").slideDown();
+      }
+      fileReader.readAsDataURL(image)
+    }
   }
 });
 cropper.render("#crop");
+
+
 
 //Add user interactions stars here
 
@@ -112,17 +140,27 @@ formStepsButtons && formStepsButtons.forEach((button : HTMLButtonElement) => {
     useFormButtons(buttonName)
   })
 
+  const cameraBtn: HTMLButtonElement | null = document.querySelector("#camera")
+  if(cameraBtn && imageUploader)
+  cameraBtn.addEventListener("click", (e: Event) => {
+    e.preventDefault()
+    imageUploader.click()
+    e.stopImmediatePropagation()
+  })
+
+
   function useFormButtons(name: string): void{
     switch (name) {
       case "2":
         $(".form-1").slideUp()
+        $("#register-title").text(
+          "Ajouter votre photo en cliquant sur le bouton ci-bas"
+        );
         $(".form-2").slideDown()
-        $(".form-3").slideUp()
         break;
       case "-2":
         $(".form-1").slideDown()
         $(".form-2").slideUp()
-        $(".form-3").slideUp()
         break;
     }
   }

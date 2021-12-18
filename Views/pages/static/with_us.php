@@ -1,7 +1,6 @@
 <div class="col-span-12 secondary_bg">
     <div class="flex flex-col md:flex-row w-11/12 md:h-screen h-auto md:items-center mx-auto md:justify-around">
-    <div data-aos="fade-down"
-    data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
+    <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
         <img src="assets/logos/h.png" class="md:h-96 h-80 w-80 md:w-96" alt="Joining image" />
     </div>
     <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 overflow-x-hidden w-full flex flex-col mt-6 ">
