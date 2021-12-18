@@ -1,9 +1,9 @@
 <?php
-namespace Root\Model;   
-use Root\Models\Queries;
-use Root\Models\Objects\Pack;
-use Root\Models\Schema;
-use Root\Models\AbstractDbOccurenceModel;
+namespace Root\App\Models;
+use Root\App\Models\Queries;
+use Root\App\Models\Objects\Pack;
+use Root\App\Models\Schema;
+use Root\App\Models\AbstractDbOccurenceModel;
 
 class PackModel extends AbstractDbOccurenceModel{
 

@@ -1,7 +1,10 @@
 <?php
-namespace Root\Models;
 
-use Root\Models\Objects\DBOccurence;
+namespace Root\App\Models;
+
+
+use Root\App\Models\Objects\DBOccurence;
+use Root\App\Models\Queries;
 
 /**
  *
@@ -14,8 +17,9 @@ abstract class AbstractDbOccurenceModel
     /**
      */
     public function __construct()
-    {}
-    
+    {
+    }
+
     /**
      * verifie l'existance d'une valeur dans une colone
      * @param string $columnName
@@ -23,10 +27,13 @@ abstract class AbstractDbOccurenceModel
      * @return bool
      * @throws ModelException s'il ya erreur lors de la communication avec la BDD
      */
-    public function check (string $columnName, $value) : bool {
+    public function check(string $columnName, $value): bool
+    {
+
         $return = false;
         try {
             $statement = Queries::executeQuery("SELECT {$columnName} FROM {$this->getTableName()} WHERE {$columnName}=? LIMIT 1", array($value));
+
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -34,19 +41,20 @@ abstract class AbstractDbOccurenceModel
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
-        
+
         return $return;
     }
-    
+
     /**
      * verification si l'identifiant existe dans la BDD
      * @param string $id
      * @return bool
      */
-    public function checkById (string $id) : bool {
+    public function checkById(string $id): bool
+    {
         return $this->check("id", $id);
     }
-    
+
     /**
      * y-t-il une historique pour l'intervale en parametre?????
      * @param \DateTime $dateMin
@@ -54,15 +62,16 @@ abstract class AbstractDbOccurenceModel
      * @return bool
      * @throws ModelException 
      */
-    public function checkByHistory (?\DateTime $dateMin, ?\DateTime $dateMax = null) : bool {
+    public function checkByHistory(?\DateTime $dateMin, ?\DateTime $dateMax = null): bool
+    {
         $return = false;
         try {
-            
+
             $args = array($dateMin->format('Y-m-d'));
             if ($dateMax != null) {
                 $args[] = $dateMax->format('Y-m-d');
             }
-            $statement = Queries::executeQuery("SELECT id FROM {$this->getTableName()} WHERE record_date ".($dateMax != null? "BETWEEN (? AND ?)":"= ?")."  LIMIT 1", $args);
+            $statement = Queries::executeQuery("SELECT id FROM {$this->getTableName()} WHERE record_date " . ($dateMax != null ? "BETWEEN (? AND ?)" : "= ?") . "  LIMIT 1", $args);
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -70,16 +79,17 @@ abstract class AbstractDbOccurenceModel
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
-        
+
         return $return;
     }
-    
+
     /**
      * comptage de tout les occurences d'une table
      * @throws ModelException
      * @return int
      */
-    public function count () : int {
+    public function count(): int
+    {
         $nombre = 0;
         try {
             $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()}", array());
@@ -92,13 +102,14 @@ abstract class AbstractDbOccurenceModel
         }
         return $nombre;
     }
-    
+
     /**
      * Supression d'une occurence dans une table
      * @param string $id
      * @throws ModelException
      */
-    public function delete (string $id) : void {
+    public function delete(string $id): void
+    {
         try {
             $statement = Queries::executeQuery("DELETE FROM {$this->getTableName()} WHERE id=?", array($id));
             $statement->closeCursor();
@@ -106,7 +117,7 @@ abstract class AbstractDbOccurenceModel
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
     }
-    
+
     /**
      * Execute une requette de selection. Le filtrage se fait sur une collone, dont le nom et la valeur sont en parametre
      * @param string $columnName nom de la collone dans la close WHERE
@@ -115,34 +126,36 @@ abstract class AbstractDbOccurenceModel
      * @return DBOccurence
      * 
      */
-    public function find (string $columnName, $value) {
+    public function find(string $columnName, $value)
+    {
         $return = null;
         try {
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$columnName}=? LIMIT 1", array($value));
             if ($row = $statement->fetch()) {
                 $return = $this->getDBOccurence($row);
                 $statement->closeCursor();
-            }else {
+            } else {
                 $statement->closeCursor();
                 throw new ModelException("Aucun resultat pour la requette executer");
             }
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
-        
+
         return $return;
     }
-    
+
     /**
      * recuperation de l'occurence dont l'ID est en parametre
      * @param string $id
-     * @return \Root\Models\Objects\DBOccurence
+     * @return Root\App\Models\Objects
      * @throws ModelException
      */
-    public function findById (string $id) {
+    public function findById(string $id)
+    {
         return $this->find("id", $id);
     }
-    
+
     /**
      * revoie une collection d'object
      * *il est possible de recuperer une intervale des donnees
@@ -152,17 +165,18 @@ abstract class AbstractDbOccurenceModel
      * @throws ModelException s'il y a erreur lors de la communication avec la BDD
      * soit aucun resultat n'a ete retourner par la requette de selection
      */
-    public function findAll(?int $limit = null, int $offset = 0) : array {
+    public function findAll(?int $limit = null, int $offset = 0): array
+    {
         $data = array();
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} ".($limit != null? "LIMIT {$limit} OFFSET {$offset}":""), array());
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} " . ($limit != null ? "LIMIT {$limit} OFFSET {$offset}" : ""), array());
             if ($row = $statement->fetch()) {
                 $data[] = $this->getDBOccurence($row);
                 while ($row = $statement->fetch()) {
                     $data[] = $this->getDBOccurence($row);
                 }
                 $statement->closeCursor();
-            }else {
+            } else {
                 $statement->closeCursor();
                 throw new ModelException("Aucun resultat pour la requette executé");
             }
@@ -171,7 +185,7 @@ abstract class AbstractDbOccurenceModel
         }
         return $data;
     }
-    
+
     /**
      * Recuperation des operations en une intervale des dates
      * @param \DateTime $dateMin
@@ -179,55 +193,55 @@ abstract class AbstractDbOccurenceModel
      * @return DBOccurence[]
      * @throws ModelException
      */
-    public function findByHistory (?\DateTime $dateMin, ?\DateTime $dateMax = null) : array {
+    public function findByHistory(?\DateTime $dateMin, ?\DateTime $dateMax = null): array
+    {
         $data = array();
         try {
-            
+
             $args = array($dateMin->format('Y-m-d'));
             if ($dateMax != null) {
                 $args[] = $dateMax->format('Y-m-d');
             }
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE record_date ".($dateMax != null? "BETWEEN (? AND ?)":"= ?")."  LIMIT 1", $args);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE record_date " . ($dateMax != null ? "BETWEEN (? AND ?)" : "= ?") . "  LIMIT 1", $args);
             if ($row = $statement->fetch()) {
                 $data[] = $this->getDBOccurence($row);
                 while ($row = $statement->fetch()) {
                     $data[] = $this->getDBOccurence($row);
                 }
                 $statement->closeCursor();
-            }else {
+            } else {
                 $statement->closeCursor();
-                throw new ModelException("Aucune operation ".($dateMax!=null? "":"en date")." du {$dateMin->format('d/m/Y')} ". ($dateMax != null? "au {$dateMax->format('d/m/Y')}":""));
+                throw new ModelException("Aucune operation " . ($dateMax != null ? "" : "en date") . " du {$dateMin->format('d/m/Y')} " . ($dateMax != null ? "au {$dateMax->format('d/m/Y')}" : ""));
             }
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
-        
+
         return $data;
     }
-    
+
     /**
      * creation d'une occurence
      * @param DBOccurence $object
      */
-    public abstract function create ($object) : void;
-    
+    public abstract function create($object): void;
+
     /**
      * mis en jour d'une occurence dans la base de donnee
      * @param DBOccurence $object
      * @param string $id
      */
-    public abstract function update ($object, $id) : void;
-    
+    public abstract function update($object, $id): void;
+
     /**
      * doit renvoyer le nom de la table
      * @return string
      */
-    protected abstract function getTableName () : string;
-    
+    protected abstract function getTableName(): string;
+
     /**
      * revoie l'obect apres maping des element dans le tableau  associative
      * @param array $keyValue
      */
-    protected abstract function getDBOccurence (array $keyValue);
+    protected abstract function getDBOccurence(array $keyValue);
 }
-

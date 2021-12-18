@@ -1,5 +1,5 @@
 <?php
-namespace Root\Models;
+namespace Root\App\Models;
 
 /**
  *
