@@ -1,6 +1,5 @@
 <?php
-namespace Root\Models\Objects;
-
+namespace Root\App\Models\Objects;
 /**
  *
  * @author Esaie MUHASA
@@ -45,11 +44,19 @@ class User extends Member
     private $sides = [];
     
     /**
+     * aliace de la methode @method getSide()
      * @return number
      */
     public function getFoot()
     {
         return $this->foot;
+    }
+    
+    /**
+     * @return number
+     */
+    public function getSide () {
+        return $this->getFoot();
     }
 
 
@@ -70,11 +77,20 @@ class User extends Member
     }
 
     /**
+     * aliace de la methode @method setSide()
      * @param number $foot
+     * 
      */
     public function setFoot($foot) : void
     {
         $this->foot = $foot;
+    }
+    
+    /**
+     * @param int $side
+     */
+    public function setSide($side) : void {
+        $this->setFoot($side);
     }
 
     /**
@@ -83,9 +99,9 @@ class User extends Member
      */
     public function setSponsor($sponsor) : void
     {
-        if ($sponsor instanceof User || $sponsor == null) {
+        if ($sponsor instanceof User || $sponsor === null) {
             $this->sponsor = $sponsor;
-        }else if(is_int($sponsor)) {
+        }else if(is_string($sponsor)) {
             $this->sponsor = new User(array('id' => $sponsor));
         }else {
             throw new \InvalidArgumentException("Argument de type invalide en parametre de la methode setSponsor()");
@@ -98,9 +114,12 @@ class User extends Member
      */
     public function setParent($parent) : void
     {
-        if ($parent instanceof User || $parent == null) {
+
+        if ($parent instanceof User || $parent === null) {
+            // var_dump($parent===null);
+            // exit();
             $this->parent = $parent;
-        }else if(is_int($parent)) {
+        }else if(is_string($parent)) {
             $this->parent = new User(array('id' => $parent));
         }else {
             throw new \InvalidArgumentException("Argument de type invalide en parametre de la methode setParent()");

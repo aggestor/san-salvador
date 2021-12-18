@@ -27,9 +27,9 @@ class Controller
      *
      * @param integer $length. La longueur de la chaine de caractere a genener
      * @param string $carateres. Les caracteres a melanger
-     * @return void
+     * @return string
      */
-    public function generate(int $length, string $carateres)
+    public static function generate(int $length, string $carateres)
     {
         return substr(str_shuffle(str_repeat($carateres, $length)), 0, $length);
     }
@@ -114,37 +114,39 @@ class Controller
         while (!is_dir($directory)) {
             mkdir($path);
             return $path . DIRECTORY_SEPARATOR;
-            exit();
         }
         return false;
     }
     /**
-     * Pour uploader les fichiers images 
-     * @param mixed $nom. Le nom du fichier a uploader
-     * @param mixed $destination. Le chemin de destination du fichier
-     * @param integer $taille_max. La taille maximal du fichier a uploader
-     *@return void|bool
+     * Undocumented function
+     *
+     * @param mixed $nom
      */
     public function addImage($nom)
     {
-        // $path=[];
-        if (isset($nom) && !empty($nom)) {
-            $image = $_FILES[$nom]['name'];
-            $extension = strrchr($image, ".");
-            $taille = $_FILES[$nom]['size'];
-            $temporaire = $_FILES[$nom]['tmp_name'];
-
-            $directory = $this->createFolder((string) $this->generate(10, '123450ABCDEabcde'));
-            $destination = $directory . $image;
-            $extensions_autorisees = array('.jpg', '.JPG', '.png', '.PNG');
-            if (in_array($extension, $extensions_autorisees)) {
-                if (move_uploaded_file($temporaire, $destination)) {
-                    $imgOrginal = $destination;
-                    $imgRedi = $this->convertImage($imgOrginal, $directory, 'x320', 96, 96);
-                    return array($imgOrginal, $imgRedi);
-                }
+        $image = $_FILES[$nom]['name'];
+        $temporaire = $_FILES[$nom]['tmp_name'];
+        $directory = $this->createFolder($this->generate(20, '123450ABCDEabcde'));
+        $destination = $directory . $image;
+        if (move_uploaded_file($temporaire, $destination)) {
+            $imgOrginal = $destination;
+            $imgRedi = $this->convertImage($imgOrginal, $directory, 'x320', 96, 96);
+            return $imgOrginal . " AND " . $imgRedi;
+        }
+    }
+    /**
+     * Undocumented function
+     *
+     * @param array $errors. Le tableau des erreurs
+     * @param string $keys. La 
+     * @return void
+     */
+    public static function errorsViews(array $errors, string $keys)
+    {
+        if ((isset($errors) && !empty($errors) && key_exists($keys, $errors))) {
+            foreach ($errors as $keys => $value) {
+                return $value;
             }
-            return $_REQUEST['message'] = "Echec de l'image";
         }
     }
 }

@@ -1,7 +1,8 @@
 <div class="col-span-12 primary_bg">
     <div class="w-full h-20 flex  flex flex-col items-center border-b border-gray-900">
         <div class="flex w-10/12 mx-auto mt-5">
-            <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a><h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
+            <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a>
+            <h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
         </div>
         <h2 class="text-gray-400 w-10/12 mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
     </div>
@@ -122,7 +123,7 @@
         <img src="assets/logos/add-user.png" style="height: 500px;" alt="Joining image" />
     </div>
     </div>
-      <div class="md:w-6/12 w-11/12 md:p-0 p-3  mx-auto mt-12 flex flex-col md:flex-row justify-between">
+    <div class="md:w-6/12 w-11/12 md:p-0 p-3  mx-auto mt-12 flex flex-col md:flex-row justify-between">
         <a class="text-gray-500 font-semibold hover:text-green-500" href="/politics">Politiques</a>
         <a class="text-gray-500 font-semibold hover:text-green-500" href="/terms">Conditions d'utilisations</a>
         <a class="text-gray-500 font-semibold hover:text-green-500" href="/contracts">Contracts</a>

@@ -1,7 +1,7 @@
 <?php
-namespace Root\Models;
+namespace Root\App\Models;
 
-use Root\Models\Objects\Operation;
+use Root\App\Models\Objects\Operation;
 
 /**
  *
