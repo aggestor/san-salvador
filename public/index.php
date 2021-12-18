@@ -53,6 +53,9 @@ $routes->get('/login', 'Root\App\Controllers\UserController@login');
 
 $routes->get('/user/dashboard', 'Root\App\Controllers\UserController@dashboard');
 
+$routes->get('/reset_pwd/first-step', 'Root\App\Controllers\TestController@reset_pwd');
+$routes->get('/reset_pwd/last-step', 'Root\App\Controllers\TestController@create_new_pwd');
+
 //route d'activation du compte utilisateur
 $routes->get('/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@accountActivation', 'id;token');
 //routes pour la reinitialisation du mot de passe
