@@ -3,5 +3,8 @@
 
 /assets/fontawesome
 /assets/css/tailwind.css
+/assets/css/tailwind.min.css
 /cpanel.txt
 /assets/ts
+/App/Controllers/testController.php
+/public/index.php
