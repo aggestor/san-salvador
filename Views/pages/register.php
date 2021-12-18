@@ -86,16 +86,6 @@
                     <!-- <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span> -->
                 </div>
                 <!--SPONSOR END-->
-                <!--PARING SIDE BEGIN-->
-                <div class="md:w-8/12 h-24 p-2 w-full mx-auto md:ml-5 border border-gray-400 rounded-lg h-10">
-                   <span class="text-gray-400">Coté de parainnage</span>
-                   <div class="w-full flex mt-3 justify-between">
-                       <span data-side="left" class="p-1 flex text-gray-400 cursor-pointer side- border rounded border-gray-400"> <i class="fas mr-2 mt-1 fa-circle    "></i> Gauche</span>
-                       <span data-side="right" class="p-1 flex text-gray-400 cursor-pointer side border rounded border-gray-400"> <i class="fas mr-2 mt-1 fa-circle    "></i> Droit</span>
-                   </div>
-                </div>
-    
-                <!--PARING SIDE END-->
                 <div class="md:w-11/12 flex justify-between mt-3 mx-auto">
                     <div class="lg:w-9/12 text-gray-500 text-sm">
                         Avant de cliquer sur <i>Suivant</i>,  rassurez-vous d'avoir bien rempli le formulaire ce-dessus.
