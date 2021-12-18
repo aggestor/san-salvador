@@ -31,5 +31,6 @@ class adminController extends Controller
     }
     public function login()
     {
+        return $this->view("pages.admin.login", "layout_");
     }
 }

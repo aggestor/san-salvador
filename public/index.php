@@ -22,6 +22,11 @@ $routes->get('/', 'Root\App\Controllers\StaticController@home');
 $routes->get('/help', 'Root\App\Controllers\StaticController@help');
 $routes->get('/services', 'Root\App\Controllers\StaticController@service');
 $routes->get('/with-us', 'Root\App\Controllers\StaticController@with_us');
+$routes->get('/contact', 'Root\App\Controllers\StaticController@contact');
+$routes->get('/security', 'Root\App\Controllers\StaticController@security');
+$routes->get('/politics', 'Root\App\Controllers\StaticController@politics');
+$routes->get('/terms', 'Root\App\Controllers\StaticController@terms');
+$routes->get('/packages', 'Root\App\Controllers\StaticController@packages');
 
 //les routes en get pour la page login et register
 
@@ -36,6 +41,8 @@ $routes->get('/admin/destroy', 'Root\App\Controllers\AdminController@destroy');
 //les routes pour l'admin en post
 $routes->post('/admin/register', 'Root\App\Controllers\AdminController@create');
 $routes->post('/admin/login', 'Root\App\Controllers\AdminController@login');
+$routes->get('/admin/login', 'Root\App\Controllers\AdminController@login');
+$routes->get('/admin/add_test', 'Root\App\Controllers\TestController@add_admin_test');
 //route pour l'admin en get
 $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@index');
 
