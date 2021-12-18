@@ -19,6 +19,14 @@
                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['userEmail']; ?></span>
                 <?php endif; ?>
             </div>
+            <div class="md:w-11/12 w-full mx-auto mb-2">
+                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                    <input id="password" name="password" type="password" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                </div>
+                <?php if (isset($_POST['connexion']) && !empty($params['errors']['password'])) : ?>
+                    <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['password']; ?></span>
+                <?php endif; ?>
+            </div>
             <div class="md:w-11/12 flex justify-between mt-5 mx-auto">
                 <div class="w-6/12 flex text-gray-500 justify-left">
                     <input class="w-4 h-4 mx-2" type="checkbox" name="remember" id="remember">
