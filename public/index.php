@@ -36,6 +36,8 @@ $routes->get('/admin/destroy', 'Root\App\Controllers\AdminController@destroy');
 //les routes pour l'admin en post
 $routes->post('/admin/register', 'Root\App\Controllers\AdminController@create');
 $routes->post('/admin/login', 'Root\App\Controllers\AdminController@login');
+$routes->get('/admin/register', 'Root\App\Controllers\AdminController@create');
+$routes->get('/admin/login', 'Root\App\Controllers\AdminController@login');
 //route pour l'admin en get
 $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@index');
 
@@ -55,12 +57,17 @@ $routes->get('/user/dashboard', 'Root\App\Controllers\UserController@dashboard')
 
 //route d'activation du compte utilisateur
 $routes->get('/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@accountActivation', 'id;token');
-//routes pour la reinitialisation du mot de passe
+//route pour l'activation du compte admin
+$routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@accountActivation', 'id;token');
+//routes pour l'a reinitialisation du mot de passe'
 $routes->get('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@resetPassword', 'id;token');
 $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@resetPassword', 'id;token');
 
+//
+
+
 $routes->get('/test', function () {
-    unset($_SESSION['token']);
+    var_dump($_SESSION);
 });
 
 

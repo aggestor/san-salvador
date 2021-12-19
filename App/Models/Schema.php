@@ -29,7 +29,9 @@ class Schema
         "timeRecord"=>"record_time",
         "modifDate"=>"last_modif_date",
         "motifTime"=>"last_modif_time",
-        "photo"=>"images_name"
+        "photo"=>"images_name",
+        "token"=>"user_token",
+
     ];
     
     const PACK=[
@@ -58,6 +60,7 @@ class Schema
         "motifTime"=>"last_modif_time",
         "validationEmail"=>"validation_Status",
         "status"=>"admin_status",
+        "token"=>"admin_token",
     ];
     const BINARY = [
         "id"=>"id",

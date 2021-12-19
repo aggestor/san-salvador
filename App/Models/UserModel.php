@@ -35,6 +35,7 @@ class UserModel extends AbstractMemberModel
                     Schema::USER['dateRecord'],
                     Schema::USER['timeRecord'],
                     Schema::USER['photo'],
+                    Schema::USER['token'],
                 ],
 
                 [
@@ -50,7 +51,8 @@ class UserModel extends AbstractMemberModel
                     $object->getValidationMail() ? 1 : 0,
                     $object->getRecordDate()->format('Y-m-d'),
                     $object->getRecordTime()->format('H:i:s'),
-                    $object->getPhoto()
+                    $object->getPhoto(),
+                    $object->getToken()
                 ]
             );
         } catch (\PDOException $th) {
@@ -65,23 +67,27 @@ class UserModel extends AbstractMemberModel
      */
     public function update($object, $id): void
     {
-        Queries::updateData(
-            $this->getTableName(),
-            [
-                Schema::USER['name'],
-                Schema::USER['phone'],
-                Schema::USER['lastModifDate'],
-                Schema::USER['lastModifTime'],
-            ],
-            "id = ?",
-            [
-                $object->getName(),
-                $object->getPhone(),
-                $object->getLastModifDate()->format('Y-m-d'),
-                $object->getLastModifTime()->format('H:i:s'),
-                $id
-            ]
-        );
+        try {
+            Queries::updateData(
+                $this->getTableName(),
+                [
+                    Schema::USER['name'],
+                    Schema::USER['phone'],
+                    Schema::USER['lastModifDate'],
+                    Schema::USER['lastModifTime'],
+                ],
+                "id = ?",
+                [
+                    $object->getName(),
+                    $object->getPhone(),
+                    $object->getLastModifDate()->format('Y-m-d'),
+                    $object->getLastModifTime()->format('H:i:s'),
+                    $id
+                ]
+            );
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
     }
     /**
      * modification de la photo d'un utilisateur
@@ -90,12 +96,16 @@ class UserModel extends AbstractMemberModel
      */
     public function updatePhoto($id, string $photoName): void
     {
-        Queries::updateData(
-            $this->getTableName(),
-            [Schema::USER['photo']],
-            "id = ?",
-            [$photoName, $id]
-        );
+        try{
+            Queries::updateData(
+                $this->getTableName(),
+                [Schema::USER['photo']],
+                "id = ?",
+                [$photoName, $id]
+            );
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
     }
 
     /**
@@ -105,12 +115,16 @@ class UserModel extends AbstractMemberModel
      */
     public function updatePassword($id, string $password): void
     {
-        Queries::updateData(
-            $this->getTableName(),
-            [Schema::USER['password']],
-            "id = ?",
-            [$password, $id]
-        );
+        try{
+            Queries::updateData(
+                $this->getTableName(),
+                [Schema::USER['password']],
+                "id = ?",
+                [$password, $id]
+            );
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
     }
 
     /**
@@ -119,12 +133,34 @@ class UserModel extends AbstractMemberModel
      */
     public function validateAccount($id): void
     {
-        Queries::updateData(
-            $this->getTableName(),
-            [Schema::USER['validationEmail']],
-            "id = ?",
-            [1, $id]
-        );
+        try{
+            Queries::updateData(
+                $this->getTableName(),
+                [Schema::USER['validationEmail']],
+                "id = ?",
+                [1, $id]
+            );
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
+    }
+    /**
+     * mis en jour du token de l'utilisateur
+     * @param string $token
+     * @param string $id
+     */
+    public function updateToken($token,$id): void
+    {
+        try{
+            Queries::updateData(
+                $this->getTableName(),
+                [Schema::USER['token']],
+                "id = ?",
+                [$token, $id]
+            );
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
     }
     /**
      * {@inheritDoc}
@@ -158,14 +194,18 @@ class UserModel extends AbstractMemberModel
      */
     public function countLeftRightSides(string $userId): int
     {
-        $count = 0;
+        try{
+            $count = 0;
 
-        if ($this->hasSides($userId)) {
-            $count += $this->countLeftSide($userId);
-            $count += $this->countRightSide($userId);
+            if ($this->hasSides($userId)) {
+                $count += $this->countLeftSide($userId);
+                $count += $this->countRightSide($userId);
+            }
+
+            return $count;
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
         }
-
-        return $count;
     }
 
     /**
@@ -177,39 +217,43 @@ class UserModel extends AbstractMemberModel
      */
     public function countSide(string $userId, int $side): int
     {
-        $count = 0;
-        switch ($side) {
-            case User::FOOT_LEFT: {
-                    if ($this->hasLeftSide($userId)) {
-                        $user = $this->findLeftSide($userId);
-                        $count++;
+        try{
+            $count = 0;
+            switch ($side) {
+                case User::FOOT_LEFT: {
+                        if ($this->hasLeftSide($userId)) {
+                            $user = $this->findLeftSide($userId);
+                            $count++;
 
-                        if ($this->hasSides($user->getId())) {
-                            $count += $this->countLeftRightSides($user->getId());
+                            if ($this->hasSides($user->getId())) {
+                                $count += $this->countLeftRightSides($user->getId());
+                            }
                         }
                     }
-                }
-                break;
+                    break;
 
-            case User::FOOT_RIGHT: {
-                    if ($this->hasRightSide($userId)) {
-                        $user = $this->findRightSide($userId);
-                        $count++;
+                case User::FOOT_RIGHT: {
+                        if ($this->hasRightSide($userId)) {
+                            $user = $this->findRightSide($userId);
+                            $count++;
 
-                        if ($this->hasSides($user->getId())) {
-                            $count += $this->countLeftRightSides($user->getId());
+                            if ($this->hasSides($user->getId())) {
+                                $count += $this->countLeftRightSides($user->getId());
+                            }
                         }
+                        return 0;
                     }
-                    return 0;
-                }
-                break;
+                    break;
 
-            default: {
-                    throw new ModelException("Side inconue => {$side}");
-                }
+                default: {
+                        throw new ModelException("Side inconue => {$side}");
+                    }
+            }
+
+            return $count;
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
         }
-
-        return $count;
     }
 
     /**
@@ -219,15 +263,19 @@ class UserModel extends AbstractMemberModel
      */
     public function countSides(string $userId): int
     {
-        $count = 0;
-        if ($this->hasLeftSide($userId)) {
-            $count++;
-        }
+        try{
+            $count = 0;
+            if ($this->hasLeftSide($userId)) {
+                $count++;
+            }
 
-        if ($this->hasRightSide($userId)) {
-            $count++;
+            if ($this->hasRightSide($userId)) {
+                $count++;
+            }
+            return $count;
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
         }
-        return $count;
     }
 
     /**
@@ -237,7 +285,11 @@ class UserModel extends AbstractMemberModel
      */
     public function countRightSide(string $userId): int
     {
-        return $this->countSide($userId, User::FOOT_RIGHT);
+        try{
+            return $this->countSide($userId, User::FOOT_RIGHT);
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
     }
 
     /**
@@ -247,7 +299,11 @@ class UserModel extends AbstractMemberModel
      */
     public function countLeftSide(string $userId): int
     {
-        return $this->countSide($userId, User::FOOT_LEFT);
+        try{
+            return $this->countSide($userId, User::FOOT_LEFT);
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
     }
 
     /**
@@ -257,15 +313,19 @@ class UserModel extends AbstractMemberModel
      */
     public function findDownlineLeftRightSides(string $userId): array
     {
-        $data = array();
-        if ($this->hasLeftSide($userId)) {
-            $data[] = $this->findDownlineRightSide($userId);
-        }
+        try{
+            $data = array();
+            if ($this->hasLeftSide($userId)) {
+                $data[] = $this->findDownlineRightSide($userId);
+            }
 
-        if ($this->hasRightSide($userId)) {
-            $data[] = $this->findDownlineLeftSide($userId);
+            if ($this->hasRightSide($userId)) {
+                $data[] = $this->findDownlineLeftSide($userId);
+            }
+            return $data;
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
         }
-        return $data;
     }
 
     /**
@@ -273,6 +333,7 @@ class UserModel extends AbstractMemberModel
      */
     public function findRoot(): User
     {
+        
         $return = null;
         try {
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . (Schema::USER['sponsor']) . ' IS NULL AND ' . (Schema::USER['parent']) . " IS NULL", array());
@@ -290,6 +351,7 @@ class UserModel extends AbstractMemberModel
         }
 
         return $return;
+        
     }
 
     /**
@@ -309,6 +371,7 @@ class UserModel extends AbstractMemberModel
         }
 
         return $return;
+        
     }
 
     /**
@@ -319,35 +382,39 @@ class UserModel extends AbstractMemberModel
      */
     public function findDownlineSide(string $userId, int $side): User
     {
-        $user = null;
-        switch ($side) {
-            case User::FOOT_LEFT: {
-                    if ($this->hasLeftSide($userId)) {
-                        $user = $this->findLeftSide($userId);
-                    } else {
-                        throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
+        try{
+            $user = null;
+            switch ($side) {
+                case User::FOOT_LEFT: {
+                        if ($this->hasLeftSide($userId)) {
+                            $user = $this->findLeftSide($userId);
+                        } else {
+                            throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case User::FOOT_RIGHT: {
-                    if ($this->hasRightSide($userId)) {
-                        $user = $this->findRightSide($userId);
-                    } else {
-                        throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
+                case User::FOOT_RIGHT: {
+                        if ($this->hasRightSide($userId)) {
+                            $user = $this->findRightSide($userId);
+                        } else {
+                            throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
+                        }
                     }
-                }
-                break;
+                    break;
 
-            default: {
-                    throw new ModelException("Side inconue => {$side}");
-                }
-        }
+                default: {
+                        throw new ModelException("Side inconue => {$side}");
+                    }
+            }
 
-        if ($this->hasSides($user->getId())) {
-            $user->setSides($this->findDownlineLeftRightSides($user->getId()));
+            if ($this->hasSides($user->getId())) {
+                $user->setSides($this->findDownlineLeftRightSides($user->getId()));
+            }
+            return $user;
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
         }
-        return $user;
     }
 
     /**
@@ -357,7 +424,11 @@ class UserModel extends AbstractMemberModel
      */
     public function findDownlineLeftSide(string $userId): User
     {
-        return $this->findDownlineSide($userId, User::FOOT_LEFT);
+        try{
+            return $this->findDownlineSide($userId, User::FOOT_LEFT);
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
     }
 
     /**
@@ -367,7 +438,11 @@ class UserModel extends AbstractMemberModel
      */
     public function findDownlineRightSide(string $userId): User
     {
-        return $this->findDownlineSide($userId, User::FOOT_RIGHT);
+        try{
+            return $this->findDownlineSide($userId, User::FOOT_RIGHT);
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
     }
 
     /**
@@ -396,6 +471,7 @@ class UserModel extends AbstractMemberModel
         }
 
         return $return;
+        
     }
 
     /**

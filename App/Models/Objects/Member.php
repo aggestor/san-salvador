@@ -44,6 +44,11 @@ abstract class Member extends DBOccurence
      * @var boolean
      */
     protected $status;
+    /**
+     * token pour la confirmation du compte
+     * @var string
+     */
+    protected $token;
     
     
     /**
@@ -150,6 +155,13 @@ abstract class Member extends DBOccurence
     {
         return $this->phone;
     }
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
 
     /**
      * @param string $phone
@@ -173,6 +185,13 @@ abstract class Member extends DBOccurence
     public function setPhoto($photo)
     {
         $this->photo = $photo;
+    }
+    /**
+     * @param string $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
     }
 
 }

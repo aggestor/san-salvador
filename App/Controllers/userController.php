@@ -108,12 +108,10 @@ class UserController extends Controller
                 return $this->view("pages.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             }
             $mail = $user->getEmail();
-            $token = Controller::generate(60, "QWERTYUIOPASDFGHJKLZXCVBNMqweryuiopasdfghjklzxcvbnm1234567890");
+            $token = $user->getToken();
             $id = $user->getId();
             $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
             $lien = $domaineName . "activation-$id-$token";
-            $_SESSION['users'] = $user;
-            $_SESSION['token'] = $token;
             $this->envoieMail($mail, $lien);
         }
         return $this->view("pages.register", "layout_");
@@ -134,29 +132,15 @@ class UserController extends Controller
      */
     public function accountActivation()
     {
-        try {
-            if (isset($_GET['id']) && isset($_GET['token'])) {
-                //on recupere le get de l'url
-                $getId = $_GET['id'];
-                $getToken = $_GET['token'];
-                //on recupere les session entre autre id et le token
-                /**
-                 * @var User
-                 */
-                $user = $_SESSION['users'];
-                $sessionToken = $_SESSION['token'];
-                //on compare les information du session avec du get
-                if (($sessionToken == $getToken) && ($getId == $user->getId()) && ($this->userModel->checkById($getId))) {
-                    $this->userModel->validateAccount($user->getId());
-                    unset($_SESSION['token']);
-                    var_dump('ok');
-                    exit();
-                } else {
-                    return $this->view('pages.404');
-                }
-            }
-        } catch (\RuntimeException $e) {
-            die($e->getMessage());
+        $validator = new UserValidator();
+        $user = $validator->activeAccountAfterValidation();
+        if ($validator->hasError() || $validator->getMessage() != null) {
+            $errors = $validator->getErrors();
+            var_dump($errors);
+            exit();
+        } else {
+            var_dump($user);
+            exit();
         }
     }
     private function isUsers()

@@ -51,14 +51,16 @@ class UserValidator extends AbstractMemberValidator
         $sponsor = isset($_GET[self::FIELD_SPONSOR]) ? $_GET[self::FIELD_SPONSOR] : null;
 
         $id = Controller::generate(11, "1234567890ABCDEFabcdef");
+        $token = Controller::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
         $this->processingId($user, $id, true);
         $this->processingEmail($user, $mail);
         $this->processingName($user, $name);
         $this->processingTelephone($user, $phone);
         $this->processingPassword($user, $password, true, $password_confirm);
-        $this->processingImage($user, $image, false);
+        $this->processingImage($image, false);
         $this->processingParent($user, $parent);
         $this->processingSponsor($user, $sponsor, $side);
+        $this->processingToken($token, $user);
         if (!$this->hasError()) {
             $controller = new Controller();
             $chemin = $controller->addImage(self::FIELD_IMAGE);
@@ -106,6 +108,27 @@ class UserValidator extends AbstractMemberValidator
     }
     public function changeStatusAfterValidation()
     {
+    }
+    /**
+     * Activation du compte apres validation
+     *
+     * @return User
+     */
+    public function activeAccountAfterValidation()
+    {
+        $user = new User();
+        $id = $_GET[self::FIELD_ID];
+        $token = $_GET[self::FIELD_TOKEN];
+        $this->processingAccount($token, $id, $user, true);
+        if (!$this->hasError()) {
+            try {
+                $this->userModel->validateAccount($id);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+        $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec d'inscription" : "succes";
+        return $user;
     }
     /**
      * Reinitialisation du compte apres validation
@@ -162,7 +185,7 @@ class UserValidator extends AbstractMemberValidator
      * @param boolean $nullable
      * @return void
      */
-    protected function processingImage(User $user, $image, $nullable = false): void
+    protected function processingImage($image, $nullable = false): void
     {
         try {
             $this->validationImage($image, $nullable);
