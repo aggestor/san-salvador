@@ -43,6 +43,7 @@ $routes->post('/admin/register', 'Root\App\Controllers\AdminController@create');
 $routes->post('/admin/login', 'Root\App\Controllers\AdminController@login');
 $routes->get('/admin/login', 'Root\App\Controllers\AdminController@login');
 $routes->get('/admin/add_test', 'Root\App\Controllers\TestController@add_admin_test');
+$routes->get('/success', 'Root\App\Controllers\TestController@success');
 //route pour l'admin en get
 $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@index');
 

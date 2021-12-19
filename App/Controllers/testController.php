@@ -16,6 +16,10 @@
         {
             return $this->view("pages.admin.add_test", "layout_");
         }
+        public function success()
+        {
+            return $this->view("pages.static.registration_success", "layout_");
+        }
     }
 
 

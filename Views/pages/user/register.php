@@ -15,7 +15,7 @@
             </div>
             <h2 id="register-title" class="text-gray-500 font-semibold text-base my-4 text-left">Remplissez ce formulaire ci-bas pour vous inscrire sur notre plateforme !</h2>
         </div>
-        <form method="POST" action="/sign_in" class="md:w-11/12 w-full  mx-auto">
+        <form method="POST" class="md:w-11/12 w-full  mx-auto" enctype="multipart/form-data">
             <!--FORM PART 1-->
             <div class="w-full form-1 flex flex-col mx-auto p-3">
                 <!--USERNAME BEGIN-->
@@ -34,7 +34,7 @@
                     <!--EMAIL BEGIN-->
                     <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
                         <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                            <input id="userEmail" name="userEmail" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                            <input id="user_email" name="user_email" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                         </div>
                         <?php
                             if (isset($_POST['enregistrer']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["userEmail"])) { ?>
@@ -46,7 +46,7 @@
                     <!--PHONE NUMBER BEGIN-->
                     <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
                         <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                            <input id="PhoneNumber" name="PhoneNumber" type="text" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                            <input id="phone_number" name="phone_number" type="text" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                         </div>
                         <?php
                             if (isset($_POST['enregistrer']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["PhoneNumber"])) { ?>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
                         <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirmer mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                            <input id="confirm_password" name="confirm_password" type="password" placeholder="Confirmer mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                         </div>
                         <?php
                             if (isset($_POST['enregistrer']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["PhoneNumber"])) {?>
@@ -82,7 +82,7 @@
                 <!--SPONSOR BEGIN-->
                 <div class="md:w-11/12 mx-auto w-full mb-2">
                     <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                        <input id="sponsor" readonly type="text" placeholder="Sponsor" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                        <input id="sponsor" name="sponsor" readonly type="text" placeholder="Sponsor" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                     </div>
                     <!-- <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span> -->
                 </div>
