@@ -53,5 +53,6 @@ class adminController extends Controller
         } else {
             header('Location:/login');
         }
+        return $this->view("pages.admin.login", "layout_");
     }
 }

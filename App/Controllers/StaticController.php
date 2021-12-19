@@ -6,30 +6,30 @@ class StaticController extends Controller
 {
     public function home()
     {
-        return $this->view('Home.HomePage', 'layouts');
+        return $this->view('pages.static.home_page', 'layouts');
     }
     public function packages()
     {
-        return $this->view('pages.packs');
+        return $this->view('pages.static.packs');
     }
     public function help()
     {
-        return $this->view('pages.help');
+        return $this->view('pages.static.help');
     }
     public function service()
     {
-        return $this->view('pages.services');
+        return $this->view('pages.static.services');
     }
     public function with_us()
     {
-        return $this->view('pages.with_us');
+        return $this->view('pages.static.with_us');
     }
     public function about()
     {
-        return $this->view('pages.about');
+        return $this->view('pages.static.about');
     }
     public function contact()
     {
-        return $this->view('pages.contact');
+        return $this->view('pages.static.contact');
     }
 }
