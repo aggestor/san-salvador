@@ -40,11 +40,11 @@
                 <button type="submit" name="connexion" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-lock"></i> Connexion</button>
             </div>
             <div class="md:w-11/12 flex text-gray-500 justify-between mt-5 mx-auto">
-                <span class="flex justify-end">Pas encore inscrit(e) ? <a class="font-semibold" href="/register"> &#160; Créer un compte</a></span>
+                <span class="flex justify-end">Pas encore inscrit(e) ? <a class="font-semibold" href="/admin/register"> &#160; Créer un compte</a></span>
             </div>
         </form>
         <div class="lg:w-6/12 hidden lg:flex overflow-hidden items-center justify-center">
-            <img src="/assets/logos/admin.png"  class="object-cover h-72" alt="Green Admin illustration">
+            <img src="/assets/logos/admin.png" class="object-cover h-72" alt="Green Admin illustration">
         </div>
     </div>
     <div class="md:w-6/12 w-11/12 md:p-0 p-3  mx-auto mt-12 flex flex-col md:flex-row justify-between">

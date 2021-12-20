@@ -1,5 +1,6 @@
 <?php
 namespace Root\App\Models;
+
 /**
  *
  * @author Esaie MUHASA
@@ -17,6 +18,7 @@ abstract class AbstractMemberModel extends AbstractDbOccurenceModel
     public function checkByMail (string $email) : bool {
          return $this->check(Schema::USER['email'], $email);
     }
+    
     
     /**
      * Ce numero telephonique existe??
@@ -36,6 +38,7 @@ abstract class AbstractMemberModel extends AbstractDbOccurenceModel
     public function findByMail (string $email) {
         return $this->find(Schema::USER['email'], $email);
     }
+    
     
     /**
      * Renvoie le proprietaire du numero de telephone en parametre

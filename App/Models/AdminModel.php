@@ -18,30 +18,36 @@ class AdminModel extends AbstractMemberModel
      */
     public function create($object): void
     {
-        Queries::addData(
-            $this->getTableName(),
-            [
-                Schema::USER['id'],
-                Schema::USER['name'],
-                Schema::USER['email'],
-                Schema::USER['password'],
-                Schema::USER['dateRecord'],
-                Schema::USER['timeRecord'],
-                Schema::USER['validationEmail'],
-                Schema::USER['status'],
-            ],
+        
+        try{
+             Queries::addData(
+                $this->getTableName(),
+                [
+                    Schema::ADMIN['id'],
+                    Schema::ADMIN['name'],
+                    Schema::ADMIN['email'],
+                    Schema::ADMIN['dateRecord'],
+                    Schema::ADMIN['timeRecord'],
+                    Schema::ADMIN['validationEmail'],
+                    Schema::ADMIN['status'],
+                    Schema::ADMIN['token']
+                ],
 
-            [
-                $object->getId(),
-                $object->getName(),
-                $object->getEmail(),
-                $object->getPassword(),
-                $object->getRecordDate()->format('Y-m-d'),
-                $object->getRecordTime()->format('H:i:s'),
-                $object->getValidationMail() ? 1 : 0,
-                $object->getStatus() ? 1 : 0
-            ]
-        );
+                [
+                    $object->getId(),
+                    $object->getName(),
+                    $object->getEmail(),
+                    $object->getRecordDate()->format('Y-m-d'),
+                    $object->getRecordTime()->format('H:i:s'),
+                    $object->getValidationMail() ? 1 : 0,
+                    $object->getStatus() ? 1 : 0,
+                    $object->getToken()
+                ]
+            ) 
+         ;
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
     }
 
     /**
@@ -51,14 +57,53 @@ class AdminModel extends AbstractMemberModel
     protected function getDBOccurence(array $keyValue)
     {
         $data = array();
-        foreach (Schema::USER as $key => $value) {
+        foreach (Schema::ADMIN as $key => $value) {
             if (key_exists($value, $keyValue)) {
                 $data[$key] = $keyValue[$value];
             }
         }
         return new Admin($data);
     }
+    /**
+     * mis en jour du mot de passe d'un l'admin
+     * @param string $id
+     * @param string $password
+     */
+    public function updatePassword($id, string $password): void
+    {
+        try{
+            Queries::updateData(
+                $this->getTableName(),
+                [
+                    Schema::ADMIN['password'],
+                    Schema::ADMIN['validationEmail'],
+                ],
+                "id = ?",
+                [$password,1, $id]
+            );
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
+    }
 
+    /**
+     * mis en jour du token de l'admin
+     * @param string $token
+     * @param string $id
+     */
+    public function updateToken($token,$id): void
+    {
+        try{
+            Queries::updateData(
+                $this->getTableName(),
+                [Schema::ADMIN['token']],
+                "id = ?",
+                [$token, $id]
+            );
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
+        }
+    }
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getTableName()

@@ -14,7 +14,7 @@ class UserValidator extends AbstractMemberValidator
     const FIELD_SPONSOR = 'sponsor';
     const FIELD_PARENT = 'parent';
     const FIELD_SIDE = 'side';
-    const FIELD_PASSWORD_CONFIRM = 'confirmPassword';
+    const FIELD_PASSWORD_CONFIRM = 'confirm_password';
 
     /**
      * Undocumented variable
@@ -51,14 +51,16 @@ class UserValidator extends AbstractMemberValidator
         $sponsor = isset($_GET[self::FIELD_SPONSOR]) ? $_GET[self::FIELD_SPONSOR] : null;
 
         $id = Controller::generate(11, "1234567890ABCDEFabcdef");
+        $token = Controller::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
         $this->processingId($user, $id, true);
         $this->processingEmail($user, $mail);
         $this->processingName($user, $name);
         $this->processingTelephone($user, $phone);
         $this->processingPassword($user, $password, true, $password_confirm);
-        $this->processingImage($user, $image, false);
+        $this->processingImage($image, false);
         $this->processingParent($user, $parent);
         $this->processingSponsor($user, $sponsor, $side);
+        $this->processingToken($token, $user);
         if (!$this->hasError()) {
             $controller = new Controller();
             $chemin = $controller->addImage(self::FIELD_IMAGE);
@@ -93,36 +95,91 @@ class UserValidator extends AbstractMemberValidator
         $user = new User();
         $mail = $_POST[self::FIELD_EMAIL];
         $password = $_POST[self::FIELD_PASSWORD];
+
+        $this->processingEmail($user, $mail, true);
+        $this->processingPassword($user, $password);
         if (!$this->hasError()) {
             try {
-                $this->processingEmail($user, $mail, true);
-                $this->processingPassword($user, $password);
             } catch (ModelException $e) {
                 $this->setMessage($e->getMessage());
             }
         }
+        $users = !empty($mail) ? $this->userModel->findByMail($mail) : null;
+        // var_dump($users);
+        // exit();
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec de la connexion" : "Connexion faite avec success";
-        return $user;
+        return $users;
     }
     public function changeStatusAfterValidation()
     {
     }
     /**
-     * Reinitialisation du compte apres validation
+     * Activation du compte apres validation
+     *
+     * @return User
+     */
+    public function activeAccountAfterValidation()
+    {
+        $user = new User();
+        $id = $_GET[self::FIELD_ID];
+        $token = $_GET[self::FIELD_TOKEN];
+        $this->processingAccount($token, $id, $user);
+        $users = $this->userModel->findById($id);
+        if (!$this->hasError()) {
+            try {
+                $this->userModel->validateAccount($id);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+        $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec d'inscription" : "succes";
+        return $users;
+    }
+    /**
+     * Reinitialisation du compte apres validation de l'email
      * @return User
      */
     public function resetPassword()
     {
         $user = new User();
         $mail = $_POST[self::FIELD_EMAIL];
+        $token = Controller::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
+        $getToken = $this->processingToken($token, $user, true);
         $this->processingEmail($user, $mail, true);
+        $users = !empty($mail) ? $this->userModel->findByMail($mail) : null;
         if (!$this->hasError()) {
+            $this->userModel->updateToken($getToken, $users->getId());
             try {
             } catch (ModelException $e) {
                 $this->setMessage($e->getMessage());
             }
         }
-        return $user;
+        return $users;
+    }
+    /**
+     * Reset password apres validation de l'email
+     * @return User
+     */
+    public function resetPasswordAfterValidation()
+    {
+        $user = new User();
+        $id = $_GET[self::FIELD_ID];
+        $token = $_GET[self::FIELD_TOKEN];
+        $password = $_POST[self::FIELD_PASSWORD];
+        $password_confirm = $_POST[self::FIELD_PASSWORD_CONFIRM];
+        $pass_hash = $this->processingPassword($user, $password, true, $password_confirm, true);
+        $this->processingAccount($token, $id, $user);
+        if (!$this->hasError()) {
+            try {
+                $this->userModel->updatePassword($id, $pass_hash);
+                $this->userModel->updateToken(null, $id);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+        $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec d'inscription" : "succes";
+        $users = $this->userModel->findById($id);
+        return $users;
     }
     /**
      * Pour la validation du numero de telephone
@@ -162,7 +219,7 @@ class UserValidator extends AbstractMemberValidator
      * @param boolean $nullable
      * @return void
      */
-    protected function processingImage(User $user, $image, $nullable = false): void
+    protected function processingImage($image, $nullable = false): void
     {
         try {
             $this->validationImage($image, $nullable);

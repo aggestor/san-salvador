@@ -16,13 +16,15 @@ use RuntimeException;
  */
 abstract class AbstractMemberValidator extends AbstractValidator
 {
-    const FIELD_EMAIL = 'userEmail';
+    const FIELD_EMAIL = 'user_email';
     const FIELD_PASSWORD = 'password';
     const FIELD_NAME = 'username';
-    const FIELD_TELEPHONE = 'PhoneNumber';
+    const FIELD_TELEPHONE = 'phone_number';
+    const FIELD_TOKEN = 'token';
 
     const MAX_LENGHT_PSW = 30;
     const MIN_LENGHT_PSW = 8;
+    const MAX_LENGHT_TOKEN = 60;
 
     /***
      * changement de statut du compte d'un utilisateur
@@ -37,12 +39,17 @@ abstract class AbstractMemberValidator extends AbstractValidator
     public abstract function loginProcess();
 
     /**
-     * Undocumented function
+     * Reset password
      *
      * @return Member
      */
     public abstract function resetPassword();
-
+    /**
+     * Active Account apres validation
+     *
+     * @return Member
+     */
+    public abstract function activeAccountAfterValidation();
     /**
      * Undocumented function
      *
@@ -53,7 +60,6 @@ abstract class AbstractMemberValidator extends AbstractValidator
      */
     protected function validationEmail($mail, bool $onConnection = false, Member $member): void
     {
-
         $this->notNullable($mail);
         if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             throw new \RuntimeException("Entrer un e-mail invalide");
@@ -156,9 +162,9 @@ abstract class AbstractMemberValidator extends AbstractValidator
      * @param string $password
      * @param boolean $onCreate
      * @param string $confirmation
-     * @return void
+     * @return string|void
      */
-    protected function processingPassword(Member $member, $password, $onCreate = false, $confirmation = "")
+    protected function processingPassword(?Member $member, $password, $onCreate = false, $confirmation = "", bool $onActivation = false)
     {
         try {
             $this->validationPassword($password, $onCreate, $confirmation, $member);
@@ -166,7 +172,11 @@ abstract class AbstractMemberValidator extends AbstractValidator
             $this->addError(self::FIELD_PASSWORD, $e->getMessage());
         }
         $pass_has = !empty($password) ? password_hash($password, PASSWORD_ARGON2I) : null;
-        $member->setPassword($pass_has);
+        if ($onActivation) {
+            return $pass_has;
+        } else {
+            $member->setPassword($pass_has);
+        }
     }
     /**
      * traitement de l'e-mail
@@ -176,11 +186,104 @@ abstract class AbstractMemberValidator extends AbstractValidator
      */
     protected function processingEmail(Member $member, $mail, $onConnection = false): void
     {
+
         try {
             $this->validationEmail($mail, $onConnection, $member);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_EMAIL, $e->getMessage());
         }
         $member->setEmail($mail);
+    }
+    /**
+     * Pour la validation du compte
+     *
+     * @param string $token. Token 
+     * @param string $id. id
+     * @param Member $member
+     * @throws \RuntimeException
+     */
+    protected function validationAccount(string $token, string $id, Member $member)
+    {
+
+        if ($token < self::MAX_LENGHT_TOKEN) {
+            throw new \RuntimeException("Token invalide");
+        }
+        if ($this->isNull($token) || $this->isNull($id)) {
+            throw new \RuntimeException("Erreur d'activation du compte");
+        }
+        //on verifie si l'id existe et le token
+        $fac = ModelFactory::getInstance();
+        $ref = new ReflectionClass($member);
+        /**
+         * @var AbstractMemberModel $model
+         */
+        $model = $fac->getModel($ref->getShortName());
+        // var_dump($model->checkById($id));
+        // exit();
+        if (!$model->checkById($id)) {
+            throw new \RuntimeException("Id introuvable");
+        }
+
+        /**
+         * @var Member
+         */
+        $occurence = $model->findById($id);
+        $getToken = $occurence->getToken(); //get token n'existe pas pour le moment
+        if ($getToken == "") {
+            throw new \RuntimeException("Token introuvable");
+        }
+        if ($getToken != $token) {
+            throw new \RuntimeException("Token introuvable");
+        }
+    }
+    /**
+     * Pour le traitement du compte apres validation
+     * @param string $token
+     * @param string $id
+     * @param Member $member
+     * @return void
+     */
+    public function processingAccount($token, $id, Member $member): void
+    {
+        try {
+            $this->validationAccount($token, $id, $member);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_TOKEN, $e->getMessage());
+        }
+    }
+    /**
+     * Pour la validation du token
+     *
+     * @param string $token
+     * @return void
+     */
+    public function validationToken(string $token)
+    {
+        if ($this->isNull($token)) {
+            throw new \RuntimeException("Token invalide");
+        }
+        if ($token < self::MAX_LENGHT_TOKEN) {
+            throw new \RuntimeException("Token invalide jjjj");
+        }
+    }
+    /**
+     * Traitement du token apres validation
+     *
+     * @param string $token
+     * @param Member $member
+     * @return void
+     */
+    public function processingToken($token, Member $member, bool $onReset = false)
+    {
+        try {
+            $this->validationToken($token);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_TOKEN, $e->getMessage());
+        }
+        if ($onReset) {
+            return $token;
+        } else {
+            $member->setToken($token);
+        }
     }
 }

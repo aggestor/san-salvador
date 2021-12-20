@@ -13,7 +13,7 @@
             </div>
             <div class="md:w-11/12 w-full mx-auto mb-2">
                 <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="name" name="name" type="text" placeholder="Noms" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['connexion']) && empty($params['errors']['userEmail'])) ? $_POST['userEmail'] : ""; ?>" />
+                    <input id="name" name="username" type="text" placeholder="Noms" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="" />
                 </div>
                 <?php if (isset($_POST['connexion']) && !empty($params['errors']['userEmail'])) : ?>
                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['userEmail']; ?></span>
@@ -21,7 +21,7 @@
             </div>
             <div class="md:w-11/12 w-full mx-auto mb-2">
                 <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="mail" name="mail" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['connexion']) && empty($params['errors']['userEmail'])) ? $_POST['userEmail'] : ""; ?>" />
+                    <input id="mail" name="user_email" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="" />
                 </div>
                 <?php if (isset($_POST['connexion']) && !empty($params['errors']['userEmail'])) : ?>
                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['userEmail']; ?></span>
@@ -32,7 +32,7 @@
             </div>
         </form>
         <div class="lg:w-6/12 hidden lg:flex overflow-hidden items-center justify-center">
-            <img src="/assets/logos/admin.png"  class="object-cover h-72" alt="Green Admin illustration">
+            <img src="/assets/logos/admin.png" class="object-cover h-72" alt="Green Admin illustration">
         </div>
     </div>
     <div class="md:w-6/12 w-11/12 md:p-0 p-3  mx-auto mt-12 flex flex-col md:flex-row justify-between">
