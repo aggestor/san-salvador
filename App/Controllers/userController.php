@@ -64,8 +64,6 @@ class UserController extends Controller
             $user = $validator->resetPassword();
             if ($validator->hasError() || $validator->getMessage() != null) {
                 $errors = $validator->getErrors();
-                var_dump($errors);
-                exit();
                 return $this->view("pages.password.reset_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             } else {
                 /**
@@ -90,8 +88,6 @@ class UserController extends Controller
             $user = $validator->resetPasswordAfterValidation();
             if ($validator->hasError() || $validator->getMessage() != null) {
                 $errors = $validator->getErrors();
-                var_dump($errors);
-                exit();
                 return $this->view("pages.password.create_new_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             }
         }
@@ -117,8 +113,6 @@ class UserController extends Controller
             $user = $validator->createAfterValidation();
             if ($validator->hasError() || $validator->getMessage() != null) {
                 $errors = $validator->getErrors();
-                var_dump($errors);
-                exit();
                 return $this->view("pages.user.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             }
             $mail = $user->getEmail();
