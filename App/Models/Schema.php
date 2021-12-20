@@ -52,7 +52,7 @@ class Schema
     const ADMIN=[
         "id"=>"id",
         "name"=>"admin_second_name",
-        "email"=>"admin_emal",
+        "email"=>"email",
         "password"=>"admin_password",
         "dateRecord"=>"record_date",
         "timeRecord"=>"record_time",

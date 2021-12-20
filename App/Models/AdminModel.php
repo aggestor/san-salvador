@@ -18,8 +18,9 @@ class AdminModel extends AbstractMemberModel
      */
     public function create($object): void
     {
+        
         try{
-            Queries::addData(
+             Queries::addData(
                 $this->getTableName(),
                 [
                     Schema::ADMIN['id'],
@@ -42,7 +43,8 @@ class AdminModel extends AbstractMemberModel
                     $object->getStatus() ? 1 : 0,
                     $object->getToken()
                 ]
-            );
+            ) 
+         ;
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
         }

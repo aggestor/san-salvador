@@ -7,7 +7,7 @@ use Root\App\Models\Objects\ReturnInvest;
 use Root\App\Models\Schema;
 use Root\App\Models\AbstractOperationModel;
 
-class ReturnInvestModel extends AbstractOperationModel
+class ReturnInvestModel extends ReturnInvest
 {
 
     /**

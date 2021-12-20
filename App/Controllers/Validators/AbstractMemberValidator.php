@@ -16,10 +16,10 @@ use RuntimeException;
  */
 abstract class AbstractMemberValidator extends AbstractValidator
 {
-    const FIELD_EMAIL = 'userEmail';
+    const FIELD_EMAIL = 'user_email';
     const FIELD_PASSWORD = 'password';
     const FIELD_NAME = 'username';
-    const FIELD_TELEPHONE = 'PhoneNumber';
+    const FIELD_TELEPHONE = 'phone_number';
     const FIELD_TOKEN = 'token';
 
     const MAX_LENGHT_PSW = 30;
@@ -60,7 +60,6 @@ abstract class AbstractMemberValidator extends AbstractValidator
      */
     protected function validationEmail($mail, bool $onConnection = false, Member $member): void
     {
-
         $this->notNullable($mail);
         if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             throw new \RuntimeException("Entrer un e-mail invalide");
@@ -187,6 +186,7 @@ abstract class AbstractMemberValidator extends AbstractValidator
      */
     protected function processingEmail(Member $member, $mail, $onConnection = false): void
     {
+
         try {
             $this->validationEmail($mail, $onConnection, $member);
         } catch (\RuntimeException $e) {
@@ -202,12 +202,13 @@ abstract class AbstractMemberValidator extends AbstractValidator
      * @param Member $member
      * @throws \RuntimeException
      */
-    protected function validationAccount(string $token, string $id, Member $member, bool $onValidation = false)
+    protected function validationAccount(string $token, string $id, Member $member)
     {
+
         if ($token < self::MAX_LENGHT_TOKEN) {
             throw new \RuntimeException("Token invalide");
         }
-        if ($this->isNull($token) || $this->isNull($token)) {
+        if ($this->isNull($token) || $this->isNull($id)) {
             throw new \RuntimeException("Erreur d'activation du compte");
         }
         //on verifie si l'id existe et le token
@@ -217,8 +218,9 @@ abstract class AbstractMemberValidator extends AbstractValidator
          * @var AbstractMemberModel $model
          */
         $model = $fac->getModel($ref->getShortName());
-
-        if ($model->checkById($id) == false) {
+        // var_dump($model->checkById($id));
+        // exit();
+        if (!$model->checkById($id)) {
             throw new \RuntimeException("Id introuvable");
         }
 
@@ -233,15 +235,6 @@ abstract class AbstractMemberValidator extends AbstractValidator
         if ($getToken != $token) {
             throw new \RuntimeException("Token introuvable");
         }
-        if ($onValidation) {
-            if ($occurence->getValidationMail()) {
-                throw new \RuntimeException("Votre compte est deja valide");
-            }
-        } else {
-            if (!$occurence->getValidationMail()) {
-                throw new \RuntimeException("Echec de l'operation");
-            }
-        }
     }
     /**
      * Pour le traitement du compte apres validation
@@ -250,10 +243,10 @@ abstract class AbstractMemberValidator extends AbstractValidator
      * @param Member $member
      * @return void
      */
-    public function processingAccount($token, $id, Member $member, $onValidation = false): void
+    public function processingAccount($token, $id, Member $member): void
     {
         try {
-            $this->validationAccount($token, $id, $member, $onValidation);
+            $this->validationAccount($token, $id, $member);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_TOKEN, $e->getMessage());
         }
@@ -280,13 +273,17 @@ abstract class AbstractMemberValidator extends AbstractValidator
      * @param Member $member
      * @return void
      */
-    public function processingToken($token, Member $member)
+    public function processingToken($token, Member $member, bool $onReset = false)
     {
         try {
             $this->validationToken($token);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_TOKEN, $e->getMessage());
         }
-        $member->setToken($token);
+        if ($onReset) {
+            return $token;
+        } else {
+            $member->setToken($token);
+        }
     }
 }
