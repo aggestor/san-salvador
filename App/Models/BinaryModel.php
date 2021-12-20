@@ -10,7 +10,7 @@ use Root\App\Models\AbstractOperationModel;
  * @author Mike
  *
  */
-class BinaryModel extends AbstractOperationModel{
+class BinaryModel extends Binary{
 
     /**
      * {@inheritDoc}

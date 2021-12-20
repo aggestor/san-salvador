@@ -5,7 +5,7 @@ use Root\App\Models\Objects\Pack;
 use Root\App\Models\Schema;
 use Root\App\Models\AbstractDbOccurenceModel;
 
-class PackModel extends AbstractDbOccurenceModel{
+class PackModel extends Pack{
 
     /**
      * {@inheritDoc}
@@ -106,6 +106,42 @@ class PackModel extends AbstractDbOccurenceModel{
             }
         }
         return new Pack($data);
+    }
+    /**
+     * ce nom existe????
+     * @param string $name
+     * @return bool
+     * @throws ModelException s'il y a erreur lors la communication avec ladd
+     */
+    public function checkByName (string $name) : bool {
+        $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
+        return $AbstractDbOccurenceModel->check(Schema::PACK['name'], $name);
+   }
+   /**
+     * Revoie le pack dont vous avez besoin
+     * @param string $name
+     * @return \Root\Models\Objects\Pack
+     */
+    public function findByName (string $name) {
+        $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
+        return $AbstractDbOccurenceModel->find(Schema::PACK['name'], $name);
+    }
+   /**
+     * Revoie le pack dont vous avez besoin
+     * @param string $name
+     * @return \Root\Models\Objects\Pack
+     */
+    public function findById (string $id) {
+        $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
+        return $AbstractDbOccurenceModel->find(Schema::PACK['id'], $id);
+    }
+   /**
+     * Revoie tous le pack
+     * @return \Root\Models\Objects\Pack
+     */
+    public function findAll () {
+        $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
+        return $AbstractDbOccurenceModel->findAll();
     }
 
 }

@@ -30,6 +30,7 @@ class UserController extends Controller
      */
     public function login()
     {
+
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $validator = new UserValidator();
             $user = $validator->loginProcess();
@@ -63,6 +64,8 @@ class UserController extends Controller
             $user = $validator->resetPassword();
             if ($validator->hasError() || $validator->getMessage() != null) {
                 $errors = $validator->getErrors();
+                var_dump($errors);
+                exit();
                 return $this->view("pages.password.reset_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             } else {
                 /**
@@ -70,8 +73,8 @@ class UserController extends Controller
                  */
                 $object = $this->userModel->findByMail($user->getEmail());
                 $mail = $user->getEmail();
-                $token = Controller::generate(60, "QWERTYUIOPASDFGHJKLZXCVBNMqweryuiopasdfghjklzxcvbnm1234567890");
                 $id = $object->getId();
+                $token = $user->getToken();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "reset-$id-$token";
                 $this->envoieMail($mail, $lien);
@@ -82,6 +85,17 @@ class UserController extends Controller
 
     public function resetPassword()
     {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $validator = new UserValidator();
+            $user = $validator->resetPasswordAfterValidation();
+            if ($validator->hasError() || $validator->getMessage() != null) {
+                $errors = $validator->getErrors();
+                var_dump($errors);
+                exit();
+                return $this->view("pages.password.create_new_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+            }
+        }
+        return $this->view("pages.password.create_new_pwd", "layout_");
     }
     /**
      * pour recuperer le mot de passe 
@@ -105,15 +119,13 @@ class UserController extends Controller
                 $errors = $validator->getErrors();
                 var_dump($errors);
                 exit();
-                return $this->view("pages.static.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                return $this->view("pages.user.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             }
             $mail = $user->getEmail();
-            $token = Controller::generate(60, "QWERTYUIOPASDFGHJKLZXCVBNMqweryuiopasdfghjklzxcvbnm1234567890");
+            $token = $user->getToken();
             $id = $user->getId();
             $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
             $lien = $domaineName . "activation-$id-$token";
-            $_SESSION['users'] = $user;
-            $_SESSION['token'] = $token;
             $this->envoieMail($mail, $lien);
         }
         return $this->view("pages.user.register", "layout_");
@@ -134,31 +146,22 @@ class UserController extends Controller
      */
     public function accountActivation()
     {
-        try {
-            if (isset($_GET['id']) && isset($_GET['token'])) {
-                //on recupere le get de l'url
-                $getId = $_GET['id'];
-                $getToken = $_GET['token'];
-                //on recupere les session entre autre id et le token
-                /**
-                 * @var User
-                 */
-                $user = $_SESSION['users'];
-                $sessionToken = $_SESSION['token'];
-                //on compare les information du session avec du get
-                if (($sessionToken == $getToken) && ($getId == $user->getId()) && ($this->userModel->checkById($getId))) {
-                    $this->userModel->validateAccount($user->getId());
-                    unset($_SESSION['token']);
-                    var_dump('ok');
-                    exit();
-                } else {
-                    return $this->view('pages.static.404');
-                }
-            }
-        } catch (\RuntimeException $e) {
-            die($e->getMessage());
+        $validator = new UserValidator();
+        $user = $validator->activeAccountAfterValidation();
+        if ($validator->hasError() || $validator->getMessage() != null) {
+            return $this->view("pages.static.404");
+        } else {
+            $_SESSION['users'] = $user;
+            $this->userModel->updateToken(null, $user->getId());
+            //return $this->view("pages.user.profile", "layout_");
+            header('Location:/user/dashboard');
         }
     }
+    /**
+     * Verifie si la session existe
+     *
+     * @return boolean
+     */
     private function isUsers()
     {
         if (isset($_SESSION['users']) && !empty($_SESSION['users'])) {

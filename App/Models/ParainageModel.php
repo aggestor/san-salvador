@@ -9,7 +9,7 @@ use Root\App\Models\AbstractOperationModel;
  * @author Mike
  *
  */
-class ParainageModel extends AbstractOperationModel{
+class ParainageModel extends Parainage{
 
     /**
      * {@inheritDoc}

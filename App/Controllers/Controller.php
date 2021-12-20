@@ -149,4 +149,18 @@ class Controller
             }
         }
     }
+    /**
+     * Verifie si la session existe deja
+     *
+     * @param mixed $session
+     * @return void
+     */
+    public static function sessionExist($session)
+    {
+        $redirect=$_SERVER;
+        var_dump($redirect);exit();
+        if (isset($session) && !empty($session)) {
+            header('Location:' . $redirect);
+        }
+    }
 }

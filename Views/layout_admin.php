@@ -21,7 +21,7 @@
     require(VIEWS . "includes/LeftBar.php");
     ?>
     <div class="col-span-10">
-        <?php require(VIEWS."includes/HeadBarMenu.php");
+        <?php require(VIEWS . "includes/HeadBarMenu.php");
         echo $content;
         ?>
     </div>

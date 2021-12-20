@@ -11,19 +11,19 @@
             <div class="w-full md:hidden mx-auto grid place-items-center">
                 <span class="w-24 h-24 rounded-full bg-gray-300 grid place-items-center"><i class="fas fa-3x text-gray-900 fa-key"></i></span>
             </div>
-            <h2 class="text-gray-400 font-semibold text-base my-4 text-left">Felicitation, completez les champs ci-bas pour créer  un nouveau mot de passe.</h2>
+            <h2 class="text-gray-400 font-semibold text-base my-4 text-left">Felicitation, completez les champs ci-bas pour créer un nouveau mot de passe.</h2>
         </div>
 
         <form method="POST" class="md:w-10/12 w-11/12  mx-auto md:p-3">
             <div class="md:w-11/12 w-full mb-2 mx-auto">
                 <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="password1" type="password" name="password1" placeholder="Nouveau Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                    <input id="password1" type="password" name="password" placeholder="Nouveau Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                 </div>
                 <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
             </div>
             <div class="md:w-11/12 w-full mx-auto">
                 <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="password2" type="password" name="password2" placeholder="Confirmer mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                    <input id="password2" type="password" name="confirm_password" placeholder="Confirmer mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                 </div>
                 <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span>
             </div>
