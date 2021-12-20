@@ -4,13 +4,13 @@
             <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a>
             <h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
         </div>
-        <h2 class="text-gray-400 w-10/12 mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
+        <h2 class="text-gray-400 md:w-10/12 w-full mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
     </div>
     <div class="flex flex-col md:flex-row md:w-10/12 w-full my-3 rounded overflow-hidden h-auto border border-gray-900 mx-auto md:justify-around justify-center">
         <div class="md:w-6/12 grid place-items-center md:p-0 p-4 primary_bg">
             <div class="w-full flex justify-center flex-col primary_bg">
                 <div class="md:w-10/12 w-11/12 mx-auto ">
-                    <div class="w-full md:hidden h-48 mx-auto grid place-items-center">
+                    <div id="userIcon" class="w-full md:hidden h-48 mx-auto grid place-items-center">
                         <i class="fas fa-7x text-gray-400 fa-user-circle"></i>
                     </div>
                     <h2 id="register-title" class="text-gray-500 font-semibold text-base my-4 text-left">Remplissez ce formulaire ci-bas pour vous inscrire sur notre plateforme !</h2>
