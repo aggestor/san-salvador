@@ -1,5 +1,5 @@
 
-<div style="height: 85vh;" class="col-span-12 primary_bg">
+<div class="col-span-12 h-screen lg:grid lg:place-items-center h-v-85 primary_bg">
     <div data-aos="zoom-in" data-aos-duration="1500" class="flex w-11/12 overflow-x-hidden flex-col md:flex-row h-auto items-center mx-auto justify-around">
     <div class="md:w-6/12 flex justify-center">
         <img src="assets/logos/invest.png" class="h-96 w-96" alt="Joining image" />
