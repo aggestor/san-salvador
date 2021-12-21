@@ -28,7 +28,7 @@
     ?>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/aos.min.js"></script>
-    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/admin.js"></script>
     <script>
         AOS.init()
     </script>
