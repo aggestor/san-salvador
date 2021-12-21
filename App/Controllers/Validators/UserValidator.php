@@ -98,15 +98,8 @@ class UserValidator extends AbstractMemberValidator
 
         $this->processingEmail($user, $mail, true);
         $this->processingPassword($user, $password);
-        if (!$this->hasError()) {
-            try {
-            } catch (ModelException $e) {
-                $this->setMessage($e->getMessage());
-            }
-        }
+
         $users = !empty($mail) ? $this->userModel->findByMail($mail) : null;
-        // var_dump($users);
-        // exit();
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec de la connexion" : "Connexion faite avec success";
         return $users;
     }
@@ -146,14 +139,15 @@ class UserValidator extends AbstractMemberValidator
         $token = Controller::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
         $getToken = $this->processingToken($token, $user, true);
         $this->processingEmail($user, $mail, true);
-        $users = !empty($mail) ? $this->userModel->findByMail($mail) : null;
+        $id = !empty($mail) ? $this->userModel->findByMail($mail)->getId() : null;
         if (!$this->hasError()) {
-            $this->userModel->updateToken($getToken, $users->getId());
             try {
+                $this->userModel->updateToken($getToken, $id);
             } catch (ModelException $e) {
                 $this->setMessage($e->getMessage());
             }
         }
+        $users = $this->userModel->findById($id);
         return $users;
     }
     /**

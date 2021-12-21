@@ -66,10 +66,11 @@ class AdminController extends Controller
             $admin = $validator->loginProcess();
 
             if ($validator->hasError() || $validator->getMessage() != null) {
-                $error = $validator->getErrors();
-
-                var_dump($error);
-                exit();
+                $errors = $validator->getErrors();
+                return $this->view("pages.admin.login", "layout_admin", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+            } else {
+                $_SESSION['admin'] = $admin;
+                header('Location:/admin/dashboard');
             }
         }
         return $this->view('pages.admin.login', 'layout_admin');

@@ -3,6 +3,8 @@
 namespace Root\App\Controllers\Validators;
 
 use Exception;
+use Root\App\Controllers\Controller;
+use Root\App\Models\ModelException;
 use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\Pack;
 use Root\App\Models\PackModel;
@@ -10,7 +12,7 @@ use Root\App\Models\PackModel;
 class PackValidation extends AbstractValidator
 {
     const FIELD_NAME_PACK = 'packname';
-    const FIELD_CURRENCY_PACK = 'packcurreny';
+    const FIELD_CURRENCY_PACK = 'packcurrency';
     const FIELD_AMOUNTMIN_PACK = 'amountmin';
     const FIELD_AMOUNTMAX_PACK = 'amountmax';
     const FIELD_IMAGE_PACK = 'image';
@@ -25,9 +27,35 @@ class PackValidation extends AbstractValidator
     {
         $this->packModel = ModelFactory::getInstance()->getModel('Pack');
     }
+    /**
+     * Creation du pack apres validation
+     *
+     * @return Pack
+     */
     public function createAfterValidation()
     {
         $pack = new Pack();
+        $id = Controller::generate(11, "1234567890ABCDEFabcdef");
+        $packname = $_POST[self::FIELD_NAME_PACK];
+        $packcurrency = $_POST[self::FIELD_CURRENCY_PACK];
+        $amountmin = $_POST[self::FIELD_AMOUNTMIN_PACK];
+        $amountmax = $_POST[self::FIELD_AMOUNTMAX_PACK];
+        $image = $_FILES[self::FIELD_ID];
+
+        $this->processingId($pack, $id, true);
+        $this->processingNamePack($packname, $pack, true);
+        $this->processingAmountPack($amountmin, $amountmax, $pack);
+        $this->processingImagePack($image, true);
+        $this->processingCurrency($packcurrency, $pack);
+
+        if (!$this->hasError()) {
+            try {
+                $this->packModel->create($pack);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+        return $pack;
     }
 
     public function updateAfterValidation()
@@ -44,7 +72,7 @@ class PackValidation extends AbstractValidator
      * @param Pack $pack
      * @return void
      */
-    protected function ValidationNamePack($name, Pack $pack,bool $onCreate=false)
+    protected function ValidationNamePack($name, bool $onCreate = false)
     {
         $this->isNull($name);
         //on va verifier si le nom du pack n'existe pas dans la base des donnees 
@@ -61,10 +89,10 @@ class PackValidation extends AbstractValidator
      * @param Pack $pack
      * @return void
      */
-    protected function processingNamePack($name, Pack $pack,$onCreate=false)
+    protected function processingNamePack($name, Pack $pack, $onCreate = false)
     {
         try {
-            $this->ValidationNamePack($name, $pack,$onCreate);
+            $this->ValidationNamePack($name, $onCreate);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_NAME_PACK, $e->getMessage());
         }
@@ -155,4 +183,17 @@ class PackValidation extends AbstractValidator
             $this->addError(self::FIELD_IMAGE_PACK, $e->getMessage());
         }
     }
+
+    // protected function validationLevelPack()
+    // {
+    //     $return=0;
+    //     $level=$this->packModel->getLevel();
+    //     if ($level=="" || $level==null) {
+    //         return $return;
+    //     }
+    //     else {
+    //         $return=(int)$level;
+    //         return $return+1;
+    //     }
+    // }
 }
