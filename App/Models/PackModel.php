@@ -5,7 +5,7 @@ use Root\App\Models\Objects\Pack;
 use Root\App\Models\Schema;
 use Root\App\Models\AbstractDbOccurenceModel;
 
-class PackModel extends Pack{
+class PackModel extends AbstractDbOccurenceModel{
 
     /**
      * {@inheritDoc}
@@ -23,6 +23,7 @@ class PackModel extends Pack{
                 $pack['mountMin'],
                 $pack['mountMax'],
                 $pack['image'],
+                $pack['adminId'],
                 $pack['dateRecord'],
                 $pack['timeRecord'],
                 $pack['leval']
@@ -37,6 +38,47 @@ class PackModel extends Pack{
                 $object->getRecordDate(),
                 $object->getRecordTime(),
                 $object->getLevel()
+            ]
+        );
+    }
+
+    /**
+     * mis en jour d'un occurence dont l'ID est en 2em parametre de cette methode
+     * {@inheritDoc}
+     * @see \Root\Models\AbstractDbOccurenceModel::update()
+     * @param Pack $object
+     */
+    public  function update($object,  $id) : void {
+        $pack = Schema::PACK;
+        Queries::updateData(
+            $this-> getTableName(),
+            [                    
+                $pack['name'],
+                $pack['currency'],
+                $pack['mountMin'],
+                $pack['mountMax'],
+                $pack['image'],
+                $pack['adminId'],
+                $pack['dateRecord'],
+                $pack['timeRecord'],
+                $pack['leval'],
+                $pack['modifDate'],
+                $pack['modifTime'],
+            ],
+            "{$pack['id']}=?",
+            [
+                $object->getName(),
+                $object->getAcurracy(),
+                $object->getAmountMin(),
+                $object->getAmountMax(),
+                $object->getImage(),
+                $object->getAdmin(),
+                $object->getRecordDate(),
+                $object->getRecordTime(),
+                $object->getLevel(),
+                $object->getLastModifDate(),
+                $object->getLastModifTime(),
+                $object->getId()
             ]
         );
     }
@@ -71,34 +113,8 @@ class PackModel extends Pack{
      * @throws ModelException s'il y a erreur lors la communication avec ladd
      */
     public function checkByName (string $name) : bool {
-        $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
-        return $AbstractDbOccurenceModel->check(Schema::PACK['name'], $name);
+               return $this->check(Schema::PACK['name'], $name);
    }
-   /**
-     * Revoie le pack dont vous avez besoin
-     * @param string $name
-     * @return \Root\Models\Objects\Pack
-     */
-    public function findByName (string $name) {
-        $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
-        return $AbstractDbOccurenceModel->find(Schema::PACK['name'], $name);
-    }
-   /**
-     * Revoie le pack dont vous avez besoin
-     * @param string $name
-     * @return \Root\Models\Objects\Pack
-     */
-    public function findById (string $id) {
-        $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
-        return $AbstractDbOccurenceModel->find(Schema::PACK['id'], $id);
-    }
-   /**
-     * Revoie tous le pack
-     * @return \Root\Models\Objects\Pack
-     */
-    public function findAll () {
-        $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
-        return $AbstractDbOccurenceModel->findAll();
-    }
+
 
 }

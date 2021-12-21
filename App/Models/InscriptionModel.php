@@ -3,7 +3,8 @@
     use Root\App\Models\Queries;
     use Root\App\Models\Objects\Inscription;
     use Root\App\Models\Schema;
-    class InscriptionModel extends Inscription{
+    use Root\App\Models\AbstractDbOccurenceModel;
+    class InscriptionModel extends AbstractDbOccurenceModel{
       /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::create()
@@ -33,6 +34,33 @@
                 ]
             );
         }
+
+    /**
+     * Confirmation de l'inscription
+     * {@inheritDoc}
+     * @see \Root\Models\AbstractDbOccurenceModel::update()
+     * @param INSCRIPTION $object
+     */
+    public  function update($object,  $id) : void {
+       
+        Queries::updateData(
+            $this-> getTableName(),
+            [                  
+                Schema::INSCRIPTION['validateInscription'],                
+                Schema::INSCRIPTION['adminId'],
+                Schema::INSCRIPTION['confirmatDate'],
+                Schema::INSCRIPTION['confirmateTime'],
+            ],
+            "id=?",
+            [
+                $object->getValidate()? 1 : 0,
+                $object->getAdmin(),
+                $object->getConfirmationDate(),
+                $object->getConfirmationTime(),
+                $object->getId()
+            ]
+        );
+    }
         /**
          * recuperation des occurences
          */
