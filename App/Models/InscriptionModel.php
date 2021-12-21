@@ -33,7 +33,9 @@
                 ]
             );
         }
-        
+        /**
+         * recuperation des occurences
+         */
         protected function getDBOccurence(array $keyValue)
         {
             $data = array();
