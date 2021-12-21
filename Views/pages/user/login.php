@@ -4,7 +4,7 @@
             <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a>
             <h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
         </div>
-        <h2 class="text-gray-400 w-10/12 mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
+        <h2 class="text-gray-400 md:w-10/12 w-full mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
     </div>
     <div class="md:w-6/12 flex flex-col justify-center items-center border mt-16 border-gray-900 mx-auto primary_bg shadow rounded md:p-12 p-4">
         <div class="md:w-9/12 w-11/12 mx-auto ">
@@ -12,7 +12,7 @@
         </div>
         <form method="POST" class="md:w-10/12 w-11/12  mx-auto md:p-3">
             <div class="md:w-11/12 w-full mx-auto mb-2">
-                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                <div class=" mx-auto focus-within:font-semibold text-gray-300 <?= $data =  (isset($_POST['connexion']) && !empty($params['errors']['user_email'])) ?"border-red-500" : " border-gray-400" ?> focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border">
                     <input id="identifier" name="user_email" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['connexion']) && empty($params['errors']['user_email'])) ? $_POST['user_email'] : ""; ?>" />
                 </div>
                 <?php if (isset($_POST['connexion']) && !empty($params['errors']['user_email'])) : ?>
@@ -20,7 +20,7 @@
                 <?php endif; ?>
             </div>
             <div class="md:w-11/12 w-full mx-auto mb-2">
-                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                <div class=" mx-auto focus-within:font-semibold <?= $data =  (isset($_POST['connexion']) && !empty($params['errors']['password'])) ?"border-red-500" : " border-gray-400" ?> text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border">
                     <input id="password" name="password" type="password" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                 </div>
                 <?php if (isset($_POST['connexion']) && !empty($params['errors']['password'])) : ?>

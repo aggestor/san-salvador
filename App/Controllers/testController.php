@@ -16,6 +16,21 @@
         {
             return $this->view("pages.admin.add_test", "layout_");
         }
+        public function success()
+        {
+            return $this->view("pages.static.registration_success", "layout_");
+        }
+
+        public function admins(){
+            return $this->view("pages.admin.dashboard", "layout_admin");
+        }
+
+        public function packages(){
+            return $this->view("pages.packages.dashboard", "layout_admin");
+        }
+        public function users(){
+            return $this->view("pages.users.dashboard_for_admin", "layout_admin");
+        }
     }
 
 

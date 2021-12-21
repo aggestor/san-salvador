@@ -156,6 +156,7 @@ formStepsButtons && formStepsButtons.forEach((button : HTMLButtonElement) => {
         $("#register-title").text(
           "Ajouter votre photo en cliquant sur le bouton ci-bas"
         );
+        $("#userIcon").slideUp();
         $(".form-2").slideDown()
         break;
       case "-2":

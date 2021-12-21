@@ -265,3 +265,8 @@ header{
     fill: rgba(0, 0, 0, .6);
     vertical-align: middle;
 }
+@media (min-width:992px) {
+  .h-v-85{
+    height: 80vh;
+  }
+}

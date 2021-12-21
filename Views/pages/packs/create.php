@@ -1,5 +1,0 @@
--nom 
--photo
--montant_max
--montant_min
--taux_interet

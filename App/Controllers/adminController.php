@@ -72,7 +72,7 @@ class AdminController extends Controller
                 exit();
             }
         }
-        return $this->view('pages.admin.login', 'layout_admin');
+        return $this->view('pages.admin.login', 'layout_');
     }
     /**
      * Validation du compte admin
