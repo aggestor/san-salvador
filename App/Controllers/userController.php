@@ -62,7 +62,6 @@ class UserController extends Controller
             $user = $validator->resetPassword();
             if ($validator->hasError() || $validator->getMessage() != null) {
                 $errors = $validator->getErrors();
-
                 return $this->view("pages.password.reset_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             } else {
                 /**

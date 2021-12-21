@@ -21,10 +21,7 @@
 
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/aos.min.js"></script>
-<<<<<<< HEAD
-=======
     <script src="/assets/js/cropper.min.js"></script>
->>>>>>> a19090dce512d66fab9fa63ee6a82dfdafbfce7e
     <script src="/assets/js/main.js"></script>
     <script>
         AOS.init()

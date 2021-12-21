@@ -1,14 +1,13 @@
 
-<div class="col-span-12 bg-secondary">
+<div class="col-span-12 h-auto bg-secondary">
     <div class="flex flex-col w-11/12 mx-auto  h-auto md:items-center">
     <div class="flex w-full flex-col sm:flex-row md:items-center mx-auto md:justify-around">
-        <div data-aos="fade-down"
-    data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
+        <div data-aos="fade-down"data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
         <img src="assets/logos/join-free.png" class="md:h-96 h-80 w-80 md:w-96" alt="Joining image" />
     </div>
     <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 overflow-x-hidden w-full flex flex-col mt-6 ">
         <h1 class="md:w-11/12 md:text-3xl text-xl text-white font-bold">NOS SERVICES</span></h1>
-        <p class="text-gray-400 my-3 _space_text_l3 w-11/12 ">Étant prestataire de services sur les actifs          numériques, usalvagetrade, est une entreprise de
+            <p class="text-gray-400 my-3 _space_text_l3 w-11/12 ">Étant prestataire de services sur les actifs          numériques, usalvagetrade, est une entreprise de
                 commerce et d'investissement en crypto-monnaies (Bitcoin, Ethereum, Dogcoin, etc)
                 qui joue l'intermédiaire en proposant les différents services relatifs à l’investissement en
                 crypto-actifs.
@@ -16,7 +15,7 @@
     </div>
     </div>
     <div class="w-11/12 flex justify-around">
-        <div class="md:w-3/12 hover:z-50 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all w-11/12 overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
+            <div class="md:w-3/12 hover:z-50 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all w-11/12 overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/exchange.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">
                     <div>
@@ -66,7 +65,7 @@
             </div>
     </div>
     <div class="w-11/12 flex justify-around">
-        <div class="md:w-3/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all w-11/12 overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
+            <div class="md:w-3/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all w-11/12 overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/give-money.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">
                     <div>

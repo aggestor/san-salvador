@@ -136,6 +136,7 @@ formStepsButtons && formStepsButtons.forEach(function (button) {
             case "2":
                 $(".form-1").slideUp();
                 $("#register-title").text("Ajouter votre photo en cliquant sur le bouton ci-bas");
+                $("#userIcon").slideUp();
                 $(".form-2").slideDown();
                 break;
             case "-2":

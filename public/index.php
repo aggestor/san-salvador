@@ -69,7 +69,8 @@ $routes->get('/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Contro
 $routes->get('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@resetPassword', 'id;token');
 $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@resetPassword', 'id;token');
 
-//
+//testing routes
+$routes->get("/admin/packages/dashboard", "Root\App\Controllers\TestController@packages");
 
 
 $routes->get('/test', function () {
