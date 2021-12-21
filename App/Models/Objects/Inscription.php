@@ -192,6 +192,13 @@ class Inscription extends DBOccurence
     {
         $this->state = $state;
     }
+    /**
+     * aliace de @method isState()
+     * @return bool|NULL
+     */
+    public function getState () : ?bool {
+        return $this->isState();
+    }
 
     /**
      * @param string $transactionCode
