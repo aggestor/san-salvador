@@ -41,7 +41,7 @@ class Schema
         "mountMin"=>"mount_min",
         "mountMax"=>"mount_max",
         "image"=>"pack_image",
-        "adminId"=>"admin_Id",
+         "adminId"=>"admin_Id",
         "dateRecord"=>"record_date",
         "timeRecord"=>"record_time",
         "leval"=>"laval",
