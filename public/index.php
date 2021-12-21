@@ -45,7 +45,8 @@ $routes->get('/admin/login', 'Root\App\Controllers\AdminController@login');
 $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@index');
 
 //route pour ajouter un packet
-$routes->post('/admin/pack', 'Root\App\Controllers\AdminController@addPack');
+$routes->post('/admin/pack', 'Root\App\Controllers\PackController@addPack');
+$routes->get('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 //route pour l'authentification de l'utilisateur en post
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
@@ -73,7 +74,8 @@ $routes->get("/admin/packages/dashboard", "Root\App\Controllers\TestController@p
 
 
 $routes->get('/test', function () {
-    unset($_SESSION['users']);
+    var_dump($_SESSION['users']);
+    //unset($_SESSION['users']);
 });
 
 

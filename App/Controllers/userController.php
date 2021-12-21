@@ -6,13 +6,11 @@ use Root\App\Controllers\Validators\UserValidator;
 use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\User;
 use Root\App\Models\UserModel;
-use RuntimeException;
 
 class UserController extends Controller
 {
     /**
      * Undocumented variable
-     *
      * @var UserModel
      */
     private $userModel;
@@ -69,12 +67,12 @@ class UserController extends Controller
                 /**
                  * @var User
                  */
-                $object = $this->userModel->findByMail($user->getEmail());
                 $mail = $user->getEmail();
-                $id = $object->getId();
                 $token = $user->getToken();
+                $id = $user->getId();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "reset-$id-$token";
+
                 $this->envoieMail($mail, $lien);
             }
         }
@@ -88,10 +86,21 @@ class UserController extends Controller
             $user = $validator->resetPasswordAfterValidation();
             if ($validator->hasError() || $validator->getMessage() != null) {
                 $errors = $validator->getErrors();
-                return $this->view("pages.password.create_new_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                if ($user->getToken() != "" && $user->getId() == $_GET['id']) {
+                    return $this->view("pages.password.create_new_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                } else {
+                    return $this->view('pages.static.404');
+                }
+            }
+            else {
+                header('Location:/login');
             }
         }
-        return $this->view("pages.password.create_new_pwd", "layout_");
+        if ($this->userModel->findById($_GET['id'])->getToken() != "") {
+            return $this->view("pages.password.create_new_pwd", "layout_");
+        } else {
+            return $this->view('pages.static.404');
+        }
     }
     /**
      * pour recuperer le mot de passe 

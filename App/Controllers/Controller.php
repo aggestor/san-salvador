@@ -37,10 +37,10 @@ class Controller
     /**
      * Pour envoyer les mails d'actiavation du compte 
      * @param string $to. Le destinataire du mail
-     * @param string $lien. Le lien d'activation de compte
+     * @param mixed $lien. Le lien d'activation de compte
      * @return void
      */
-    public function envoieMail(string $to, string $lien)
+    public function envoieMail($to, string $lien)
     {
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';
