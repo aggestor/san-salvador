@@ -70,6 +70,11 @@ $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controller
 
 //testing routes
 $routes->get("/admin/packages/dashboard", "Root\App\Controllers\TestController@packages");
+$routes->get("/admin/administrators/dashboard", "Root\App\Controllers\TestController@admins");
+
+
+//testing routes
+$routes->get("/reset_pwd_success", "Root\App\Controllers\TestController@reset_pwd_success");
 
 
 $routes->get('/test', function () {
