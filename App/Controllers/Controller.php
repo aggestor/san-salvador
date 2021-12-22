@@ -120,7 +120,7 @@ class Controller
     /**
      * Undocumented function
      *
-     * @param mixed $nom
+     * @param mixed $nom. Le du champs du type file dans le formulaire
      */
     public function addImage($nom)
     {
