@@ -22,7 +22,7 @@
         }
 
         public function admins(){
-            return $this->view("pages.admin.dashboard", "layout_admin");
+            return $this->view("pages.admin.admins_dashboard", "layout_admin");
         }
 
         public function packages(){
@@ -30,6 +30,15 @@
         }
         public function users(){
             return $this->view("pages.users.dashboard_for_admin", "layout_admin");
+        }
+        public function reset_pwd_success(){
+            return $this->view("pages.static.reset_pwd_success", "layout_");
+        }
+        public function mail_sent(){
+            return $this->view("pages.static.mail_sent_success", "layout_");
+        }
+        public function subscribe(){
+            return $this->view("pages.packages.subscribe", "layout_");
         }
     }
 

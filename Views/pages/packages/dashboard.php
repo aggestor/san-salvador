@@ -10,5 +10,8 @@
         <div class="w-11/12 mx-auto p-3 border border-gray-700 primary_bg_ flex rounded">
             <?php include(VIEWS."pages/packages/create.php");?>
         </div>
+        <div class="w-11/12 mx-auto p-3 border border-gray-700 primary_bg_ flex rounded">
+            <?php include(VIEWS."pages/packages/view_all.php");?>
+        </div>
     </div>
 </div>
