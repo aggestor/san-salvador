@@ -37,6 +37,9 @@
         public function mail_sent(){
             return $this->view("pages.static.mail_sent_success", "layout_");
         }
+        public function subscribe(){
+            return $this->view("pages.packages.subscribe", "layout_");
+        }
     }
 
 

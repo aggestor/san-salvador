@@ -76,7 +76,7 @@ $routes->get("/admin/administrators/dashboard", "Root\App\Controllers\TestContro
 //testing routes
 $routes->get("/reset_pwd_success", "Root\App\Controllers\TestController@reset_pwd_success");
 $routes->get("/mail_sent", "Root\App\Controllers\TestController@mail_sent");
-$routes->get("/mail_sent", "Root\App\Controllers\TestController@mail_sent");
+$routes->get("/subscribe", "Root\App\Controllers\TestController@subscribe");
 
 
 $routes->get('/test', function () {
