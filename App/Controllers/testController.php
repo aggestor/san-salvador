@@ -34,6 +34,9 @@
         public function reset_pwd_success(){
             return $this->view("pages.static.reset_pwd_success", "layout_");
         }
+        public function mail_sent(){
+            return $this->view("pages.static.mail_sent_success", "layout_");
+        }
     }
 
 
