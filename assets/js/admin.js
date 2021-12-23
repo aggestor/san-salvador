@@ -20,4 +20,31 @@ adminPaths && adminPaths.forEach(function (path) {
         }
     });
 });
-console.log(window.location.pathname);
+var showPackAdminSection = $("#showPackAdminSection");
+var addPackAdminSection = $("#addPackAdminSection");
+$("#closeShowPackAdmin").click(function () { return showPackAdminSection.slideUp(); });
+$("#closeAddPackAdmin").click(function () { return addPackAdminSection.slideUp(); });
+$("#btnShowPackSection").click(function () { return showAll(); });
+$("#btnAddPackSection").click(function () { return showAdd(); });
+function showAll() {
+    window.localStorage.setItem("current_admin_pack_window", "show");
+    showPackAdminSection.slideDown();
+    addPackAdminSection.slideUp();
+}
+function showAdd() {
+    window.localStorage.setItem("current_admin_pack_window", "add");
+    addPackAdminSection.slideDown();
+    showPackAdminSection.slideUp();
+}
+$(document).ready(function () {
+    var currentPackWindow = window.localStorage.getItem("current_admin_pack_window");
+    if (currentPackWindow == "show") {
+        showAll();
+    }
+    else if (currentPackWindow === "add") {
+        showAdd();
+    }
+    else {
+        showAll();
+    }
+});

@@ -5,8 +5,8 @@
 -taux_interet -->
 <div class="w-full">
     <div class="h-12 flex justify-between">
-        <h1 class="text-gray-300 font-semibold text-xl w-full"> <i class="fas fa-2x fa-box-open    "></i> Compléter ce formulaire pour créer un nouveau pack.</h1>
-        <span class="w-7 h-7 cursor-pointer border-gray-500 border rounded grid place-items-center text-gray-500"><i class="fa text-lg fa-times"></i></span>
+        <h1 class="text-gray-300 font-semibold text-xl w-full"> <i class="fa fa-box-open mr-2"></i> Compléter ce formulaire pour créer un nouveau pack.</h1>
+        <span id="closeAddPackAdmin" class="w-7 h-7 cursor-pointer border-gray-500 border rounded grid place-items-center text-gray-500"><i class="fa text-lg fa-times"></i></span>
     </div>
     <form method="POST" enctype="multipart/form-data" class="w-10/12 mx-auto items-center flex h-72">
         <div class="w-5/12 flex justify-center">
