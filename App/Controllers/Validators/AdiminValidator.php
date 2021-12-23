@@ -44,7 +44,7 @@ class AdiminValidator extends AbstractMemberValidator
 
         if (!$this->hasError()) {
             $admin->setRecordDate(new \DateTime());
-            $admin->setRecordTime(new \DateTime());
+            $admin->settimeRecord(new \DateTime());
             try {
                 $this->adminModel->create($admin);
             } catch (ModelException $e) {

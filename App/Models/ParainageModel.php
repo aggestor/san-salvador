@@ -1,5 +1,7 @@
 <?php
+
 namespace Root\App\Models;
+
 use Root\App\Models\Queries;
 use Root\App\Models\Objects\Parainage;
 use Root\App\Models\Schema;
@@ -9,23 +11,25 @@ use Root\App\Models\AbstractOperationModel;
  * @author Mike
  *
  */
-class ParainageModel extends Parainage{
+class ParainageModel extends Parainage
+{
 
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::create()
      * @param Parainage $object
      */
-    public function create($object) : void {           
+    public function create($object): void
+    {
         $parainage = Schema::RETURN_INVEST;
-        Queries::addData (
-           $this-> getTableName(),
+        Queries::addData(
+            $this->getTableName(),
             [
                 $parainage['id'],
                 $parainage['inscriptionId'],
                 $parainage['generator'],
                 $parainage['amount'],
-                $parainage['dateRecord'],
+                $parainage['recordDate'],
                 $parainage['timeRecord'],
                 $parainage['surplus'],
             ],
@@ -35,21 +39,21 @@ class ParainageModel extends Parainage{
                 $object->getGenerator(),
                 $object->getAmount(),
                 $object->getRecordDate(),
-                $object->getRecordTime(),
-                $object->getSurplus()                   
+                $object->gettimeRecord(),
+                $object->getSurplus()
             ]
         );
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
      */
-    protected function getTableName() : string {
+    protected function getTableName(): string
+    {
         return Schema::TABLE_SCHEMA['parainage'];
-
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getDBOccurence()
@@ -57,14 +61,14 @@ class ParainageModel extends Parainage{
     protected function getDBOccurence(array $keyValue)
     {
         $data = array();
-        foreach ( Schema::PARAINAGE  as $key=>$value){
-            if(key_exists($value,$keyValue)){
-                $data[$key]=$keyValue[$key];
+        foreach (Schema::PARAINAGE  as $key => $value) {
+            if (key_exists($value, $keyValue)) {
+                $data[$key] = $keyValue[$key];
             }
         }
         return new Parainage($data);
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractOperationModel::getFieldsNames()
@@ -73,6 +77,4 @@ class ParainageModel extends Parainage{
     {
         return Schema::PARAINAGE;
     }
-
-
 }

@@ -1,26 +1,30 @@
 <?php
+
 namespace Root\App\Models;
+
 use Root\App\Models\Queries;
 use Root\App\Models\Objects\CashOut;
 use Root\App\Models\Schema;
 use Root\App\Models\AbstractOperationModel;
 
-class CashOutModel extends AbstractOperationModel{
+class CashOutModel extends AbstractOperationModel
+{
 
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::create()
      * @param  CashOut $object
      */
-    public function create($object) : void {           
+    public function create($object): void
+    {
         $cashOut = Schema::CASHOUT;
-        Queries::addData (
-           $this-> getTableName(),
+        Queries::addData(
+            $this->getTableName(),
             [
                 $cashOut['id'],
                 $cashOut['inscriptionId'],
                 $cashOut['amount'],
-                $cashOut['dateRecord'],
+                $cashOut['recordDate'],
                 $cashOut['timeRecord'],
             ],
             [
@@ -28,7 +32,7 @@ class CashOutModel extends AbstractOperationModel{
                 $object->getInscription(),
                 $object->getAmount(),
                 $object->getRecordDate(),
-                $object->getRecordTime()                  
+                $object->gettimeRecord()
             ]
         );
     }
@@ -37,11 +41,11 @@ class CashOutModel extends AbstractOperationModel{
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
      */
-    protected function getTableName() : string {
+    protected function getTableName(): string
+    {
         return Schema::CASHOUT['cashOut'];
-
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getDBOccurence()
@@ -49,14 +53,14 @@ class CashOutModel extends AbstractOperationModel{
     protected function getDBOccurence(array $keyValue)
     {
         $data = array();
-        foreach ( Schema::CASHOUT  as $key=>$value){
-            if(key_exists($value,$keyValue)){
-                $data[$key]=$keyValue[$key];
+        foreach (Schema::CASHOUT  as $key => $value) {
+            if (key_exists($value, $keyValue)) {
+                $data[$key] = $keyValue[$key];
             }
         }
         return new CashOut($data);
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractOperationModel::getFieldsNames()
@@ -65,5 +69,4 @@ class CashOutModel extends AbstractOperationModel{
     {
         return Schema::CASHOUT;
     }
-
 }

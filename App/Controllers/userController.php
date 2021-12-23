@@ -75,8 +75,8 @@ class UserController extends Controller
                     $id = $user->getId();
                     $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                     $lien = $domaineName . "reset-$id-$token";
-
                     $this->envoieMail($mail, $lien);
+                    Controller::redirect('/user/mail');
                 }
             }
             return $this->view("pages.password.reset_pwd", "layout_");
@@ -100,7 +100,7 @@ class UserController extends Controller
                     return $this->view('pages.static.404');
                 }
             } else {
-                header('Location:/login');
+                Controller::redirect("/user/password");
             }
         }
         if ($this->userModel->findById($_GET['id'])->getToken() != "") {
@@ -131,6 +131,7 @@ class UserController extends Controller
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "activation-$id-$token";
                 $this->envoieMail($mail, $lien);
+                Controller::redirect('/user/mail'); 
             }
             return $this->view("pages.user.register", "layout_");
         }
@@ -142,11 +143,39 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        // var_dump($_SESSION['users']->getPhoto());
-        // exit();
         if ($this->isUsers()) {
             return $this->view("pages.user.profile", "layout_");
         }
+    }
+
+    /**
+     * Pour l'envoie du mail avec success
+     *
+     * @return void
+     */
+    public function mailSendSuccess()
+    {
+        return $this->view('pages.static.mail_sent_success', 'layout_');
+    }
+
+    /**
+     * Pour la reinitialisation du mode passe avec success
+     *
+     * @return void
+     */
+    public function passwordSuccess()
+    {
+        return $this->view('pages.static.reset_pwd_success', 'layout_');
+    }
+
+    /**
+     * Pour l'inscription fait avec success
+     *
+     * @return void
+     */
+    public function registerSuccess()
+    {
+        return $this->view('pages.static.registration_success', 'layout_');
     }
     public function suscribPack(int $id)
     {
@@ -165,7 +194,7 @@ class UserController extends Controller
         } else {
             $_SESSION['users'] = $user;
             $this->userModel->updateToken(null, $user->getId());
-            header('Location:/user/dashboard');
+            Controller::redirect('/user/account');
         }
     }
     /**

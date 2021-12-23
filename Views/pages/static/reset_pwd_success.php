@@ -3,7 +3,7 @@
         <div class="md:w-10/12 w-11/12 lg:w-6/12  mx-auto md:p-3">
             <h1 class="_green_text text-3xl font-bold">Mot de passe changé avec success !!!</h1>
             <p class="text-gray-200 font-semibold text-lg mt-4"> Vous pouvez desormain acceder votre avec votre nouveau mot de passe</p>
-            <p class="mt-6 text-sm text-gray-300"><b>Note : </b> Si vous n'est pas rédirigé(e) automatiquement, <span class="font-semibold _green_text underline"><a href="#">cliquez-ici</a></span></p>
+            <p class="mt-6 text-sm text-gray-300"><b>Note : </b> Si vous n'est pas rédirigé(e) automatiquement, <span class="font-semibold _green_text underline"><a href="/user/dashboard">cliquez-ici</a></span></p>
         </div>
         <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">
             <span class="h-60 w-60 text-gray-900 relative">
