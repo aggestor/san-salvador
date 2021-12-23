@@ -208,7 +208,6 @@ class UserValidator extends AbstractMemberValidator
     }
     /**
      * Traitement de l'image
-     * @param User $user
      * @param array $image
      * @param boolean $nullable
      * @return void
