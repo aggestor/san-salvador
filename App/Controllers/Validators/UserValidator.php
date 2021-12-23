@@ -66,7 +66,7 @@ class UserValidator extends AbstractMemberValidator
             $chemin = $controller->addImage(self::FIELD_IMAGE);
             $user->setPhoto($chemin);
             $user->setRecordDate(new \DateTime());
-            $user->setRecordTime(new \DateTime());
+            $user->settimeRecord(new \DateTime());
             try {
                 $this->userModel->create($user);
             } catch (ModelException $e) {
@@ -98,15 +98,8 @@ class UserValidator extends AbstractMemberValidator
 
         $this->processingEmail($user, $mail, true);
         $this->processingPassword($user, $password);
-        if (!$this->hasError()) {
-            try {
-            } catch (ModelException $e) {
-                $this->setMessage($e->getMessage());
-            }
-        }
+
         $users = !empty($mail) ? $this->userModel->findByMail($mail) : null;
-        // var_dump($users);
-        // exit();
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec de la connexion" : "Connexion faite avec success";
         return $users;
     }
@@ -146,15 +139,17 @@ class UserValidator extends AbstractMemberValidator
         $token = Controller::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
         $getToken = $this->processingToken($token, $user, true);
         $this->processingEmail($user, $mail, true);
-        $users = !empty($mail) ? $this->userModel->findByMail($mail) : null;
         if (!$this->hasError()) {
-            $this->userModel->updateToken($getToken, $users->getId());
+            $user = $this->userModel->findByMail($mail);
+            $id = $user->getId();
+
             try {
+                $this->userModel->updateToken($getToken, $id);
             } catch (ModelException $e) {
                 $this->setMessage($e->getMessage());
             }
         }
-        return $users;
+        return $user;
     }
     /**
      * Reset password apres validation de l'email
@@ -214,7 +209,6 @@ class UserValidator extends AbstractMemberValidator
     }
     /**
      * Traitement de l'image
-     * @param User $user
      * @param array $image
      * @param boolean $nullable
      * @return void

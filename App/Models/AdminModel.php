@@ -18,15 +18,15 @@ class AdminModel extends AbstractMemberModel
      */
     public function create($object): void
     {
-        
-        try{
-             Queries::addData(
+
+        try {
+            Queries::addData(
                 $this->getTableName(),
                 [
                     Schema::ADMIN['id'],
                     Schema::ADMIN['name'],
                     Schema::ADMIN['email'],
-                    Schema::ADMIN['dateRecord'],
+                    Schema::ADMIN['recordDate'],
                     Schema::ADMIN['timeRecord'],
                     Schema::ADMIN['validationEmail'],
                     Schema::ADMIN['status'],
@@ -38,13 +38,12 @@ class AdminModel extends AbstractMemberModel
                     $object->getName(),
                     $object->getEmail(),
                     $object->getRecordDate()->format('Y-m-d'),
-                    $object->getRecordTime()->format('H:i:s'),
+                    $object->gettimeRecord()->format('H:i:s'),
                     $object->getValidationMail() ? 1 : 0,
                     $object->getStatus() ? 1 : 0,
                     $object->getToken()
                 ]
-            ) 
-         ;
+            );
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
         }
@@ -71,7 +70,7 @@ class AdminModel extends AbstractMemberModel
      */
     public function updatePassword($id, string $password): void
     {
-        try{
+        try {
             Queries::updateData(
                 $this->getTableName(),
                 [
@@ -79,7 +78,7 @@ class AdminModel extends AbstractMemberModel
                     Schema::ADMIN['validationEmail'],
                 ],
                 "id = ?",
-                [$password,1, $id]
+                [$password, 1, $id]
             );
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
@@ -91,9 +90,9 @@ class AdminModel extends AbstractMemberModel
      * @param string $token
      * @param string $id
      */
-    public function updateToken($token,$id): void
+    public function updateToken($token, $id): void
     {
-        try{
+        try {
             Queries::updateData(
                 $this->getTableName(),
                 [Schema::ADMIN['token']],

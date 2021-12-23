@@ -1,5 +1,9 @@
 <?php
+
 namespace Root\App\Models\Objects;
+
+use InvalidArgumentException;
+
 /**
  * 
  * @author Esaie MUHASA
@@ -14,66 +18,61 @@ class Inscription extends DBOccurence
      * @var User 
      */
     private $user;
-    
+
     /**
      * @var Pack
      */
     private $pack;
-    
+
     /**
      * le montant d'affiliation au packet
      * @var number
      */
     private $amount;
-    
+
     /**
      * l'inscription predecesseur
      * @var Inscription
      */
     private $old;
-    
+
     /**
      * le statut de l'inscription
      * @var boolean
      */
     private $state;
-    
+
     /**
      * le code de la transaction
      * @var string
      */
     private $transactionCode;
-    
+
     /**
      * l'origine de la transaction
      * @var string
      */
     private $transactionOrigi;
-    
+
     /**
      * l'inscription est-elle deja valider par l'administrateur??
      * @var boolean
      */
     private $validate;
-        /**
-     * l'administrateur qui aurait enregistrer l'occurence dans la BDD
-     * @var Admin
-     */
-    private $admin;
     /**
      * @var \DateTime
      */
     private $confirmationDate;
-    
+
     /**
      * @var \DateTime
      */
     private $confirmationTime;
-    
+
     /**
      * @return \Root\Models\Objects\User
      */
-    public function getUser() : ?User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -81,7 +80,7 @@ class Inscription extends DBOccurence
     /**
      * @return \Root\Models\Objects\Pack
      */
-    public function getPack() : ?Pack
+    public function getPack(): ?Pack
     {
         return $this->pack;
     }
@@ -105,7 +104,7 @@ class Inscription extends DBOccurence
     /**
      * @return \Root\Models\Objects\Inscription
      */
-    public function getOld() : ?Inscription
+    public function getOld(): ?Inscription
     {
         return $this->old;
     }
@@ -137,15 +136,16 @@ class Inscription extends DBOccurence
     /**
      * @return boolean
      */
-    public function isValidate() : ?bool
+    public function isValidate(): ?bool
     {
         return $this->validate;
     }
-    
+
     /**
      * @return bool|NULL
      */
-    public function getValidate() : ?bool {
+    public function getValidate(): ?bool
+    {
         return $this->isValidate();
     }
 
@@ -166,25 +166,40 @@ class Inscription extends DBOccurence
     }
 
     /**
-     * @param \Root\Models\Objects\User $user
+     * @param \Root\Models\Objects\User|string $user
      */
-    public function setUser($user) : void
+    public function setUser($user): void
     {
-        $this->user = $user;
+        if ($user instanceof User || $user == null) {
+            $this->user = $user;
+        } else if (is_string($user)) {
+            // die($user);
+            $this->user = new User(array('id' => $user));
+        } else {
+            throw new InvalidArgumentException("Le type de l'argument en parametre de la methode setUser() doit etre soit un string ou une instace de la classe User");
+        }
     }
 
     /**
      * @param \Root\Models\Objects\Pack $pack
      */
-    public function setPack($pack) : void
+    public function setPack($pack): void
     {
-        $this->pack = $pack;
+        if ($pack instanceof Pack || $pack == null) {
+            $this->pack = $pack;
+        } else if (is_string($pack)) {
+            // die($pack);
+            $this->pack = new Pack(array('id' => $pack));
+        } else {
+            throw new InvalidArgumentException("Le type de l'argument en parametre de la methode setPak() doit etre soit un string ou une instace de la classe Pack");
+        }
+       
     }
 
     /**
      * @param number $amount
      */
-    public function setAmount($amount) : void
+    public function setAmount($amount): void
     {
         $this->amount = $amount;
     }
@@ -192,7 +207,7 @@ class Inscription extends DBOccurence
     /**
      * @param \Root\Models\Objects\Inscription $old
      */
-    public function setOld($old) : void
+    public function setOld($old): void
     {
         $this->old = $old;
     }
@@ -200,7 +215,7 @@ class Inscription extends DBOccurence
     /**
      * @param boolean $state
      */
-    public function setState($state) : void
+    public function setState($state): void
     {
         $this->state = $state;
     }
@@ -208,14 +223,15 @@ class Inscription extends DBOccurence
      * aliace de @method isState()
      * @return bool|NULL
      */
-    public function getState () : ?bool {
+    public function getState(): ?bool
+    {
         return $this->isState();
     }
 
     /**
      * @param string $transactionCode
      */
-    public function setTransactionCode($transactionCode) : void
+    public function setTransactionCode($transactionCode): void
     {
         $this->transactionCode = $transactionCode;
     }
@@ -223,7 +239,7 @@ class Inscription extends DBOccurence
     /**
      * @param string $transactionOrigi
      */
-    public function setTransactionOrigi($transactionOrigi) : void
+    public function setTransactionOrigi($transactionOrigi): void
     {
         $this->transactionOrigi = $transactionOrigi;
     }
@@ -231,7 +247,7 @@ class Inscription extends DBOccurence
     /**
      * @param boolean $validate
      */
-    public function setValidate($validate) : void
+    public function setValidate($validate): void
     {
         $this->validate = $validate;
     }
@@ -239,7 +255,7 @@ class Inscription extends DBOccurence
     /**
      * @param \DateTime $confirmationDate
      */
-    public function setConfirmationDate($confirmationDate) : void
+    public function setConfirmationDate($confirmationDate): void
     {
         $this->confirmationDate = $confirmationDate;
     }
@@ -247,10 +263,8 @@ class Inscription extends DBOccurence
     /**
      * @param \DateTime $confirmationTime
      */
-    public function setConfirmationTime($confirmationTime) : void
+    public function setConfirmationTime($confirmationTime): void
     {
         $this->confirmationTime = $confirmationTime;
     }
-
 }
-

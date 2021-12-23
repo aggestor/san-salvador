@@ -38,21 +38,24 @@ class AdminController extends Controller
      */
     public function create()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $validator = new AdiminValidator();
-            $admin = $validator->createAfterValidation();
-            if ($validator->hasError() || $validator->getMessage() != null) {
-                $errors = $validator->getErrors();
-                return $this->view("pages.admin.add_test", "layout_admin", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+        if (!$this->redirectAdmin()) {
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $validator = new AdiminValidator();
+                $admin = $validator->createAfterValidation();
+                if ($validator->hasError() || $validator->getMessage() != null) {
+                    $errors = $validator->getErrors();
+                    return $this->view("pages.admin.add_test", "layout_admin", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                }
+                $mail = $admin->getEmail();
+                $token = $admin->getToken();
+                $id = $admin->getId();
+                $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
+                $lien = $domaineName . "admin/activation-$id-$token";
+                $this->envoieMail($mail, $lien);
             }
-            $mail = $admin->getEmail();
-            $token = $admin->getToken();
-            $id = $admin->getId();
-            $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
-            $lien = $domaineName . "admin/activation-$id-$token";
-            $this->envoieMail($mail, $lien);
+            return $this->view('pages.admin.add_test', 'layout_admin');
         }
-        return $this->view('pages.admin.add_test', 'layout_admin');
     }
     /**
      * Connexion de l'admin
@@ -61,18 +64,21 @@ class AdminController extends Controller
      */
     public function login()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $validator = new AdiminValidator();
-            $admin = $validator->loginProcess();
+        if (!$this->redirectAdmin()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $validator = new AdiminValidator();
+                $admin = $validator->loginProcess();
 
-            if ($validator->hasError() || $validator->getMessage() != null) {
-                $error = $validator->getErrors();
-
-                var_dump($error);
-                exit();
+                if ($validator->hasError() || $validator->getMessage() != null) {
+                    $errors = $validator->getErrors();
+                    return $this->view("pages.admin.login", "layout_", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                } else {
+                    $_SESSION['admin'] = $admin;
+                    header('Location:/admin/dashboard');
+                }
             }
+            return $this->view('pages.admin.login', 'layout_');
         }
-        return $this->view('pages.admin.login', 'layout_admin');
     }
     /**
      * Validation du compte admin
@@ -81,26 +87,36 @@ class AdminController extends Controller
      */
     public function accountActivation()
     {
-        $validator = new AdiminValidator();
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $admin = $validator->activeAccountAfterValidation();
-            if ($validator->hasError() || $validator->getMessage() != null) {
-                $errors = $validator->getErrors();
-                if ($admin->getToken() != "" && $admin->getId() == $_GET['id']) {
-                    return $this->view("pages.password.create_new_pwd", "layout_admin", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+        if (!$this->redirectAdmin()) {
+            $validator = new AdiminValidator();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $admin = $validator->activeAccountAfterValidation();
+                if ($validator->hasError() || $validator->getMessage() != null) {
+                    $errors = $validator->getErrors();
+                    if ($admin->getToken() != "" && $admin->getId() == $_GET['id']) {
+                        return $this->view("pages.password.create_new_pwd", "layout_admin", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                    } else {
+                        return $this->view("pages.static.404");
+                    }
                 } else {
-                    return $this->view("pages.static.404");
+                    $_SESSION['admin'] = $admin;
+                    header('Location:/admin/dashboard');
                 }
+            }
+            if ($this->adminModel->findById($_GET['id'])->getToken() != "") {
+                return $this->view("pages.password.create_new_pwd", "layout_");
             } else {
-                $_SESSION['admin'] = $admin;
-                header('Location:/admin/dashboard');
+                return $this->view("pages.static.404");
             }
         }
-        if ($this->adminModel->findById($_GET['id'])->getToken() != "") {
-            return $this->view("pages.password.create_new_pwd", "layout_");
-        } else {
-            return $this->view("pages.static.404");
-        }
+    }
+    /**
+     * Gestion des operations des admin
+     *
+     * @return void
+     */
+    public function administratorDashboard()
+    {
     }
     /**
      * Verification de la sessios admin
@@ -124,5 +140,17 @@ class AdminController extends Controller
     {
         unset($_SESSION['admin']);
         header('Location:/admin/login');
+    }
+
+    /**
+     * Redirection de l'admin si la session admin existe et differents de vide
+     *
+     * @return void
+     */
+    private function redirectAdmin()
+    {
+        if (isset($_SESSION['admin']) && !empty($_SESSION['admin'])) {
+            header('Location:/admin/dashboard');
+        }
     }
 }

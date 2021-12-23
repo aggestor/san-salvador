@@ -3,31 +3,76 @@
 namespace Root\App\Controllers\Validators;
 
 use Exception;
+use Root\App\Controllers\Controller;
+use Root\App\Models\ModelException;
 use Root\App\Models\ModelFactory;
+use Root\App\Models\Objects\Inscription;
 use Root\App\Models\Objects\Pack;
 use Root\App\Models\PackModel;
+use Root\Models\InscriptionModel;
 
 class PackValidation extends AbstractValidator
 {
-    const FIELD_NAME_PACK = 'packname';
-    const FIELD_CURRENCY_PACK = 'packcurreny';
-    const FIELD_AMOUNTMIN_PACK = 'amountmin';
-    const FIELD_AMOUNTMAX_PACK = 'amountmax';
-    const FIELD_IMAGE_PACK = 'image';
+    const FIELD_NAME_PACK = 'pack_name';
+    const FIELD_CURRENCY_PACK = 'pack_currency';
+    const FIELD_AMOUNTMIN_PACK = 'pack_min_value';
+    const FIELD_AMOUNTMAX_PACK = 'pack_max_value';
+    const FIELD_IMAGE_PACK = 'pack_image';
+    const FIELD_AMOUNT_SUCRIBE = 'mount_invested';
+    const FIELD_AMOUNT_SOURCE = 'source';
+    const FIELD_AMOUNT_REF = 'ref';
     /**
-     * Undocumented variable
+     * Pack Model
      *
      * @var PackModel
      */
     private $packModel;
-
+    /**
+     * Inscription Model
+     * @var InscriptionModel
+     */
+    private $inscriptionModel;
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         $this->packModel = ModelFactory::getInstance()->getModel('Pack');
+        $this->inscriptionModel = ModelFactory::getInstance()->getModel('Inscription');
     }
+    /**
+     * Creation du pack apres validation
+     *
+     * @return Pack
+     */
     public function createAfterValidation()
     {
         $pack = new Pack();
+        $id = Controller::generate(11, "1234567890ABCDEFabcdef");
+        $packname = $_POST[self::FIELD_NAME_PACK];
+        $packcurrency = $_POST[self::FIELD_CURRENCY_PACK];
+        $amountmin = $_POST[self::FIELD_AMOUNTMIN_PACK];
+        $amountmax = $_POST[self::FIELD_AMOUNTMAX_PACK];
+        $image = $_FILES[self::FIELD_IMAGE_PACK];
+        $this->processingId($pack, $id, true);
+        $this->processingNamePack($packname, $pack, true);
+        $this->processingAmountPack($amountmin, $amountmax, $pack);
+        $this->processingImagePack($image, false);
+        $this->processingCurrency($packcurrency, $pack);
+
+        if (!$this->hasError()) {
+            $controller = new Controller();
+            $chemin = $controller->addImage(self::FIELD_IMAGE_PACK);
+            $pack->setImage($chemin);
+            $pack->setRecordDate(new \DateTime());
+            $pack->settimeRecord(new \DateTime());
+            try {
+                $this->packModel->create($pack);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+        return $pack;
     }
 
     public function updateAfterValidation()
@@ -38,15 +83,139 @@ class PackValidation extends AbstractValidator
     {
     }
     /**
+     * Inscription au pack apres validation
+     *
+     * @return void
+     */
+    public function sucribePackAfterValidation()
+    {
+        $inscription = new Inscription();
+        $id = Controller::generate(11, "1234567890ABCDEFabcdef");
+        $this->processingId($inscription, $id, true);
+        $montant = $_POST[self::FIELD_AMOUNT_SUCRIBE];
+        $source = $_POST[self::FIELD_AMOUNT_SOURCE];
+        $ref = $_POST[self::FIELD_AMOUNT_REF];
+        $this->processingAmountSource($source, $inscription);
+        $this->processingRefAmount($ref, $inscription);
+        $this->processingAmountOnSucribePack($montant, $inscription);
+
+        if (!$this->hasError()) {
+            $idPack = isset($_GET['pack']) ? $_GET['pack'] : null;
+            $idUsers = $_SESSION['users']->getId();
+            $inscription->setUser($idUsers);
+            $inscription->setPack($idPack);
+            $inscription->setRecordDate(new \DateTime());
+            $inscription->settimeRecord(new \DateTime());
+            try {
+                $this->inscriptionModel->create($inscription);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * Validation de la source du montant
+     *
+     * @param mixed $amountSource
+     * @return void
+     */
+    protected function validationAmountSource($amountSource): void
+    {
+        $this->notNullable($amountSource);
+    }
+
+    /**
+     * Traitement de la source du montant investi apres validation
+     *
+     * @param mixed $amountSource
+     * @return void
+     */
+    protected function processingAmountSource($amountSource, Inscription $inscription): void
+    {
+        try {
+            $this->validationAmountSource($amountSource);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_AMOUNT_SOURCE, $e->getMessage());
+        }
+        $inscription->setTransactionOrigi($amountSource);
+    }
+
+    /**
+     * Validation de la reference du montant apres validation
+     *
+     * @param mixed $reference
+     * @return void
+     */
+    protected function validationRefAmount($reference)
+    {
+        $this->notNullable($reference);
+    }
+
+    /**
+     * Traitement de la refenrence du montant apres validation
+     *
+     * @param mixed $reference
+     * @return void
+     */
+    protected function processingRefAmount($reference, Inscription $inscription)
+    {
+        try {
+            $this->validationRefAmount($reference);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_AMOUNT_REF, $e->getMessage());
+        }
+        $inscription->setTransactionCode($reference);
+    }
+    /*
+     * Validation du montant lors de la souscription a un pack
+     *
+     * @param mixed $montant
+     * @return void
+     */
+    protected function validationAmountOnSuscribePack($montant)
+    {
+        /**
+         * @var Pack
+         */
+        $pack = $this->packModel->findById($_GET['pack']);
+        $montantMin = $pack->getAmountMin();
+        $montantMax = $pack->getAmountMax();
+        $this->notNullable($montant);
+        if (!is_numeric($montant)) {
+            throw new \RuntimeException("Veuillez entrer une valeur numerique");
+        }
+        if ($montant < $montantMin || $montant > $montantMax) {
+            throw new \RuntimeException("Veuillez entrer un montant correspondant dans l'interval du package selectionner");
+        }
+    }
+
+    /**
+     * Traitement du montant de souscription au pack
+     *
+     * @param mixed $montant
+     * @param Inscription $inscription
+     * @return void
+     */
+    protected function processingAmountOnSucribePack($montant, Inscription $inscription)
+    {
+        try {
+            $this->validationAmountOnSuscribePack($montant);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_AMOUNT_SUCRIBE, $e->getMessage());
+        }
+        $inscription->setAmount($montant);
+    }
+    /**
      * Undocumented function
      *
      * @param string $name
      * @param Pack $pack
      * @return void
      */
-    protected function ValidationNamePack($name, Pack $pack,bool $onCreate=false)
+    protected function ValidationNamePack($name, bool $onCreate = false)
     {
-        $this->isNull($name);
+        $this->notNullable($name);
         //on va verifier si le nom du pack n'existe pas dans la base des donnees 
         if ($onCreate) {
             if ($this->packModel->checkByName($name)) {
@@ -61,10 +230,10 @@ class PackValidation extends AbstractValidator
      * @param Pack $pack
      * @return void
      */
-    protected function processingNamePack($name, Pack $pack,$onCreate=false)
+    protected function processingNamePack($name, Pack $pack, $onCreate = false)
     {
         try {
-            $this->ValidationNamePack($name, $pack,$onCreate);
+            $this->ValidationNamePack($name, $onCreate);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_NAME_PACK, $e->getMessage());
         }
@@ -74,11 +243,11 @@ class PackValidation extends AbstractValidator
     /**
      * Validation du montant de pack
      *
-     * @param integer $amountMin
-     * @param integer $amountMax
+     * @param  $amountMin
+     * @param  $amountMax
      * @return void
      */
-    protected function validationAmountPack(int $amountMin, int $amountMax)
+    protected function validationAmountPack($amountMin, $amountMax)
     {
         if (empty($amountMin) || empty($amountMax)) {
             throw new \RuntimeException("Veuillez enter Le montant du pack");
@@ -86,7 +255,7 @@ class PackValidation extends AbstractValidator
         if ($amountMin >= $amountMax || $amountMax < 0 || $amountMin < 0) {
             throw new \RuntimeException("Veuillez enter les valeurs correctes");
         }
-        if (!is_int($amountMin) || !is_int($amountMax) || !is_numeric($amountMin) || !is_numeric($amountMax)) {
+        if (!is_numeric($amountMin) || !is_numeric($amountMax)) {
             throw new \RuntimeException("Le montant doit etre numeric du type entier");
         }
     }
@@ -116,7 +285,7 @@ class PackValidation extends AbstractValidator
      */
     protected function validationCurrency($currency)
     {
-        $this->isNull($currency);
+        $this->notNullable($currency);
         if (!is_numeric($currency)) {
             throw new \RuntimeException("Le taux doit etre de type numerique");
         }
@@ -143,7 +312,7 @@ class PackValidation extends AbstractValidator
     /**
      * Traitement de l'image du pack
      *
-     * @param mixed $image
+     * @param array $image
      * @param boolean $nullable
      * @return void
      */

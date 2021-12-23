@@ -4,6 +4,7 @@ namespace Root\App\Controllers\Validators;
 
 use ReflectionClass;
 use Root\App\Controllers\Controller;
+use Root\App\Models\AbstractDbOccurenceModel;
 use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\DBOccurence;
 
@@ -173,6 +174,9 @@ abstract class AbstractValidator
         } else {
             $fc = ModelFactory::getInstance();
             $ref = new ReflectionClass($object);
+            /**
+             * @var AbstractDbOccurenceModel
+             */
             $model = $fc->getModel($ref->getShortName());
             do {
                 $id = Controller::generate(11, "1234567890ABCDEFabcdef");

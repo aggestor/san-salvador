@@ -26,7 +26,7 @@ class ReturnInvestModel extends ReturnInvest
                 $ReturnInvest['id'],
                 $ReturnInvest['inscriptionId'],
                 $ReturnInvest['amount'],
-                $ReturnInvest['dateRecord'],
+                $ReturnInvest['recordDate'],
                 $ReturnInvest['timeRecord'],
                 $ReturnInvest['surplus'],
             ],
@@ -35,7 +35,7 @@ class ReturnInvestModel extends ReturnInvest
                 $object->getInscription(),
                 $object->getAmount(),
                 $object->getRecordDate(),
-                $object->getRecordTime(),
+                $object->gettimeRecord(),
                 $object->getSurplus()
             ]
         );

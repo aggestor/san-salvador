@@ -44,7 +44,7 @@ class AdiminValidator extends AbstractMemberValidator
 
         if (!$this->hasError()) {
             $admin->setRecordDate(new \DateTime());
-            $admin->setRecordTime(new \DateTime());
+            $admin->settimeRecord(new \DateTime());
             try {
                 $this->adminModel->create($admin);
             } catch (ModelException $e) {
@@ -100,15 +100,10 @@ class AdiminValidator extends AbstractMemberValidator
         $admin = new Admin();
         $mail = $_POST[self::FIELD_EMAIL];
         $password = $_POST[self::FIELD_PASSWORD];
-        if (!$this->hasError()) {
-            try {
-                $this->processingEmail($admin, $mail, true);
-                $this->processingPassword($admin, $password);
-            } catch (ModelException $e) {
-                $this->setMessage($e->getMessage());
-            }
-        }
+        $this->processingEmail($admin, $mail, true);
+        $this->processingPassword($admin, $password);
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec de la connexion" : "Connexion faite avec success";
+        $admin = !empty($mail) ? $this->adminModel->findByMail($mail) : null;
         return $admin;
     }
     public function changeStatusAfterValidation()

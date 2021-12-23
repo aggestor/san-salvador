@@ -1,5 +1,7 @@
 <?php
+
 namespace Root\App\Models\Objects;
+
 /**
  *
  * @author Esaie MUHASA
@@ -12,25 +14,25 @@ class DBOccurence
      * @var string
      */
     protected  $id;
-    
+
     /**
      * La date de creation de l'occurence
      * @var \DateTime
      */
     protected $recordDate;
-    
+
     /**
      * l'heure de creation de l'ocurence
      * @var \DateTime
      */
-    protected $recordTime;
-    
+    protected $timeRecord;
+
     /**
      * dernier date de modification
      * @var \DateTime
      */
     protected $lastModifDate;
-    
+
     /**
      * @var \DateTime
      */
@@ -42,33 +44,35 @@ class DBOccurence
     {
         $this->readData($data);
     }
-    
+
     /**
      * pour charger les donnees en provenance de l'exterieur dans l'objet (l'hydratation de l'objet)
      * on peut directement passer par un tableau associeatif
      * @param array $data
      */
-    protected function readData (array $data = array()) : void {
+    protected function readData(array $data = array()): void
+    {
         foreach ($data as $key => $value) {
-            $method = "set".ucfirst($key);
+            $method = "set" . ucfirst($key);
             if (is_callable(array($this, $method))) {
                 $this->$method($value);
             }
         }
     }
-    
+
     /**
      * Lecture d'une date ou heure (la date doit etre soit un objet de type DateTime)
      * @param string|\DateTime $date
      * @return \DateTime|NULL
      */
-    protected function readDate($date) : ?\DateTime {
+    protected function readDate($date): ?\DateTime
+    {
         if ($date instanceof \DateTime || $date == null) {
             return $date;
         }
-        return new \DateTime($date);        
+        return new \DateTime($date);
     }
-    
+
     /**
      * @return string
      */
@@ -80,7 +84,7 @@ class DBOccurence
     /**
      * @return \DateTime
      */
-    public function getRecordDate() : ?\DateTime
+    public function getRecordDate(): ?\DateTime
     {
         return $this->recordDate;
     }
@@ -88,15 +92,15 @@ class DBOccurence
     /**
      * @return \DateTime
      */
-    public function getRecordTime() : ?\DateTime
+    public function gettimeRecord(): ?\DateTime
     {
-        return $this->recordTime;
+        return $this->timeRecord;
     }
 
     /**
      * @return \DateTime
      */
-    public function getLastModifDate() : ?\DateTime
+    public function getLastModifDate(): ?\DateTime
     {
         return $this->lastModifDate;
     }
@@ -104,7 +108,7 @@ class DBOccurence
     /**
      * @return \DateTime
      */
-    public function getLastModifTime() : ?\DateTime
+    public function getLastModifTime(): ?\DateTime
     {
         return $this->lastModifTime;
     }
@@ -126,11 +130,11 @@ class DBOccurence
     }
 
     /**
-     * @param \DateTime $recordTime
+     * @param \DateTime $timeRecord
      */
-    public function setRecordTime($recordTime)
+    public function settimeRecord($timeRecord)
     {
-        $this->recordTime = $this->readDate($recordTime);
+        $this->timeRecord = $this->readDate($timeRecord);
     }
 
     /**
@@ -148,6 +152,4 @@ class DBOccurence
     {
         $this->lastModifTime = $this->readDate($lastModifTime);
     }
-
 }
-

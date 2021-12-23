@@ -37,10 +37,10 @@ class Controller
     /**
      * Pour envoyer les mails d'actiavation du compte 
      * @param string $to. Le destinataire du mail
-     * @param string $lien. Le lien d'activation de compte
+     * @param mixed $lien. Le lien d'activation de compte
      * @return void
      */
-    public function envoieMail(string $to, string $lien)
+    public function envoieMail($to, string $lien)
     {
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';
@@ -106,7 +106,6 @@ class Controller
     /**
      * La fonction pour cree un repertoire dans le dossier assets/img/directory
      * @param mixed $directory. Le chemin de le nom du dossier a cree
-     * @return void
      */
     public function createFolder($directory)
     {
@@ -120,7 +119,7 @@ class Controller
     /**
      * Undocumented function
      *
-     * @param mixed $nom
+     * @param mixed $nom. Le du champs du type file dans le formulaire
      */
     public function addImage($nom)
     {
@@ -131,7 +130,9 @@ class Controller
         if (move_uploaded_file($temporaire, $destination)) {
             $imgOrginal = $destination;
             $imgRedi = $this->convertImage($imgOrginal, $directory, 'x320', 96, 96);
-            return $imgOrginal . " AND " . $imgRedi;
+            //chemin a enreistre dans la base des donnees 
+            $folder = str_replace(RACINE, "", $imgOrginal . ' AND ' . $imgRedi);
+            return $folder;
         }
     }
     /**
@@ -149,6 +150,17 @@ class Controller
             }
         }
     }
+
+    /**
+     * Pour la redirection automatique
+     *
+     * @param string $chemin
+     * @return void
+     */
+    public static function redirect($chemin)
+    {
+        header('Location:' . $chemin);
+    }
     /**
      * Verifie si la session existe deja
      *
@@ -157,10 +169,8 @@ class Controller
      */
     public static function sessionExist($session)
     {
-        $redirect=$_SERVER;
-        var_dump($redirect);exit();
         if (isset($session) && !empty($session)) {
-            header('Location:' . $redirect);
+            return true;
         }
     }
 }

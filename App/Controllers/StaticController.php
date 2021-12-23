@@ -8,10 +8,6 @@ class StaticController extends Controller
     {
         return $this->view('pages.static.home_page', 'layouts');
     }
-    public function packages()
-    {
-        return $this->view('pages.static.packs');
-    }
     public function help()
     {
         return $this->view('pages.static.help');

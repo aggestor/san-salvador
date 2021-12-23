@@ -4,13 +4,13 @@
             <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a>
             <h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
         </div>
-        <h2 class="text-gray-400 w-10/12 mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
+        <h2 class="text-gray-400 md:w-10/12 w-full mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
     </div>
     <div class="flex flex-col md:flex-row md:w-10/12 w-full my-3 rounded overflow-hidden h-auto border border-gray-900 mx-auto md:justify-around justify-center">
         <div class="md:w-6/12 grid place-items-center md:p-0 p-4 primary_bg">
             <div class="w-full flex justify-center flex-col primary_bg">
                 <div class="md:w-10/12 w-11/12 mx-auto ">
-                    <div class="w-full md:hidden h-48 mx-auto grid place-items-center">
+                    <div id="userIcon" class="w-full md:hidden h-48 mx-auto grid place-items-center">
                         <i class="fas fa-7x text-gray-400 fa-user-circle"></i>
                     </div>
                     <h2 id="register-title" class="text-gray-500 font-semibold text-base my-4 text-left">Remplissez ce formulaire ci-bas pour vous inscrire sur notre plateforme !</h2>
@@ -20,73 +20,57 @@
                     <div class="w-full form-1 flex flex-col mx-auto p-3">
                         <!--USERNAME BEGIN-->
                         <div class="md:w-11/12 mx-auto w-full mb-2">
-                            <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                            <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['username'])) ?"border-red-500" : " border-gray-400" ?>">
                                 <input id="username" name="username" type="text" placeholder="Nom d'utilisateur" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                             </div>
-                            <?php
-                            if (isset($_POST['enregistrer']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["userName"])) { ?>
-                                <span class="-mt-2 text-red-500 text-xs"><?= $_SESSION["message"]["userName"] ?></span>
-                            <?php }
-                            ?>
+                            <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['username'])): ?>
+                                <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['username']; ?></span>
+                            <?php endif;?>
                         </div>
                         <!--USERNAME END-->
                         <div class="md:w-11/12 md:flex w-full md:justify-between mb-2 mx-auto">
                             <!--EMAIL BEGIN-->
                             <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
-                                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['user_email'])) ?"border-red-500" : " border-gray-400" ?>">
                                     <input id="userEmail" name="user_email" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                                 </div>
-                                <?php
-                                if (isset($_POST['enregistrer']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["userEmail"])) { ?>
-                                    <span class="-mt-2 text-gray-500 text-xs"><?= $_SESSION["message"]["userEmail"] ?></span>
-                                <?php } ?>
+                                <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['user_email'])): ?>
+                                    <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['user_email']; ?></span>
+                                <?php endif;?>
                             </div>
                             <!--EMAIL END-->
 
                             <!--PHONE NUMBER BEGIN-->
                             <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
-                                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['phone_number'])) ?"border-red-500" : " border-gray-400" ?>">
                                     <input id="PhoneNumber" name="phone_number" type="text" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                                 </div>
-                                <?php
-                                if (isset($_POST['enregistrer']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["PhoneNumber"])) { ?>
-                                    <span class="-mt-2 text-gray-500 text-xs"><?= $_SESSION["message"]["PhoneNumber"] ?></span>
-                                <?php } ?>
+                                <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['phone_number'])): ?>
+                                    <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['phone_number']; ?></span>
+                                <?php endif;?>
                             </div>
                             <!--PHONE NUMBER END-->
                         </div>
-
-                        <!--PASSWORDS BEGIN-->
-                        <div class="md:w-11/12 md:flex w-full md:justify-between mb-2 mx-auto">
-                            <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
-                                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                                    <input id="password" name="password" type="password" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
-                                </div>
-                                <?php
-                                if (isset($_POST['enregistrer']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["PhoneNumber"])) { ?>
-                                    <span class="-mt-2 text-red-500 text-xs"><?= $_SESSION["message"]["Password"] ?></span>
-                                <?php } ?>
+                        <!--PASSWORD BEGIN-->
+                        <div class="md:w-11/12 mx-auto w-full mb-2">
+                            <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['password'])) ?"border-red-500" : " border-gray-400" ?>">
+                                <input id="password" name="password" type="text" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                             </div>
-                            <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
-                                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                                    <input id="confirmPassword" name="confirm_password" type="password" placeholder="Confirmer mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
-                                </div>
-                                <?php
-                                if (isset($_POST['enregistrer']) && isset($_SESSION["message"]) && !empty($_SESSION["message"]["PhoneNumber"])) { ?>
-                                    <span class="-mt-2 text-red-500 text-xs"><?= $_SESSION["message"]["Password"] ?></span>
-                                <?php } ?>
-                            </div>
+                            <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['password'])): ?>
+                                <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['password']; ?></span>
+                            <?php endif;?>
                         </div>
                         <!--PASSWORD END-->
-
-                        <!--SPONSOR BEGIN-->
+                        <!--PASSWORD BEGIN-->
                         <div class="md:w-11/12 mx-auto w-full mb-2">
-                            <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                                <input id="sponsor" name="sponsor" readonly type="text" placeholder="Sponsor" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                            <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['confirm_password'])) ?"border-red-500" : " border-gray-400" ?>">
+                                <input id="confirmPassword" name="confirm_password" type="text" placeholder="Confirmer mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                             </div>
-                            <!-- <span class="-mt-2 text-gray-500 text-xs">Le champ ci-haut est obligatoire !</span> -->
+                            <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['confirm_password'])): ?>
+                                <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['confirm_password']; ?></span>
+                            <?php endif;?>
                         </div>
-                        <!--SPONSOR END-->
+                        <!--PASSWORD END-->
                         <div class="md:w-11/12 flex justify-between mt-3 mx-auto">
                             <div class="lg:w-9/12 text-gray-500 text-sm">
                                 Avant de cliquer sur <i>Suivant</i>, rassurez-vous d'avoir bien rempli le formulaire ce-dessus.

@@ -1,5 +1,7 @@
 <?php
+
 namespace Root\App\Models;
+
 use Root\App\Models\Queries;
 use Root\App\Models\Objects\Pack;
 use Root\App\Models\Schema;
@@ -12,10 +14,11 @@ class PackModel extends AbstractDbOccurenceModel{
      * @see \Root\Models\AbstractDbOccurenceModel::create()
      * @param Pack $object
      */
-    public function create($object) : void {
+    public function create($object): void
+    {
         $pack = Schema::PACK;
-        Queries::addData (
-           $this-> getTableName(),
+        Queries::addData(
+            $this->getTableName(),
             [
                 $pack['id'],
                 $pack['name'],
@@ -23,8 +26,7 @@ class PackModel extends AbstractDbOccurenceModel{
                 $pack['mountMin'],
                 $pack['mountMax'],
                 $pack['image'],
-                $pack['adminId'],
-                $pack['dateRecord'],
+                $pack['recordDate'],
                 $pack['timeRecord'],
                 $pack['leval']
             ],
@@ -35,9 +37,44 @@ class PackModel extends AbstractDbOccurenceModel{
                 $object->getAmountMin(),
                 $object->getAmountMax(),
                 $object->getImage(),
-                $object->getRecordDate(),
-                $object->getRecordTime(),
+                $object->getRecordDate()->format('Y-m-d'),
+                $object->gettimeRecord()->format('H:i:s'),
                 $object->getLevel()
+            ]
+        );
+    }
+    /**
+     * {@inheritDoc}
+     * @see \Root\Models\AbstractDbOccurenceModel::create()
+     * @param Pack $object
+     */
+    public function update($object, $id): void
+    {
+        $pack = Schema::PACK;
+        Queries::updateData(
+            $this->getTableName(),
+            [
+                $pack['name'],
+                $pack['acurracy'],
+                $pack['amountMin'],
+                $pack['amountMax'],
+                $pack['image'],
+                $pack['modifDate'],
+                $pack['modifTime'],
+                $pack['leval']
+            ],
+            "id=?",
+            [
+
+                $object->getName(),
+                $object->getAcurracy(),
+                $object->getAmountMin(),
+                $object->getAmountMax(),
+                $object->getImage(),
+                $object->getLastModifDate(),
+                $object->getLastModifTime(),
+                $object->getLevel(),
+                $id
             ]
         );
     }
@@ -87,11 +124,11 @@ class PackModel extends AbstractDbOccurenceModel{
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
      */
-    protected function getTableName() : string {
+    protected function getTableName(): string
+    {
         return Schema::TABLE_SCHEMA['pack'];
-
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getDBOcurence()
@@ -99,11 +136,14 @@ class PackModel extends AbstractDbOccurenceModel{
     protected function getDBOccurence(array $keyValue)
     {
         $data = array();
-        foreach (Schema::PACK  as $key=>$value){
-            if(key_exists($value,$keyValue)){
-                $data[$key]=$keyValue[$key];
+        $keyVal = $keyValue;
+        foreach (Schema::PACK as $key => $value) {
+
+            if (key_exists($value, $keyVal)) {
+                $data[$key] = $keyVal[$value];
             }
         }
+//var_dump($data);exit();
         return new Pack($data);
     }
     /**
@@ -112,9 +152,12 @@ class PackModel extends AbstractDbOccurenceModel{
      * @return bool
      * @throws ModelException s'il y a erreur lors la communication avec ladd
      */
-    public function checkByName (string $name) : bool {
-               return $this->check(Schema::PACK['name'], $name);
-   }
+    public function checkByName(string $name): bool
+    {
+        return $this->check(Schema::PACK['name'], $name);
+    }
+
+    
 
 
 }

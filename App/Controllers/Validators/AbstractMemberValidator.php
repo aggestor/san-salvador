@@ -263,7 +263,7 @@ abstract class AbstractMemberValidator extends AbstractValidator
             throw new \RuntimeException("Token invalide");
         }
         if ($token < self::MAX_LENGHT_TOKEN) {
-            throw new \RuntimeException("Token invalide jjjj");
+            throw new \RuntimeException("Token invalide");
         }
     }
     /**
