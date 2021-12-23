@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myChart" height="500" width="500"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let socket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade")
+        
+        let prices = [], times = []
+        data = {}, config = {}
+        socket.onmessage = (evt) => {
+             let time = new Date()
+             time = time.toString().match(/(.\d\:){2}\d{2}/gm)[0]
+
+            let data_ = evt.data
+            data_ = JSON.parse(data_)
+            if(times.length < 10){
+                times.push(time)
+            }else {
+                times.pop()
+                times.push(time)
+            }
+            if(prices.length < 10){
+                prices.push(data_.p)
+            }else{
+                prices.shift()
+                prices.push(data_.p)
+            }
+            data.labels = times
+            data.dataset = [{
+                label:"test",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: prices
+            }]
+            config = {
+                type: 'line',
+                data: data,
+                options: {}
+            }
+            console.log(config)
+        }
+        const chart = new Chart(document.querySelector("canvas"), config)
+    </script>
+</body>
+</html>
