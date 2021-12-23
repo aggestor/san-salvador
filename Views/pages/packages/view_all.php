@@ -1,7 +1,7 @@
 <div class="w-full">
     <div class="h-12 w-full flex justify-between">
         <h1 class="text-gray-300 font-semibold text-xl w-full"> <i class="fas fa-list  mr-3"></i> Liste de tous les pack disponibles.</h1>
-        <span class="w-7 h-7 cursor-pointer border-gray-500 border rounded grid place-items-center text-gray-500"><i class="fa text-lg fa-times"></i></span>
+        <span id="closeShowPackAdmin" class="w-7 h-7 cursor-pointer border-gray-500 border rounded grid place-items-center text-gray-500"><i class="fa text-lg fa-times"></i></span>
     </div>
     <div class="w-full flex flex-col p-2">
         <div class="w-11/12 flex justify-between p-1 h-28 my-6 rounded border border-gray-500">
