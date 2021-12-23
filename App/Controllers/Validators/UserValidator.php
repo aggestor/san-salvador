@@ -137,17 +137,17 @@ class UserValidator extends AbstractMemberValidator
         $user = new User();
         $mail = $_POST[self::FIELD_EMAIL];
         $token = Controller::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
-        $getToken = $this->processingToken($token, $user, true);
+        $this->processingToken($token, $user);
         $this->processingEmail($user, $mail, true);
         if (!$this->hasError()) {
-            $user = $this->userModel->findByMail($mail);
-            $id = $user->getId();
-
+            $userInSystem = $this->userModel->findByMail($mail);
+            $userInSystem->setToken($token);
             try {
-                $this->userModel->updateToken($getToken, $id);
+                $this->userModel->updateToken($user->getToken(), $userInSystem->getId());
             } catch (ModelException $e) {
                 $this->setMessage($e->getMessage());
             }
+            $user = $userInSystem;
         }
         return $user;
     }

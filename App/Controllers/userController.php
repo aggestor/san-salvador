@@ -94,7 +94,7 @@ class UserController extends Controller
             $user = $validator->resetPasswordAfterValidation();
             if ($validator->hasError() || $validator->getMessage() != null) {
                 $errors = $validator->getErrors();
-                if ($user->getToken() != "" && $user->getId() == $_GET['id']) {
+                if ($user->getToken() != "" && $user->getId() == $_GET['id'] && $user->getToken() == $_GET['token']) {
                     return $this->view("pages.password.create_new_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 } else {
                     return $this->view('pages.static.404');
@@ -103,7 +103,7 @@ class UserController extends Controller
                 Controller::redirect("/user/password");
             }
         }
-        if ($this->userModel->findById($_GET['id'])->getToken() != "") {
+        if ($this->userModel->findById($_GET['id'])->getToken() != "" && $this->userModel->findById($_GET['id'])->getToken() == $_GET['token']) {
             return $this->view("pages.password.create_new_pwd", "layout_");
         } else {
             return $this->view('pages.static.404');
@@ -131,7 +131,7 @@ class UserController extends Controller
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "activation-$id-$token";
                 $this->envoieMail($mail, $lien);
-                Controller::redirect('/user/mail'); 
+                Controller::redirect('/user/mail');
             }
             return $this->view("pages.user.register", "layout_");
         }

@@ -271,19 +271,18 @@ abstract class AbstractMemberValidator extends AbstractValidator
      *
      * @param string $token
      * @param Member $member
-     * @return void
      */
-    public function processingToken($token, Member $member, bool $onReset = false)
+    public function processingToken($token, Member $member)
     {
         try {
             $this->validationToken($token);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_TOKEN, $e->getMessage());
         }
-        if ($onReset) {
-            return $token;
-        } else {
-            $member->setToken($token);
-        }
+        // if ($onReset) {
+        //     return $token;
+        // } else {
+        // }
+        $member->setToken($token);
     }
 }
