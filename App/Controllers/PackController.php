@@ -3,6 +3,7 @@
 namespace Root\App\Controllers;
 
 use Root\App\Controllers\Validators\PackValidation;
+use Root\App\Models\InscriptionModel;
 use Root\App\Models\ModelFactory;
 use Root\App\Models\PackModel;
 
@@ -14,9 +15,17 @@ class PackController extends Controller
      * @var PackModel
      */
     private $packModel;
+
+    /**
+     * Undocumented variable
+     *
+     * @var InscriptionModel
+     */
+    private $inscriptionModel;
     public function __construct()
     {
         $this->packModel = ModelFactory::getInstance()->getModel('Pack');
+        $this->inscriptionModel = ModelFactory::getInstance()->getModel('Inscription');
     }
 
     /**
@@ -31,7 +40,7 @@ class PackController extends Controller
             $pack = $validator->createAfterValidation();
             if ($validator->hasError() || $validator->getMessage() != "") {
                 $errors = $validator->getErrors();
-                return $this->view("pages.packages.dashboard", "layout_admin", ['admin' => $pack, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                return $this->view("pages.packages.dashboard", "layout_admin", ['pack' => $pack, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             }
         }
         return $this->view('pages.packages.dashboard', 'layout_admin');
@@ -39,6 +48,29 @@ class PackController extends Controller
 
     public function sucribeOnPack()
     {
-        
+        if (Controller::sessionExist($_SESSION['users'])) {
+            if ($this->packModel->checkById($_GET['pack'])) {
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $validator = new PackValidation();
+                    $suscribe = $validator->sucribePackAfterValidation();
+
+                    if ($validator->hasError() || $validator->getMessage() != "") {
+                        $errors = $validator->getErrors();
+                        var_dump($errors);
+                        exit();
+                    }
+                }
+                return $this->view('pages.packages.subscribe');
+            } else {
+                return $this->view('pages.static.404');
+            }
+        } else {
+            Controller::redirect('/login');
+        }
+    }
+    public function packages()
+    {
+        $package = $this->packModel->findAll();
+        return $this->view('pages.packages.packs', 'layouts', ['pack' => $package]);
     }
 }

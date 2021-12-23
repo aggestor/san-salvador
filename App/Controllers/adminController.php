@@ -87,7 +87,7 @@ class AdminController extends Controller
      */
     public function accountActivation()
     {
-        if ($this->redirectAdmin()) {
+        if (!$this->redirectAdmin()) {
             $validator = new AdiminValidator();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $admin = $validator->activeAccountAfterValidation();
@@ -115,8 +115,8 @@ class AdminController extends Controller
      *
      * @return void
      */
-    public function administratorDashboard(){
-
+    public function administratorDashboard()
+    {
     }
     /**
      * Verification de la sessios admin

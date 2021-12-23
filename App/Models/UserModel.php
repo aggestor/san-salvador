@@ -32,7 +32,7 @@ class UserModel extends AbstractMemberModel
                     Schema::USER['side'],
                     Schema::USER['status'],
                     Schema::USER['validationEmail'],
-                    Schema::USER['dateRecord'],
+                    Schema::USER['recordDate'],
                     Schema::USER['timeRecord'],
                     Schema::USER['photo'],
                     Schema::USER['token'],
@@ -50,7 +50,7 @@ class UserModel extends AbstractMemberModel
                     $object->getStatus() ? 1 : 0,
                     $object->getValidationMail() ? 1 : 0,
                     $object->getRecordDate()->format('Y-m-d'),
-                    $object->getRecordTime()->format('H:i:s'),
+                    $object->gettimeRecord()->format('H:i:s'),
                     $object->getPhoto(),
                     $object->getToken()
                 ]
@@ -96,7 +96,7 @@ class UserModel extends AbstractMemberModel
      */
     public function updatePhoto($id, string $photoName): void
     {
-        try{
+        try {
             Queries::updateData(
                 $this->getTableName(),
                 [Schema::USER['photo']],
@@ -115,7 +115,7 @@ class UserModel extends AbstractMemberModel
      */
     public function updatePassword($id, string $password): void
     {
-        try{
+        try {
             Queries::updateData(
                 $this->getTableName(),
                 [Schema::USER['password']],
@@ -133,7 +133,7 @@ class UserModel extends AbstractMemberModel
      */
     public function validateAccount($id): void
     {
-        try{
+        try {
             Queries::updateData(
                 $this->getTableName(),
                 [Schema::USER['validationEmail']],
@@ -149,9 +149,9 @@ class UserModel extends AbstractMemberModel
      * @param string $token
      * @param string $id
      */
-    public function updateToken($token,$id): void
+    public function updateToken($token, $id): void
     {
-        try{
+        try {
             Queries::updateData(
                 $this->getTableName(),
                 [Schema::USER['token']],
@@ -194,7 +194,7 @@ class UserModel extends AbstractMemberModel
      */
     public function countLeftRightSides(string $userId): int
     {
-        try{
+        try {
             $count = 0;
 
             if ($this->hasSides($userId)) {
@@ -217,7 +217,7 @@ class UserModel extends AbstractMemberModel
      */
     public function countSide(string $userId, int $side): int
     {
-        try{
+        try {
             $count = 0;
             switch ($side) {
                 case User::FOOT_LEFT: {
@@ -263,7 +263,7 @@ class UserModel extends AbstractMemberModel
      */
     public function countSides(string $userId): int
     {
-        try{
+        try {
             $count = 0;
             if ($this->hasLeftSide($userId)) {
                 $count++;
@@ -285,7 +285,7 @@ class UserModel extends AbstractMemberModel
      */
     public function countRightSide(string $userId): int
     {
-        try{
+        try {
             return $this->countSide($userId, User::FOOT_RIGHT);
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
@@ -299,7 +299,7 @@ class UserModel extends AbstractMemberModel
      */
     public function countLeftSide(string $userId): int
     {
-        try{
+        try {
             return $this->countSide($userId, User::FOOT_LEFT);
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
@@ -313,7 +313,7 @@ class UserModel extends AbstractMemberModel
      */
     public function findDownlineLeftRightSides(string $userId): array
     {
-        try{
+        try {
             $data = array();
             if ($this->hasLeftSide($userId)) {
                 $data[] = $this->findDownlineRightSide($userId);
@@ -333,7 +333,7 @@ class UserModel extends AbstractMemberModel
      */
     public function findRoot(): User
     {
-        
+
         $return = null;
         try {
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . (Schema::USER['sponsor']) . ' IS NULL AND ' . (Schema::USER['parent']) . " IS NULL", array());
@@ -351,7 +351,6 @@ class UserModel extends AbstractMemberModel
         }
 
         return $return;
-        
     }
 
     /**
@@ -371,7 +370,6 @@ class UserModel extends AbstractMemberModel
         }
 
         return $return;
-        
     }
 
     /**
@@ -382,7 +380,7 @@ class UserModel extends AbstractMemberModel
      */
     public function findDownlineSide(string $userId, int $side): User
     {
-        try{
+        try {
             $user = null;
             switch ($side) {
                 case User::FOOT_LEFT: {
@@ -424,7 +422,7 @@ class UserModel extends AbstractMemberModel
      */
     public function findDownlineLeftSide(string $userId): User
     {
-        try{
+        try {
             return $this->findDownlineSide($userId, User::FOOT_LEFT);
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
@@ -438,7 +436,7 @@ class UserModel extends AbstractMemberModel
      */
     public function findDownlineRightSide(string $userId): User
     {
-        try{
+        try {
             return $this->findDownlineSide($userId, User::FOOT_RIGHT);
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
@@ -471,7 +469,6 @@ class UserModel extends AbstractMemberModel
         }
 
         return $return;
-        
     }
 
     /**

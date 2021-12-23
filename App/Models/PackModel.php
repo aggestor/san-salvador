@@ -1,21 +1,25 @@
 <?php
+
 namespace Root\App\Models;
+
 use Root\App\Models\Queries;
 use Root\App\Models\Objects\Pack;
 use Root\App\Models\Schema;
 use Root\App\Models\AbstractDbOccurenceModel;
 
-class PackModel extends AbstractDbOccurenceModel{
+class PackModel extends AbstractDbOccurenceModel
+{
 
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::create()
      * @param Pack $object
      */
-    public function create($object) : void {
+    public function create($object): void
+    {
         $pack = Schema::PACK;
-        Queries::addData (
-           $this-> getTableName(),
+        Queries::addData(
+            $this->getTableName(),
             [
                 $pack['id'],
                 $pack['name'],
@@ -23,7 +27,7 @@ class PackModel extends AbstractDbOccurenceModel{
                 $pack['mountMin'],
                 $pack['mountMax'],
                 $pack['image'],
-                $pack['dateRecord'],
+                $pack['recordDate'],
                 $pack['timeRecord'],
                 $pack['leval']
             ],
@@ -34,8 +38,8 @@ class PackModel extends AbstractDbOccurenceModel{
                 $object->getAmountMin(),
                 $object->getAmountMax(),
                 $object->getImage(),
-                $object->getRecordDate(),
-                $object->getRecordTime(),
+                $object->getRecordDate()->format('Y-m-d'),
+                $object->gettimeRecord()->format('H:i:s'),
                 $object->getLevel()
             ]
         );
@@ -45,15 +49,16 @@ class PackModel extends AbstractDbOccurenceModel{
      * @see \Root\Models\AbstractDbOccurenceModel::create()
      * @param Pack $object
      */
-    public function update($object,$id) : void {
+    public function update($object, $id): void
+    {
         $pack = Schema::PACK;
-        Queries::updateData (
-           $this-> getTableName(),
+        Queries::updateData(
+            $this->getTableName(),
             [
                 $pack['name'],
-                $pack['currency'],
-                $pack['mountMin'],
-                $pack['mountMax'],
+                $pack['acurracy'],
+                $pack['amountMin'],
+                $pack['amountMax'],
                 $pack['image'],
                 $pack['modifDate'],
                 $pack['modifTime'],
@@ -61,7 +66,7 @@ class PackModel extends AbstractDbOccurenceModel{
             ],
             "id=?",
             [
-                
+
                 $object->getName(),
                 $object->getAcurracy(),
                 $object->getAmountMin(),
@@ -79,11 +84,11 @@ class PackModel extends AbstractDbOccurenceModel{
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
      */
-    protected function getTableName() : string {
+    protected function getTableName(): string
+    {
         return Schema::TABLE_SCHEMA['pack'];
-
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getDBOcurence()
@@ -91,11 +96,14 @@ class PackModel extends AbstractDbOccurenceModel{
     protected function getDBOccurence(array $keyValue)
     {
         $data = array();
-        foreach (Schema::PACK  as $key=>$value){
-            if(key_exists($value,$keyValue)){
-                $data[$key]=$keyValue[$key];
+        $keyVal = $keyValue;
+        foreach (Schema::PACK as $key => $value) {
+
+            if (key_exists($value, $keyVal)) {
+                $data[$key] = $keyVal[$value];
             }
         }
+//var_dump($data);exit();
         return new Pack($data);
     }
     /**
@@ -104,19 +112,20 @@ class PackModel extends AbstractDbOccurenceModel{
      * @return bool
      * @throws ModelException s'il y a erreur lors la communication avec ladd
      */
-    public function checkByName (string $name) : bool {
+    public function checkByName(string $name): bool
+    {
         return $this->check(Schema::PACK['name'], $name);
-   }
+    }
 
-//    /**
-//      * Revoie le pack dont vous avez besoin
-//      * @param string $name
-//      * @return \Root\Models\Objects\Pack
-//      */
-//     public function findByName (string $name) {
-//         $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
-//         return $AbstractDbOccurenceModel->find(Schema::PACK['name'], $name);
-//     }
+    //    /**
+    //      * Revoie le pack dont vous avez besoin
+    //      * @param string $name
+    //      * @return \Root\Models\Objects\Pack
+    //      */
+    //     public function findByName (string $name) {
+    //         $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
+    //         return $AbstractDbOccurenceModel->find(Schema::PACK['name'], $name);
+    //     }
 
 
 }

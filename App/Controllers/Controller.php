@@ -106,7 +106,6 @@ class Controller
     /**
      * La fonction pour cree un repertoire dans le dossier assets/img/directory
      * @param mixed $directory. Le chemin de le nom du dossier a cree
-     * @return void
      */
     public function createFolder($directory)
     {
@@ -131,7 +130,9 @@ class Controller
         if (move_uploaded_file($temporaire, $destination)) {
             $imgOrginal = $destination;
             $imgRedi = $this->convertImage($imgOrginal, $directory, 'x320', 96, 96);
-            return $imgOrginal . " AND " . $imgRedi;
+            //chemin a enreistre dans la base des donnees 
+            $folder = str_replace(RACINE, "", $imgOrginal . ' AND ' . $imgRedi);
+            return $folder;
         }
     }
     /**
@@ -149,6 +150,17 @@ class Controller
             }
         }
     }
+
+    /**
+     * Pour la redirection automatique
+     *
+     * @param string $chemin
+     * @return void
+     */
+    public static function redirect($chemin)
+    {
+        header('Location:' . $chemin);
+    }
     /**
      * Verifie si la session existe deja
      *
@@ -157,10 +169,8 @@ class Controller
      */
     public static function sessionExist($session)
     {
-        $redirect=$_SERVER;
-        var_dump($redirect);exit();
         if (isset($session) && !empty($session)) {
-            header('Location:' . $redirect);
+            return true;
         }
     }
 }

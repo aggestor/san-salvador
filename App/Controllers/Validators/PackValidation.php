@@ -18,7 +18,9 @@ class PackValidation extends AbstractValidator
     const FIELD_AMOUNTMIN_PACK = 'pack_min_value';
     const FIELD_AMOUNTMAX_PACK = 'pack_max_value';
     const FIELD_IMAGE_PACK = 'pack_image';
-    const FIELD_AMOUNT_SUCRIBE = 'montant';
+    const FIELD_AMOUNT_SUCRIBE = 'mount_invested';
+    const FIELD_AMOUNT_SOURCE = 'source';
+    const FIELD_AMOUNT_REF = 'ref';
     /**
      * Pack Model
      *
@@ -63,7 +65,7 @@ class PackValidation extends AbstractValidator
             $chemin = $controller->addImage(self::FIELD_IMAGE_PACK);
             $pack->setImage($chemin);
             $pack->setRecordDate(new \DateTime());
-            $pack->setRecordTime(new \DateTime());
+            $pack->settimeRecord(new \DateTime());
             try {
                 $this->packModel->create($pack);
             } catch (ModelException $e) {
@@ -90,26 +92,82 @@ class PackValidation extends AbstractValidator
         $inscription = new Inscription();
         $id = Controller::generate(11, "1234567890ABCDEFabcdef");
         $this->processingId($inscription, $id, true);
-        $idPack = isset($_GET['pack']) ? $_GET['pack'] : null;
-        $idUsers = isset($_SESSION['users']) ? $_SESSION['users']->getUser() : null;
-        $montant=$_POST[self::FIELD_AMOUNT_SUCRIBE];
-        $this->processingAmountOnSucribePack($montant,$inscription);
+        $montant = $_POST[self::FIELD_AMOUNT_SUCRIBE];
+        $source = $_POST[self::FIELD_AMOUNT_SOURCE];
+        $ref = $_POST[self::FIELD_AMOUNT_REF];
+        $this->processingAmountSource($source, $inscription);
+        $this->processingRefAmount($ref, $inscription);
+        $this->processingAmountOnSucribePack($montant, $inscription);
 
         if (!$this->hasError()) {
-           $inscription->setUser($idUsers);
-           $inscription->setPack($idPack);
-           $inscription->setRecordDate(new \DateTime());
-           $inscription->setRecordTime(new \DateTime());
-           try {
-               $this->inscriptionModel->create($inscription);
-           } catch (ModelException $e) {
-               $this->setMessage($e->getMessage());
-           }
-
+            $idPack = isset($_GET['pack']) ? $_GET['pack'] : null;
+            $idUsers = $_SESSION['users']->getId();
+            $inscription->setUser($idUsers);
+            $inscription->setPack($idPack);
+            $inscription->setRecordDate(new \DateTime());
+            $inscription->settimeRecord(new \DateTime());
+            try {
+                $this->inscriptionModel->create($inscription);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
         }
     }
 
     /**
+     * Validation de la source du montant
+     *
+     * @param mixed $amountSource
+     * @return void
+     */
+    protected function validationAmountSource($amountSource): void
+    {
+        $this->notNullable($amountSource);
+    }
+
+    /**
+     * Traitement de la source du montant investi apres validation
+     *
+     * @param mixed $amountSource
+     * @return void
+     */
+    protected function processingAmountSource($amountSource, Inscription $inscription): void
+    {
+        try {
+            $this->validationAmountSource($amountSource);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_AMOUNT_SOURCE, $e->getMessage());
+        }
+        $inscription->setTransactionOrigi($amountSource);
+    }
+
+    /**
+     * Validation de la reference du montant apres validation
+     *
+     * @param mixed $reference
+     * @return void
+     */
+    protected function validationRefAmount($reference)
+    {
+        $this->notNullable($reference);
+    }
+
+    /**
+     * Traitement de la refenrence du montant apres validation
+     *
+     * @param mixed $reference
+     * @return void
+     */
+    protected function processingRefAmount($reference, Inscription $inscription)
+    {
+        try {
+            $this->validationRefAmount($reference);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_AMOUNT_REF, $e->getMessage());
+        }
+        $inscription->setTransactionCode($reference);
+    }
+    /*
      * Validation du montant lors de la souscription a un pack
      *
      * @param mixed $montant
@@ -128,7 +186,7 @@ class PackValidation extends AbstractValidator
             throw new \RuntimeException("Veuillez entrer une valeur numerique");
         }
         if ($montant < $montantMin || $montant > $montantMax) {
-            throw new \RuntimeException("Veuillez entrer un montant correspondant au pack selectionner");
+            throw new \RuntimeException("Veuillez entrer un montant correspondant dans l'interval du package selectionner");
         }
     }
 

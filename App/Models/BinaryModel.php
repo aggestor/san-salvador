@@ -1,5 +1,7 @@
 <?php
-namespace Root\App\Models;  
+
+namespace Root\App\Models;
+
 use Root\App\Models\Queries;
 use Root\App\Models\Objects\Binary;
 use Root\App\Models\Schema;
@@ -10,23 +12,25 @@ use Root\App\Models\AbstractOperationModel;
  * @author Mike
  *
  */
-class BinaryModel extends Binary{
+class BinaryModel extends Binary
+{
 
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::update()
      * @param Binary $object
      */
-    public function create($object) : void {           
+    public function create($object): void
+    {
         $Binary = Schema::BINARY;
-        Queries::addData (
-           $this-> getTableName(),
+        Queries::addData(
+            $this->getTableName(),
             [
                 $Binary['id'],
                 $Binary['inscriptionId'],
                 $Binary['amount'],
                 $Binary['mountMin'],
-                $Binary['dateRecord'],
+                $Binary['recordDate'],
                 $Binary['timeRecord'],
                 $Binary['surplus']
             ],
@@ -35,21 +39,21 @@ class BinaryModel extends Binary{
                 $object->getInscription(),
                 $object->getAmount(),
                 $object->getRecordDate(),
-                $object->getRecordTime(),
-                $object->getSurplus()                   
+                $object->gettimeRecord(),
+                $object->getSurplus()
             ]
         );
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
      */
-    protected function getTableName() : string {
+    protected function getTableName(): string
+    {
         return Schema::TABLE_SCHEMA['binary'];
-
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getDBOccurence()
@@ -57,14 +61,14 @@ class BinaryModel extends Binary{
     protected function getDBOccurence(array $keyValue)
     {
         $data = array();
-        foreach ( Schema::BINARY  as $key=>$value){
-            if(key_exists($value,$keyValue)){
-                $data[$key]=$keyValue[$key];
+        foreach (Schema::BINARY  as $key => $value) {
+            if (key_exists($value, $keyValue)) {
+                $data[$key] = $keyValue[$key];
             }
         }
         return new Binary($data);
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractOperationModel::getFieldsNames()
@@ -73,5 +77,4 @@ class BinaryModel extends Binary{
     {
         return Schema::BINARY;
     }
-
 }

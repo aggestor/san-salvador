@@ -49,11 +49,11 @@ $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\AdminContro
 $routes->post('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 $routes->get('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 //route pour afficher les pack
-$routes->get('/packages', 'Root\App\Controllers\PackControlle@packages');
+$routes->get('/packages', 'Root\App\Controllers\PackController@packages');
 
 //route pour souscrire a une pack
-$routes->get('/admin/pack/sucribe-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@ucribeOnPack','pack');
-$routes->post('/admin/pack/sucribe-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@ucribeOnPack','pack');
+$routes->get('/user/pack/sucribe-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@sucribeOnPack', 'pack');
+$routes->post('/user/pack/sucribe-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@sucribeOnPack', 'pack');
 
 //route pour l'authentification de l'utilisateur en post
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
@@ -68,6 +68,16 @@ $routes->post('/reset-password', 'Root\App\Controllers\UserController@resetPassw
 $routes->post('/login', 'Root\App\Controllers\UserController@login');
 $routes->get('/login', 'Root\App\Controllers\UserController@login');
 $routes->get('/user/dashboard', 'Root\App\Controllers\UserController@dashboard');
+$routes->get('/logout', 'Root\App\Controllers\UserController@logout');
+/*
+    les routes de succes pour 
+    1. l'envoie du mail
+    2. la reinitialisation du mot de passe avec success
+    3. l'incription terminer avec succes 
+ */
+$routes->get('/user/mail', 'Root\App\Controllers\UserController@mailSendSuccess');
+$routes->get('/user/password', 'Root\App\Controllers\UserController@passwordSuccess');
+$routes->get('/user/account', 'Root\App\Controllers\UserController@registerSuccess');
 
 
 //route d'activation du compte utilisateur
