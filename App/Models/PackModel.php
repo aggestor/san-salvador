@@ -79,46 +79,7 @@ class PackModel extends AbstractDbOccurenceModel{
         );
     }
 
-    /**
-     * mis en jour d'un occurence dont l'ID est en 2em parametre de cette methode
-     * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::update()
-     * @param Pack $object
-     */
-    public  function update($object,  $id) : void {
-        $pack = Schema::PACK;
-        Queries::updateData(
-            $this-> getTableName(),
-            [                    
-                $pack['name'],
-                $pack['currency'],
-                $pack['mountMin'],
-                $pack['mountMax'],
-                $pack['image'],
-                $pack['adminId'],
-                $pack['dateRecord'],
-                $pack['timeRecord'],
-                $pack['leval'],
-                $pack['modifDate'],
-                $pack['modifTime'],
-            ],
-            "{$pack['id']}=?",
-            [
-                $object->getName(),
-                $object->getAcurracy(),
-                $object->getAmountMin(),
-                $object->getAmountMax(),
-                $object->getImage(),
-                $object->getAdmin(),
-                $object->getRecordDate(),
-                $object->getRecordTime(),
-                $object->getLevel(),
-                $object->getLastModifDate(),
-                $object->getLastModifTime(),
-                $object->getId()
-            ]
-        );
-    }
+  
 
     /**
      * {@inheritDoc}
