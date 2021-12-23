@@ -66,4 +66,40 @@
     {
         throw new ModelException("Operation non pris en charge");
     }
+    /**
+     * @return bool
+     */
+    public function checkIfExistActivePack(string $userId): bool
+    {
+        $return = false;
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {Schema::INSCRIPTION['user']}=? AND {Schema::INSCRIPTION['state']}=?", array($userId,1));
+            if ($statement->fetch()) {
+                $return = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+        }
+
+        return $return;
+    }
+    /**
+     * @return bool
+     */
+    public function checkIfExistInActivePack(string $userId): bool
+    {
+        $return = false;
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {Schema::INSCRIPTION['user']}=? AND {Schema::INSCRIPTION['state']}=?", array($userId,0));
+            if ($statement->fetch()) {
+                $return = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+        }
+
+        return $return;
+    }
 }
