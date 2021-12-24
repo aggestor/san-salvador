@@ -1,12 +1,12 @@
 <?php
-
-namespace Root\App\Models;
-
-use Root\App\Models\Objects\Inscription;
-
-class InscriptionModel extends AbstractDbOccurenceModel
-{
-    /**
+    namespace Root\Models;
+    use Root\App\Models\Queries;
+    use Root\App\Models\Objects\Inscription;
+    use Root\App\Models\Schema;
+    use Root\App\Models\AbstractDbOccurenceModel;
+    use Root\App\Models\ModelException;
+    class InscriptionModel extends AbstractDbOccurenceModel{
+      /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::create()
      * @param Inscription $object
@@ -66,7 +66,6 @@ class InscriptionModel extends AbstractDbOccurenceModel
     {
         throw new ModelException("Operation non pris en charge");
     }
-
     /**
      * @return bool
      */
@@ -74,7 +73,9 @@ class InscriptionModel extends AbstractDbOccurenceModel
     {
         $return = false;
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {Schema::INSCRIPTION['user']}=? AND {Schema::INSCRIPTION['state']}=?", array($userId,1));
+            $user=Schema::INSCRIPTION['user'];
+            $state=Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {$user}=? AND {$state}=?", array($userId,1));
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -92,7 +93,9 @@ class InscriptionModel extends AbstractDbOccurenceModel
     {
         $return = false;
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {Schema::INSCRIPTION['user']}=? AND {Schema::INSCRIPTION['state']}=?", array($userId,0));
+            $user=Schema::INSCRIPTION['user'];
+            $state=Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {$user}=? AND {$state}=?", array($userId,0));
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -113,7 +116,9 @@ class InscriptionModel extends AbstractDbOccurenceModel
     {
         $return = array();
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { Schema::INSCRIPTION['user']}=? AND  { Schema::INSCRIPTION['validateInscription']}", array($userId,0));
+            $user=Schema::INSCRIPTION['user'];
+            $validation=Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { $user}=? AND  { $validation}=?", array($userId,0));
             if ($row = $statement->fetch()) {
                 $return[] = new INSCRIPTION($row);
                 while ($row = $statement->fetch()) {
@@ -139,7 +144,9 @@ class InscriptionModel extends AbstractDbOccurenceModel
     {
         $return = array();
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { Schema::INSCRIPTION['user']}=? AND  { Schema::INSCRIPTION['validateInscription']}", array($userId,1));
+            $user=Schema::INSCRIPTION['user'];
+            $validation=Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { $user}=? AND  { $validation}=?", array($userId,1));
             if ($row = $statement->fetch()) {
                 $return[] = new INSCRIPTION($row);
                 while ($row = $statement->fetch()) {
