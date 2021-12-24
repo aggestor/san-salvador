@@ -48,6 +48,8 @@ class PackController extends Controller
 
     public function sucribeOnPack()
     {
+        $id=$_SESSION['users']->getId();
+        var_dump($this->inscriptionModel->checkIfExistActivePack($id));exit();
         if (Controller::sessionExist($_SESSION['users'])) {
             if ($this->packModel->checkById($_GET['pack'])) {
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
