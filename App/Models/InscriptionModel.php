@@ -1,12 +1,12 @@
 <?php
-    namespace Root\Models;
-    use Root\App\Models\Queries;
-    use Root\App\Models\Objects\Inscription;
-    use Root\App\Models\Schema;
-    use Root\App\Models\AbstractDbOccurenceModel;
-    use Root\App\Models\ModelException;
-    class InscriptionModel extends AbstractDbOccurenceModel{
-      /**
+
+namespace Root\App\Models;
+
+use Root\App\Models\Objects\Inscription;
+
+class InscriptionModel extends AbstractDbOccurenceModel
+{
+    /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::create()
      * @param Inscription $object
@@ -14,7 +14,7 @@
     public function create($object): void
     {
         Queries::addData(
-            
+
             $this->getTableName(),
             [
                 Schema::INSCRIPTION['id'],
@@ -34,7 +34,7 @@
                 $object->getAmount(),
                 $object->getState() ? 1 : 0,
                 $object->getTransactionOrigi(),
-                $object->getTransactionCode(),                
+                $object->getTransactionCode(),
                 $object->getRecordDate()->format('Y-m-d'),
                 $object->gettimeRecord()->format('H:i:s')
             ]
@@ -67,15 +67,16 @@
         throw new ModelException("Operation non pris en charge");
     }
     /**
+     * verifie s'il existe une inscription a un pack activé
      * @return bool
      */
     public function checkIfExistActivePack(string $userId): bool
     {
         $return = false;
         try {
-            $user=Schema::INSCRIPTION['user'];
-            $state=Schema::INSCRIPTION['validateInscription'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {$user}=? AND {$state}=?", array($userId,1));
+            $user = Schema::INSCRIPTION['user'];
+            $state = Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {$user}=? AND {$state}=?", array($userId, 1));
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -87,15 +88,16 @@
         return $return;
     }
     /**
+     * verifie s'il existe une inscription a un a pack en  attente d'acivation
      * @return bool
      */
     public function checkIfExistInActivePack(string $userId): bool
     {
         $return = false;
         try {
-            $user=Schema::INSCRIPTION['user'];
-            $state=Schema::INSCRIPTION['validateInscription'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {$user}=? AND {$state}=?", array($userId,0));
+            $user = Schema::INSCRIPTION['user'];
+            $state = Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {$user}=? AND {$state}=?", array($userId, 0));
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -106,7 +108,7 @@
 
         return $return;
     }
-        /**
+    /**
      * revoie tout les informations des souscription en attante de validation
      * @param string $userId
      * @throws ModelException
@@ -116,9 +118,9 @@
     {
         $return = array();
         try {
-            $user=Schema::INSCRIPTION['user'];
-            $validation=Schema::INSCRIPTION['validateInscription'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { $user}=? AND  { $validation}=?", array($userId,0));
+            $user = Schema::INSCRIPTION['user'];
+            $validation = Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { $user}=? AND  { $validation}=?", array($userId, 0));
             if ($row = $statement->fetch()) {
                 $return[] = new INSCRIPTION($row);
                 while ($row = $statement->fetch()) {
@@ -127,14 +129,14 @@
                 $statement->closeCursor();
             } else {
                 $statement->closeCursor();
-                $return=$return;
+                $return = $return;
             }
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
         return $return;
     }
-        /**
+    /**
      * revoie tout les informations des souscription deja valide
      * @param string $userId
      * @throws ModelException
@@ -144,9 +146,9 @@
     {
         $return = array();
         try {
-            $user=Schema::INSCRIPTION['user'];
-            $validation=Schema::INSCRIPTION['validateInscription'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { $user}=? AND  { $validation}=?", array($userId,1));
+            $user = Schema::INSCRIPTION['user'];
+            $validation = Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { $user}=? AND  { $validation}=?", array($userId, 1));
             if ($row = $statement->fetch()) {
                 $return[] = new INSCRIPTION($row);
                 while ($row = $statement->fetch()) {
@@ -155,7 +157,7 @@
                 $statement->closeCursor();
             } else {
                 $statement->closeCursor();
-                $return=$return;
+                $return = $return;
             }
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
