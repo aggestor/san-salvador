@@ -54,6 +54,6 @@
 
 <?php
 
-mkdir("./assets/test");
+//mkdir("./assets/test");
 
 ?>

@@ -117,6 +117,7 @@ class AdminController extends Controller
      */
     public function administratorDashboard()
     {
+
     }
     /**
      * Verification de la sessios admin
