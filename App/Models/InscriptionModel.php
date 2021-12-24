@@ -1,12 +1,12 @@
 <?php
-
-namespace Root\App\Models;
-
-use Root\App\Models\Objects\Inscription;
-
-class InscriptionModel extends AbstractDbOccurenceModel
-{
-    /**
+    namespace Root\Models;
+    use Root\App\Models\Queries;
+    use Root\App\Models\Objects\Inscription;
+    use Root\App\Models\Schema;
+    use Root\App\Models\AbstractDbOccurenceModel;
+    use Root\App\Models\ModelException;
+    class InscriptionModel extends AbstractDbOccurenceModel{
+      /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::create()
      * @param Inscription $object
@@ -65,5 +65,101 @@ class InscriptionModel extends AbstractDbOccurenceModel
     public function update($object, $id): void
     {
         throw new ModelException("Operation non pris en charge");
+    }
+    /**
+     * @return bool
+     */
+    public function checkIfExistActivePack(string $userId): bool
+    {
+        $return = false;
+        try {
+            $user=Schema::INSCRIPTION['user'];
+            $state=Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {$user}=? AND {$state}=?", array($userId,1));
+            if ($statement->fetch()) {
+                $return = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+        }
+
+        return $return;
+    }
+    /**
+     * @return bool
+     */
+    public function checkIfExistInActivePack(string $userId): bool
+    {
+        $return = false;
+        try {
+            $user=Schema::INSCRIPTION['user'];
+            $state=Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE  {$user}=? AND {$state}=?", array($userId,0));
+            if ($statement->fetch()) {
+                $return = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+        }
+
+        return $return;
+    }
+        /**
+     * revoie tout les informations des souscription en attante de validation
+     * @param string $userId
+     * @throws ModelException
+     * @return array
+     */
+    public function findAwaitForValidation(string $userId): array
+    {
+        $return = array();
+        try {
+            $user=Schema::INSCRIPTION['user'];
+            $validation=Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { $user}=? AND  { $validation}=?", array($userId,0));
+            if ($row = $statement->fetch()) {
+                $return[] = new INSCRIPTION($row);
+                while ($row = $statement->fetch()) {
+                    $return[] = new INSCRIPTION($row);
+                }
+                $statement->closeCursor();
+            } else {
+                $statement->closeCursor();
+                $return=$return;
+            }
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        return $return;
+    }
+        /**
+     * revoie tout les informations des souscription deja valide
+     * @param string $userId
+     * @throws ModelException
+     * @return array
+     */
+    public function findForValidation(string $userId): array
+    {
+        $return = array();
+        try {
+            $user=Schema::INSCRIPTION['user'];
+            $validation=Schema::INSCRIPTION['validateInscription'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { $user}=? AND  { $validation}", array($userId,1));
+            if ($row = $statement->fetch()) {
+                $return[] = new INSCRIPTION($row);
+                while ($row = $statement->fetch()) {
+                    $return[] = new INSCRIPTION($row);
+                }
+                $statement->closeCursor();
+            } else {
+                $statement->closeCursor();
+                $return=$return;
+            }
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        return $return;
     }
 }

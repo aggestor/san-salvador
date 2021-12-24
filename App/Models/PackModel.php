@@ -7,8 +7,7 @@ use Root\App\Models\Objects\Pack;
 use Root\App\Models\Schema;
 use Root\App\Models\AbstractDbOccurenceModel;
 
-class PackModel extends AbstractDbOccurenceModel
-{
+class PackModel extends AbstractDbOccurenceModel{
 
     /**
      * {@inheritDoc}
@@ -80,6 +79,8 @@ class PackModel extends AbstractDbOccurenceModel
         );
     }
 
+  
+
     /**
      * {@inheritDoc}
      * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
@@ -117,15 +118,7 @@ class PackModel extends AbstractDbOccurenceModel
         return $this->check(Schema::PACK['name'], $name);
     }
 
-    //    /**
-    //      * Revoie le pack dont vous avez besoin
-    //      * @param string $name
-    //      * @return \Root\Models\Objects\Pack
-    //      */
-    //     public function findByName (string $name) {
-    //         $AbstractDbOccurenceModel=new AbstractDbOccurenceModel();
-    //         return $AbstractDbOccurenceModel->find(Schema::PACK['name'], $name);
-    //     }
+    
 
 
 }

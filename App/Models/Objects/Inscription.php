@@ -59,7 +59,6 @@ class Inscription extends DBOccurence
      * @var boolean
      */
     private $validate;
-
     /**
      * @var \DateTime
      */
@@ -84,6 +83,14 @@ class Inscription extends DBOccurence
     public function getPack(): ?Pack
     {
         return $this->pack;
+    }
+/**
+     * Revoie la refence vers l'administreateur qui aurait enregistre l'occurence
+     * @return \Root\Models\Objects\Admin
+     */
+    public function getAdmin() : ?Admin
+    {
+        return $this->admin;
     }
 
     /**
