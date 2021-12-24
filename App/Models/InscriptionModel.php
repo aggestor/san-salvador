@@ -146,7 +146,7 @@
         try {
             $user=Schema::INSCRIPTION['user'];
             $validation=Schema::INSCRIPTION['validateInscription'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { $user}=? AND  { $validation}", array($userId,1));
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE { $user}=? AND  { $validation}=?", array($userId,1));
             if ($row = $statement->fetch()) {
                 $return[] = new INSCRIPTION($row);
                 while ($row = $statement->fetch()) {
