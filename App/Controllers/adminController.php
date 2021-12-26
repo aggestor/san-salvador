@@ -73,7 +73,7 @@ class AdminController extends Controller
                     $errors = $validator->getErrors();
                     return $this->view("pages.admin.login", "layout_", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 } else {
-                    $_SESSION['admin'] = $admin;
+                    $_SESSION[self::SESSION_ADMIN] = $admin;
                     header('Location:/admin/dashboard');
                 }
             }
@@ -99,7 +99,7 @@ class AdminController extends Controller
                         return $this->view("pages.static.404");
                     }
                 } else {
-                    $_SESSION['admin'] = $admin;
+                    $_SESSION[self::SESSION_ADMIN] = $admin;
                     header('Location:/admin/dashboard');
                 }
             }
@@ -126,7 +126,7 @@ class AdminController extends Controller
      */
     private function isAdmin()
     {
-        if (isset($_SESSION['admin']) && !empty($_SESSION['admin'])) {
+        if (isset($_SESSION[self::SESSION_ADMIN]) && !empty($_SESSION[self::SESSION_ADMIN])) {
             return true;
         } else {
             header('Location:/admin/login');
@@ -139,7 +139,7 @@ class AdminController extends Controller
      */
     public function destroy()
     {
-        unset($_SESSION['admin']);
+        unset($_SESSION[self::SESSION_ADMIN]);
         header('Location:/admin/login');
     }
 
@@ -150,7 +150,7 @@ class AdminController extends Controller
      */
     private function redirectAdmin()
     {
-        if (isset($_SESSION['admin']) && !empty($_SESSION['admin'])) {
+        if (isset($_SESSION[self::SESSION_ADMIN]) && !empty($_SESSION[self::SESSION_ADMIN])) {
             header('Location:/admin/dashboard');
         }
     }

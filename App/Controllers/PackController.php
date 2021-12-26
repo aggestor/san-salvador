@@ -46,30 +46,48 @@ class PackController extends Controller
         return $this->view('pages.packages.dashboard', 'layout_admin');
     }
 
+    /**
+     * L'inscription a un pack
+     */
     public function sucribeOnPack()
     {
-        $id=$_SESSION['users']->getId();
-        var_dump($this->inscriptionModel->checkIfExistInActivePack($id));exit();
-        if (Controller::sessionExist($_SESSION['users'])) {
-            if ($this->packModel->checkById($_GET['pack'])) {
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $validator = new PackValidation();
-                    $suscribe = $validator->sucribePackAfterValidation();
+        if (Controller::sessionExist($_SESSION[self::SESSION_USERS])) {
+            $id = $_SESSION[self::SESSION_USERS]->getId();
+            if (!$this->inscriptionModel->checkIfExistInActivePack($id)) {
+                if ($this->packModel->checkById($_GET['pack'])) {
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $validator = new PackValidation();
+                        $suscribe = $validator->sucribePackAfterValidation();
 
-                    if ($validator->hasError() || $validator->getMessage() != "") {
-                        $errors = $validator->getErrors();
-                        var_dump($errors);
-                        exit();
+                        if ($validator->hasError() || $validator->getMessage() != "") {
+                            $errors = $validator->getErrors();
+                            return $this->view("pages.packages.dashboard", "layout_admin", ['pack' => $suscribe, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                        }
                     }
+                    return $this->view('pages.packages.subscribe');
+                } else {
+                    return $this->view('pages.static.404');
                 }
-                return $this->view('pages.packages.subscribe');
             } else {
-                return $this->view('pages.static.404');
+                Controller::redirect('/user/dashboard');
             }
         } else {
             Controller::redirect('/login');
         }
     }
+
+    /**
+     * upgrade packages
+     *
+     * @return void
+     */
+    public function upgradePackages()
+    {
+        
+    }
+    /**
+     * Affichages de touts les pack
+     */
     public function packages()
     {
         $package = $this->packModel->findAll();

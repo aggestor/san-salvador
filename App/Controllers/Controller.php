@@ -2,8 +2,92 @@
 
 namespace Root\App\Controllers;
 
+use Root\App\Models\BinaryModel;
+use Root\App\Models\InscriptionModel;
+use Root\App\Models\ModelFactory;
+use Root\App\Models\Objects\Inscription;
+use Root\App\Models\Objects\User;
+use Root\App\Models\PackModel;
+use Root\App\Models\ParainageModel;
+use Root\App\Models\ReturnInvestModel;
+use Root\App\Models\UserModel;
+
 class Controller
 {
+    const SESSION_ADMIN = 'admin';
+    const SESSION_USERS = 'users';
+    /**
+     * Inscrption Model
+     *
+     * @var InscriptionModel
+     */
+    private $inscriptionModel;
+
+    /**
+     * Pack Model
+     *
+     * @var PackModel
+     */
+    private $packModel;
+
+    /**
+     * Parainage Model
+     *
+     * @var ParainageModel
+     */
+    private $parainageModel;
+
+    /**
+     * Binary Model
+     *
+     * @var BinaryModel
+     */
+    private $binaryModel;
+
+    /**
+     * ReturnInvest Model
+     *
+     * @var ReturnInvestModel
+     */
+    private $returnInvestModel;
+
+    /**
+     * User Model
+     *
+     * @var UserModel
+     */
+    private $userModel;
+
+    /**
+     * Constructeur 
+     */
+    public function __construct()
+    {
+        $this->inscriptionModel = ModelFactory::getInstance()->getModel("Inscription");
+        $this->packModel = ModelFactory::getInstance()->getModel("Pack");
+        $this->parainageModel = ModelFactory::getInstance()->getModel("Parainage");
+        $this->binaryModel = ModelFactory::getInstance()->getModel("Binary");
+        $this->returnInvestModel = ModelFactory::getInstance()->getModel("ReturnInvest");
+        $this->userModel = ModelFactory::getInstance()->getModel("User");
+    }
+
+    /**
+     * La methode pour retourner le tableau des utilisateurs
+     *
+     * @return object UserModel
+     */
+    public function getAllUsers()
+    {
+        return $this->userModel->findAll();
+    }
+
+    public function captitalInvesti(){
+        if ($this->sessionExist($_SESSION[self::SESSION_USERS])) {
+            $id=$_SESSION[self::SESSION_USERS]->getId();
+            var_dump($id); exit();
+            return $this->inscriptionModel->findById($id);
+        }
+    }
     /**
      * Pour rendre les views dans l'application
      * @param string $path. Le lien ou se trouve la vue a rendre dans le dossier Views
@@ -165,12 +249,22 @@ class Controller
      * Verifie si la session existe deja
      *
      * @param mixed $session
-     * @return void
+     * @return true
      */
     public static function sessionExist($session)
     {
         if (isset($session) && !empty($session)) {
             return true;
         }
+    }
+
+    /**
+     * Pour retourner le 300% de la valeur en parametre
+     *
+     * @param int|float|double|decimal $value. 
+     */
+    public static function pourcentage($value)
+    {
+        return ($value * 300) / 100;
     }
 }

@@ -36,7 +36,7 @@ class UserController extends Controller
                     $errors = $validator->getErrors();
                     return $this->view("pages.user.login", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 }
-                $_SESSION['users'] = $user;
+                $_SESSION[self::SESSION_USERS] = $user;
                 header('Location: /user/dashboard');
             }
             return $this->view("pages.user.login", "layout_");
@@ -49,7 +49,7 @@ class UserController extends Controller
      */
     public function logout()
     {
-        unset($_SESSION['users']);
+        unset($_SESSION[self::SESSION_USERS]);
         header('Location:/login');
     }
     /**
@@ -143,9 +143,12 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        if ($this->isUsers()) {
-            return $this->view("pages.user.profile", "layout_");
-        }
+        // if ($this->isUsers()) {
+        //     return $this->view("pages.user.profile", "layout_");
+        // }
+       parent::__construct();
+        var_dump($this->captitalInvesti());
+        exit();
     }
 
     /**
@@ -192,7 +195,7 @@ class UserController extends Controller
         if ($validator->hasError() || $validator->getMessage() != null) {
             return $this->view("pages.static.404");
         } else {
-            $_SESSION['users'] = $user;
+            $_SESSION[self::SESSION_USERS] = $user;
             $this->userModel->updateToken(null, $user->getId());
             Controller::redirect('/user/account');
         }
@@ -204,7 +207,7 @@ class UserController extends Controller
      */
     private function isUsers()
     {
-        if (isset($_SESSION['users']) && !empty($_SESSION['users'])) {
+        if (isset($_SESSION[self::SESSION_USERS]) && !empty($_SESSION[self::SESSION_USERS])) {
             return true;
         } else {
             header('Location:/login');
@@ -217,7 +220,7 @@ class UserController extends Controller
      */
     private function redirectUser()
     {
-        if (isset($_SESSION['users']) && !empty($_SESSION['users'])) {
+        if (isset($_SESSION[self::SESSION_USERS]) && !empty($_SESSION[self::SESSION_USERS])) {
             header('Location:/user/dashboard');
         }
     }
