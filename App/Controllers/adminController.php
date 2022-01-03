@@ -5,6 +5,7 @@ namespace Root\App\Controllers;
 use Root\App\Controllers\Validators\AdiminValidator;
 use Root\App\Models\AdminModel;
 use Root\App\Models\ModelFactory;
+use Root\App\Models\Objects\Admin;
 
 class AdminController extends Controller
 {
@@ -27,6 +28,8 @@ class AdminController extends Controller
      */
     public function index()
     {
+        parent::__construct();
+        $allNonValidateInscription = $this->allNonValidateInscription();
         if ($this->isAdmin()) {
             return $this->view('pages.admin.dashboard', 'layout_admin');
         }
@@ -73,7 +76,7 @@ class AdminController extends Controller
                     $errors = $validator->getErrors();
                     return $this->view("pages.admin.login", "layout_", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 } else {
-                    $_SESSION['admin'] = $admin;
+                    $_SESSION[self::SESSION_ADMIN] = $admin;
                     header('Location:/admin/dashboard');
                 }
             }
@@ -99,15 +102,47 @@ class AdminController extends Controller
                         return $this->view("pages.static.404");
                     }
                 } else {
-                    $_SESSION['admin'] = $admin;
+                    $_SESSION[self::SESSION_ADMIN] = $admin;
                     header('Location:/admin/dashboard');
                 }
             }
-            if ($this->adminModel->findById($_GET['id'])->getToken() != "") {
+            /**
+             * @var Admin
+             */
+            $admin = $this->adminModel->findById($_GET['id']);
+            if ($admin->getToken() != "") {
                 return $this->view("pages.password.create_new_pwd", "layout_");
             } else {
                 return $this->view("pages.static.404");
             }
+        }
+    }
+
+    /**
+     * pour la validation des inscriptions en attente
+     *
+     * @return void
+     */
+    public function activeInscriptions()
+    {
+        if ($this->isAdmin()) {
+            parent::__construct();
+            $this->activeInscription();
+        }
+    }
+
+    /**
+     * Pour l'affichage des inscription en attente de de validation
+     *
+     * @return void
+     */
+    public function viewAllNonActiveInscription()
+    {
+        if ($this->isAdmin()) {
+            parent::__construct();
+            $allNonValidateInscription = $this->allNonValidateInscription();
+            //la view pour afficher les inscriptions en cours de validation 
+            //return $this->view('pages.admin.dashboard', 'layout_admin', ['nonValidate' => $allNonValidateInscription]);
         }
     }
     /**
@@ -117,7 +152,6 @@ class AdminController extends Controller
      */
     public function administratorDashboard()
     {
-
     }
     /**
      * Verification de la sessios admin
@@ -126,7 +160,7 @@ class AdminController extends Controller
      */
     private function isAdmin()
     {
-        if (isset($_SESSION['admin']) && !empty($_SESSION['admin'])) {
+        if (isset($_SESSION[self::SESSION_ADMIN]) && !empty($_SESSION[self::SESSION_ADMIN])) {
             return true;
         } else {
             header('Location:/admin/login');
@@ -139,7 +173,7 @@ class AdminController extends Controller
      */
     public function destroy()
     {
-        unset($_SESSION['admin']);
+        unset($_SESSION[self::SESSION_ADMIN]);
         header('Location:/admin/login');
     }
 
@@ -150,7 +184,7 @@ class AdminController extends Controller
      */
     private function redirectAdmin()
     {
-        if (isset($_SESSION['admin']) && !empty($_SESSION['admin'])) {
+        if (isset($_SESSION[self::SESSION_ADMIN]) && !empty($_SESSION[self::SESSION_ADMIN])) {
             header('Location:/admin/dashboard');
         }
     }

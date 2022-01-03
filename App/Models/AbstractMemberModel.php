@@ -1,6 +1,9 @@
 <?php
 namespace Root\App\Models;
 
+use Root\App\Models\Objects\Member;
+use Root\App\Models\Objects\DBOccurence;
+
 /**
  *
  * @author Esaie MUHASA
@@ -33,7 +36,7 @@ abstract class AbstractMemberModel extends AbstractDbOccurenceModel
     /**
      * Revoie l'utilisateur dont le mail est en parametre
      * @param string $email
-     * @return \Root\Models\Objects\Member
+     * @return Member
      */
     public function findByMail (string $email) {
         return $this->find(Schema::USER['email'], $email);
@@ -43,7 +46,7 @@ abstract class AbstractMemberModel extends AbstractDbOccurenceModel
     /**
      * Renvoie le proprietaire du numero de telephone en parametre
      * @param string $phone
-     * @return \Root\Models\Objects\DBOccurence
+     * @return DBOccurence
      */
     public function findByPhone (string $phone) {
         return $this->find(Schema::USER['phone'], $phone);

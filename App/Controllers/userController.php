@@ -4,6 +4,7 @@ namespace Root\App\Controllers;
 
 use Root\App\Controllers\Validators\UserValidator;
 use Root\App\Models\ModelFactory;
+use Root\App\Models\Objects\Inscription;
 use Root\App\Models\Objects\User;
 use Root\App\Models\UserModel;
 
@@ -14,8 +15,6 @@ class UserController extends Controller
      * @var UserModel
      */
     private $userModel;
-
-    const FIELD_IMAGE = 'image';
 
     public function __construct()
     {
@@ -36,7 +35,7 @@ class UserController extends Controller
                     $errors = $validator->getErrors();
                     return $this->view("pages.user.login", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 }
-                $_SESSION['users'] = $user;
+                $_SESSION[self::SESSION_USERS] = $user;
                 header('Location: /user/dashboard');
             }
             return $this->view("pages.user.login", "layout_");
@@ -49,7 +48,7 @@ class UserController extends Controller
      */
     public function logout()
     {
-        unset($_SESSION['users']);
+        unset($_SESSION[self::SESSION_USERS]);
         header('Location:/login');
     }
     /**
@@ -103,7 +102,11 @@ class UserController extends Controller
                 Controller::redirect("/user/password");
             }
         }
-        if ($this->userModel->findById($_GET['id'])->getToken() != "" && $this->userModel->findById($_GET['id'])->getToken() == $_GET['token']) {
+        /**
+         * @var User $user
+         */
+        $user = $this->userModel->findById($_GET['id']);
+        if ($user->getToken() != "" && $user->getToken() == $_GET['token']) {
             return $this->view("pages.password.create_new_pwd", "layout_");
         } else {
             return $this->view('pages.static.404');
@@ -143,9 +146,23 @@ class UserController extends Controller
      */
     public function dashboard()
     {
+        parent::__construct();
+        
+            
+            $this->allNonValidateInscription();
+
+        
         if ($this->isUsers()) {
-            return $this->view("pages.user.profile", "layout_");
+            if (!$this->userObject()->hasInscription(false)) {
+                echo "vous n'avez pas d'inscription";
+            } elseif ($this->existValidateInscription()) {
+                //retourne une vue avec le message de veuillez votre inscription est en court de validation 
+                echo "Veuillez patientez nous entrain de valider votre inscription. Merci pour votre confiance";
+            } else {
+                return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject()]);
+            }
         }
+        //var_dump($this->userObject()->hasPack()); exit();
     }
 
     /**
@@ -192,7 +209,7 @@ class UserController extends Controller
         if ($validator->hasError() || $validator->getMessage() != null) {
             return $this->view("pages.static.404");
         } else {
-            $_SESSION['users'] = $user;
+            $_SESSION[self::SESSION_USERS] = $user;
             $this->userModel->updateToken(null, $user->getId());
             Controller::redirect('/user/account');
         }
@@ -204,7 +221,7 @@ class UserController extends Controller
      */
     private function isUsers()
     {
-        if (isset($_SESSION['users']) && !empty($_SESSION['users'])) {
+        if (isset($_SESSION[self::SESSION_USERS]) && !empty($_SESSION[self::SESSION_USERS])) {
             return true;
         } else {
             header('Location:/login');
@@ -217,7 +234,7 @@ class UserController extends Controller
      */
     private function redirectUser()
     {
-        if (isset($_SESSION['users']) && !empty($_SESSION['users'])) {
+        if (isset($_SESSION[self::SESSION_USERS]) && !empty($_SESSION[self::SESSION_USERS])) {
             header('Location:/user/dashboard');
         }
     }

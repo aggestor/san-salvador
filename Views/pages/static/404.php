@@ -11,6 +11,9 @@
                 <li>URL expirée, du coup non trouvée sur le serveur</li>
                 <li>Une erreur sur le serveur lors du rendu</li>
             </ul>
+            <ul class="list-disc _space_text_l3 mt-2 ml-8 text-gray-400">
+                <li><?php echo $params['message'] ?></li>
+            </ul>
             </p>
         </div>
     </div>

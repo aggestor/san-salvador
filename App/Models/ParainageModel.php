@@ -2,31 +2,39 @@
 
 namespace Root\App\Models;
 
-use Root\App\Models\Queries;
 use Root\App\Models\Objects\Parainage;
-use Root\App\Models\Schema;
-use Root\App\Models\AbstractOperationModel;
 
 /**
  * @author Mike
  *
  */
-class ParainageModel extends Parainage
+class ParainageModel extends AbstractOperationModel
 {
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::create()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::create()
      * @param Parainage $object
      */
     public function create($object): void
     {
-        $parainage = Schema::RETURN_INVEST;
-        Queries::addData(
+        $this->createInTransaction(Queries::getPDOInstance(), $object);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Root\App\Models\AbstractDbOccurenceModel::createInTransaction()
+     * @param Parainage $object
+     */
+    public function createInTransaction(\PDO $pdo, $object): void
+    {
+        $parainage = Schema::PARAINAGE;
+        Queries::addDataInTransaction(
+            $pdo,
             $this->getTableName(),
             [
                 $parainage['id'],
-                $parainage['inscriptionId'],
+                $parainage['user'],
                 $parainage['generator'],
                 $parainage['amount'],
                 $parainage['recordDate'],
@@ -35,19 +43,20 @@ class ParainageModel extends Parainage
             ],
             [
                 $object->getId(),
-                $object->getInscription(),
-                $object->getGenerator(),
+                $object->getUser()->getId(),
+                $object->getGenerator()->getId(),
                 $object->getAmount(),
-                $object->getRecordDate(),
-                $object->gettimeRecord(),
+                $object->getFormatedRecordDate(),
+                $object->getFormatedTimeRecord(),
                 $object->getSurplus()
             ]
         );
+        
     }
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getTableName()
      */
     protected function getTableName(): string
     {
@@ -56,25 +65,17 @@ class ParainageModel extends Parainage
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getDBOccurence()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getDBOccurence()
      */
     protected function getDBOccurence(array $keyValue)
     {
         $data = array();
         foreach (Schema::PARAINAGE  as $key => $value) {
             if (key_exists($value, $keyValue)) {
-                $data[$key] = $keyValue[$key];
+                $data[$key] = $keyValue[$value];
             }
         }
         return new Parainage($data);
     }
 
-    /**
-     * {@inheritDoc}
-     * @see \Root\Models\AbstractOperationModel::getFieldsNames()
-     */
-    protected function getFieldsNames(): array
-    {
-        return Schema::PARAINAGE;
-    }
 }

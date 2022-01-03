@@ -8,6 +8,7 @@ use Root\App\Models\AdminModel;
 use Root\App\Models\ModelException;
 use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\Admin;
+use Root\Core\GenerateId;
 use RuntimeException;
 
 class AdiminValidator extends AbstractMemberValidator
@@ -33,8 +34,8 @@ class AdiminValidator extends AbstractMemberValidator
     public function createAfterValidation()
     {
         $admin = new Admin();
-        $id = Controller::generate(11, "1234567890ABCDEFabcdef");
-        $token = Controller::generate(60, "QWERTYUIOPASDFGHJKLZXCVBNMqweryuiopasdfghjklzxcvbnm1234567890");
+        $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
+        $token = GenerateId::generate(60, "QWERTYUIOPASDFGHJKLZXCVBNMqweryuiopasdfghjklzxcvbnm1234567890");
         $mail = $_POST[self::FIELD_EMAIL];
         $name = $_POST[self::FIELD_NAME];
         $this->processingId($admin, $id, true);

@@ -10,9 +10,9 @@ abstract class Operation extends DBOccurence
     /**
      * L'utilisateur beneficiaire de l'operation
      * (proprietaire du compte qui aurait subit l'operation)
-     * @var Inscription
+     * @var User
      */
-    protected $inscription;
+    protected $user;
     
     /**
      * le montant pour l'operation effectuer
@@ -28,11 +28,11 @@ abstract class Operation extends DBOccurence
     
     
     /**
-     * @return \Root\Models\Objects\Inscription
+     * @return User
      */
-    public function getInscription() : ?Inscription
+    public function getUser() : ?User
     {
-        return $this->inscription;
+        return $this->user;
     }
 
     /**
@@ -44,16 +44,16 @@ abstract class Operation extends DBOccurence
     }
 
     /**
-     * @param \Root\Models\Objects\Inscription $inscription
+     * @param User $user
      */
-    public function setInscription ($inscription) : void
+    public function setUser ($user) : void
     {
-        if ($inscription instanceof Inscription || $inscription == null) {
-            $this->inscription = $inscription;
-        }else if (is_int($inscription)) {
-            $this->inscription = new Inscription(array('id' => $inscription));
+        if ($user instanceof User || $user == null) {
+            $this->user = $user;
+        }else if (is_string($user)) {
+            $this->user = new User(array('id' => $user));
         }else {
-            throw new \InvalidArgumentException("Argument invalide en parametre de la methode setInscription()");
+            throw new \InvalidArgumentException("Argument invalide en parametre de la methode setUser()");
         }
     }
 

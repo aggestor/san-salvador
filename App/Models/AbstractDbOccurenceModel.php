@@ -4,7 +4,6 @@ namespace Root\App\Models;
 
 
 use Root\App\Models\Objects\DBOccurence;
-use Root\App\Models\Queries;
 
 /**
  *
@@ -13,11 +12,27 @@ use Root\App\Models\Queries;
  */
 abstract class AbstractDbOccurenceModel
 {
+    /**
+     * Le conteneur des models
+     * @var ModelFactory
+     */
+    private $factory;
 
     /**
+     * initialisation d'un model
+     * @param ModelFactory $factory, fabrique de base du model
      */
-    public function __construct()
+    public function __construct(ModelFactory $factory)
     {
+        $this->factory = $factory;
+    }
+
+    /**
+     * @return \Root\App\Models\ModelFactory
+     */
+    public function getFactory() : ModelFactory
+    {
+        return $this->factory;
     }
 
     /**
@@ -151,7 +166,7 @@ abstract class AbstractDbOccurenceModel
     /**
      * recuperation de l'occurence dont l'ID est en parametre
      * @param string $id
-     * @return Root\App\Models\Objects
+     * @return DBOccurence
      * @throws ModelException
      */
     public function findById(string $id)
@@ -187,6 +202,28 @@ abstract class AbstractDbOccurenceModel
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
         return $data;
+    }
+    
+    /**
+     * y-a-il des donnes pour cette intervale???
+     * @param int $limit
+     * @param int $offset
+     * @throws ModelException
+     * @return bool
+     */
+    public function checkAll(?int $limit = null, int $offset = 0): bool
+    {
+        $return = false;
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} " . ($limit != null ? "LIMIT 1 OFFSET {$offset}" : ""), array());
+            if ($statement->fetch()) {
+                $return = true;
+            } 
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        return $return;
     }
 
     /**
@@ -228,6 +265,16 @@ abstract class AbstractDbOccurenceModel
      * @param DBOccurence $object
      */
     public abstract function create($object): void;
+    
+    /**
+     * demande de creation dans une transaction externe
+     * @param \PDO $pdo
+     * @param DBOccurence $object
+     * @throws ModelException
+     */
+    public function createInTransaction(\PDO $pdo, $object) : void {
+        throw new ModelException("Transaction non pris en charge");
+    }
 
     /**
      * mis en jour d'une occurence dans la base de donnee

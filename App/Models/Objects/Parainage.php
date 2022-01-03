@@ -17,7 +17,7 @@ class Parainage extends Operation
     
     
     /**
-     * @return \Root\Models\Objects\Inscription
+     * @return Inscription
      */
     public function getGenerator() : ?Inscription
     {
@@ -25,13 +25,13 @@ class Parainage extends Operation
     }
 
     /**
-     * @param \Root\Models\Objects\Inscription $generator
+     * @param Inscription $generator
      */
     public function setGenerator($generator) : void
     {
         if ($generator == null || $generator instanceof Inscription) {
             $this->generator = $generator;
-        }else if (is_int($generator)) {
+        }else if (is_string($generator)) {
             $this->generator = new Inscription(array('id' => $generator));
         }else {
             throw new \InvalidArgumentException("valeur de type invalide en parametre de la methode setGenerator");

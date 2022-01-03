@@ -26,6 +26,7 @@ class Schema
         "password" => "user_password",
         "side" => "side",
         "status" => "user_status",
+        "locked" => "locked",
         "validationEmail" => "validation_Status",
         "recordDate" => "record_date",
         "timeRecord" => "record_time",
@@ -43,7 +44,7 @@ class Schema
         "amountMin" => "mount_min",
         "amountMax" => "mount_max",
         "image" => "pack_image",
-        "adminId" => "admin_Id",
+        "admin" => "admin_Id",
         "recordDate" => "record_date",
         "timeRecord" => "record_time",
         "leval" => "laval",
@@ -64,10 +65,11 @@ class Schema
         "status" => "admin_status",
         "token" => "admin_token",
     ];
+    
     const BINARY = [
         "id" => "id",
-        "inscriptionId" => "id_inscription",
-        "sponsoredId" => "id_sponsored_inscription",
+        "user" => "user_id",
+        "generator" => "id_sponsored_inscription",
         "amount" => "amount",
         "recordDate" => "record_date",
         "timeRecord" => "record_time",
@@ -78,7 +80,7 @@ class Schema
     ];
     const CASHOUT = [
         "id" => "id",
-        "inscriptionId" => "id_inscription",
+        "user" => "user_id",
         "amount" => "amount",
         "recordDate" => "record_date",
         "timeRecord" => "record_time",
@@ -88,7 +90,7 @@ class Schema
     ];
     const RETURN_INVEST = [
         "id" => "id",
-        "inscriptionId" => "id_inscription",
+        "user" => "user_id",
         "amount" => "amount",
         "recordDate" => "record_date",
         "timeRecord" => "record_time",
@@ -97,9 +99,10 @@ class Schema
         "surplus" => "surplus",
 
     ];
+    
     const PARAINAGE = [
         "id" => "id",
-        "inscriptionId" => "id_inscription",
+        "user" => "user_id",
         "generator" => "id_sponsored_inscription",
         "amount" => "amount",
         "recordDate" => "record_date",
@@ -107,20 +110,18 @@ class Schema
         "modifDate" => "last_modif_date",
         "motifTime" => "last_modif_time",
         "surplus" => "surplus",
-
     ];
+    
     const INSCRIPTION = [
         "id" => "id",
         "user" => "user_id",
-        "packId" => "pack_id",
         "amount" => "amount",
-        "state" => "state",
         "recordDate" => "record_date",
         "timeRecord" => "record_time",
-        "transactionOrigin" => "transaction_origin",
+        "transactionOrigi" => "transaction_origin",
         "transactionCode" => "transaction_code",
-        "validateInscription" => "validate_inscription",
-        "adminId" => "admin_id",
+        "validate" => "validate_inscription",
+        "admin" => "admin_id",
         "confirmatDate" => "confirmat_date",
         "confirmateTime" => "confirmate_time",
         "modifDate" => "last_modif_date",
@@ -133,7 +134,7 @@ class Schema
         "pack" => "packs",
         "admin" => "admins",
         "binary" => "binarys",
-        "cashout" => "cashout",
+        "cashOut" => "cashout",
         "inscription" => "inscriptions",
         "returnInvest" => "return_invest",
         "parainage" => "parenages",
