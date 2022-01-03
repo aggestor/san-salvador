@@ -43,7 +43,7 @@ $routes->get('/admin/register', 'Root\App\Controllers\AdminController@create');
 $routes->get('/admin/login', 'Root\App\Controllers\AdminController@login');
 //route pour l'admin en get
 $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@index');
-$routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\AdminController@administratorDashboard');
+// $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\AdminController@administratorDashboard');
 
 //route pour ajouter un packet
 $routes->post('/admin/pack', 'Root\App\Controllers\PackController@addPack');
@@ -86,6 +86,12 @@ $routes->get('/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Contro
 //routes pour l'a reinitialisation du mot de passe'
 $routes->get('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@resetPassword', 'id;token');
 $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@resetPassword', 'id;token');
+
+/**
+ * ROUTES pour test Aggestor
+ */
+$routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
+
 
 
 $routes->get('/test', function () {
