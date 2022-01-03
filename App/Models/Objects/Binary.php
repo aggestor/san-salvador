@@ -15,7 +15,7 @@ class Binary extends Operation
     private $generator;
     
     /**
-     * @return \Root\Models\Objects\Inscription
+     * @return Inscription|NULL
      */
     public function getGenerator() : ?Inscription
     {
@@ -23,7 +23,8 @@ class Binary extends Operation
     }
     
     /**
-     * @param \Root\Models\Objects\Inscription $generator
+     * @param string|Inscription $generator
+     * @throws \InvalidArgumentException
      */
     public function setGenerator($generator) : void
     {

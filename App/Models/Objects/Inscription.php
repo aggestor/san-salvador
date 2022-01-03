@@ -2,45 +2,22 @@
 
 namespace Root\App\Models\Objects;
 
-use InvalidArgumentException;
 
 /**
  * 
  * @author Esaie MUHASA
  * 
- * Affiliation a un packet
- * ========================================
- *        
+ * Nouveau capital investie par un utilisateur
+ * ========================================     
  */
-class Inscription extends DBOccurence
+class Inscription extends Operation
 {
-    /**
-     * @var User 
-     */
-    private $user;
-
-    /**
-     * @var Pack
-     */
-    private $pack;
-
-    /**
-     * le montant d'affiliation au packet
-     * @var number
-     */
-    private $amount;
 
     /**
      * l'inscription predecesseur
      * @var Inscription
      */
-    private $old;
-
-    /**
-     * le statut de l'inscription
-     * @var boolean
-     */
-    private $state;
+    private $previus;
 
     /**
      * le code de la transaction
@@ -70,23 +47,8 @@ class Inscription extends DBOccurence
     private $confirmationTime;
 
     /**
-     * @return \Root\Models\Objects\User
-     */
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @return \Root\Models\Objects\Pack
-     */
-    public function getPack(): ?Pack
-    {
-        return $this->pack;
-    }
-/**
      * Revoie la refence vers l'administreateur qui aurait enregistre l'occurence
-     * @return \Root\Models\Objects\Admin
+     * @return Admin
      */
     public function getAdmin() : ?Admin
     {
@@ -94,28 +56,13 @@ class Inscription extends DBOccurence
     }
 
     /**
-     * @return number
+     * @return Inscription
      */
-    public function getAmount()
+    public function gelPrevius(): ?Inscription
     {
-        return $this->amount;
+        return $this->previus;
     }
 
-    /**
-     * @return \Root\Models\Objects\Inscription
-     */
-    public function getOld(): ?Inscription
-    {
-        return $this->old;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isState()
-    {
-        return $this->state;
-    }
 
     /**
      * @return string
@@ -166,66 +113,11 @@ class Inscription extends DBOccurence
     }
 
     /**
-     * @param \Root\Models\Objects\User|string $user
+     * @param Inscription $previus
      */
-    public function setUser($user): void
+    public function selPrevius($previus): void
     {
-        if ($user instanceof User || $user == null) {
-            $this->user = $user;
-        } else if (is_string($user)) {
-            // die($user);
-            $this->user = new User(array('id' => $user));
-        } else {
-            throw new InvalidArgumentException("Le type de l'argument en parametre de la methode setUser() doit etre soit un string ou une instace de la classe User");
-        }
-    }
-
-    /**
-     * @param \Root\Models\Objects\Pack $pack
-     */
-    public function setPack($pack): void
-    {
-        if ($pack instanceof Pack || $pack == null) {
-            $this->pack = $pack;
-        } else if (is_string($pack)) {
-            // die($pack);
-            $this->pack = new Pack(array('id' => $pack));
-        } else {
-            throw new InvalidArgumentException("Le type de l'argument en parametre de la methode setPak() doit etre soit un string ou une instace de la classe Pack");
-        }
-       
-    }
-
-    /**
-     * @param number $amount
-     */
-    public function setAmount($amount): void
-    {
-        $this->amount = $amount;
-    }
-
-    /**
-     * @param \Root\Models\Objects\Inscription $old
-     */
-    public function setOld($old): void
-    {
-        $this->old = $old;
-    }
-
-    /**
-     * @param boolean $state
-     */
-    public function setState($state): void
-    {
-        $this->state = $state;
-    }
-    /**
-     * aliace de @method isState()
-     * @return bool|NULL
-     */
-    public function getState(): ?bool
-    {
-        return $this->isState();
+        $this->previus = $previus;
     }
 
     /**

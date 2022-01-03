@@ -7,6 +7,7 @@ use Root\App\Controllers\Controller;
 use Root\App\Models\AbstractDbOccurenceModel;
 use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\DBOccurence;
+use Root\Core\GenerateId;
 
 /**
  *
@@ -179,7 +180,7 @@ abstract class AbstractValidator
              */
             $model = $fc->getModel($ref->getShortName());
             do {
-                $id = Controller::generate(11, "1234567890ABCDEFabcdef");
+                $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
             } while ($model->checkById($id));
         }
         $object->setId($id);

@@ -12,10 +12,10 @@ class NotFoundException extends Exception
     {
         parent::__construct($message, $code, $previous);
     }
-    public function error404()
+    public function error404($message)
     {
         //require VIEWS . 'pages/404.php';
         http_response_code(404);
-        $controller = (new Controller())->view('pages.static.404');
+        $controller = (new Controller())->view('pages.static.404','layouts',['message'=>$message]);
     }
 }

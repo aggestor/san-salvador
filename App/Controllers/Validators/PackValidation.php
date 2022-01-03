@@ -9,6 +9,7 @@ use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\Inscription;
 use Root\App\Models\Objects\Pack;
 use Root\App\Models\PackModel;
+use Root\Core\GenerateId;
 use Root\Models\InscriptionModel;
 
 class PackValidation extends AbstractValidator
@@ -48,7 +49,7 @@ class PackValidation extends AbstractValidator
     public function createAfterValidation()
     {
         $pack = new Pack();
-        $id = Controller::generate(11, "1234567890ABCDEFabcdef");
+        $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
         $packname = $_POST[self::FIELD_NAME_PACK];
         $packcurrency = $_POST[self::FIELD_CURRENCY_PACK];
         $amountmin = $_POST[self::FIELD_AMOUNTMIN_PACK];
@@ -90,7 +91,7 @@ class PackValidation extends AbstractValidator
     public function sucribePackAfterValidation()
     {
         $inscription = new Inscription();
-        $id = Controller::generate(11, "1234567890ABCDEFabcdef");
+        $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
         $this->processingId($inscription, $id, true);
         $montant = $_POST[self::FIELD_AMOUNT_SUCRIBE];
         $source = $_POST[self::FIELD_AMOUNT_SOURCE];
@@ -100,10 +101,8 @@ class PackValidation extends AbstractValidator
         $this->processingAmountOnSucribePack($montant, $inscription);
 
         if (!$this->hasError()) {
-            $idPack = isset($_GET['pack']) ? $_GET['pack'] : null;
             $idUsers = $_SESSION['users']->getId();
             $inscription->setUser($idUsers);
-            $inscription->setPack($idPack);
             $inscription->setRecordDate(new \DateTime());
             $inscription->settimeRecord(new \DateTime());
             try {
@@ -175,18 +174,15 @@ class PackValidation extends AbstractValidator
      */
     protected function validationAmountOnSuscribePack($montant)
     {
-        /**
-         * @var Pack
-         */
-        $pack = $this->packModel->findById($_GET['pack']);
-        $montantMin = $pack->getAmountMin();
-        $montantMax = $pack->getAmountMax();
         $this->notNullable($montant);
         if (!is_numeric($montant)) {
             throw new \RuntimeException("Veuillez entrer une valeur numerique");
         }
-        if ($montant < $montantMin || $montant > $montantMax) {
-            throw new \RuntimeException("Veuillez entrer un montant correspondant dans l'interval du package selectionner");
+        if (!preg_match("#^[0-9]*$#", $montant)) {
+            throw new \RuntimeException("Veuillez entrer les valeurs numeriques correctes");
+        }
+        if (!$this->packModel->checkByAmount($montant)) {
+            throw new \RuntimeException("Ce montant ne correspond pas a aucune des nos pack");
         }
     }
 

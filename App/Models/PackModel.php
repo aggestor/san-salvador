@@ -2,16 +2,13 @@
 
 namespace Root\App\Models;
 
-use Root\App\Models\Queries;
 use Root\App\Models\Objects\Pack;
-use Root\App\Models\Schema;
-use Root\App\Models\AbstractDbOccurenceModel;
 
 class PackModel extends AbstractDbOccurenceModel{
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::create()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::create()
      * @param Pack $object
      */
     public function create($object): void
@@ -45,7 +42,7 @@ class PackModel extends AbstractDbOccurenceModel{
     }
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::create()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::create()
      * @param Pack $object
      */
     public function update($object, $id): void
@@ -83,7 +80,7 @@ class PackModel extends AbstractDbOccurenceModel{
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getTableName()
      */
     protected function getTableName(): string
     {
@@ -92,7 +89,7 @@ class PackModel extends AbstractDbOccurenceModel{
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getDBOcurence()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getDBOcurence()
      */
     protected function getDBOccurence(array $keyValue)
     {
@@ -104,7 +101,6 @@ class PackModel extends AbstractDbOccurenceModel{
                 $data[$key] = $keyVal[$value];
             }
         }
-//var_dump($data);exit();
         return new Pack($data);
     }
     /**
@@ -117,8 +113,60 @@ class PackModel extends AbstractDbOccurenceModel{
     {
         return $this->check(Schema::PACK['name'], $name);
     }
-
     
+    /**
+     * verifie s'il y a un pack pour le montant en parametre
+     * @param int $amount
+     * @throws ModelException
+     * @return bool
+     */
+    public function checkByAmount (int $amount) : bool {
+        $return = false;
+        $min = Schema::PACK['amountMin'];
+        $max = Schema::PACK['amountMax'];
+        
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$min}<= ? AND {$max} >= ? LIMIT 1", array($amount, $amount));
+            
+            if ($statement->fetch()) {
+                $return = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        
+        return $return;
+    }
+    
+    /**
+     * renvoie le pack pour le montant en parametre
+     * @param int $amount
+     * @throws ModelException
+     * @return Pack
+     */
+    public function findByAmount (int $amount) : Pack {
+        $return = null;
+        $min = Schema::PACK['amountMin'];
+        $max = Schema::PACK['amountMax'];
+        
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$min}<= ? AND {$max} >= ? LIMIT 1", array($amount, $amount));
+            
+            if ($row = $statement->fetch()) {
+                $return = $this->getDBOccurence($row);
+            } else {
+                $statement->closeCursor();
+                throw new ModelException("Aucun packet ne supporte le montant {$amount} USD");
+            }
+            
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        
+        return $return;
+    }
 
 
 }

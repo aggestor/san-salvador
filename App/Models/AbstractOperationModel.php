@@ -12,7 +12,7 @@ abstract class AbstractOperationModel extends AbstractDbOccurenceModel
 {
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::update()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::update()
      */
     public function update($object, $id): void
     {
@@ -24,10 +24,9 @@ abstract class AbstractOperationModel extends AbstractDbOccurenceModel
      * @throws ModelException
      * @return bool
      */
-    public function checkForUser ($userId)  : bool {
-        $inscriptionTableName = Schema::TABLE_SCHEMA['inscription'];
+    public function checkByUser ($userId)  : bool {
         $userIdName = Schema::INSCRIPTION['user'];
-        $SQL = "SELECT {$this->getTableName()}.id AS id, {$inscriptionTableName}.{$userIdName} AS userId FROM {$this->getTableName()} INNER JOIN {$inscriptionTableName} ON {$this->getTableName()}.id_inscription = {$inscriptionTableName}.id WHERE userId = ?";
+        $SQL = "SELECT * FROM {$this->getTableName()}  WHERE {$userIdName} = ?";
         
         $return = false;
         
@@ -51,19 +50,11 @@ abstract class AbstractOperationModel extends AbstractDbOccurenceModel
      * @throws ModelException
      * @return Operation[]
      */
-    public function findForUser ($userId)  : array {
+    public function findByUser ($userId)  : array {
         
-        $inscriptionTableName = Schema::TABLE_SCHEMA['inscription'];
         $userIdName = Schema::INSCRIPTION['user'];
-        
-        $fields = $this->getFieldsNames();
-        $fieldsTxt = "";
-        $compter = 0;
-       
-        foreach ($fields as $v) {
-            $fieldsTxt .= "{$this->getTableName()}.{$v} AS {$v}".($compter < count($fields)? ",":"");
-        }
-        $SQL = "SELECT {$fieldsTxt} FROM {$this->getTableName()} INNER JOIN {$inscriptionTableName} ON {$this->getTableName()}.id_inscription = {$inscriptionTableName}.id WHERE {$userIdName} = ?";
+
+        $SQL = "SELECT * FROM {$this->getTableName()} WHERE {$userIdName} = ?";
         
         $return = array();
         
@@ -85,12 +76,6 @@ abstract class AbstractOperationModel extends AbstractDbOccurenceModel
         
         return $return;
     }
-    
-    /**
-     * doit renvoyer la liste des champs de la table, conformement au Schema
-     * @return array
-     */
-    protected abstract function getFieldsNames  () : array;
 
 }
 

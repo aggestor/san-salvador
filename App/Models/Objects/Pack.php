@@ -98,7 +98,7 @@ class Pack extends DBOccurence
 
     /**
      * Revoie la refence vers l'administreateur qui aurait enregistre l'occurence
-     * @return \Root\Models\Objects\Admin
+     * @return Admin
      */
     public function getAdmin() : ?Admin
     {
@@ -154,7 +154,7 @@ class Pack extends DBOccurence
     }
 
     /**
-     * @param \Root\Models\Objects\Admin $admin
+     * @param Admin $admin
      */
     public function setAdmin($admin) : void
     {
@@ -165,6 +165,15 @@ class Pack extends DBOccurence
         }else {
             throw new \InvalidArgumentException("Argument invalide en parametre de la methode setAdmin()");
         }
+    }
+    
+    /**
+     * verifie si le montant en parametre est pris en charge par ce packet
+     * @param int $amount
+     * @return bool
+     */
+    public function inPack (int $amount) : bool {
+        return ($amount >= $this->getAmountMin() && $amount <= $this->getAmountMax());
     }
 
 }

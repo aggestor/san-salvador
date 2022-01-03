@@ -76,8 +76,11 @@ class Router
 
                     $_GET = array_merge($_GET, $params);
                 }
-
-                return $route->execute();
+                try {
+                    return $route->execute();
+                } catch (\Exception $th) {
+                    throw new NotFoundException("Une erreur est survenue dans le processuce de generation de la page: {$th->getMessage()}");
+                }
             }
         }
 

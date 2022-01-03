@@ -2,17 +2,13 @@
 
 namespace Root\App\Models;
 
-use Root\App\Models\Queries;
 use Root\App\Models\Objects\CashOut;
-use Root\App\Models\Schema;
-use Root\App\Models\AbstractOperationModel;
-
 class CashOutModel extends AbstractOperationModel
 {
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::create()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::create()
      * @param  CashOut $object
      */
     public function create($object): void
@@ -22,14 +18,14 @@ class CashOutModel extends AbstractOperationModel
             $this->getTableName(),
             [
                 $cashOut['id'],
-                $cashOut['inscriptionId'],
+                $cashOut['user'],
                 $cashOut['amount'],
                 $cashOut['recordDate'],
                 $cashOut['timeRecord'],
             ],
             [
                 $object->getId(),
-                $object->getInscription(),
+                $object->getUser()->getId(),
                 $object->getAmount(),
                 $object->getRecordDate(),
                 $object->gettimeRecord()
@@ -39,16 +35,16 @@ class CashOutModel extends AbstractOperationModel
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getTableName()
      */
     protected function getTableName(): string
     {
-        return Schema::CASHOUT['cashOut'];
+        return Schema::TABLE_SCHEMA['cashOut'];
     }
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getDBOccurence()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getDBOccurence()
      */
     protected function getDBOccurence(array $keyValue)
     {
@@ -59,14 +55,5 @@ class CashOutModel extends AbstractOperationModel
             }
         }
         return new CashOut($data);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see \Root\Models\AbstractOperationModel::getFieldsNames()
-     */
-    protected function getFieldsNames(): array
-    {
-        return Schema::CASHOUT;
     }
 }
