@@ -193,6 +193,15 @@ abstract class Member extends DBOccurence
     {
         $this->token = $token;
     }
+    /**
+     * {@inheritDoc}
+     * @see \Root\App\Models\Objects\DBOccurence::__toString()
+     */
+    public function __toString(): string
+    {
+        return "{$this->getName()} : {$this->getEmail()}";
+    }
+
 
 }
 

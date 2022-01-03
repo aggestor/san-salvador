@@ -7,6 +7,7 @@ use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\User;
 use Root\App\Models\UserModel;
 use Root\App\Controllers\Controller;
+use Root\Core\GenerateId;
 
 class UserValidator extends AbstractMemberValidator
 {
@@ -50,8 +51,8 @@ class UserValidator extends AbstractMemberValidator
         $parent = isset($_GET[self::FIELD_PARENT]) ? $_GET[self::FIELD_PARENT] : null;
         $sponsor = isset($_GET[self::FIELD_SPONSOR]) ? $_GET[self::FIELD_SPONSOR] : null;
 
-        $id = Controller::generate(11, "1234567890ABCDEFabcdef");
-        $token = Controller::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
+        $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
+        $token = GenerateId::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
         $this->processingId($user, $id, true);
         $this->processingEmail($user, $mail);
         $this->processingName($user, $name);
@@ -136,7 +137,7 @@ class UserValidator extends AbstractMemberValidator
     {
         $user = new User();
         $mail = $_POST[self::FIELD_EMAIL];
-        $token = Controller::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
+        $token = GenerateId::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
         $this->processingToken($token, $user);
         $this->processingEmail($user, $mail, true);
         if (!$this->hasError()) {

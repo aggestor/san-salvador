@@ -13,7 +13,7 @@ class AdminModel extends AbstractMemberModel
 {
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::create()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::create()
      * @param Admin $object
      */
     public function create($object): void
@@ -51,7 +51,7 @@ class AdminModel extends AbstractMemberModel
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getDBOccurence()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getDBOccurence()
      */
     protected function getDBOccurence(array $keyValue)
     {
@@ -105,7 +105,7 @@ class AdminModel extends AbstractMemberModel
     }
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getTableName()
      */
     protected function getTableName(): string
     {
@@ -114,7 +114,7 @@ class AdminModel extends AbstractMemberModel
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::update()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::update()
      */
     public function update($object, $id): void
     {

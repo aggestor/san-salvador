@@ -26,8 +26,7 @@ final class ModelFactory
     /**
      */
     private function __construct()
-    {
-    }
+    {}
 
     /**
      * Revoie une reference vers l'instance de la fabrique de base du modele des donnees
@@ -43,30 +42,26 @@ final class ModelFactory
 
     /**
      * revoie une reference vers le model dont le nom est en parametre
-     * @param string $name le nom du model doit etre un nom simple de la classe du namespace \Root\Models\Objects\
+     * @param string $name le nom du model doit etre un nom simple de la classe du namespace \Root\App\Models\Objects\
      * @throws ModelException
-     * @return \Root\Models\AbstractDbOccurenceModel
+     * @return \Root\App\Models\AbstractDbOccurenceModel
      */
-    public function getModel(string $name)
+    public function getModel (string $name)
     {
-
         foreach ($this->models as $key => $model) { //Recherche d'une reference
             if ($key == $name) {
                 return $model;
             }
         }
 
-        //$className = '\\Root\\Models\\'.ucfirst($name).'Model';
         $className = '\\Root\\App\\Models\\' . ucfirst($name) . 'Model';
-        $classFileName = (__DIR__) . '\\' . ucfirst($name) . 'Model.php';
-        // var_dump($classFileName);
-        // die();
+        $classFileName = (__DIR__) . DIRECTORY_SEPARATOR . ucfirst($name) . 'Model.php';
 
-        if (!file_exists($classFileName)) {
+        if (!file_exists($classFileName) || !class_exists($className)) {
             throw new ModelException("Aucun modele pour {$name} n'est accessible");
         }
 
-        $this->models[$name] = new $className();
+        $this->models[$name] = new $className($this);
         return $this->models[$name];
     }
 }

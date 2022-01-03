@@ -4,6 +4,7 @@ namespace Root\App\Controllers;
 
 use Root\App\Controllers\Validators\UserValidator;
 use Root\App\Models\ModelFactory;
+use Root\App\Models\Objects\Inscription;
 use Root\App\Models\Objects\User;
 use Root\App\Models\UserModel;
 
@@ -14,8 +15,6 @@ class UserController extends Controller
      * @var UserModel
      */
     private $userModel;
-
-    const FIELD_IMAGE = 'image';
 
     public function __construct()
     {
@@ -103,7 +102,11 @@ class UserController extends Controller
                 Controller::redirect("/user/password");
             }
         }
-        if ($this->userModel->findById($_GET['id'])->getToken() != "" && $this->userModel->findById($_GET['id'])->getToken() == $_GET['token']) {
+        /**
+         * @var User $user
+         */
+        $user = $this->userModel->findById($_GET['id']);
+        if ($user->getToken() != "" && $user->getToken() == $_GET['token']) {
             return $this->view("pages.password.create_new_pwd", "layout_");
         } else {
             return $this->view('pages.static.404');
@@ -143,12 +146,23 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        // if ($this->isUsers()) {
-        //     return $this->view("pages.user.profile", "layout_");
-        // }
-       parent::__construct();
-        var_dump($this->captitalInvesti());
-        exit();
+        parent::__construct();
+        
+            
+            $this->allNonValidateInscription();
+
+        
+        if ($this->isUsers()) {
+            if (!$this->userObject()->hasInscription(false)) {
+                echo "vous n'avez pas d'inscription";
+            } elseif ($this->existValidateInscription()) {
+                //retourne une vue avec le message de veuillez votre inscription est en court de validation 
+                echo "Veuillez patientez nous entrain de valider votre inscription. Merci pour votre confiance";
+            } else {
+                return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject()]);
+            }
+        }
+        //var_dump($this->userObject()->hasPack()); exit();
     }
 
     /**

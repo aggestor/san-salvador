@@ -11,6 +11,7 @@ use Root\App\Models\PackModel;
 use Root\App\Models\ParainageModel;
 use Root\App\Models\ReturnInvestModel;
 use Root\App\Models\UserModel;
+use Root\Core\GenerateId;
 
 class Controller
 {
@@ -74,18 +75,68 @@ class Controller
     /**
      * La methode pour retourner le tableau des utilisateurs
      *
-     * @return object UserModel
+     * @return array
      */
     public function getAllUsers()
     {
         return $this->userModel->findAll();
     }
 
-    public function captitalInvesti(){
+    /**
+     * La methode qui retourner l'objet utilisateur
+     *
+     * @return User
+     */
+    public function userObject()
+    {
         if ($this->sessionExist($_SESSION[self::SESSION_USERS])) {
-            $id=$_SESSION[self::SESSION_USERS]->getId();
-            var_dump($id); exit();
-            return $this->inscriptionModel->findById($id);
+            $id = $_SESSION[self::SESSION_USERS]->getId();
+            return $this->userModel->load($id);
+        }
+    }
+
+    /**
+     * Methode pour verifier s'il y'a un pack en attende de validation 
+     *
+     * @return bool
+     */
+    public function existValidateInscription()
+    {
+        return $this->inscriptionModel->checkAwait($_SESSION[self::SESSION_USERS]->getId());
+    }
+
+    /**
+     * Undocumented function
+     *
+     */
+    public function allNonValidateInscription()
+    {
+        $return = array();
+        $allValidate = $this->inscriptionModel->findAwait();
+        foreach ($allValidate as $validate) {
+            $validate->setUser($this->userModel->findById($validate->getUser()->getId()));
+            $return[] = $validate;
+        }
+        return $return;
+    }
+
+    public function activeInscription()
+    {
+        $idInscription = $_GET['inscription'];
+        $idAdmin = $_SESSION[self::SESSION_ADMIN]->getId();
+        $idUser=$_GET['user'];
+        /**
+         * @var Inscription
+         */
+        $inscription = $this->inscriptionModel->findById($idInscription);
+        if ($this->inscriptionModel->checkById($idInscription) ) {
+            if (!$inscription->isValidate()) {
+                $this->inscriptionModel->validate($idInscription, $idAdmin);
+            } else {
+                Controller::redirect('/admin/dashboard');
+            }
+        } else {
+            return $this->view("pages.static.404");
         }
     }
     /**
@@ -106,17 +157,17 @@ class Controller
         $content = ob_get_clean();
         require VIEWS . $template . '.php';
     }
-    /**
-     * Pour genener un melnge de chaine de caractere 
-     *
-     * @param integer $length. La longueur de la chaine de caractere a genener
-     * @param string $carateres. Les caracteres a melanger
-     * @return string
-     */
-    public static function generate(int $length, string $carateres)
-    {
-        return substr(str_shuffle(str_repeat($carateres, $length)), 0, $length);
-    }
+    // /**
+    //  * Pour genener un melnge de chaine de caractere 
+    //  *
+    //  * @param integer $length. La longueur de la chaine de caractere a genener
+    //  * @param string $carateres. Les caracteres a melanger
+    //  * @return string
+    //  */
+    // public static function generate(int $length, string $carateres)
+    // {
+    //     return substr(str_shuffle(str_repeat($carateres, $length)), 0, $length);
+    // }
 
     /**
      * Pour envoyer les mails d'actiavation du compte 
@@ -207,9 +258,10 @@ class Controller
      */
     public function addImage($nom)
     {
+
         $image = $_FILES[$nom]['name'];
         $temporaire = $_FILES[$nom]['tmp_name'];
-        $directory = $this->createFolder($this->generate(20, '123450ABCDEabcde'));
+        $directory = $this->createFolder(GenerateId::generate(20, '123450ABCDEabcde'));
         $destination = $directory . $image;
         if (move_uploaded_file($temporaire, $destination)) {
             $imgOrginal = $destination;
@@ -256,15 +308,5 @@ class Controller
         if (isset($session) && !empty($session)) {
             return true;
         }
-    }
-
-    /**
-     * Pour retourner le 300% de la valeur en parametre
-     *
-     * @param int|float|double|decimal $value. 
-     */
-    public static function pourcentage($value)
-    {
-        return ($value * 300) / 100;
     }
 }

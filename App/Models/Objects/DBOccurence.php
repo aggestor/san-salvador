@@ -9,6 +9,9 @@ namespace Root\App\Models\Objects;
  */
 class DBOccurence
 {
+    const MYSQL_FORMATED_DATE = "Y-m-d";
+    const MYSQL_FORMATED_TIME = "H:i:s";
+    
     /**
      * l'identifiant de l'occurence dans la bdd
      * @var string
@@ -88,13 +91,33 @@ class DBOccurence
     {
         return $this->recordDate;
     }
+    
+    /**
+     * renvoie la date d'enregistrement formater
+     * @param string $format
+     * @return string|NULL
+     */
+    public function getFormatedRecordDate (?string $format=null) : ?string  {
+        $format = $format === null? self::MYSQL_FORMATED_DATE : $format;
+        return $this->getRecordDate()!=null? $this->getRecordDate()->format($format) : null;
+    }
 
     /**
      * @return \DateTime
      */
-    public function gettimeRecord(): ?\DateTime
+    public function getTimeRecord(): ?\DateTime
     {
         return $this->timeRecord;
+    }
+    
+    /**
+     * renvoie l'heure d'enregistrement formater
+     * @param string $format
+     * @return string|NULL
+     */
+    public function getFormatedTimeRecord (?string $format=null) : ?string  {
+        $format = $format === null? self::MYSQL_FORMATED_TIME : $format;
+        return $this->getTimeRecord()!=null? $this->getTimeRecord()->format($format) : null;
     }
 
     /**
@@ -104,6 +127,16 @@ class DBOccurence
     {
         return $this->lastModifDate;
     }
+    
+    /**
+     * Renvoie la date de modification deja formater
+     * @param string $format
+     * @return string|NULL
+     */
+    public function getFormatedLastModifDate (?string $format=null) : ?string  {
+        $format = $format === null? self::MYSQL_FORMATED_DATE : $format;
+        return $this->getLastModifDate()!=null? $this->getLastModifDate()->format($format) : null;
+    }
 
     /**
      * @return \DateTime
@@ -112,11 +145,21 @@ class DBOccurence
     {
         return $this->lastModifTime;
     }
+    
+    /**
+     * renvoie l'heure du derniere modification, formater
+     * @param string $format
+     * @return string|NULL
+     */
+    public function getFormatedLastModifTime (?string $format=null) : ?string  {
+        $format = $format === null? self::MYSQL_FORMATED_TIME : $format;
+        return $this->getLastModifTime()!=null? $this->getLastModifTime()->format($format) : null;
+    }
 
     /**
      * @param string $id
      */
-    public function setId($id)
+    public function setId ($id) : void
     {
         $this->id = $id;
     }
@@ -124,7 +167,7 @@ class DBOccurence
     /**
      * @param \DateTime $recordDate
      */
-    public function setRecordDate($recordDate)
+    public function setRecordDate($recordDate) : void
     {
         $this->recordDate = $this->readDate($recordDate);
     }
@@ -132,7 +175,7 @@ class DBOccurence
     /**
      * @param \DateTime $timeRecord
      */
-    public function settimeRecord($timeRecord)
+    public function setTimeRecord($timeRecord) : void
     {
         $this->timeRecord = $this->readDate($timeRecord);
     }
@@ -140,7 +183,7 @@ class DBOccurence
     /**
      * @param \DateTime $lastModifDate
      */
-    public function setLastModifDate($lastModifDate)
+    public function setLastModifDate($lastModifDate) : void
     {
         $this->lastModifDate = $this->readDate($lastModifDate);
     }
@@ -148,8 +191,15 @@ class DBOccurence
     /**
      * @param \DateTime $lastModifTime
      */
-    public function setLastModifTime($lastModifTime)
+    public function setLastModifTime($lastModifTime) : void
     {
         $this->lastModifTime = $this->readDate($lastModifTime);
+    }
+    
+    /**
+     * @return string
+     */
+    public function __toString () : string {
+        return $this->getId()!=null? $this->getId() : "";
     }
 }

@@ -53,21 +53,20 @@ class PackController extends Controller
     {
         if (Controller::sessionExist($_SESSION[self::SESSION_USERS])) {
             $id = $_SESSION[self::SESSION_USERS]->getId();
-            if (!$this->inscriptionModel->checkIfExistInActivePack($id)) {
-                if ($this->packModel->checkById($_GET['pack'])) {
-                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                        $validator = new PackValidation();
-                        $suscribe = $validator->sucribePackAfterValidation();
-
-                        if ($validator->hasError() || $validator->getMessage() != "") {
-                            $errors = $validator->getErrors();
-                            return $this->view("pages.packages.dashboard", "layout_admin", ['pack' => $suscribe, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
-                        }
+            //var_dump($this->inscriptionModel->checkAwait($id)); exit();
+            if (!$this->inscriptionModel->checkAwait($id)) {
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $validator = new PackValidation();
+                    $suscribe = $validator->sucribePackAfterValidation();
+                    if ($validator->hasError() || $validator->getMessage() != "") {
+                        $errors = $validator->getErrors();
+                        return $this->view("pages.packages.dashboard", "layout_admin", ['pack' => $suscribe, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                     }
-                    return $this->view('pages.packages.subscribe');
-                } else {
-                    return $this->view('pages.static.404');
+                    else {
+                        Controller::redirect('/user/dashboard');
+                    }
                 }
+                return $this->view('pages.packages.subscribe');
             } else {
                 Controller::redirect('/user/dashboard');
             }
@@ -76,6 +75,7 @@ class PackController extends Controller
         }
     }
 
+    
     /**
      * upgrade packages
      *
@@ -83,7 +83,12 @@ class PackController extends Controller
      */
     public function upgradePackages()
     {
-        
+        if (Controller::sessionExist($_SESSION[self::SESSION_USERS])) {
+            /*cette url va prendre en $_GET['inscription'] et $_GET['pack'] qui est respectivement l'id de l'inscription en court et l'id du pqck qu'on n'a selectionner on va verifier si cet id a un pack active et valide
+            */
+        } else {
+            Controller::redirect('/login');
+        }
     }
     /**
      * Affichages de touts les pack

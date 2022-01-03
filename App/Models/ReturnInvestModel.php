@@ -2,19 +2,16 @@
 
 namespace Root\App\Models;
 
-use Root\App\Models\Queries;
 use Root\App\Models\Objects\ReturnInvest;
-use Root\App\Models\Schema;
-use Root\App\Models\AbstractOperationModel;
 
-class ReturnInvestModel extends ReturnInvest
+class ReturnInvestModel extends AbstractOperationModel
 {
 
     /**
      * La methode create permet l'insertion d'une nouvelle occurence data la table ReturnInvest
      * il prend a paramettre une objet ReturnInvest
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::create()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::create()
      * @param ReturnInvest $object
      */
     public function create($object): void
@@ -43,7 +40,7 @@ class ReturnInvestModel extends ReturnInvest
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getTableName()
      */
     protected function getTableName(): string
     {
@@ -52,25 +49,17 @@ class ReturnInvestModel extends ReturnInvest
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getDBOccurence()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getDBOccurence()
      */
     protected function getDBOccurence(array $keyValue)
     {
         $data = array();
         foreach (Schema::RETURN_INVEST  as $key => $value) {
             if (key_exists($value, $keyValue)) {
-                $data[$key] = $keyValue[$key];
+                $data[$key] = $keyValue[$value];
             }
         }
         return new ReturnInvest($data);
     }
 
-    /**
-     * {@inheritDoc}
-     * @see \Root\Models\AbstractOperationModel::getFieldsNames()
-     */
-    protected function getFieldsNames(): array
-    {
-        return Schema::RETURN_INVEST;
-    }
 }

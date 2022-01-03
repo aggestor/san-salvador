@@ -2,10 +2,7 @@
 
 namespace Root\App\Models;
 
-use Root\App\Models\Queries;
 use Root\App\Models\Objects\Binary;
-use Root\App\Models\Schema;
-use Root\App\Models\AbstractOperationModel;
 
 /**
  * 
@@ -16,37 +13,53 @@ class BinaryModel extends AbstractOperationModel{
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::update()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::update()
      * @param Binary $object
      */
     public function create($object): void
     {
+        try {            
+            $this->createInTransaction(Queries::getPDOInstance(), $object);
+        } catch (\PDOException $e) {
+            throw new ModelException($e->getMessage(), intval($e->getCode(), 10), $e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Root\App\Models\AbstractDbOccurenceModel::createInTransaction()
+     * @param Binary $object
+     */
+    public function createInTransaction(\PDO $pdo, $object): void
+    {
         $Binary = Schema::BINARY;
-        Queries::addData(
+        Queries::addDataInTransaction(
+            $pdo,
             $this->getTableName(),
             [
                 $Binary['id'],
-                $Binary['inscriptionId'],
+                $Binary['user'],
+                $Binary['generator'],
                 $Binary['amount'],
-                $Binary['mountMin'],
+                $Binary['surplus'],
                 $Binary['recordDate'],
-                $Binary['timeRecord'],
-                $Binary['surplus']
+                $Binary['timeRecord']
             ],
             [
                 $object->getId(),
-                $object->getInscription(),
+                $object->getUser()->getId(),
+                $object->getGenerator()->getId(),
                 $object->getAmount(),
-                $object->getRecordDate(),
-                $object->gettimeRecord(),
-                $object->getSurplus()
+                $object->getSurplus(),
+                $object->getFormatedRecordDate(),
+                $object->getFormatedTimeRecord()
             ]
         );
     }
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getTableName()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getTableName()
      */
     protected function getTableName(): string
     {
@@ -55,25 +68,16 @@ class BinaryModel extends AbstractOperationModel{
 
     /**
      * {@inheritDoc}
-     * @see \Root\Models\AbstractDbOccurenceModel::getDBOccurence()
+     * @see \Root\App\Models\AbstractDbOccurenceModel::getDBOccurence()
      */
     protected function getDBOccurence(array $keyValue)
     {
         $data = array();
         foreach (Schema::BINARY  as $key => $value) {
             if (key_exists($value, $keyValue)) {
-                $data[$key] = $keyValue[$key];
+                $data[$key] = $keyValue[$value];
             }
         }
         return new Binary($data);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see \Root\Models\AbstractOperationModel::getFieldsNames()
-     */
-    protected function getFieldsNames(): array
-    {
-        return Schema::BINARY;
     }
 }

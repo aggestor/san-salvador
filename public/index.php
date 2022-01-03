@@ -41,17 +41,26 @@ $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\AdminContro
 //route pour ajouter un packet
 $routes->post('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 $routes->get('/admin/pack', 'Root\App\Controllers\PackController@addPack');
+//route d'activation de l'inscrption
+$routes->post('/admin/active/inscription', 'Root\App\Controllers\AdminController@viewAllNonActiveInscription');
+$routes->get('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@activeInscriptions','inscription;user');
 //route pour l'authentification de l'utilisateur en post
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 //route pour afficher les pack
 $routes->get('/packages', 'Root\App\Controllers\PackController@packages');
 //route pour souscrire a une pack
-$routes->get('/user/pack/sucribe-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@sucribeOnPack', 'pack');
-$routes->post('/user/pack/sucribe-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@sucribeOnPack', 'pack');
+$routes->get('/user/pack/sucribe', 'Root\App\Controllers\PackController@sucribeOnPack');
+$routes->post('/user/pack/sucribe', 'Root\App\Controllers\PackController@sucribeOnPack');
 //routes pour upgrade packages
-$routes->get('/user/pack/upgrade-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@upgradePackages', 'pack');
-$routes->post('/user/pack/upgrade-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@upgradePackages', 'pack');
+$routes->get('/user/pack/upgrade', 'Root\App\Controllers\PackController@upgradePackages');
+$routes->post('/user/pack/upgrade', 'Root\App\Controllers\PackController@upgradePackages');
+
+
+// les routes pour l'activation du pack
+// $routes->get('/user/pack/activation-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@activationPackages', 'inscription');
+// $routes->post('/user/pack/activation-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@activationPackages', 'inscription');
+
 //les routes pour les utilisateurs
 $routes->post('/register', 'Root\App\Controllers\UserController@create');
 $routes->get('/register', 'Root\App\Controllers\UserController@create');
@@ -91,5 +100,6 @@ $routes->get('/test', function () {
 try {
     $routes->run();
 } catch (NotFoundException $e) {
-    return $e->error404();
+    $message = $e->getMessage();
+    return $e->error404($message);
 }
