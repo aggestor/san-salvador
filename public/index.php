@@ -36,22 +36,22 @@ $routes->get('/admin/register', 'Root\App\Controllers\AdminController@create');
 $routes->get('/admin/login', 'Root\App\Controllers\AdminController@login');
 //route pour l'admin en get
 $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@index');
-$routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\AdminController@administratorDashboard');
+// $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\AdminController@administratorDashboard');
 
 //route pour ajouter un packet
 $routes->post('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 $routes->get('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 //route d'activation de l'inscrption
-$routes->post('/admin/active/inscription', 'Root\App\Controllers\AdminController@viewAllNonActiveInscription');
-$routes->get('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@activeInscriptions','inscription;user');
+$routes->get('/admin/active/inscription', 'Root\App\Controllers\AdminController@viewAllNonActiveInscription');
+$routes->post('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@activeInscriptions','inscription;user');
 //route pour l'authentification de l'utilisateur en post
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 //route pour afficher les pack
 $routes->get('/packages', 'Root\App\Controllers\PackController@packages');
 //route pour souscrire a une pack
-$routes->get('/user/pack/sucribe', 'Root\App\Controllers\PackController@sucribeOnPack');
-$routes->post('/user/pack/sucribe', 'Root\App\Controllers\PackController@sucribeOnPack');
+$routes->get('/user/pack/subscribe', 'Root\App\Controllers\PackController@sucribeOnPack');
+$routes->post('/user/pack/subscribe', 'Root\App\Controllers\PackController@sucribeOnPack');
 //routes pour upgrade packages
 $routes->get('/user/pack/upgrade', 'Root\App\Controllers\PackController@upgradePackages');
 $routes->post('/user/pack/upgrade', 'Root\App\Controllers\PackController@upgradePackages');
@@ -71,7 +71,7 @@ $routes->post('/reset-password', 'Root\App\Controllers\UserController@resetPassw
 $routes->post('/login', 'Root\App\Controllers\UserController@login');
 $routes->get('/login', 'Root\App\Controllers\UserController@login');
 $routes->get('/user/dashboard', 'Root\App\Controllers\UserController@dashboard');
-$routes->get('/logout', 'Root\App\Controllers\UserController@logout');
+$routes->get('/user/logout', 'Root\App\Controllers\UserController@logout');
 /*
     les routes de succes pour 
     1. l'envoie du mail
@@ -89,6 +89,12 @@ $routes->get('/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Contro
 //routes pour l'a reinitialisation du mot de passe'
 $routes->get('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@resetPassword', 'id;token');
 $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\UserController@resetPassword', 'id;token');
+
+/**
+ * ROUTES pour test Aggestor
+ */
+$routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
+
 
 
 $routes->get('/test', function () {

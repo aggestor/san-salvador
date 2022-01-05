@@ -128,6 +128,8 @@ class AdminController extends Controller
         if ($this->isAdmin()) {
             parent::__construct();
             $this->activeInscription();
+
+            header("location:".$_SERVER['HTTP_REFERER']);
         }
     }
 
@@ -142,8 +144,9 @@ class AdminController extends Controller
             parent::__construct();
             $allNonValidateInscription = $this->allNonValidateInscription();
             //la view pour afficher les inscriptions en cours de validation 
-            //return $this->view('pages.admin.dashboard', 'layout_admin', ['nonValidate' => $allNonValidateInscription]);
+            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['nonValidate' => $allNonValidateInscription]);
         }
+    
     }
     /**
      * Gestion des operations des admin

@@ -8,24 +8,46 @@ $("#imageHolder").click(function (e) {
 });
 $("#packImageUploader").on("change", function (e) {
     var imgTempURL = URL.createObjectURL(e.target.files[0]);
-    $("#imageHolder")
-        .html("<img src=\"" + imgTempURL + "\" class=\"object-cover h-52\"  alt=\"Some package image example\">");
+    $("#imageHolder").html("<img src=\"" + imgTempURL + "\" class=\"object-cover h-52\"  alt=\"Some package image example\">");
 });
 var adminPaths = document.querySelectorAll("[data-path]");
-adminPaths && adminPaths.forEach(function (path) {
-    var pathname = path.dataset["path"];
-    $(path).click(function () {
-        if (pathname) {
-            window.location.pathname = "/admin" + pathname;
-        }
+adminPaths &&
+    adminPaths.forEach(function (path) {
+        var pathname = path.dataset["path"];
+        $(path).click(function () {
+            if (pathname) {
+                window.location.pathname = "/admin" + pathname;
+            }
+        });
     });
-});
 var showPackAdminSection = $("#showPackAdminSection");
 var addPackAdminSection = $("#addPackAdminSection");
-$("#closeShowPackAdmin").click(function () { return showPackAdminSection.slideUp(); });
-$("#closeAddPackAdmin").click(function () { return addPackAdminSection.slideUp(); });
-$("#btnShowPackSection").click(function () { return showAll(); });
-$("#btnAddPackSection").click(function () { return showAdd(); });
+var showAdminAdminSection = $("#showAdminAdminSection");
+var addAdminAdminSection = $("#addAdminAdminSection");
+$("#closeShowPackAdmin").click(function () {
+    showPackAdminSection.slideUp();
+});
+$("#closeAddPackAdmin").click(function () {
+    addPackAdminSection.slideUp();
+});
+$("#btnShowPackSection").click(function () {
+    showAll();
+});
+$("#btnAddPackSection").click(function () {
+    showAdd();
+});
+$("#closeShowAdminAdmin").click(function () {
+    showAdminAdminSection.slideUp();
+});
+$("#closeAddAdminAdmin").click(function () {
+    addAdminAdminSection.slideUp();
+});
+$("#btnShowAdminSection").click(function () {
+    showAllAdmin();
+});
+$("#btnAddAdminSection").click(function () {
+    showAddAdmin();
+});
 function showAll() {
     window.localStorage.setItem("current_admin_pack_window", "show");
     showPackAdminSection.slideDown();
@@ -36,8 +58,19 @@ function showAdd() {
     addPackAdminSection.slideDown();
     showPackAdminSection.slideUp();
 }
+function showAllAdmin() {
+    window.localStorage.setItem("curren_admin_admin_window", "show");
+    showAdminAdminSection.slideDown();
+    addAdminAdminSection.slideUp();
+}
+function showAddAdmin() {
+    window.localStorage.setItem("curren_admin_admin_window", "add");
+    addAdminAdminSection.slideDown();
+    showAdminAdminSection.slideUp();
+}
 $(document).ready(function () {
     var currentPackWindow = window.localStorage.getItem("current_admin_pack_window");
+    var currentAdminWindow = window.localStorage.getItem("curren_admin_admin_window");
     if (currentPackWindow == "show") {
         showAll();
     }
@@ -46,5 +79,14 @@ $(document).ready(function () {
     }
     else {
         showAll();
+    }
+    if (currentAdminWindow == "show") {
+        showAllAdmin();
+    }
+    else if (currentAdminWindow === "add") {
+        showAddAdmin();
+    }
+    else {
+        showAllAdmin();
     }
 });

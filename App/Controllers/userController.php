@@ -154,10 +154,11 @@ class UserController extends Controller
         
         if ($this->isUsers()) {
             if (!$this->userObject()->hasInscription(false)) {
-                echo "vous n'avez pas d'inscription";
+                return $this->view("pages.user.hasNotSubscribedYet", "layout_");
+
             } elseif ($this->existValidateInscription()) {
                 //retourne une vue avec le message de veuillez votre inscription est en court de validation 
-                echo "Veuillez patientez nous entrain de valider votre inscription. Merci pour votre confiance";
+                return $this->view("pages.user.awaitUserPackValidation", "layout_");
             } else {
                 return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject()]);
             }
