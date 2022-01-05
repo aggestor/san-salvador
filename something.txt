@@ -1,0 +1,28 @@
+public void update(ProductController obj)
+        {
+            Services.Validator validator = new Services.Validator();
+            if (validator.isNotEmpty(obj.fields["name"]))
+            {
+                if (validator.isNotEmpty(obj.fields["marqueId"]))
+                {
+                    if (validator.isFloat(obj.fields["minPrice"]) && validator.isFloat(obj.fields["maxPrice"]))
+                    {
+                        Models.Objects.ProductObject product_obj = new Models.Objects.ProductObject();
+                        product_obj.Name = obj.fields["name"];
+                        product_obj.Description = obj.fields["description"];
+                        product_obj.MinPrice = Convert.ToDouble(obj.fields["minPrice"]);
+                        product_obj.MaxPrice = Convert.ToDouble(obj.fields["maxPrice"]);
+                        product_obj.MarqueId = Convert.ToInt16(obj.fields["marqueId"]);
+                        product_obj.Id = obj.fields["id"];
+                        product_obj.UserId = Convert.ToInt16(Services.Session.userSession["id"]);
+                        Models.Produit mark_model = new Models.Produit();
+                        mark_model.update(product_obj);
+                        message = mark_model.callback;
+                    }
+                    else message = new Dictionary<string, string> { { "type", "failure" }, { "message", "Le prix minimum et le prx max doivent etre de type decimal" } };
+                }
+                else message = new Dictionary<string, string> { { "type", "failure" }, { "message", "Veillez choisir la marque a la quelle appartien le produi svp !!!" } };
+
+            }
+            else message = new Dictionary<string, string> { { "type", "failure" }, { "message", "Le nom du produit est obligatoire" } };
+        }

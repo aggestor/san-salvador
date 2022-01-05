@@ -148,12 +148,12 @@ class UserController extends Controller
     {
         parent::__construct();
         if ($this->isUsers()) {
-            if (!$this->userObject()->hasInscription()) {
-                echo "Vous n'avez pas encore souscris a un de nos pack ???";
-                echo '<a href="/user/pack/subscribe">' . 'Veilleuiz cliquer ici' . '</a>';
+            if (!$this->userObject()->hasInscription(false)) {
+                return $this->view("pages.user.hasNotSubscribedYet", "layout_");
+
             } elseif ($this->existValidateInscription()) {
                 //retourne une vue avec le message de veuillez votre inscription est en court de validation 
-                echo "Veuillez patientez nous entrain de valider votre inscription. Merci pour votre confiance";
+                return $this->view("pages.user.awaitUserPackValidation", "layout_");
             } else {
                 return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject()]);
             }

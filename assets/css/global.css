@@ -273,3 +273,26 @@ header{
 .h-screen-admin{
   height: 89vh
 }
+.animate-spin-customer{
+  animation: spin-around 3s infinite linear;
+}
+.animate-spin-customer-reversed{
+  animation: spin-around-reversed 3s infinite linear;
+}
+
+@keyframes spin-around {
+  from{
+    transform: rotate(0deg); 
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin-around-reversed {
+  from{
+    transform: rotate(360deg); 
+  }
+  to{
+    transform: rotate(0deg);
+  }
+}
