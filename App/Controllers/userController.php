@@ -147,14 +147,10 @@ class UserController extends Controller
     public function dashboard()
     {
         parent::__construct();
-        
-            
-            $this->allNonValidateInscription();
-
-        
         if ($this->isUsers()) {
-            if (!$this->userObject()->hasInscription(false)) {
-                echo "vous n'avez pas d'inscription";
+            if (!$this->userObject()->hasInscription()) {
+                echo "Vous n'avez pas encore souscris a un de nos pack ???";
+                echo '<a href="/user/pack/subscribe">' . 'Veilleuiz cliquer ici' . '</a>';
             } elseif ($this->existValidateInscription()) {
                 //retourne une vue avec le message de veuillez votre inscription est en court de validation 
                 echo "Veuillez patientez nous entrain de valider votre inscription. Merci pour votre confiance";

@@ -71,6 +71,7 @@ abstract class AbstractMemberValidator extends AbstractValidator
          */
         $model = $fac->getModel($ref->getShortName());
         if ($onConnection) {
+            //var_dump($model->checkByMail($mail)); exit();
             if (!$model->checkByMail($mail)) {
                 throw new \RuntimeException("Votre adresse e-mail est incorrect");
             }
@@ -147,9 +148,8 @@ abstract class AbstractMemberValidator extends AbstractValidator
              * @var AbstractMemberModel $model
              */
             $model = $fac->getModel($ref->getShortName());
-
             $mail = $model->findByMail($member->getEmail());
-            $pass_has = $mail->getPassword();
+            $pass_has = !is_null($mail) ? $mail->getPassword() : "";
             if (!password_verify($password, $pass_has)) {
                 throw new \RuntimeException("L'adresse e-mail et/ou le mot de passe est incorrect");
             }
