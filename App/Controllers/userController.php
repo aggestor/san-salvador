@@ -147,11 +147,6 @@ class UserController extends Controller
     public function dashboard()
     {
         parent::__construct();
-        
-            
-            $this->allNonValidateInscription();
-
-        
         if ($this->isUsers()) {
             if (!$this->userObject()->hasInscription(false)) {
                 return $this->view("pages.user.hasNotSubscribedYet", "layout_");

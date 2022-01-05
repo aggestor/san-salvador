@@ -276,13 +276,10 @@ class UserValidator extends AbstractMemberValidator
 
     protected function processingSponsor(User $user, $idSponsor, $side = null): void
     {
-
         try {
-
             if ($idSponsor != null && !empty($idSponsor)) {
                 $this->validationSponsor($idSponsor);
             }
-
             $node = ($idSponsor == null && empty($idSponsor)) ? $this->userModel->findRoot() : $this->userModel->findById($idSponsor);
             // var_dump($this->userModel->countSides($node->getId()));
             // die();
@@ -298,7 +295,9 @@ class UserValidator extends AbstractMemberValidator
                     if (!$this->userModel->hasSide($node->getId(), $side)) {
                         $user->setSide($side);
                     } else {
-                        $user->setSide($side == User::FOOT_LEFT ? User::FOOT_RIGHT : User::FOOT_LEFT);
+                        $newSide = $side == User::FOOT_LEFT ? User::FOOT_RIGHT : User::FOOT_LEFT;
+
+                        $user->setSide($newSide);
                     }
                 } else {
                     $user->setSide($this->userModel->hasLeftSide($node->getId()) ? User::FOOT_RIGHT : User::FOOT_LEFT);

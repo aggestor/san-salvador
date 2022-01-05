@@ -28,7 +28,11 @@ class InscriptionModel extends AbstractOperationModel
                 Schema::INSCRIPTION['transactionOrigi'],
                 Schema::INSCRIPTION['transactionCode'],
                 Schema::INSCRIPTION['recordDate'],
+<<<<<<< HEAD
+                Schema::INSCRIPTION['timeRecord']
+=======
                 Schema::INSCRIPTION['timeRecord'],
+>>>>>>> 5d214b9eab98d01129f6cec74b0127227079eaa2
             ],
             [
                 $object->getId(),
