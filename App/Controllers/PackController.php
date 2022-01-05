@@ -60,13 +60,13 @@ class PackController extends Controller
                     $suscribe = $validator->sucribePackAfterValidation();
                     if ($validator->hasError() || $validator->getMessage() != "") {
                         $errors = $validator->getErrors();
-                        return $this->view("pages.packages.dashboard", "layout_admin", ['pack' => $suscribe, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                        return $this->view("pages.packages.subscribe", "layout_", ['pack' => $suscribe, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                     }
                     else {
                         Controller::redirect('/user/dashboard');
                     }
                 }
-                return $this->view('pages.packages.subscribe');
+                return $this->view('pages.packages.subscribe',"layout_" );
             } else {
                 Controller::redirect('/user/dashboard');
             }

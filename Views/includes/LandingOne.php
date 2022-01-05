@@ -11,7 +11,9 @@
         investisseurs débloquent un univers de contrats à terme ouverts sur les bénéfices.
         Usalvagetrade est conçu pour offrir de multiples opportunités et avantages à ses investisseurs,
         commerçants et utilisateurs afin de générer des bénéfices quotidiennement.</p>
-        <div class="flex md:w-6/12 mt-4 mb-8 md:mb-4 justify-between">
+        <?php
+            if(!isset($_SESSION['users'])) :?>
+                <div class="flex md:w-6/12 mt-4 mb-8 md:mb-4 justify-between">
              <span>
                 <a class=" text-white font-semibold" href="register">Créer un compte </a>
             </span>
@@ -20,6 +22,9 @@
                 <a class="_green_btn" href="login">Connexion</a>
             </div>
         </div>
+            
+
+        <?php endif;?>
     </div>
     </div>
 

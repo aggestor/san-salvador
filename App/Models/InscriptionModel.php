@@ -2,12 +2,12 @@
 
 namespace Root\App\Models;
 
+use Root\App\Models\Objects\Admin;
+use Root\App\Models\Objects\Binary;
 use Root\App\Models\Objects\Inscription;
 use Root\App\Models\Objects\Parainage;
-use Root\App\Models\Objects\Binary;
 use Root\App\Models\Objects\User;
 use Root\Core\GenerateId;
-use Root\App\Models\Objects\Admin;
 
 class InscriptionModel extends AbstractOperationModel
 {
@@ -28,7 +28,7 @@ class InscriptionModel extends AbstractOperationModel
                 Schema::INSCRIPTION['transactionOrigi'],
                 Schema::INSCRIPTION['transactionCode'],
                 Schema::INSCRIPTION['recordDate'],
-                Schema::INSCRIPTION['recordTime']
+                Schema::INSCRIPTION['timeRecord'],
             ],
             [
                 $object->getId(),
@@ -37,11 +37,11 @@ class InscriptionModel extends AbstractOperationModel
                 $object->getTransactionOrigi(),
                 $object->getTransactionCode(),
                 $object->getFormatedRecordDate(),
-                $object->getFormatedTimeRecord()
+                $object->getFormatedTimeRecord(),
             ]
         );
     }
-    
+
     /**
      * recuperation des occurences
      */
@@ -55,7 +55,7 @@ class InscriptionModel extends AbstractOperationModel
         }
         return new Inscription($data);
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\App\Models\AbstractDbOccurenceModel::getTableName()
@@ -74,12 +74,12 @@ class InscriptionModel extends AbstractOperationModel
     {
         throw new ModelException("Operation non pris en charge");
     }
-    
+
     /**
      * validation d'une instcription.
      * c'est a ce moment que les bonus sont calculer.
      * @param string $id
-     * @param Admin|string $admin l'administrateur validateur de l'inscription. 
+     * @param Admin|string $admin l'administrateur validateur de l'inscription.
      * Le parametre adminin doit:
      * <br/>- Soit une chaine de caractere qui represente son ID
      * <br/>- Soit une instance de la classe Admin. L'attribut $id de cette instance doit etre initialiser d'avence par l'id du dit Admin
@@ -93,87 +93,92 @@ class InscriptionModel extends AbstractOperationModel
          * @var \Root\App\Models\UserModel $userModel
          */
         $userModel = $this->getFactory()->getModel("User");
-        
+
         $inscription = $this->findById($id);
         $user = $userModel->load($inscription->getUser()->getId());
         $user->setParent($userModel->load($user->getParent()->getId()));
         $user->setSponsor($userModel->findSponsor($user->getId()));
-        
+
         try {
             $pdo = Queries::getPDOInstance();
             if (!$pdo->beginTransaction()) {
                 throw new ModelException("Une erreur est survenue au demarrage de la transaction");
             }
-            
-            if ($userModel->countLeftRightSides($user->getParent()->getId())) {//si le parent aumoin un enfant
-                $user->getParent()->setSides($userModel->findDownlineLeftRightSides($user->getId()));//recuperation des enfants du parent de l'actuel
-                
+
+            if ($userModel->countLeftRightSides($user->getParent()->getId())) { //si le parent a aumoin un enfant
+                $user->getParent()->setSides($userModel->findDownlineLeftRightSides($user->getParent()->getId())); //recuperation des enfants du parent de l'actuel
             }
-            
-            $bonus = ($inscription->getAmount()/100) * 10;// 10 % du montant investie
-            $now = new \DateTime();//heure actuel
-            
+            // $user->getParent()->refresh();
+            // $user->refresh();
+
+            $bonus = ($inscription->getAmount() / 100) * 10; // 10 % du montant investie
+            $now = new \DateTime(); //heure actuel
+
             //bonsus binaire
             if (
-                ($user->getFoot() == User::FOOT_LEFT &&($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()))
-                || ($user->getFoot() == User::FOOT_RIGHT &&($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()) )
-                ) {
-                    
+                ($user->getFoot() == User::FOOT_LEFT && ($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()))
+                || ($user->getFoot() == User::FOOT_RIGHT && ($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()))
+            ) {
+
                 $binary = new Binary();
                 $binary->setGenerator($inscription);
                 $binary->setRecordDate($now);
                 $binary->setTimeRecord($now);
-                
+
                 //on remonte de l'arbre pour donner le bonus binaire aux uplines
                 $node = $user;
                 while ($userModel->hasSponsor($node->getId()) && $node->getSponsor()->getId() != $user->getParent()->getId()) {
                     $node = $userModel->findSponsor($node->getId());
-                    
-                    $binary->setUser($node); 
-                    if ($node->isEnable() && !$node->isLocked()) {//si le compte est toujours activer
-                        
-                        if ($node->getMaxBonus() <= ( $node->getBonus() + $bonus )) {
-                            $surplus =  $bonus + $node->getBonus() - $node->getMaxBonus();
-                            $amount =  $bonus - $surplus ;
+
+                    $binary->setUser($node);
+                    if ($node->isEnable() && !$node->isLocked()) { //si le compte est toujours activer
+
+                        if ($node->getMaxBonus() <= ($node->getBonus() + $bonus)) {
+                            $surplus = $bonus + $node->getBonus() - $node->getMaxBonus();
+                            $amount = $bonus - $surplus;
                             $binary->setAmount($amount);
                             $binary->setSurplus($surplus);
                             //on block definitivement le compte
                             $userModel->lockAcount($pdo, $node->getId());
-                        } else {//dans le cas ou le compte  n'est pas encore saturer
+                        } else { //dans le cas ou le compte  n'est pas encore saturer
                             $binary->setAmount($bonus);
                             $binary->setSurplus(0);
                         }
-                        
+
                         $this->sendBinary($pdo, $binary);
                     }
                 }
                 //--
-                
-            }
 
-            $parainage  = new Parainage();
+            }
+            // echo "<pre>";
+            // var_dump($user->getParent());
+            // echo "</pre>";
+            // exit();
+
+            var_dump("ok", $user->getParent()->getCapital());exit();
+
+            $parainage = new Parainage();
             $parainage->setUser($user->getParent());
             $parainage->setGenerator($inscription);
             $parainage->setTimeRecord($now);
             $parainage->setRecordDate($now);
-            
-            if ($user->getParent()->getMaxBonus() <= ( $user->getParent()->getBonus() + $bonus ) ) {//si son compte sera sauter
-                $surplus =  $bonus + $user->getParent()->getBonus() - $user->getParent()->getMaxBonus();
-                $amount =  $bonus - $surplus ;
+
+            if ($user->getParent()->getMaxBonus() <= ($user->getParent()->getBonus() + $bonus)) { //si son compte sera sauter
+                $surplus = $bonus + $user->getParent()->getBonus() - $user->getParent()->getMaxBonus();
+                $amount = $bonus - $surplus;
                 $parainage->setAmount($amount);
                 $parainage->setSurplus($surplus);
-                
+
                 //on block definitivement le compte
                 $userModel->lockAcount($pdo, $user->getParent()->getId());
             } else {
                 $parainage->setAmount($bonus);
-                $parainage->setSurplus(0);                
+                $parainage->setSurplus(0);
             }
-            
-            
+
             $this->sendParainage($pdo, $parainage);
-            
-            
+
             //finalisation des metadonnes de confirmation de l'inscription
             Queries::updateDataInTransaction(
                 $pdo,
@@ -182,7 +187,7 @@ class InscriptionModel extends AbstractOperationModel
                     Schema::INSCRIPTION['confirmatDate'],
                     Schema::INSCRIPTION['confirmateTime'],
                     Schema::INSCRIPTION['validate'],
-                    Schema::INSCRIPTION['admin']
+                    Schema::INSCRIPTION['admin'],
                 ],
                 "id = ?",
                 [
@@ -190,46 +195,48 @@ class InscriptionModel extends AbstractOperationModel
                     $now->format('H:i:s'),
                     1,
                     $admin,
-                    $id
+                    $id,
                 ]
             );
-            
-            $pdo->commit();//confirmation des operations
+
+            $pdo->commit(); //confirmation des operations
         } catch (\PDOException $e) {
             try {
                 $pdo->rollBack();
-            } catch (\Exception $e) { }
+            } catch (\Exception $e) {}
             throw new ModelException($e->getMessage(), intval($e->getCode(), 10), $e);
         }
-        
+
     }
-    
+
     /**
-     * 
+     *
      * @param \PDO $pdo
      * @param Parainage $parainage
      */
-    private function sendParainage (\PDO $pdo, Parainage $parainage) : void {
+    private function sendParainage(\PDO $pdo, Parainage $parainage): void
+    {
         $id = GenerateId::generate();
         while ($this->getFactory()->getModel("Parainage")->checkById($id)) {
             $id = GenerateId::generate();
         }
-        
+
         $parainage->setId($id);
         $this->getFactory()->getModel("Parainage")->createInTransaction($pdo, $parainage);
     }
-    
+
     /**
      * evoie d'un bonus binaire
      * @param \PDO $pdo
      * @param Binary $binary
      */
-    private function sendBinary (\PDO $pdo, Binary $binary) : void {
+    private function sendBinary(\PDO $pdo, Binary $binary): void
+    {
         $id = GenerateId::generate();
         while ($this->getFactory()->getModel("Binary")->checkById($id)) {
             $id = GenerateId::generate();
         }
-        
+
         $binary->setId($id);
         $this->getFactory()->getModel("Binary")->createInTransaction($pdo, $binary);
     }
@@ -259,7 +266,7 @@ class InscriptionModel extends AbstractOperationModel
 
         return $return;
     }
-    
+
     /**
      * verifie s'il existe une inscription a un a pack en  attente d'acivation
      * @return bool
@@ -286,7 +293,7 @@ class InscriptionModel extends AbstractOperationModel
 
         return $return;
     }
-    
+
     /**
      * revoie tout les informations des souscription en attante de validation
      * @throws ModelException
@@ -319,7 +326,7 @@ class InscriptionModel extends AbstractOperationModel
         }
         return $return;
     }
-    
+
     /**
      * revoie tout les informations des souscription deja valide
      * @param string $userId
@@ -342,11 +349,11 @@ class InscriptionModel extends AbstractOperationModel
             }
             if ($row = $statement->fetch()) {
 
-                $return[] =  $this->getDBOccurence($row);
+                $return[] = $this->getDBOccurence($row);
                 while ($row = $statement->fetch()) {
                     $return[] = $this->getDBOccurence($row);
                 }
-                
+
                 $statement->closeCursor();
             } else {
                 $statement->closeCursor();
@@ -357,5 +364,5 @@ class InscriptionModel extends AbstractOperationModel
         }
         return $return;
     }
-    
+
 }

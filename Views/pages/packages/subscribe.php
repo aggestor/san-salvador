@@ -12,24 +12,24 @@
                 <h2 class="text-gray-400 font-semibold text-xl lg:ml-4 my-4 text-left"> Souscrire à un pack !</h2>
             </div>
             <div class="md:w-11/12 w-full mx-auto mb-2">
-                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="packMount1" name="mount_invested" type="text" placeholder="Montant investi" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="" />
+                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =  (isset($_POST['subscribe']) && !empty($params['errors']['mount_invested'])) ?"border-red-500" : " border-gray-400" ?>">
+                    <input id="packMount1" name="mount_invested" type="text" placeholder="Montant investi" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['subscribe']) && empty($params['errors']['mount_invested'])) ? $_POST['mount_invested'] : "";?>" />
                 </div>
                 <?php if (isset($_POST['subscribe']) && !empty($params['errors']['mount_invested'])) : ?>
                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['mount_invested']; ?></span>
                 <?php endif; ?>
             </div>
             <div class="md:w-11/12 w-full mx-auto mb-2">
-                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="mail" name="source" type="text" placeholder="Source de transaction" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="" />
+                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =  (isset($_POST['subscribe']) && !empty($params['errors']['source'])) ?"border-red-500" : " border-gray-400" ?>">
+                    <input id="mail" name="source" type="text" placeholder="Source de transaction" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['subscribe']) && empty($params['errors']['source'])) ? $_POST['source'] : "";?>" />
                 </div>
                 <?php if (isset($_POST['subscribe']) && !empty($params['errors']['source'])) : ?>
                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['source']; ?></span>
                 <?php endif; ?>
             </div>
             <div class="md:w-11/12 w-full mx-auto mb-2">
-                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="mail" name="ref" type="text" placeholder="Reference" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="" />
+                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =  (isset($_POST['subscribe']) && !empty($params['errors']['ref'])) ?"border-red-500" : " border-gray-400" ?>">
+                    <input id="mail" name="ref" type="text" placeholder="Reference" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['subscribe']) && empty($params['errors']['ref'])) ? $_POST['ref'] : "";?>" />
                 </div>
                 <?php if (isset($_POST['subscribe']) && !empty($params['errors']['ref'])) : ?>
                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['ref']; ?></span>

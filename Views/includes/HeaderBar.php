@@ -7,10 +7,18 @@
             <li class="text-base"><span><a href="/help">Aide</a></span></li>
             <li class="text-base"><span><a href="/packages">Packs</a></span></li>
             <li class="text-base"><span><a href="/services">Services</a></span></li>
-            <li class="text-base">|</li>
-            <li class="hover:text-green-500 font-semibold text-base"><a href="/register">Créer un compte</a></li>
-            <li class="text-base">ou</li>
-            <li class="hover:text-green-500 font-semibold text-base"><a class="_green_btn" href="/login">Connexion</a></li>
+            <?php
+                if(!isset($_SESSION['users'])): ?>
+                    <li class="text-base">|</li>
+                    <li class="hover:text-green-500 font-semibold text-base"><a href="/register">Créer un compte</a></li>
+                    <li class="text-base">ou</li>
+                    <li class="hover:text-green-500 font-semibold text-base"><a class="_green_btn" href="/login">Connexion</a></li>
+                 <?php else: ?>
+                    <li class="hover:text-green-500 text-base"><a href="/user/dashboard">Profil</a></li>
+                <li class="hover:text-green-500 font-semibold text-base"><a href="/user/logout">Déconnexion</a></li>
+                <?php endif;?>
+                 
+            
         </ul>
     </nav>
     <button id="hamburger" class="w-8 h-8 rounded sm:hidden items-center flex justify-center border my-auto text-gray-800">
