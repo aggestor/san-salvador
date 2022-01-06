@@ -92,6 +92,7 @@ class UserModel extends AbstractMemberModel
                     $id
                 ]
             );
+            
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
         }

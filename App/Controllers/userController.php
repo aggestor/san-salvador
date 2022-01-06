@@ -148,7 +148,7 @@ class UserController extends Controller
     {
         parent::__construct();
         if ($this->isUsers()) {
-            if (!$this->userObject()->hasInscription(false)) {
+            if (!$this->userObject()->hasInscription()) {
                 return $this->view("pages.user.hasNotSubscribedYet", "layout_");
 
             } elseif ($this->existValidateInscription()) {

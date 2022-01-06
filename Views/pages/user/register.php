@@ -21,7 +21,8 @@
                         <!--USERNAME BEGIN-->
                         <div class="md:w-11/12 mx-auto w-full mb-2">
                             <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['username'])) ?"border-red-500" : " border-gray-400" ?>">
-                                <input id="username" name="username" type="text" placeholder="Nom d'utilisateur" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                                <input id="username" name="username" type="text" placeholder="Nom d'utilisateur" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['enregistrer']) && empty($params['errors']['username'])) ? $_POST['username'] : "";
+?>" />
                             </div>
                             <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['username'])): ?>
                                 <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['username']; ?></span>
@@ -32,7 +33,7 @@
                             <!--EMAIL BEGIN-->
                             <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
                                 <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['user_email'])) ?"border-red-500" : " border-gray-400" ?>">
-                                    <input id="userEmail" name="user_email" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                                    <input id="userEmail" name="user_email" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['enregistrer']) && empty($params['errors']['user_email'])) ? $_POST['user_email'] : "";?>" />
                                 </div>
                                 <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['user_email'])): ?>
                                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['user_email']; ?></span>
@@ -43,7 +44,7 @@
                             <!--PHONE NUMBER BEGIN-->
                             <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
                                 <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['phone_number'])) ?"border-red-500" : " border-gray-400" ?>">
-                                    <input id="PhoneNumber" name="phone_number" type="text" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                                    <input id="PhoneNumber" name="phone_number" type="text" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['enregistrer']) && empty($params['errors']['phone_number'])) ? $_POST['phone_number'] : "";?>" />
                                 </div>
                                 <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['phone_number'])): ?>
                                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['phone_number']; ?></span>
@@ -54,7 +55,7 @@
                         <!--PASSWORD BEGIN-->
                         <div class="md:w-11/12 mx-auto w-full mb-2">
                             <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['password'])) ?"border-red-500" : " border-gray-400" ?>">
-                                <input id="password" name="password" type="text" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                                <input id="password" name="password" type="text" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                             </div>
                             <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['password'])): ?>
                                 <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['password']; ?></span>
@@ -89,13 +90,13 @@
                             <div class="hidden w-full grid place-items-center" id="crop"></div>
                             <div class="w-16 h-16 rounded-full _green_bg cursor-pointer grid place-items-center mx-auto" id="camera"> <i class="fas fa-2x mx-auto fa-camera    "></i></div>
                         </div>
-                        <div class="md:w-11/12 hide-b4-save flex justify-between mt-3 mx-auto">
+                        <div class="md:w-11/12  flex justify-between mt-3 mx-auto">
                             <div class="lg:w-9/12 text-gray-500 text-sm">
-                                <b>Note : </b> Avant de cliquer sur <i>Enregistrer</i>, rassurez-vous d'avoir bien cadriée la photo.
+                                <b>Note : </b> En cliquant sur  <i>Enregistrer</i>, vous acceptez nos conditions d'utilisations et notre politique de confidentialités.
                             </div>
                         </div>
                         <div class="md:w-11/12 w-full flex justify-between mx-auto mt-4">
-                            <button type="submit" name="enregistrer" class="_green_bg hide-b4-save text-gray-900 p-2 w-5/12 h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
+                            <button type="submit" name="enregistrer" class="_green_bg  text-gray-900 p-2 w-5/12 h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
                             <button name="-2" type="button" class="_green_bg form-user-btn text-gray-900 p-2 w-5/12 h-10 rounded"><i class="fas fa-arrow-up"></i> Retour</button>
                         </div>
                     </div>
