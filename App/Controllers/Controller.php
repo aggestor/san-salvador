@@ -60,7 +60,7 @@ class Controller
     private $userModel;
 
     /**
-     * Constructeur 
+     * Constructeur
      */
     public function __construct()
     {
@@ -96,7 +96,7 @@ class Controller
     }
 
     /**
-     * Methode pour verifier s'il y'a un pack en attende de validation 
+     * Methode pour verifier s'il y'a un pack en attende de validation
      *
      * @return bool
      */
@@ -128,12 +128,12 @@ class Controller
     {
         $idInscription = $_GET['inscription'];
         $idAdmin = $_SESSION[self::SESSION_ADMIN]->getId();
-        $idUser=$_GET['user'];
+        $idUser = $_GET['user'];
         /**
          * @var Inscription
          */
         $inscription = $this->inscriptionModel->findById($idInscription);
-        if ($this->inscriptionModel->checkById($idInscription) ) {
+        if ($this->inscriptionModel->checkById($idInscription)) {
             if (!$inscription->isValidate()) {
                 $this->inscriptionModel->validate($idInscription, $idAdmin);
             } else {
@@ -162,7 +162,7 @@ class Controller
         require VIEWS . $template . '.php';
     }
     // /**
-    //  * Pour genener un melnge de chaine de caractere 
+    //  * Pour genener un melnge de chaine de caractere
     //  *
     //  * @param integer $length. La longueur de la chaine de caractere a genener
     //  * @param string $carateres. Les caracteres a melanger
@@ -174,7 +174,7 @@ class Controller
     // }
 
     /**
-     * Pour envoyer les mails d'actiavation du compte 
+     * Pour envoyer les mails d'actiavation du compte
      * @param string $to. Le destinataire du mail
      * @param mixed $lien. Le lien d'activation de compte
      * @return void
@@ -219,7 +219,7 @@ class Controller
      * @param mixed $destination. La destination du fichier redimensionner
      * @param mixed $name. Le nom du fichier redimensionner
      * @param mixed $width.La largeur du fichier redimensionner
-     * @param mixed $height. La hateur du fichier redimensionner 
+     * @param mixed $height. La hateur du fichier redimensionner
      * @return void
      */
     public function convertImage($source, $destination, $name, $width, $height)
@@ -270,7 +270,7 @@ class Controller
         if (move_uploaded_file($temporaire, $destination)) {
             $imgOrginal = $destination;
             $imgRedi = $this->convertImage($imgOrginal, $directory, 'x320', 96, 96);
-            //chemin a enreistre dans la base des donnees 
+            //chemin a enreistre dans la base des donnees
             $folder = str_replace(RACINE, "", $imgOrginal . ' AND ' . $imgRedi);
             return $folder;
         }
@@ -279,7 +279,7 @@ class Controller
      * Undocumented function
      *
      * @param array $errors. Le tableau des erreurs
-     * @param string $keys. La 
+     * @param string $keys. La
      * @return void
      */
     public static function errorsViews(array $errors, string $keys)
