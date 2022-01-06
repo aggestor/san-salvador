@@ -90,13 +90,13 @@
                             <div class="hidden w-full grid place-items-center" id="crop"></div>
                             <div class="w-16 h-16 rounded-full _green_bg cursor-pointer grid place-items-center mx-auto" id="camera"> <i class="fas fa-2x mx-auto fa-camera    "></i></div>
                         </div>
-                        <div class="md:w-11/12 hide-b4-save flex justify-between mt-3 mx-auto">
+                        <div class="md:w-11/12  flex justify-between mt-3 mx-auto">
                             <div class="lg:w-9/12 text-gray-500 text-sm">
-                                <b>Note : </b> Avant de cliquer sur <i>Enregistrer</i>, rassurez-vous d'avoir bien cadriée la photo.
+                                <b>Note : </b> En cliquant sur  <i>Enregistrer</i>, vous acceptez nos conditions d'utilisations et notre politique de confidentialités.
                             </div>
                         </div>
                         <div class="md:w-11/12 w-full flex justify-between mx-auto mt-4">
-                            <button type="submit" name="enregistrer" class="_green_bg hide-b4-save text-gray-900 p-2 w-5/12 h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
+                            <button type="submit" name="enregistrer" class="_green_bg  text-gray-900 p-2 w-5/12 h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
                             <button name="-2" type="button" class="_green_bg form-user-btn text-gray-900 p-2 w-5/12 h-10 rounded"><i class="fas fa-arrow-up"></i> Retour</button>
                         </div>
                     </div>
