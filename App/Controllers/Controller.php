@@ -77,9 +77,9 @@ class Controller
      *
      * @return array
      */
-    public function getAllUsers()
+    public function getAllPck()
     {
-        return $this->userModel->findAll();
+        return $this->packModel->findAll();
     }
 
     /**
@@ -105,6 +105,18 @@ class Controller
         return $this->inscriptionModel->checkAwait($_SESSION[self::SESSION_USERS]->getId());
     }
 
+    //Methode pour verifier si l'utilisateur au moins une inscription active
+    public function existOneValidateInscription(){
+        return $this->inscriptionModel->hasPack($_SESSION[self::SESSION_USERS]->getId());
+    }
+
+    public function allUsersHasValidateInscription()
+    {
+        if ($this->inscriptionModel->checkValidated()) {
+            return $this->inscriptionModel->findValidated();
+        }
+        return array();
+    }
     /**
      * Undocumented function
      *
@@ -112,7 +124,6 @@ class Controller
     public function allNonValidateInscription()
     {
         $return = array();
-        //var_dump($this->inscriptionModel->checkAwait()); exit();
         if ($this->inscriptionModel->checkAwait()) {
             $allValidate = $this->inscriptionModel->findAwait();
             //var_dump($allValidate); exit();

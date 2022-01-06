@@ -142,8 +142,6 @@ class AdminController extends Controller
     public function viewAllNonActiveInscription()
     {
         if ($this->isAdmin()) {
-
-            //la view pour afficher les inscriptions en cours de validation 
             return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['nonValidate' => $this->allNonValidateInscription()]);
         }
     }
@@ -154,6 +152,34 @@ class AdminController extends Controller
      */
     public function administratorDashboard()
     {
+        if ($this->isAdmin()) {
+            $allAdmin = $this->adminModel->findAll();
+            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['allAdmin' => $allAdmin]);
+        }
+    }
+    /**
+     * All Pack Operation
+     *
+     * @return void
+     */
+    public function allPacks()
+    {
+        if ($this->isAdmin()) {
+            $pack = $this->getAllPck();
+            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['allPack' => $pack]);
+        }
+    }
+
+    /**
+     * All users operation
+     * @return void
+     */
+    public function allUsers()
+    {
+        if ($this->isAdmin()) {
+            $users = $this->allUsersHasValidateInscription();
+            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['allPack' => $users]);
+        }
     }
     /**
      * Verification de la sessios admin

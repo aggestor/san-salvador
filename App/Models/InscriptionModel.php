@@ -370,13 +370,13 @@ class InscriptionModel extends AbstractOperationModel
         try {
             $user = Schema::INSCRIPTION['user'];
             $validation = Schema::INSCRIPTION['validate'];
-            $state = Schema::INSCRIPTION['state'];
+            //$state = Schema::INSCRIPTION['state'];
             if (is_null($userId)) {
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=?", array($userId, 1));
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=?", array(1));
             } else {
 
                 //$statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$user}=? AND {$validation}=? AND {$state}=?", [$userId, 1, 1]);
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . $user . "=? AND " . $validation . " = ? AND " . $state . "=?", array($userId, 1, 1));
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . $user . "=? AND " . $validation . " = ? ", array($userId, 1));
             }
             if ($row = $statement->fetch()) {
 

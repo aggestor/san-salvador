@@ -43,10 +43,15 @@ $routes->post('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 $routes->get('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 //route d'activation de l'inscrption
 $routes->get('/admin/active/inscription', 'Root\App\Controllers\AdminController@viewAllNonActiveInscription');
-$routes->post('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@activeInscriptions','inscription;user');
+$routes->post('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@activeInscriptions', 'inscription;user');
 //route pour l'authentification de l'utilisateur en post
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
+//les routes en get vers l'admin pour afficher les users, les admin et les pacl
+$routes->get('/admin/viewpacks', 'Root\App\Controllers\AdminController@allPacks');
+$routes->get('/admin/viewusers', 'Root\App\Controllers\AdminController@allUsers');
+$routes->get('/admin/administrator', 'Root\App\Controllers\AdminController@administratorDashboard');
+
 //route pour afficher les pack
 $routes->get('/packages', 'Root\App\Controllers\PackController@packages');
 //route pour souscrire a une pack

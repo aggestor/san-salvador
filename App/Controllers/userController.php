@@ -65,7 +65,8 @@ class UserController extends Controller
                 $user = $validator->resetPassword();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
-                    var_dump($errors);exit();
+                    var_dump($errors);
+                    exit();
                     return $this->view("pages.password.reset_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 } else {
                     /**
@@ -148,14 +149,14 @@ class UserController extends Controller
      */
     public function dashboard()
     {
+        //var_dump($this->allUsersHasValidateInscription()); exit();
         if ($this->isUsers()) {
             if (!$this->userObject()->hasInscription()) {
                 return $this->view("pages.user.hasNotSubscribedYet", "layout_");
-
             } elseif ($this->existValidateInscription()) {
                 //retourne une vue avec le message de veuillez votre inscription est en court de validation 
                 return $this->view("pages.user.awaitUserPackValidation", "layout_");
-            } else {
+            } else if ($this->existOneValidateInscription()) {
                 return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject()]);
             }
         }
