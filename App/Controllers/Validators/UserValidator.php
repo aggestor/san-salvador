@@ -63,9 +63,9 @@ class UserValidator extends AbstractMemberValidator
         $this->processingSponsor($user, $sponsor, $side);
         $this->processingToken($token, $user);
         if (!$this->hasError()) {
-            $controller = new Controller();
-            $chemin = $controller->addImage(self::FIELD_IMAGE);
-            $user->setPhoto($chemin);
+            // $controller = new Controller();
+            // $chemin = $controller->addImage(self::FIELD_IMAGE);
+            // $user->setPhoto($chemin);
             $user->setRecordDate(new \DateTime());
             $user->settimeRecord(new \DateTime());
             try {
@@ -281,14 +281,16 @@ class UserValidator extends AbstractMemberValidator
                 $this->validationSponsor($idSponsor);
             }
             $node = ($idSponsor == null && empty($idSponsor)) ? $this->userModel->findRoot() : $this->userModel->findById($idSponsor);
-            // var_dump($this->userModel->countSides($node->getId()));
-            // die();
+            
             if ($this->userModel->countSides($node->getId()) == 2) {
                 while ($this->userModel->countSides($node->getId()) == 2) {
-                    if ($this->userModel->hasleftSide($node->getId())) {
-                        $node = $this->userModel->findLeftSide($node->getId());
+                    if ($this->userModel->hasRightSide($node->getId())) {
+                        $node = $this->userModel->findRightSide($node->getId());
                     }
                 }
+                var_dump($node->getId());
+                exit();
+                $user->setSponsor($node->getId());
                 $user->setFoot(User::FOOT_LEFT);
             } else {
                 if ($side != null) {
