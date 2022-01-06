@@ -8,6 +8,7 @@ use Root\App\Models\Objects\User;
 use Root\App\Models\UserModel;
 use Root\App\Controllers\Controller;
 use Root\Core\GenerateId;
+use RuntimeException;
 
 class UserValidator extends AbstractMemberValidator
 {
@@ -63,9 +64,9 @@ class UserValidator extends AbstractMemberValidator
         $this->processingSponsor($user, $sponsor, $side);
         $this->processingToken($token, $user);
         if (!$this->hasError()) {
-            // $controller = new Controller();
-            // $chemin = $controller->addImage(self::FIELD_IMAGE);
-            // $user->setPhoto($chemin);
+            $controller = new Controller();
+            $chemin = $controller->addImage(self::FIELD_IMAGE);
+            $user->setPhoto($chemin);
             $user->setRecordDate(new \DateTime());
             $user->settimeRecord(new \DateTime());
             try {
@@ -281,31 +282,25 @@ class UserValidator extends AbstractMemberValidator
                 $this->validationSponsor($idSponsor);
             }
             $node = ($idSponsor == null && empty($idSponsor)) ? $this->userModel->findRoot() : $this->userModel->findById($idSponsor);
-            
-            if ($this->userModel->countSides($node->getId()) == 2) {
-                while ($this->userModel->countSides($node->getId()) == 2) {
-                    if ($this->userModel->hasRightSide($node->getId())) {
-                        $node = $this->userModel->findRightSide($node->getId());
-                    }
-                }
-                var_dump($node->getId());
-                exit();
-                $user->setSponsor($node->getId());
-                $user->setFoot(User::FOOT_LEFT);
-            } else {
-                if ($side != null) {
-                    if (!$this->userModel->hasSide($node->getId(), $side)) {
-                        $user->setSide($side);
-                    } else {
-                        $newSide = $side == User::FOOT_LEFT ? User::FOOT_RIGHT : User::FOOT_LEFT;
 
-                        $user->setSide($newSide);
-                    }
-                } else {
-                    $user->setSide($this->userModel->hasLeftSide($node->getId()) ? User::FOOT_RIGHT : User::FOOT_LEFT);
-                }
+            while ($this->userModel->countSides($node->getId()) == 2) {
+                $node = $this->userModel->findRightSide($node->getId());
             }
             $user->setSponsor($node);
+            $right = $this->userModel->hasRightSide($node->getId());
+            $left = $this->userModel->hasLeftSide($node->getId());
+
+            if ((!$right && $side == null) || (!$right && $side == User::FOOT_RIGHT)) {
+                $user->setFoot(User::FOOT_RIGHT);
+                return;
+            }
+
+            if ((!$left && $side == null) || (!$left && $side == User::FOOT_LEFT)) {
+                $user->setFoot(User::FOOT_LEFT);
+                return;
+            }
+
+            throw new \RuntimeException("Impossible de determinner sur quel pied affecter ton compte");
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_SPONSOR, $e->getMessage());
             $user->setSponsor($idSponsor);
