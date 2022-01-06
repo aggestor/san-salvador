@@ -2,7 +2,7 @@
     <div class="title text-gray-300 p-2 font-semibold ">
         <h1 class="ml-2">USALVAGETRADE</h1>
     </div>
-    <div class="flex flex-col">
+    <div id="userMenu" class="flex flex-col">
         <div data-path="/" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
            <div class="w-11/12 mx-auto flex ">
                 <span class="w-2/12"><i class="fas fa-school"></i></span> 

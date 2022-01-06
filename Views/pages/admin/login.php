@@ -39,9 +39,6 @@
             <div class="md:w-11/12 mx-auto mt-4">
                 <button type="submit" name="connexion" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-lock"></i> Connexion</button>
             </div>
-            <div class="md:w-11/12 flex text-gray-500 justify-between mt-5 mx-auto">
-                <span class="flex justify-end">Pas encore inscrit(e) ? <a class="font-semibold" href="/admin/register"> &#160; Créer un compte</a></span>
-            </div>
         </form>
         <div class="lg:w-6/12 hidden lg:flex overflow-hidden items-center justify-center">
             <img src="/assets/logos/admin.png" class="object-cover h-72" alt="Green Admin illustration">
