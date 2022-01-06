@@ -1,10 +1,10 @@
 <div class="col-span-12 primary_bg">
-    <div class="w-full h-20 flex  flex flex-col items-center border-b border-gray-900">
+    <div class="w-full h-20 flex flex-col items-center border-b border-gray-900">
         <div class="flex w-10/12 mx-auto mt-5">
             <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a>
             <h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
         </div>
-        <h2 class="text-gray-400 md:w-10/12 w-full mx-auto font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
+        <h2 class="text-gray-400 md:w-10/12 w-full mx-auto font-semibold text-base pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
     </div>
     <div class="flex flex-col md:flex-row md:w-10/12 w-full my-3 rounded overflow-hidden h-auto border border-gray-900 mx-auto md:justify-around justify-center">
         <div class="md:w-6/12 grid place-items-center md:p-0 p-4 primary_bg">
@@ -87,7 +87,7 @@
                     <!---FORM PART 2-->
                     <div class="w-full form-2 hidden flex-col mx-auto p-3">
                         <div>
-                            <div class="hidden w-full grid place-items-center" id="crop"></div>
+                            <div style="display:none" class=" w-full grid place-items-center" id="crop"></div>
                             <div class="w-16 h-16 rounded-full _green_bg cursor-pointer grid place-items-center mx-auto" id="camera"> <i class="fas fa-2x mx-auto fa-camera    "></i></div>
                         </div>
                         <div class="md:w-11/12  flex justify-between mt-3 mx-auto">

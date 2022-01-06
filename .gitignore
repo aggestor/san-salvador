@@ -8,3 +8,7 @@
 /assets/ts
 /App/Controllers/testController.php
 /public/index.php
+
+package.json
+tailwind.config.js
+/assets/src

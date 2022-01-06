@@ -1,5 +1,5 @@
 <div class="col-span-12 h-screen primary_bg ">
-    <div class="w-full h-20 flex  flex flex-col items-center border-b border-gray-900">
+    <div class="w-full h-20 flex flex-col items-center border-b border-gray-900">
         <div class="flex w-10/12 mx-auto mt-5">
             <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a>
             <h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
