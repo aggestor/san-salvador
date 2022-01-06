@@ -112,10 +112,14 @@ class Controller
     public function allNonValidateInscription()
     {
         $return = array();
-        $allValidate = $this->inscriptionModel->findAwait();
-        foreach ($allValidate as $validate) {
-            $validate->setUser($this->userModel->findById($validate->getUser()->getId()));
-            $return[] = $validate;
+        //var_dump($this->inscriptionModel->checkAwait()); exit();
+        if ($this->inscriptionModel->checkAwait()) {
+            $allValidate = $this->inscriptionModel->findAwait();
+            //var_dump($allValidate); exit();
+            foreach ($allValidate as $validate) {
+                $validate->setUser($this->userModel->findById($validate->getUser()->getId()));
+                $return[] = $validate;
+            }
         }
         return $return;
     }

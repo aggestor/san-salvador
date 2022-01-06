@@ -18,6 +18,7 @@ class UserController extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         $this->userModel = ModelFactory::getInstance()->getModel('User');
     }
     /**
@@ -64,6 +65,7 @@ class UserController extends Controller
                 $user = $validator->resetPassword();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
+                    var_dump($errors);exit();
                     return $this->view("pages.password.reset_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 } else {
                     /**
@@ -146,7 +148,6 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        parent::__construct();
         if ($this->isUsers()) {
             if (!$this->userObject()->hasInscription()) {
                 return $this->view("pages.user.hasNotSubscribedYet", "layout_");
