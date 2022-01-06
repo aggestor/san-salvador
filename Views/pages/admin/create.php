@@ -29,7 +29,6 @@
 <div class="w-full h-96 p-2">
     <div class="h-12 w-full flex justify-between">
         <h1 class="text-gray-300 font-semibold text-xl w-full"> <i class="fas fa-user-secret  mr-3"></i> Ajouter un administrateur</h1>
-        <span id="closeShowAdminAdmin" class="w-7 h-7 cursor-pointer border-gray-500 border rounded grid place-items-center text-gray-500"><i class="fa text-lg fa-times"></i></span>
     </div>
     <div class="w-full h-full flex justify-between">
         <form class="w-6/12 mt-12" method="POST">

@@ -20,9 +20,8 @@
                     <div class="w-full form-1 flex flex-col mx-auto p-3">
                         <!--USERNAME BEGIN-->
                         <div class="md:w-11/12 mx-auto w-full mb-2">
-                            <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['username'])) ?"border-red-500" : " border-gray-400" ?>">
-                                <input id="username" name="username" type="text" placeholder="Nom d'utilisateur" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['enregistrer']) && empty($params['errors']['username'])) ? $_POST['username'] : "";
-?>" />
+                            <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data = (isset($_POST['enregistrer']) && !empty($params['errors']['username'])) ?"border-red-500" : " border-gray-400" ?>">
+                                <input id="username" name="username" type="text" placeholder="Nom d'utilisateur" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['enregistrer']) && empty($params['errors']['username'])) ? $_POST['username']:"";?>" />
                             </div>
                             <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['username'])): ?>
                                 <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['username']; ?></span>
@@ -32,7 +31,7 @@
                         <div class="md:w-11/12 md:flex w-full md:justify-between mb-2 mx-auto">
                             <!--EMAIL BEGIN-->
                             <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
-                                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['user_email'])) ?"border-red-500" : " border-gray-400" ?>">
+                                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =(isset($_POST['enregistrer']) && !empty($params['errors']['user_email'])) ?"border-red-500" : " border-gray-400" ?>">
                                     <input id="userEmail" name="user_email" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['enregistrer']) && empty($params['errors']['user_email'])) ? $_POST['user_email'] : "";?>" />
                                 </div>
                                 <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['user_email'])): ?>
@@ -43,7 +42,7 @@
 
                             <!--PHONE NUMBER BEGIN-->
                             <div class="md:w-1/2 w-full md:mt-0 mt-1 mr-1">
-                                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['phone_number'])) ?"border-red-500" : " border-gray-400" ?>">
+                                <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data = (isset($_POST['enregistrer']) && !empty($params['errors']['phone_number'])) ?"border-red-500" : " border-gray-400" ?>">
                                     <input id="PhoneNumber" name="phone_number" type="text" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['enregistrer']) && empty($params['errors']['phone_number'])) ? $_POST['phone_number'] : "";?>" />
                                 </div>
                                 <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['phone_number'])): ?>

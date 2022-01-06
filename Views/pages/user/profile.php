@@ -24,7 +24,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
         </div>
         <div class="w-2/12 flex items-center h-full">
              <span class="bg-yellow-500 text-gray-900 place-items-center px-2 flex h-12 rounded-full">
-               <span class="text-base font-semibold mr-1">Super diamond</span> <i class="fas fa-check-circle "></i>
+               <span class="text-base font-semibold mr-1"><?=$params['user']->getPack()->getName()?></span> <i class="fas fa-check-circle "></i>
             </span>
         </div>
         <div class="w-2/12 flex items-center h-full">
@@ -55,34 +55,34 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
     </div>
     <div class="w-full mt-4 grid grid-cols-12">
         <div class="col-span-2 h-96 rounded border border-gray-800 primary_bg_">
-            <div data-path="/" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div data-path-user="/user/dashboard" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-school"></i></span>
                     <span class="w-10/12 mt-0.5">Dashboard</span>
             </div>
             </div>
-            <div data-path="/tree" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div data-path-user="/user/tree" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-tree"></i></span>
                     <span class="w-10/12 mt-0.5">Arbre</span>
             </div>
             </div>
-            <div data-path="/me" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div data-path-user="/user/me" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-user"></i></span>
                     <span class="w-10/12 mt-0.5">Mon Compte</span>
             </div>
             </div>
-            <div data-path="/me" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div data-path-user="/" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-home"></i></span>
                     <span class="w-10/12 mt-0.5">Acceuil</span>
             </div>
             </div>
-            <div data-path="/me" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div data-path-user="/user/logout" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-power-off"></i></span>
-                    <span class="w-10/12 mt-0.5">Deconnexion</span>
+                    <span class="w-10/12 mt-0.5">Déconnexion</span>
             </div>
             </div>
         </div>
@@ -170,7 +170,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                                 <i class="fas fa-dollar-sign "></i>
                             </span>
                             <span class="font-semibold text-blue-500 mt-3 text-2xl my-auto">
-                            <?=$params['user']->getPack()->getAcurracy() ?> % / Jour
+                            <?=$params['user']->getPack()->getAcurracy()?> % / Jour
                             </span>
                         </div>
                     </div>
@@ -185,7 +185,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                                 <i class="fas fa-dollar-sign "></i>
                             </span>
                             <span class="font-semibold text-yellow-300 mt-3 text-2xl my-auto">
-                            <?=$params['user']->getPack()->getAcurracy() ?>
+                            <?=$params['user']->getPack()->getAcurracy()?>
                             </span>
                             <div class="border rounded-lg border-gray-900 p-2 ml-2 w-auto mt-2 flex h-10 justify-around items-center">
                                 <span class="bg-gray-500 grid  text-gray-900 place-items-center w-7 h-7 rounded-full">

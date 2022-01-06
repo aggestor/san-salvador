@@ -154,7 +154,7 @@ class AdminController extends Controller
     {
         if ($this->isAdmin()) {
             $allAdmin = $this->adminModel->findAll();
-            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['allAdmin' => $allAdmin]);
+            return $this->view('pages.admin.administratorsDashboard', 'layout_admin', ['allAdmin' => $allAdmin]);
         }
     }
     /**

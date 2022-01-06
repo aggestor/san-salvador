@@ -57,6 +57,7 @@ $(".hide-b4-save").hide();
 /**
  * Initializing cropper class
  */
+var Cropper;
 var cropper = new Cropper({
     width: 320,
     height: 320,
@@ -115,7 +116,7 @@ imageUploader && imageUploader.addEventListener("change", function (evt) {
         }
     }
 });
-cropper.render("#crop");
+document.querySelector("#cropper") && cropper.render("#crop");
 //Add user interactions stars here
 var formStepsButtons = document.querySelectorAll(".form-user-btn");
 formStepsButtons && formStepsButtons.forEach(function (button) {
@@ -145,4 +146,14 @@ formStepsButtons && formStepsButtons.forEach(function (button) {
                 break;
         }
     }
+});
+var userMenus = document.querySelectorAll("[data-path-user]");
+console.log(userMenus);
+userMenus.forEach(function (menu) {
+    menu.addEventListener("click", function () {
+        var path = menu.getAttribute("data-path-user");
+        if (path) {
+            window.location.pathname = path;
+        }
+    });
 });
