@@ -78,7 +78,7 @@ $routes->get('/login', 'Root\App\Controllers\UserController@login');
 $routes->get('/user/dashboard', 'Root\App\Controllers\UserController@dashboard');
 $routes->get('/user/logout', 'Root\App\Controllers\UserController@logout');
 $routes->get('/user/me', 'Root\App\Controllers\UserController@profil');
-$routes->get('/user/tree', 'Root\App\Controllers\UserController@ltree');
+$routes->get('/user/tree', 'Root\App\Controllers\UserController@tree');
 
 //route lors du renvoie du mail s'il ya echec
 $routes->get('/user/mail/error', 'Root\App\Controllers\UserController@mailSendError');

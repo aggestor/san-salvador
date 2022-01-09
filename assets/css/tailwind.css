@@ -555,12 +555,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-column: span 8 / span 8;
 }
 
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+
 .m-4 {
   margin: 1rem;
 }
 
 .m-1 {
   margin: 0.25rem;
+}
+
+.m-2 {
+  margin: 0.5rem;
 }
 
 .mx-auto {
@@ -596,6 +604,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+.mx-0 {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }
 
 .mt-4 {
@@ -700,6 +718,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
 }
 
 .flex {
@@ -820,6 +842,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-2 {
   height: 0.5rem;
+}
+
+.h-1 {
+  height: 0.25rem;
+}
+
+.h-32 {
+  height: 8rem;
 }
 
 .w-screen {
@@ -954,6 +984,22 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: auto;
 }
 
+.w-11 {
+  width: 2.75rem;
+}
+
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-1 {
+  width: 0.25rem;
+}
+
+.w-4\/12 {
+  width: 33.333333%;
+}
+
 .flex-shrink-0 {
   flex-shrink: 0;
 }
@@ -995,6 +1041,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .grid-cols-12 {
   grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -1184,6 +1234,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
+.border-gray-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
+}
+
 .bg-gray-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
@@ -1287,6 +1342,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.from-green-500 {
+  --tw-gradient-from: #22c55e;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(34 197 94 / 0));
+}
+
+.to-gray-900 {
+  --tw-gradient-to: #111827;
 }
 
 .object-contain {
@@ -1630,6 +1694,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(30 64 175 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-green-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 163 74 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-opacity-100:hover {
   --tw-bg-opacity: 1;
 }
@@ -1836,6 +1905,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 @media (min-width: 1024px) {
+  .lg\:m-4 {
+    margin: 1rem;
+  }
+
   .lg\:ml-4 {
     margin-left: 1rem;
   }
@@ -1854,6 +1927,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .lg\:h-screen {
     height: 100vh;
+  }
+
+  .lg\:h-96 {
+    height: 24rem;
   }
 
   .lg\:w-10\/12 {
@@ -1880,12 +1957,28 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 33.333333%;
   }
 
+  .lg\:w-11\/12 {
+    width: 91.666667%;
+  }
+
+  .lg\:w-3\/12 {
+    width: 25%;
+  }
+
   .lg\:flex-row {
     flex-direction: row;
   }
 
+  .lg\:flex-col {
+    flex-direction: column;
+  }
+
   .lg\:place-items-center {
     place-items: center;
+  }
+
+  .lg\:justify-around {
+    justify-content: space-around;
   }
 
   .lg\:p-0 {

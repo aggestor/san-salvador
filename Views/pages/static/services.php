@@ -14,8 +14,8 @@
             </p>
     </div>
     </div>
-    <div class="w-11/12 flex justify-around">
-            <div class="md:w-3/12 hover:z-50 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all w-11/12 overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
+    <div class="lg:w-11/12 w-full lg:flex-row flex-col flex  justify-around">
+            <div class="lg:w-3/12 w-11/12 mx-auto hover:z-50 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all  overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/exchange.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">
                     <div>
@@ -25,9 +25,8 @@
                     </div>
 
                 </div>
-
             </div>
-            <div class="md:w-3/12 w-11/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
+            <div class="lg:w-3/12 w-11/12 mx-auto transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/cryptos.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">
                     <div>
@@ -39,7 +38,7 @@
                 </div>
 
             </div>
-            <div class="md:w-3/12 w-11/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
+            <div class="lg:w-3/12 mx-auto w-11/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/security.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">
                     <div>
@@ -51,7 +50,7 @@
                 </div>
 
             </div>
-            <div class="md:w-3/12 w-11/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
+            <div class="lg:w-3/12 mx-auto w-11/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/explore.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">
                     <div>
@@ -64,8 +63,8 @@
 
             </div>
     </div>
-    <div class="w-11/12 flex justify-around">
-            <div class="md:w-3/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all w-11/12 overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
+    <div class="lg:w-11/12 w-full flex lg:flex-row flex-col lg:justify-around">
+            <div class="lg:w-3/12 mx-auto w-11/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/give-money.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">
                     <div>
@@ -77,7 +76,7 @@
                 </div>
 
             </div>
-            <div class="md:w-3/12 w-11/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
+            <div class="lg:w-3/12 w-11/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/wallet.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">
                     <div>
@@ -89,7 +88,7 @@
                 </div>
 
             </div>
-            <div class="md:w-3/12 w-11/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
+            <div class="lg:w-3/12 mx-auto w-11/12 transform hover:scale-125 cursor-pointer hover:bg-opacity-50 duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/advice.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">
                     <div>
@@ -101,7 +100,7 @@
                 </div>
 
             </div>
-            <div class="md:w-3/12 w-11/12 transform hover:scale-125 cursor-pointer  duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl h-96">
+            <div class="lg:w-3/12 hidden mx-auto w-11/12 transform hover:scale-125 cursor-pointer  duration-500 transition-all overflow-hidden m-4 primary_bg rounded-xl lg:h-96">
                 
             </div>
     </div>
