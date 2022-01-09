@@ -11,7 +11,6 @@
                 <div class="w-10/12 mx-auto focus-within:font-semibold text-gray-600 focus-within:text-green-500 group focus-within:border-green-500 my-4 h-14 px-2 flex rounded-xl border-2 border-gray-400">
                   <i class="fas fa-search text-xl my-auto mx-2 "></i>  <input id="search" class="bg-transparent w-11/12 h-11/12 text-xl focus:text-green-500 focus:outline-none"type="text" placeholder="Expliquez votre problème" autofocus/>
                 </div>
-                
             </form>
         </div>
     <div data-aos="fade-down"
