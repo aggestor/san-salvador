@@ -193,16 +193,18 @@ abstract class AbstractValidator
     protected function validationImage($image, bool $nullable = false): void
     {
         $img = new UploadFile($image);
-        if (!$nullable && !$img->isFile()) {
-            throw new \RuntimeException("Assurez-vous d'avoir uploader une image");
-        }
-
-        if (!$nullable && !$img->isImage()) {
-            throw new \RuntimeException("le fichier uploader doit être une image");
-        }
-
-        if (!$nullable && $img->getSize() > self::DEFAULT_IMAGE_MAX_SIZE) {
-            throw new \RuntimeException("Le fichier est trop volumineux");
+        if (isset($img) && !empty($img)) {
+            if (!$nullable && !$img->isFile()) {
+                throw new \RuntimeException("Assurez-vous d'avoir uploader une image");
+            }
+    
+            // if (!$nullable && !$img->isImage()) {
+            //     throw new \RuntimeException("le fichier uploader doit être une image");
+            // }
+    
+            if (!$nullable && $img->getSize() > self::DEFAULT_IMAGE_MAX_SIZE) {
+                throw new \RuntimeException("Le fichier est trop volumineux");
+            }
         }
     }
 }

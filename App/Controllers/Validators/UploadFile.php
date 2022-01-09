@@ -49,7 +49,7 @@ class UploadFile
      */
     public function isFile(): bool
     {
-        if (($this->metadata != null && !empty($this->metadata)) && array_key_exists("name", $this->metadata)
+        if (array_key_exists("name", $this->metadata)
             && array_key_exists("tmp_name", $this->metadata)  && array_key_exists("size", $this->metadata)
         ) {
             return true;

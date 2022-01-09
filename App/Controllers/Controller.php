@@ -106,7 +106,8 @@ class Controller
     }
 
     //Methode pour verifier si l'utilisateur au moins une inscription active
-    public function existOneValidateInscription(){
+    public function existOneValidateInscription()
+    {
         return $this->inscriptionModel->hasPack($_SESSION[self::SESSION_USERS]->getId());
     }
 
@@ -188,9 +189,8 @@ class Controller
      * Pour envoyer les mails d'actiavation du compte
      * @param string $to. Le destinataire du mail
      * @param mixed $lien. Le lien d'activation de compte
-     * @return void
      */
-    public function envoieMail($to, string $lien)
+    public function envoieMail($to, string $lien, string $sujet = null, $path)
     {
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';
@@ -199,28 +199,11 @@ class Controller
         $headers[] = 'Repay-To: contact@usalvagetrade.com';
         $headers[] = 'X-Mailer: PHP/' . phpversion();
 
-        $sujet = 'Activation du compte';
-        $message =
-            "
-        <html lang='en' style='box-sizing: border-box;font-family: sans-serif;'>
-        <head>
-            <meta charset='UTF-8'>
-        </head>
-        <body style='margin: 0;padding: 0;color: #fff;'>
-            <center style='background-color: rgb(24, 188, 156);padding-top: 25px;padding-bottom: 25px;'>
-                <h1>UsalvageTrade</h1>
-            </center>
-            <center style='background-color: rgb(44, 62, 80);padding-top: 10px;padding-bottom: 50px;'>
-                <p>Pour finaliser la creation de votre compte chez <strong>usalvageTrade. </strong></br>
-                    Veuillez cliquer sur le lien ci-dessous qui va activer votre compte
-                </p>
-                <p>
-                    <a href='$lien'>Activation du compte</a>
-                </p>
-            </center>
-        </body>
-        </html>
-        ";
+        $sujet = $sujet;
+        ob_start();
+        require VIEWS . $path . '.php';
+        $message = ob_get_clean();
+
         return mail($to, $sujet, $message, implode("\r\n", $headers));
     }
     /**

@@ -54,7 +54,7 @@
                         <!--PASSWORD BEGIN-->
                         <div class="md:w-11/12 mx-auto w-full mb-2">
                             <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['password'])) ?"border-red-500" : " border-gray-400" ?>">
-                                <input id="password" name="password" type="text" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
+                                <input id="password" name="password" type="password" placeholder="Mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on"/>
                             </div>
                             <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['password'])): ?>
                                 <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['password']; ?></span>
@@ -64,7 +64,7 @@
                         <!--PASSWORD BEGIN-->
                         <div class="md:w-11/12 mx-auto w-full mb-2">
                             <div class="md:w-8/12 w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['confirm_password'])) ?"border-red-500" : " border-gray-400" ?>">
-                                <input id="confirmPassword" name="confirm_password" type="text" placeholder="Confirmer mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                                <input id="confirmPassword" name="confirm_password" type="password" placeholder="Confirmer mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                             </div>
                             <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['confirm_password'])): ?>
                                 <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['confirm_password']; ?></span>

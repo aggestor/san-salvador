@@ -54,7 +54,7 @@ class Queries
      * @return \PDOStatement
      */
     public static function addData(string $table, array $fields, array $args)
-    {        
+    {
         return self::addDataInTransaction(self::getPDOInstance(), $table, $fields, $args);
     }
 

@@ -116,7 +116,7 @@ imageUploader && imageUploader.addEventListener("change", function (evt) {
         }
     }
 });
-document.querySelector("#cropper") && cropper.render("#crop");
+document.querySelector("#crop") && cropper.render("#crop");
 //Add user interactions stars here
 var formStepsButtons = document.querySelectorAll(".form-user-btn");
 formStepsButtons && formStepsButtons.forEach(function (button) {
