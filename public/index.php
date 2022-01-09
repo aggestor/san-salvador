@@ -92,10 +92,12 @@ $routes->post('/user/mail/resend-(reset|activation)', 'Root\App\Controllers\User
     1. l'envoie du mail
     2. la reinitialisation du mot de passe avec success
     3. l'incription terminer avec succes 
+    4. view pour le lien de parainage
  */
 $routes->get('/user/mail/success', 'Root\App\Controllers\UserController@mailSendSuccess');
 $routes->get('/user/password', 'Root\App\Controllers\UserController@passwordSuccess');
 $routes->get('/user/account', 'Root\App\Controllers\UserController@registerSuccess');
+$routes->get('/user/share/link', 'Root\App\Controllers\UserController@shareLink');
 
 
 //route d'activation du compte utilisateur

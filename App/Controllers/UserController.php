@@ -79,9 +79,9 @@ class UserController extends Controller
                     $id = $user->getId();
                     $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                     $lien = $domaineName . "reset-$id-$token";
-                    $nom=$user->getName();
+                    $nom = $user->getName();
                     $_REQUEST['mail'] = $mail;
-                    if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail",$nom)) {
+                    if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", $nom)) {
                         Controller::redirect('/user/mail/success');
                     } else {
                         $_REQUEST['action'] = 'reset';
@@ -141,11 +141,11 @@ class UserController extends Controller
                 $mail = $user->getEmail();
                 $token = $user->getToken();
                 $id = $user->getId();
-                $nom=$user->getName();
+                $nom = $user->getName();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "activation-$id-$token";
                 $_REQUEST['mail'] = $mail;
-                if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail",$nom)) {
+                if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail", $nom)) {
                     Controller::redirect('/user/mail/success');
                 } else {
                     $_REQUEST['action'] = 'activation';
@@ -171,7 +171,7 @@ class UserController extends Controller
                 //retourne une vue avec le message de veuillez votre inscription est en court de validation 
                 return $this->view("pages.user.awaitUserPackValidation", "layout_");
             } else if ($this->existOneValidateInscription()) {
-                return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject()]);
+                return $this->view("pages.user.profile", "layout_user", ['user' => $this->userObject()]);
             }
         }
         //var_dump($this->userObject()->hasPack()); exit();
@@ -179,13 +179,26 @@ class UserController extends Controller
 
     public function profil()
     {
+        if ($this->isUsers()) {
+            return $this->view('pages.user.me', 'layout_user', ['user' => $_SESSION[self::SESSION_USERS]]);
+        }
     }
     public function tree()
     {
+        if ($this->isUsers()) {
+            return $this->view('pages.user.tree', 'layout_user');
+        }
     }
     public function mailSendError()
     {
         //return View error mail
+    }
+
+    public function shareLink()
+    {
+        if ($this->isUsers()) {
+            return $this->view('pages.user.sharelink', 'layout_user');
+        }
     }
     public function mailResend()
     {
