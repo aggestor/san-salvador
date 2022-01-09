@@ -28,6 +28,8 @@ class UserController extends Controller
      */
     public function login()
     {
+        //return $this->view("pages.user.login", "layout_");
+
         if (!$this->redirectUser()) {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $validator = new UserValidator();
@@ -65,8 +67,8 @@ class UserController extends Controller
                 $user = $validator->resetPassword();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
-                    var_dump($errors);
-                    exit();
+                    // var_dump($errors);
+                    // exit();
                     return $this->view("pages.password.reset_pwd", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 } else {
                     /**
@@ -77,8 +79,11 @@ class UserController extends Controller
                     $id = $user->getId();
                     $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                     $lien = $domaineName . "reset-$id-$token";
-                    $this->envoieMail($mail, $lien);
-                    Controller::redirect('/user/mail');
+                    if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail")) {
+                        Controller::redirect('/user/mail/success');
+                    } else {
+                        //view de echec lors de l'envoie du mail
+                    }
                 }
             }
             return $this->view("pages.password.reset_pwd", "layout_");
@@ -123,9 +128,8 @@ class UserController extends Controller
     public function create()
     {
         if (!$this->redirectUser()) {
-
+            $validator = new UserValidator();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $validator = new UserValidator();
                 $user = $validator->createAfterValidation();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
@@ -136,12 +140,17 @@ class UserController extends Controller
                 $id = $user->getId();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "activation-$id-$token";
-                $this->envoieMail($mail, $lien);
-                Controller::redirect('/user/mail');
+                $_REQUEST['mail'] = $mail;
+                if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail")) {
+                    Controller::redirect('/user/mail/success/success');
+                } else {
+                    //view lors de l'echec de l'envoie du mail
+                }
             }
             return $this->view("pages.user.register", "layout_");
         }
     }
+
     /**
      * Pour afficher le dashboard du l'utilisateur quand il sera connecter
      *
@@ -170,7 +179,7 @@ class UserController extends Controller
      */
     public function mailSendSuccess()
     {
-        return $this->view('pages.static.mail_sent_success', 'layout_');
+        return $this->view('pages.static.mail_sent_success', 'layout_', ['mail' => $_REQUEST['mail']]);
     }
 
     /**
@@ -205,6 +214,7 @@ class UserController extends Controller
         $validator = new UserValidator();
         $user = $validator->activeAccountAfterValidation();
         if ($validator->hasError() || $validator->getMessage() != null) {
+            //var_dump($validator->getErrors()); exit();
             return $this->view("pages.static.404");
         } else {
             $_SESSION[self::SESSION_USERS] = $user;

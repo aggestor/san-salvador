@@ -4,7 +4,8 @@ namespace Root\App\Models;
 
 use Root\App\Models\Objects\Pack;
 
-class PackModel extends AbstractDbOccurenceModel{
+class PackModel extends AbstractDbOccurenceModel
+{
 
     /**
      * {@inheritDoc}
@@ -19,9 +20,9 @@ class PackModel extends AbstractDbOccurenceModel{
             [
                 $pack['id'],
                 $pack['name'],
-                $pack['currency'],
-                $pack['mountMin'],
-                $pack['mountMax'],
+                $pack['acurracy'],
+                $pack['amountMin'],
+                $pack['amountMax'],
                 $pack['image'],
                 $pack['recordDate'],
                 $pack['timeRecord'],
@@ -76,7 +77,7 @@ class PackModel extends AbstractDbOccurenceModel{
         );
     }
 
-  
+
 
     /**
      * {@inheritDoc}
@@ -113,21 +114,22 @@ class PackModel extends AbstractDbOccurenceModel{
     {
         return $this->check(Schema::PACK['name'], $name);
     }
-    
+
     /**
      * verifie s'il y a un pack pour le montant en parametre
      * @param int $amount
      * @throws ModelException
      * @return bool
      */
-    public function checkByAmount (int $amount) : bool {
+    public function checkByAmount(int $amount): bool
+    {
         $return = false;
         $min = Schema::PACK['amountMin'];
         $max = Schema::PACK['amountMax'];
-        
+
         try {
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$min}<= ? AND {$max} >= ? LIMIT 1", array($amount, $amount));
-            
+
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -135,38 +137,37 @@ class PackModel extends AbstractDbOccurenceModel{
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
-        
+
         return $return;
     }
-    
+
     /**
      * renvoie le pack pour le montant en parametre
      * @param int $amount
      * @throws ModelException
      * @return Pack
      */
-    public function findByAmount (int $amount) : Pack {
+    public function findByAmount(int $amount): Pack
+    {
         $return = null;
         $min = Schema::PACK['amountMin'];
         $max = Schema::PACK['amountMax'];
-        
+
         try {
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$min}<= ? AND {$max} >= ? LIMIT 1", array($amount, $amount));
-            
+
             if ($row = $statement->fetch()) {
                 $return = $this->getDBOccurence($row);
             } else {
                 $statement->closeCursor();
                 throw new ModelException("Aucun packet ne supporte le montant {$amount} USD");
             }
-            
+
             $statement->closeCursor();
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
-        
+
         return $return;
     }
-
-
 }

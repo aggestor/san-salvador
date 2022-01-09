@@ -205,9 +205,6 @@ abstract class AbstractMemberValidator extends AbstractValidator
     protected function validationAccount(string $token, string $id, Member $member)
     {
 
-        if ($token < self::MAX_LENGHT_TOKEN) {
-            throw new \RuntimeException("Token invalide");
-        }
         if ($this->isNull($token) || $this->isNull($id)) {
             throw new \RuntimeException("Erreur d'activation du compte");
         }
@@ -260,10 +257,7 @@ abstract class AbstractMemberValidator extends AbstractValidator
     public function validationToken(string $token)
     {
         if ($this->isNull($token)) {
-            throw new \RuntimeException("Token invalide");
-        }
-        if ($token < self::MAX_LENGHT_TOKEN) {
-            throw new \RuntimeException("Token invalide");
+            throw new \RuntimeException("Token invalide {$token}");
         }
     }
     /**
@@ -279,10 +273,6 @@ abstract class AbstractMemberValidator extends AbstractValidator
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_TOKEN, $e->getMessage());
         }
-        // if ($onReset) {
-        //     return $token;
-        // } else {
-        // }
         $member->setToken($token);
     }
 }
