@@ -127,7 +127,7 @@ imageUploader && imageUploader.addEventListener("change", (evt) => {
     }
   }
 });
-document.querySelector("#cropper") && cropper.render("#crop");
+document.querySelector("#crop") && cropper.render("#crop");
 //Add user interactions stars here
 
 const formStepsButtons: NodeListOf<HTMLButtonElement> | null = document.querySelectorAll(".form-user-btn")
