@@ -93,6 +93,29 @@ class UserValidator extends AbstractMemberValidator
     {
     }
 
+    /**
+     * Renvoie de l'email pour generer un nouveau token
+     * @return User
+     */
+    public function resendMail()
+    {
+        $user = new User();
+        $mail = $_POST[self::FIELD_EMAIL];
+        $token = GenerateId::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
+        $this->processingToken($token, $user);
+        $this->processingEmail($user, $mail, true);
+        if (!$this->hasError()) {
+            $userInSystem = $this->userModel->findByMail($mail);
+            $userInSystem->setToken($token);
+            try {
+                $this->userModel->updateToken($user->getToken(), $userInSystem->getId());
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+            $user = $userInSystem;
+        }
+        return $user;
+    }
     // /**
     //  * Undocumented function
     //  *

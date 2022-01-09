@@ -54,9 +54,10 @@ class AdminController extends Controller
                 $mail = $admin->getEmail();
                 $token = $admin->getToken();
                 $id = $admin->getId();
+                $nom=$admin->getName();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "admin/activation-$id-$token";
-                if ($this->envoieMail($mail, $lien, "Activation et finalisation de la creation du compte", "pages/mail/activationAccoutMail")) {
+                if ($this->envoieMail($mail, $lien, "Activation et finalisation de la creation du compte", "pages/mail/activationAccoutMail",$nom)) {
                     Controller::redirect('/user/mail/success');
                 } else {
                     //view de echec lors de l'envoie du mail

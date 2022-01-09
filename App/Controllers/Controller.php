@@ -190,7 +190,7 @@ class Controller
      * @param string $to. Le destinataire du mail
      * @param mixed $lien. Le lien d'activation de compte
      */
-    public function envoieMail($to, string $lien, string $sujet = null, $path)
+    public function envoieMail($to, string $lien, string $sujet = null, $path,$nom)
     {
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';
