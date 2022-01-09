@@ -65,8 +65,12 @@ class UserValidator extends AbstractMemberValidator
         $this->processingToken($token, $user);
         if (!$this->hasError()) {
             $controller = new Controller();
-            $chemin = $controller->addImage(self::FIELD_IMAGE);
-            $user->setPhoto($chemin);
+            if (!empty($image) && isset($image)) {
+                $chemin = $controller->addImage(self::FIELD_IMAGE);
+                $user->setPhoto($chemin);
+            } else {
+                $user->setPhoto(null);
+            }
             $user->setRecordDate(new \DateTime());
             $user->settimeRecord(new \DateTime());
             try {
@@ -77,6 +81,7 @@ class UserValidator extends AbstractMemberValidator
         }
 
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec d'inscription" : "succes";
+        $_REQUEST['lastInsert'] = $user;
         return $user;
     }
 
@@ -87,6 +92,29 @@ class UserValidator extends AbstractMemberValidator
     public function updateAfterValidation()
     {
     }
+
+    // /**
+    //  * Undocumented function
+    //  *
+    //  * @param boolean $resend
+    //  * @return User
+    //  */
+    // public function sendMailAfterValidation(bool $resend = false)
+    // {
+    //     /**
+    //      * @var User
+    //      */
+    //     $lastInsert = $_REQUEST['lastInsert'];
+    //     $user = $this->userModel->findById($lastInsert->getId());
+    //     if (!$resend) {
+    //         $token = GenerateId::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
+    //         $this->userModel->updateToken($token, $user->getId());
+    //         $lastInsert->setToken($token);
+    //         $user = $lastInsert;
+    //         return $user;
+    //     }
+    //     return $user;
+    // }
     /**
      * Login de l'utilisateur apres validation
      * {@inheritDoc}
@@ -151,6 +179,7 @@ class UserValidator extends AbstractMemberValidator
             }
             $user = $userInSystem;
         }
+        $_REQUEST['lastInsert'] = $user;
         return $user;
     }
     /**

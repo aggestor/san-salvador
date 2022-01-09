@@ -61,12 +61,11 @@ class PackController extends Controller
                     if ($validator->hasError() || $validator->getMessage() != "") {
                         $errors = $validator->getErrors();
                         return $this->view("pages.packages.subscribe", "layout_", ['pack' => $suscribe, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
-                    }
-                    else {
+                    } else {
                         Controller::redirect('/user/dashboard');
                     }
                 }
-                return $this->view('pages.packages.subscribe',"layout_" );
+                return $this->view('pages.packages.subscribe', "layout_");
             } else {
                 Controller::redirect('/user/dashboard');
             }
@@ -75,7 +74,7 @@ class PackController extends Controller
         }
     }
 
-    
+
     /**
      * upgrade packages
      *

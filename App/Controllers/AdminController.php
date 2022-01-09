@@ -56,7 +56,11 @@ class AdminController extends Controller
                 $id = $admin->getId();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "admin/activation-$id-$token";
-                $this->envoieMail($mail, $lien);
+                if ($this->envoieMail($mail, $lien, "Activation et finalisation de la creation du compte", "pages/mail/activationAccoutMail")) {
+                    Controller::redirect('/user/mail/success');
+                } else {
+                    //view de echec lors de l'envoie du mail
+                }
             }
             return $this->view('pages.admin.add_test', 'layout_admin');
         }

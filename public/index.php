@@ -77,13 +77,17 @@ $routes->post('/login', 'Root\App\Controllers\UserController@login');
 $routes->get('/login', 'Root\App\Controllers\UserController@login');
 $routes->get('/user/dashboard', 'Root\App\Controllers\UserController@dashboard');
 $routes->get('/user/logout', 'Root\App\Controllers\UserController@logout');
+
+//route lors du renvoie du mail s'il ya echec
+$routes->get('/user/mail/error', 'Root\App\Controllers\UserController@mailSendSuccess');
+
 /*
     les routes de succes pour 
     1. l'envoie du mail
     2. la reinitialisation du mot de passe avec success
     3. l'incription terminer avec succes 
  */
-$routes->get('/user/mail', 'Root\App\Controllers\UserController@mailSendSuccess');
+$routes->get('/user/mail/success', 'Root\App\Controllers\UserController@mailSendSuccess');
 $routes->get('/user/password', 'Root\App\Controllers\UserController@passwordSuccess');
 $routes->get('/user/account', 'Root\App\Controllers\UserController@registerSuccess');
 
