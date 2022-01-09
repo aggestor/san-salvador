@@ -1,6 +1,7 @@
 /node_modules
 *.lock
 
+
 /assets/fontawesome
 /assets/css/tailwind.css
 /assets/css/tailwind.min.css
@@ -12,3 +13,4 @@
 package.json
 tailwind.config.js
 /assets/src
+/assets/ts
