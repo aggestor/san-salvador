@@ -111,10 +111,10 @@ class Controller
         return $this->inscriptionModel->hasPack($_SESSION[self::SESSION_USERS]->getId());
     }
 
-    public function allUsersHasValidateInscription()
+    public function allUsersHasValidateInscription($limit=null,$offset=null)
     {
         if ($this->inscriptionModel->checkValidated()) {
-            return $this->inscriptionModel->findValidated();
+            return $this->inscriptionModel->findValidated($limit,$offset);
         }
         return array();
     }

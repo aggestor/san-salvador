@@ -71,7 +71,10 @@ abstract class AbstractMemberValidator extends AbstractValidator
          */
         $model = $fac->getModel($ref->getShortName());
         if ($onConnection) {
-            //var_dump($model->checkByMail($mail)); exit();
+            $user = $model->findByMail($mail);
+            if (!$user->isValidationMail()) {
+                throw new \RuntimeException("Votre Compte n'est pas encore active, un email d'activavion est déja envoyer dans votre boite mail");
+            }
             if (!$model->checkByMail($mail)) {
                 throw new \RuntimeException("Votre adresse e-mail est incorrect");
             }

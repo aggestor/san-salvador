@@ -80,12 +80,12 @@ class UserController extends Controller
                     $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                     $lien = $domaineName . "reset-$id-$token";
                     $nom = $user->getName();
-                    $_REQUEST['mail'] = $mail;
+                    $_SESSION['mail'] = $mail;
                     if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", $nom)) {
                         Controller::redirect('/user/mail/success');
                     } else {
-                        $_REQUEST['action'] = 'reset';
-                        //view de echec lors de l'envoie du mail
+                        $_SESSION['action'] = 'reset';
+                        Controller::redirect('/user/mail/resend');
                     }
                 }
             }
@@ -144,12 +144,12 @@ class UserController extends Controller
                 $nom = $user->getName();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "activation-$id-$token";
-                $_REQUEST['mail'] = $mail;
+                $_SESSION['mail'] = $mail;
                 if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail", $nom)) {
                     Controller::redirect('/user/mail/success');
                 } else {
-                    $_REQUEST['action'] = 'activation';
-                    //view lors de l'echec de l'envoie du mail
+                    $_SESSION['action'] = 'activation';
+                    Controller::redirect('/user/mail/resend');
                 }
             }
             return $this->view("pages.user.register", "layout_");
@@ -166,7 +166,7 @@ class UserController extends Controller
         //var_dump($this->allUsersHasValidateInscription()); exit();
         if ($this->isUsers()) {
             if (!$this->userObject()->hasInscription()) {
-                return $this->view("pages.user.hasNotSubscribedYet", "layout_");
+                return $this->view("pages.user.hasNotSubscribedYet", "layout_",['user'=>$_SESSION[self::SESSION_USERS]]);
             } elseif ($this->existValidateInscription()) {
                 //retourne une vue avec le message de veuillez votre inscription est en court de validation 
                 return $this->view("pages.user.awaitUserPackValidation", "layout_");
@@ -189,10 +189,6 @@ class UserController extends Controller
             return $this->view('pages.user.tree', 'layout_user');
         }
     }
-    public function mailSendError()
-    {
-        //return View error mail
-    }
 
     public function shareLink()
     {
@@ -203,24 +199,41 @@ class UserController extends Controller
     public function mailResend()
     {
         $validator = new UserValidator();
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $user = $validator->resendMail();
-            if ($validator->hasError() || $validator->getMessage() != null) {
-                $errors = $validator->getErrors();
-                return $this->view("pages.user.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
-            }
-            $mail = $user->getEmail();
-            $token = $user->getToken();
-            $id = $user->getId();
-            $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
+        if ($this->sessionExist($_SESSION['action'])) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $user = $validator->resendMail();
+                if ($validator->hasError() || $validator->getMessage() != null) {
+                    $errors = $validator->getErrors();
+                    return $this->view("pages.static.mail_sent_error", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                }
+                $mail = $user->getEmail();
+                $token = $user->getToken();
+                $id = $user->getId();
+                $nom = $user->getName();
+                $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
 
-            if ($_GET['action'] == 'activation') {
-                $lien = $domaineName . "activation-$id-$token";
-            } else if ($_GET['action'] == 'reset') {
-                $lien = $domaineName . "reset-$id-$token";
+                if ($_GET['action'] == 'activation') {
+                    $lien = $domaineName . "activation-$id-$token";
+                    if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail", $nom)) {
+                        Controller::redirect('/user/mail/success');
+                    } else {
+                        $_SESSION['action'] = 'activation';
+                        Controller::redirect('/user/mail/resend');
+                    }
+                } else if ($_GET['action'] == 'reset') {
+                    $lien = $domaineName . "reset-$id-$token";
+                    if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", $nom)) {
+                        Controller::redirect('/user/mail/success');
+                    } else {
+                        $_SESSION['action'] = 'reset';
+                        Controller::redirect('/user/mail/resend');
+                    }
+                }
             }
+            return $this->view("pages.static.mail_sent_error", "layout_");
+        } else {
+            Controller::redirect('/login');
         }
-        //return view
     }
     /**
      * Pour l'envoie du mail avec success
@@ -229,7 +242,7 @@ class UserController extends Controller
      */
     public function mailSendSuccess()
     {
-        return $this->view('pages.static.mail_sent_success', 'layout_', ['mail' => $_REQUEST['mail']]);
+        return $this->view('pages.static.mail_sent_success', 'layout_', ['mail' => $_SESSION['mail']]);
     }
 
     /**
@@ -261,6 +274,7 @@ class UserController extends Controller
      */
     public function accountActivation()
     {
+        unset($_SESSION['mail'],$_SESSION['action']);
         $validator = new UserValidator();
         $user = $validator->activeAccountAfterValidation();
         if ($validator->hasError() || $validator->getMessage() != null) {

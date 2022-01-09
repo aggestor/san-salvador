@@ -27,7 +27,7 @@ class Schema
         "side" => "side",
         "status" => "user_status",
         "locked" => "locked",
-        "validationEmail" => "validation_Status",
+        "validationMail" => "validation_Status",
         "recordDate" => "record_date",
         "timeRecord" => "record_time",
         "modifDate" => "last_modif_date",
@@ -65,7 +65,7 @@ class Schema
         "status" => "admin_status",
         "token" => "admin_token",
     ];
-    
+
     const BINARY = [
         "id" => "id",
         "user" => "user_id",
@@ -99,7 +99,7 @@ class Schema
         "surplus" => "surplus",
 
     ];
-    
+
     const PARAINAGE = [
         "id" => "id",
         "user" => "user_id",
@@ -111,7 +111,7 @@ class Schema
         "motifTime" => "last_modif_time",
         "surplus" => "surplus",
     ];
-    
+
     const INSCRIPTION = [
         "id" => "id",
         "user" => "user_id",

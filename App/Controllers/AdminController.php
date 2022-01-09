@@ -29,8 +29,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        // 
-        // $allNonValidateInscription = $this->allNonValidateInscription();
         if ($this->isAdmin()) {
             return $this->view('pages.admin.dashboard', 'layout_admin');
         }
