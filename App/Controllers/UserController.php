@@ -171,7 +171,7 @@ class UserController extends Controller
                 //retourne une vue avec le message de veuillez votre inscription est en court de validation 
                 return $this->view("pages.user.awaitUserPackValidation", "layout_");
             } else if ($this->existOneValidateInscription()) {
-                return $this->view("pages.user.profile", "layout_user", ['user' => $this->userObject()]);
+                return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject()]);
             }
         }
         //var_dump($this->userObject()->hasPack()); exit();
@@ -180,13 +180,13 @@ class UserController extends Controller
     public function profil()
     {
         if ($this->isUsers()) {
-            return $this->view('pages.user.me', 'layout_user', ['user' => $_SESSION[self::SESSION_USERS]]);
+            return $this->view('pages.user.me', 'layout_', ['user' => $this->userObject()]);
         }
     }
     public function tree()
     {
         if ($this->isUsers()) {
-            return $this->view('pages.user.tree', 'layout_user');
+            return $this->view('pages.user.tree', 'layout_',['user' => $this->userObject()]);
         }
     }
     public function mailSendError()
@@ -197,7 +197,7 @@ class UserController extends Controller
     public function shareLink()
     {
         if ($this->isUsers()) {
-            return $this->view('pages.user.sharelink', 'layout_user');
+            return $this->view('pages.user.sharelink', 'layout_',['user' => $this->userObject()] );
         }
     }
     public function mailResend()
