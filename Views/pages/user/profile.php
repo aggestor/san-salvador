@@ -55,7 +55,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
     </div>
     <div class="w-full mt-4 grid grid-cols-12">
         <div class="col-span-2 h-96 rounded border border-gray-800 primary_bg_">
-            <div data-path-user="/user/dashboard" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div data-path-user="/user/dashboard" class="flex p-2 my-2 from-green-500 to-gray-900 text-white transition-all duration-500   cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-school"></i></span>
                     <span class="w-10/12 mt-0.5">Dashboard</span>
@@ -77,6 +77,12 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-home"></i></span>
                     <span class="w-10/12 mt-0.5">Acceuil</span>
+            </div>
+            </div>
+            <div data-path-user="/user/share/link" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div class="w-11/12 mx-auto flex ">
+                    <span class="w-2/12"><i class="fas fa-share"></i></span>
+                    <span class="w-10/12 mt-0.5">Partager</span>
             </div>
             </div>
             <div data-path-user="/user/logout" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
