@@ -79,9 +79,12 @@ class UserController extends Controller
                     $id = $user->getId();
                     $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                     $lien = $domaineName . "reset-$id-$token";
-                    if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail")) {
+                    $nom=$user->getName();
+                    $_REQUEST['mail'] = $mail;
+                    if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail",$nom)) {
                         Controller::redirect('/user/mail/success');
                     } else {
+                        $_REQUEST['action'] = 'reset';
                         //view de echec lors de l'envoie du mail
                     }
                 }
@@ -138,12 +141,14 @@ class UserController extends Controller
                 $mail = $user->getEmail();
                 $token = $user->getToken();
                 $id = $user->getId();
+                $nom=$user->getName();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "activation-$id-$token";
                 $_REQUEST['mail'] = $mail;
-                if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail")) {
-                    Controller::redirect('/user/mail/success/success');
+                if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail",$nom)) {
+                    Controller::redirect('/user/mail/success');
                 } else {
+                    $_REQUEST['action'] = 'activation';
                     //view lors de l'echec de l'envoie du mail
                 }
             }
@@ -172,6 +177,38 @@ class UserController extends Controller
         //var_dump($this->userObject()->hasPack()); exit();
     }
 
+    public function profil()
+    {
+    }
+    public function tree()
+    {
+    }
+    public function mailSendError()
+    {
+        //return View error mail
+    }
+    public function mailResend()
+    {
+        $validator = new UserValidator();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $user = $validator->resendMail();
+            if ($validator->hasError() || $validator->getMessage() != null) {
+                $errors = $validator->getErrors();
+                return $this->view("pages.user.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+            }
+            $mail = $user->getEmail();
+            $token = $user->getToken();
+            $id = $user->getId();
+            $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
+
+            if ($_GET['action'] == 'activation') {
+                $lien = $domaineName . "activation-$id-$token";
+            } else if ($_GET['action'] == 'reset') {
+                $lien = $domaineName . "reset-$id-$token";
+            }
+        }
+        //return view
+    }
     /**
      * Pour l'envoie du mail avec success
      *
