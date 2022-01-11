@@ -177,3 +177,36 @@ userMenus.forEach(menu => {
     
   })
 })
+/**
+ * Pairing sides
+ */
+const paringSides  = document.querySelector("#pairing-sides");
+const sides: NodeListOf<Element> | undefined = paringSides?.querySelectorAll("[data-side]")
+
+sides?.forEach((side): void => {
+  side.addEventListener("click", (e) => {
+    const sideId = side.getAttribute("data-side")
+    setActiveSide(side)
+    
+  })
+})
+function setActiveSide(side?: Element): void {
+  $(side).attr(
+    "class",
+    "flex border border-gray-400 cursor-pointer bg-green-500 text-gray-900 rounded h-12 p-1 items-center w-4/12 justify-between"
+  );
+  $(side).siblings().attr("class", "flex border border-gray-400 cursor-pointer text-gray-300 rounded h-12 p-1 items-center w-4/12 justify-between")
+  const sideCircle = side?.querySelector("span:nth-child(2)". 
+  $($(side).siblings().children()[1]).html("<i></i>")
+  $(sideCircle).attr("class","h-7 w-7 rounded-full border border-gray-900 grid place-items-center bg-gray-900");
+  $(sideCircle).html("<i class='fas fa-check-circle text-green-500'></i>");
+  
+  
+}
+
+$("#copy").click(() => {
+  const valueToCopy = document.querySelector("#valueToCopy")
+  
+  
+  
+})
