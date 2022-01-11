@@ -29,8 +29,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        // 
-        // $allNonValidateInscription = $this->allNonValidateInscription();
         if ($this->isAdmin()) {
             return $this->view('pages.admin.dashboard', 'layout_admin');
         }
@@ -54,10 +52,10 @@ class AdminController extends Controller
                 $mail = $admin->getEmail();
                 $token = $admin->getToken();
                 $id = $admin->getId();
-                $nom=$admin->getName();
+                $nom = $admin->getName();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "admin/activation-$id-$token";
-                if ($this->envoieMail($mail, $lien, "Activation et finalisation de la creation du compte", "pages/mail/activationAccoutMail",$nom)) {
+                if ($this->envoieMail($mail, $lien, "Activation et finalisation de la creation du compte", "pages/mail/activationAccoutMail", $nom)) {
                     Controller::redirect('/user/mail/success');
                 } else {
                     //view de echec lors de l'envoie du mail
@@ -181,9 +179,18 @@ class AdminController extends Controller
      */
     public function allUsers()
     {
+
         if ($this->isAdmin()) {
-            $users = $this->allUsersHasValidateInscription();
-            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['allPack' => $users]);
+            $totalCount = $this->countValidateInscription();
+            @$page = !empty($_GET['page']) ? $_GET['page'] : 1;
+            $nombre_element_par_page = 10;
+            $nombre_pages = ceil($totalCount / $nombre_element_par_page);
+            $debut = ($page - 1) * $nombre_element_par_page;
+            $users = $this->allUsersHasValidateInscription($debut, $nombre_element_par_page);
+            if ($_GET['page'] > $nombre_pages) {
+                return $this->view("pages.static.404");
+            }
+            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['allUsers' => $users, 'nombrePage' => $nombre_pages]);
         }
     }
     /**

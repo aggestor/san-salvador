@@ -49,7 +49,7 @@ $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\
 $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 //les routes en get vers l'admin pour afficher les users, les admin et les pacl
 $routes->get('/admin/viewpacks', 'Root\App\Controllers\AdminController@allPacks');
-$routes->get('/admin/viewusers', 'Root\App\Controllers\AdminController@allUsers');
+$routes->get('/admin/users-page-([0-9]+)', 'Root\App\Controllers\AdminController@allUsers', 'page');
 $routes->get('/admin/administrator', 'Root\App\Controllers\AdminController@administratorDashboard');
 
 //route pour afficher les pack
@@ -83,7 +83,7 @@ $routes->get('/user/tree', 'Root\App\Controllers\UserController@tree');
 //route lors du renvoie du mail s'il ya echec
 $routes->get('/user/mail/error', 'Root\App\Controllers\UserController@mailSendError');
 //route lors du renvoie du mail
-$routes->get('/user/mail/resend', 'Root\App\Controllers\UserController@mailResend', 'action');
+$routes->get('/user/mail/resend', 'Root\App\Controllers\UserController@mailResend');
 $routes->post('/user/mail/resend-(reset|activation)', 'Root\App\Controllers\UserController@mailResend', 'action');
 
 

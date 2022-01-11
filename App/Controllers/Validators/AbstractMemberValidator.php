@@ -58,7 +58,7 @@ abstract class AbstractMemberValidator extends AbstractValidator
      * @param Member $member
      * @return void
      */
-    protected function validationEmail($mail, bool $onConnection = false, Member $member): void
+    protected function validationEmail($mail, bool $onConnection = false, $onValidation=false,Member $member): void
     {
         $this->notNullable($mail);
         if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
@@ -71,7 +71,12 @@ abstract class AbstractMemberValidator extends AbstractValidator
          */
         $model = $fac->getModel($ref->getShortName());
         if ($onConnection) {
-            //var_dump($model->checkByMail($mail)); exit();
+            if ($onValidation) {
+                $user = $model->findByMail($mail);
+                if (!$user->isValidationMail()) {
+                    throw new \RuntimeException("Votre Compte n'est pas encore active, un email d'activavion est déja envoyer dans votre boite mail");
+                }
+            }
             if (!$model->checkByMail($mail)) {
                 throw new \RuntimeException("Votre adresse e-mail est incorrect");
             }
@@ -184,11 +189,11 @@ abstract class AbstractMemberValidator extends AbstractValidator
      * @param string $mail
      * @param boolean $onConnection
      */
-    protected function processingEmail(Member $member, $mail, $onConnection = false): void
+    protected function processingEmail(Member $member, $mail, $onConnection = false,$onValidation=false): void
     {
 
         try {
-            $this->validationEmail($mail, $onConnection, $member);
+            $this->validationEmail($mail, $onConnection, $onValidation, $member);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_EMAIL, $e->getMessage());
         }
