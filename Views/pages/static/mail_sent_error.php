@@ -4,11 +4,11 @@
             <h1 class="text-red-500 text-3xl font-bold">Mail non envoyé !!!</h1>
             <p class="text-gray-400 font-semibold text-lg mt-4"> Une erreur est survenue lors de l'envoie de votre mail...</p>
             <div>
-                <form autocomplete="off">
-                <div class="w-full mx-auto focus-within:font-semibold text-gray-600 focus-within:text-green-500 group focus-within:border-green-500 my-4 h-14 px-2 flex rounded-xl border-2 border-gray-400">
-                   <input  class="bg-transparent w-11/12 h-11/12 text-xl focus:text-green-500 focus:outline-none"type="text" placeholder="Entrer votre mail"/> <button type="submit" class="h-full p-1"><i class="fas fa-paper-plane text-xl my-auto mx-2 "></i></button> 
-                </div>
-            </form>
+                <form autocomplete="off" method="POST" action="/user/mail/resend-<?php echo $_SESSION['action']; ?>">
+                    <div class="w-full mx-auto focus-within:font-semibold text-gray-600 focus-within:text-green-500 group focus-within:border-green-500 my-4 h-14 px-2 flex rounded-xl border-2 border-gray-400">
+                        <input class="bg-transparent w-11/12 h-11/12 text-xl focus:text-green-500 focus:outline-none" type="text" placeholder="Entrer votre mail" name="user_email" value="<?php echo $_SESSION['mail']; ?>" /> <button type="submit" class="h-full p-1"><i class="fas fa-paper-plane text-xl my-auto mx-2 "></i></button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">

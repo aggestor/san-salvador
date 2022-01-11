@@ -95,6 +95,11 @@ class Controller
         }
     }
 
+    public function allUsers()
+    {
+        return $this->userModel->findAll();
+    }
+
     /**
      * Methode pour verifier s'il y'a un pack en attende de validation
      *
@@ -111,12 +116,20 @@ class Controller
         return $this->inscriptionModel->hasPack($_SESSION[self::SESSION_USERS]->getId());
     }
 
-    public function allUsersHasValidateInscription()
+    public function allUsersHasValidateInscription($limit = 0, $offset = 0)
     {
         if ($this->inscriptionModel->checkValidated()) {
-            return $this->inscriptionModel->findValidated();
+            return $this->inscriptionModel->findValidated($limit, $offset);
         }
         return array();
+    }
+
+    public function countValidateInscription()
+    {
+        if ($this->inscriptionModel->checkValidated()) {
+            return $this->inscriptionModel->countValidate();
+        }
+        return 0;
     }
     /**
      * Undocumented function
@@ -190,7 +203,7 @@ class Controller
      * @param string $to. Le destinataire du mail
      * @param mixed $lien. Le lien d'activation de compte
      */
-    public function envoieMail($to, string $lien, string $sujet = null, $path,$nom)
+    public function envoieMail($to, string $lien, string $sujet = null, $path, $nom)
     {
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';

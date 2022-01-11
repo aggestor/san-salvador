@@ -30,7 +30,7 @@ abstract class AbstractDbOccurenceModel
     /**
      * @return \Root\App\Models\ModelFactory
      */
-    public function getFactory() : ModelFactory
+    public function getFactory(): ModelFactory
     {
         return $this->factory;
     }
@@ -145,7 +145,7 @@ abstract class AbstractDbOccurenceModel
     {
         $return = null;
         try {
-            
+
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$columnName}=? LIMIT 1", array($value));
             //var_dump($statement->fetch()); exit();
             if ($row = $statement->fetch()) {
@@ -154,7 +154,7 @@ abstract class AbstractDbOccurenceModel
             } else {
                 $statement->closeCursor();
                 return $return;
-               // throw new ModelException("Aucun resultat pour la requette executer");
+                // throw new ModelException("Aucun resultat pour la requette executer");
             }
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
@@ -203,7 +203,7 @@ abstract class AbstractDbOccurenceModel
         }
         return $data;
     }
-    
+
     /**
      * y-a-il des donnes pour cette intervale???
      * @param int $limit
@@ -218,7 +218,7 @@ abstract class AbstractDbOccurenceModel
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} " . ($limit != null ? "LIMIT 1 OFFSET {$offset}" : ""), array());
             if ($statement->fetch()) {
                 $return = true;
-            } 
+            }
             $statement->closeCursor();
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
@@ -265,14 +265,15 @@ abstract class AbstractDbOccurenceModel
      * @param DBOccurence $object
      */
     public abstract function create($object): void;
-    
+
     /**
      * demande de creation dans une transaction externe
      * @param \PDO $pdo
      * @param DBOccurence $object
      * @throws ModelException
      */
-    public function createInTransaction(\PDO $pdo, $object) : void {
+    public function createInTransaction(\PDO $pdo, $object): void
+    {
         throw new ModelException("Transaction non pris en charge");
     }
 
