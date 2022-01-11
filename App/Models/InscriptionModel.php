@@ -369,21 +369,21 @@ class InscriptionModel extends AbstractOperationModel
      * @throws ModelException
      * @return array
      */
-    public function findValidated(?int $limit = null, int $offset = 0, $userId = null): array
+    public function findValidated(?int $limit = 0, ?int $offset = null, $userId = null): array
     {
         $return = array();
         try {
             $user = Schema::INSCRIPTION['user'];
-            $validation = Schema::INSCRIPTION['validateInscription'];
-            if (is_null($userId)) {
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=?" . ($limit != null ? "LIMIT {$limit} OFFSET {$offset}" : ""), array($userId, 1));
+            $validation = Schema::INSCRIPTION['validate'];
+            if (is_null($userId) && !is_null($limit) && !is_null($limit)) {
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=? LIMIT {$limit},{$offset}", array(1));
             } else {
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$user}=? AND  { $validation}=?" . ($limit != null ? "LIMIT {$limit} OFFSET {$offset}" : ""), array($userId, 1));
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$user}=? AND  {$validation}=?" . ($limit != null ? "LIMIT {$limit} OFFSET {$offset}" : ""), array($userId, 1));
             }
             if ($row = $statement->fetch()) {
-                $return[] = new INSCRIPTION($row);
+                $return[] = $this->getDBOccurence($row);
                 while ($row = $statement->fetch()) {
-                    $return[] = new INSCRIPTION($row);
+                    $return[] = $this->getDBOccurence($row);
                 }
                 $statement->closeCursor();
             } else {
@@ -391,8 +391,29 @@ class InscriptionModel extends AbstractOperationModel
                 $return = $return;
             }
         } catch (\PDOException $e) {
-            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD {$e->getMessage()}", intval($e->getCode()), $e);
         }
         return $return;
+    }
+
+    /**
+     * comptage de tout les occurences d'une table
+     * @throws ModelException
+     * @return int
+     */
+    public function countValidate(): int
+    {
+        $nombre = 0;
+        $validation = Schema::INSCRIPTION['validate'];
+        try {
+            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE {$validation}=1", array());
+            if ($row = $statement->fetch()) {
+                $nombre = $row['nombre'];
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        return $nombre;
     }
 }

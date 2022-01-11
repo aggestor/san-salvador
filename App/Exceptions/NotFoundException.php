@@ -16,6 +16,6 @@ class NotFoundException extends Exception
     {
         //require VIEWS . 'pages/404.php';
         http_response_code(404);
-        $controller = (new Controller())->view('pages.static.404','layouts',['message'=>$message]);
+        $controller = (new Controller())->view('pages.static.404', 'layouts', ['message' => $message]);
     }
 }
