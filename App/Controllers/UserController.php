@@ -311,4 +311,10 @@ class UserController extends Controller
             header('Location:/user/dashboard');
         }
     }
+    public function cashOut(){
+        if ($this->isUsers()) {
+            return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject()]);
+        }
+
+    }
 }

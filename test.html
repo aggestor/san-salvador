@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/assets/css/tailwind.min.css" />
+    <link rel="stylesheet" href="/assets/css/tailwind.css" />
     <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css" />
     <link rel="stylesheet" href="/assets/css/global.css" />
   </head>
@@ -19,6 +19,7 @@
 		"name": "YOHASI MAHINDI Jackson",
 		"icon": "img/user.png",
 		"foot": 3,
+		"root" : "true",
 		"childs": [
 			{
 				"name": "YOHASI NGIMA ELIE",
@@ -1908,29 +1909,33 @@
 }
 
     //   function draw(parent, children) {}
-
       function drawBinaryTree(data) {
+		  let treeData ;
         let parent = {};
         if (data.tree) {
             parent = data.tree;
-            console.log(`parent : ${parent.name} => child: ${JSON.stringify(parent.childs)} `)
         } else parent = data;
         const rootName = parent.name;
         const childs = parent.childs ?? [];
         const length = childs.length;
+		let htmlTree;
+		
         for (let i = 0; i < length; i++) {
-            console.log(`parent : ${childs[i].name} ==> child : ${JSON.stringify(childs[i].childs)}`)
-          if (childs[i].childs) {
-            drawBinaryTree(childs[i]);
-          }
-          //else console.log(childs[i].name)
+			if (childs[i].childs) {
+				drawBinaryTree(childs[i].childs);
+					treeData += `<div class="border p-2 border-blue-500"><strong/> parent : ${childs[i].name}</strong> ==> child : ${JSON.stringify(childs[i].childs)}</strong>`
+			}
+			treeData += `<div class="border p-2 border-red-500"> parent : ${childs[i].name} ==> child : ${JSON.stringify(childs[i].childs)}</div>`
+          
         }
+		console.log(treeData)
+		document.body.innerHTML = treeData
       }
-      const start = new Date().getTime()
+    //   const start = new Date().getTime()
       drawBinaryTree(dataTree);
-      const end = new Date().getTime()
-      const time = end - start
-      console.log((end-start)/1000)
+    //   const end = new Date().getTime()
+    //   const time = end - start
+    //   console.log((end-start)/1000)
     </script>
   </body>
 </html>
