@@ -157,3 +157,26 @@ userMenus.forEach(function (menu) {
         }
     });
 });
+/**
+ * Pairing sides
+ */
+var paringSides = document.querySelector("#pairing-sides");
+var sides = paringSides === null || paringSides === void 0 ? void 0 : paringSides.querySelectorAll("[data-side]");
+sides === null || sides === void 0 ? void 0 : sides.forEach(function (side) {
+    side.addEventListener("click", function (e) {
+        var sideId = side.getAttribute("data-side");
+        setActiveSide(side);
+    });
+});
+function setActiveSide(side) {
+    $(side).attr("class", "flex border border-gray-400 cursor-pointer bg-green-500 text-gray-900 rounded h-12 p-1 items-center w-4/12 justify-between");
+    $(side).siblings().attr("class", "flex border border-gray-400 cursor-pointer text-gray-300 rounded h-12 p-1 items-center w-4/12 justify-between");
+    var sideCircle = side === null || side === void 0 ? void 0 : side.querySelector("span:nth-child(2)");
+    $($(side).siblings().children()[1]).html("<i></i>");
+    $(sideCircle).attr("class", "h-7 w-7 rounded-full border border-gray-900 grid place-items-center bg-gray-900");
+    $(sideCircle).html("<i class='fas fa-check-circle text-green-500'></i>");
+    $("#valueToCopy").text("https://usalvagetrade.com/register-" + $(side).data("side") + "-" + $("#valueToCopy").data("parent") + "-" + $("#valueToCopy").data("sponsor"));
+}
+$("#copy").click(function () {
+    var valueToCopy = document.querySelector("#valueToCopy");
+});

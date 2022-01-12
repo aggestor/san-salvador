@@ -73,6 +73,12 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     <span class="w-10/12 mt-0.5">Mon Compte</span>
             </div>
             </div>
+            <div data-path-user="/user/cashout" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div class="w-11/12 mx-auto flex ">
+                    <span class="w-2/12"><i class="fas fa-dollar-sign"></i></span>
+                    <span class="w-10/12 mt-0.5">Retrait</span>
+            </div>
+            </div>
             <div data-path-user="/" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-home"></i></span>
@@ -93,7 +99,20 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             </div>
         </div>
         <div class="col-span-10 flex flex-col p-3">
-            
+            <div class="w-11/12 mx-auto flex flex-col">
+                <div class="w-6/12 flex p-2">
+                    <div class="6/12 w-56 border border-gray-900">
+                        <img class="object-contain" src="/assets/img/<?=$images[0]?>" alt="<?=$_SESSION["users"]->getName()?>">
+                    </div>
+                    <div class="w-6/12 px-2 h-56">
+                        <div class="w-full h-16 flex flex-col">
+                            <div class="text-gray-300 font-semibold">Noms</div>
+                            <div class="text-gray-600"><?=$_SESSION["users"]->getName()?></div>
+                        </div>
+                    </div>
+                </div>
+                <div></div>
+            </div>
         </div>
     </div>
 </div>

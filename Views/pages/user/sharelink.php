@@ -73,6 +73,12 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     <span class="w-10/12 mt-0.5">Mon Compte</span>
             </div>
             </div>
+            <div data-path-user="/user/cashout" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div class="w-11/12 mx-auto flex ">
+                    <span class="w-2/12"><i class="fas fa-dollar-sign"></i></span>
+                    <span class="w-10/12 mt-0.5">Retrait</span>
+            </div>
+            </div>
             <div data-path-user="/" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-home"></i></span>
@@ -99,33 +105,29 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                </div>
                <form class="w-full flex justify-between my-6 h-96 primary_bg_ rounded">
                     <div class="w-1/2 p-3 h-full">
-                        <div class=" mt-3 h-72 mb-2 rounded w-full">
-                            <div id="sides" class="h-32 mt-5 p-2 w-10/12 border  border-gray-600 rounded flex flex-col">
+                        <div class=" mt-3 h-72 mb-2 flex flex-col justify-center items-center rounded w-full">
+                            <div id="pairing-sides" class="h-32 mt-5 p-2 w-full border  border-gray-600 rounded flex flex-col">
                                 <div class="w-10/12 text-gray-300">Choisir côté de parrainage</div>
                                 <div class="mt-3 mx-1 flex  justify-between">
-                                    <div class="flex border border-gray-400 cursor-pointer text-gray-300 rounded h-12 p-1 items-center w-4/12 justify-between">
+                                    <div data-side="1" class="flex border border-gray-400 cursor-pointer text-gray-300 rounded h-12 p-1 items-center w-4/12 justify-between">
                                         <span>Gauche</span>
                                         <span class="h-7 w-7 rounded-full border"></span>
                                     </div>
-                                    <div class="flex border border-gray-400 cursor-pointer text-gray-300 rounded h-12 p-1 items-center w-4/12 justify-between">
+                                    <div data-side="2" class="flex border border-gray-400 cursor-pointer text-gray-300 rounded h-12 p-1 items-center w-4/12 justify-between">
                                         <span>Droite</span>
                                         <span class="h-7 w-7 rounded-full border"></span>
                                     </div>
                                     
                                 </div>
                             </div>
-                            <div class="flex w-10/12 mt-5 justify-around">
+                            <div class="flex w-full mt-5 justify-around">
                                 <!--PASSWORD BEGIN-->
-                                <div class="w-9/12 mb-2">
-                                    <div class="w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data =  (isset($_POST['enregistrer']) && !empty($params['errors']['confirm_password'])) ?"border-red-500" : " border-gray-400" ?>">
-                                        <input id="confirmPassword" name="confirm_password" type="password" placeholder="Confirmer mot de passe" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                                <div class="w-9/12 flex mb-2">
+                                    <div  id="valueToCopy" data-parent="<?= $_SESSION['users']->getParent()->getId() ?>"data-sponsor="<?= $_SESSION['users']->getSponsor()->getId() ?>" class="w-full bg-gray-900 text-gray-400 flex-grow-0 flex-shrink-0 flex text-sm cursor-text rounded h-10">
                                     </div>
-                                    <?php if (isset($_POST['enregistrer']) && !empty($params['errors']['confirm_password'])): ?>
-                                        <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['confirm_password']; ?></span>
-                                    <?php endif;?>
                                 </div>
                                 <div class="w-3/12 flex items-center justify-end h-10">
-                                    <span class="bg-green-500 text-gray-900 rounded hover:bg-green-600 cursor-pointer p-1 items-center font-semibold flex justify-around w-10/12 h-10"> Copier <i class="fas fa-copy "></i></span>
+                                    <span id="copy" class="bg-green-500 text-gray-900 rounded hover:bg-green-600 cursor-pointer p-1 items-center font-semibold flex justify-around w-10/12 h-10"> Copier <i class="fas fa-copy "></i></span>
                                 </div>
                             </div>
                         </div>
