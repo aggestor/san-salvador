@@ -1,0 +1,5 @@
+{
+    "require": {
+        "react/event-loop": "1.2.0"
+    }
+}

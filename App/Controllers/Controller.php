@@ -2,6 +2,7 @@
 
 namespace Root\App\Controllers;
 
+use ArrayObject;
 use Root\App\Models\BinaryModel;
 use Root\App\Models\InscriptionModel;
 use Root\App\Models\ModelFactory;
@@ -97,7 +98,27 @@ class Controller
 
     public function allUsers()
     {
-        return $this->userModel->findAll();
+        if ($this->sessionExist($_SESSION[self::SESSION_USERS])) {
+            $id = $_SESSION[self::SESSION_USERS]->getId();
+
+            /**
+             * @var User
+             */
+            $users=$this->userModel->findById($id);
+            $downlines=$this->userModel->findDownlineLeftRightSides($id);
+            $users->setSides($downlines);
+            echo "<pre>";
+            var_dump($users->getName(),$users->getNodeIcon(),$users->getSide()); 
+            foreach ($users->getSides() as $key) {
+                $childs=$this->userModel->findById($key->getId());
+                while ($childs->setSides($this->userModel->findDownlineLeftRightSides($key->getId()))) {
+                    # code...
+                    var_dump("{",$childs->getName(),$childs->getNodeIcon(),$childs->getSide(),"}");
+                }
+            }
+            echo "</pre>";
+            exit();
+        }
     }
 
     /**

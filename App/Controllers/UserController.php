@@ -166,7 +166,7 @@ class UserController extends Controller
         //var_dump($this->allUsersHasValidateInscription()); exit();
         if ($this->isUsers()) {
             if (!$this->userObject()->hasInscription()) {
-                return $this->view("pages.user.hasNotSubscribedYet", "layout_",['user'=>$_SESSION[self::SESSION_USERS]]);
+                return $this->view("pages.user.hasNotSubscribedYet", "layout_", ['user' => $_SESSION[self::SESSION_USERS]]);
             } elseif ($this->existValidateInscription()) {
                 //retourne une vue avec le message de veuillez votre inscription est en court de validation 
                 return $this->view("pages.user.awaitUserPackValidation", "layout_");
@@ -185,15 +185,16 @@ class UserController extends Controller
     }
     public function tree()
     {
+        $this->allUsers();
         if ($this->isUsers()) {
-            return $this->view('pages.user.tree', 'layout_',['user' => $this->allUsers()]);
+            return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject()]);
         }
     }
 
     public function shareLink()
     {
         if ($this->isUsers()) {
-            return $this->view('pages.user.sharelink', 'layout_',['user' => $this->userObject()] );
+            return $this->view('pages.user.sharelink', 'layout_', ['user' => $this->userObject()]);
         }
     }
     public function mailResend()
@@ -274,7 +275,7 @@ class UserController extends Controller
      */
     public function accountActivation()
     {
-        unset($_SESSION['mail'],$_SESSION['action']);
+        unset($_SESSION['mail'], $_SESSION['action']);
         $validator = new UserValidator();
         $user = $validator->activeAccountAfterValidation();
         if ($validator->hasError() || $validator->getMessage() != null) {
