@@ -175,6 +175,7 @@ function setActiveSide(side) {
     $($(side).siblings().children()[1]).html("<i></i>");
     $(sideCircle).attr("class", "h-7 w-7 rounded-full border border-gray-900 grid place-items-center bg-gray-900");
     $(sideCircle).html("<i class='fas fa-check-circle text-green-500'></i>");
+    $("#valueToCopy").text("https://usalvagetrade.com/register-" + $(side).data("side") + "-" + $("#valueToCopy").data("parent") + "-" + $("#valueToCopy").data("sponsor"));
 }
 $("#copy").click(function () {
     var valueToCopy = document.querySelector("#valueToCopy");
