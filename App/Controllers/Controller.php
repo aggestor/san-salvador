@@ -98,22 +98,22 @@ class Controller
 
     public function allUsers()
     {
+        var_dump(getdate()); exit();
         if ($this->sessionExist($_SESSION[self::SESSION_USERS])) {
             $id = $_SESSION[self::SESSION_USERS]->getId();
-
             /**
              * @var User
              */
-            $users=$this->userModel->findById($id);
-            $downlines=$this->userModel->findDownlineLeftRightSides($id);
+            $users = $this->userModel->findById($id);
+            $downlines = $this->userModel->findDownlineLeftRightSides($id);
             $users->setSides($downlines);
             echo "<pre>";
-            var_dump($users->getName(),$users->getNodeIcon(),$users->getSide()); 
+            var_dump($users->getName(), $users->getNodeIcon(), $users->getSide());
             foreach ($users->getSides() as $key) {
-                $childs=$this->userModel->findById($key->getId());
+                $childs = $this->userModel->findById($key->getId());
                 while ($childs->setSides($this->userModel->findDownlineLeftRightSides($key->getId()))) {
                     # code...
-                    var_dump("{",$childs->getName(),$childs->getNodeIcon(),$childs->getSide(),"}");
+                    var_dump("{", $childs->getName(), $childs->getNodeIcon(), $childs->getSide(), "}");
                 }
             }
             echo "</pre>";

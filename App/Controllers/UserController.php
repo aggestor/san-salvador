@@ -312,9 +312,28 @@ class UserController extends Controller
         }
     }
     public function cashOut(){
+        $dateActuelle = getdate();
+        var_dump($this->enabledCashOut($dateActuelle));exit();
+if (condition) {
+    # code...
+}
         if ($this->isUsers()) {
             return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject()]);
         }
 
+    }
+
+    /**
+     * La fonction pour active et verifier que le jour du retrait est valide
+     *
+     * @param array $date
+     * @return true|false
+     */
+    private function enabledCashOut(array $date)
+    {
+        if ($date["wday"]==6 && $date["weekday"]=="Saturday") {
+            return true;
+        }
+        return false;
     }
 }
