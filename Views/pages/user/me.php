@@ -11,7 +11,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             <div class="w-8/12 flex flex-col pl-5">
                 <span class="text-gray-300 font-semibold text-lg"><?=$_SESSION["users"]->getName()?></span>
                 <span class="text-gray-400 text-base"><?=$_SESSION["users"]->getEmail()?></span>
-                <span class="_green_text text-sm">Online</span>
+                <span class="text-green-500 border border-green-500 rounded-full w-16 text-center p-0.5 text-sm">En ligne</span>
             </div>
         </div>
         <div class="w-2/12 flex items-center h-full">
@@ -38,23 +38,23 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
         </div>
         <div class="w-3/12 border-gray-800 border p-2 mr-3 h-full rounded-xl">
             <div class="flex relative">
-                <span class="w-4 h-4 animate-ping rounded-full absolute bg-green-400 opacity-75"></span>
-                <span class="w-3 h-3 left-1 top-1 rounded-full absolute bg-green-500"></span>
-                <span class="text-green-500 absolute left-10 "> EVOLUTION DE VOTRE COMPTE</span>
+                <span class="w-3 h-3 animate-ping rounded-full absolute bg-green-400 opacity-75"></span>
+                <span class="w-2 h-2  top-1 rounded-full absolute bg-green-500"></span>
+                <span class="text-green-500 absolute left-10 -top-1 "> Evolution de votre compte</span>
             </div>
-            <div class="w-full h-3 overflow-hidden mt-8 border-green-500 border rounded-full">
-                <div style="width: calc(<?=$params['user']->getBonusToPercent()?>%/3)" class="h-2 bg-green-500">
+            <div class="w-full h-2 overflow-hidden mt-8 border-green-500 border rounded">
+                <div style="width: calc(<?=$params['user']->getBonusToPercent()?>% / 3)" class="h-1 bg-green-500">
 
                 </div>
             </div>
-            <div class="text-gray-500 flex justify-between">
+            <div class="text-gray-500 text-sm flex justify-between">
                 <span><?=$params['user']->getBonusToPercent()?>%</span>
                 <span class="text-green-500">300%</span>
             </div>
         </div>
     </div>
     <div class="w-full mt-4 grid grid-cols-12">
-        <div class="col-span-2 h-96 rounded border border-gray-800 primary_bg_">
+        <div class="col-span-2 relative ml-1 h-screen-customer rounded border border-gray-800 primary_bg_">
             <div data-path-user="/user/dashboard" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-school"></i></span>
@@ -97,21 +97,122 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     <span class="w-10/12 mt-0.5">Déconnexion</span>
             </div>
             </div>
+            <div class="absolute bottom-0 left-4 h-16 text-gray-500">
+               <span class="text-center">Usalvagetrade &#169; 2022</span> 
+            </div>
         </div>
-        <div class="col-span-10 flex flex-col p-3">
-            <div class="w-11/12 mx-auto flex flex-col">
-                <div class="w-6/12 flex p-2">
-                    <div class="6/12 w-56 border border-gray-900">
-                        <img class="object-contain" src="/assets/img/<?=$images[0]?>" alt="<?=$_SESSION["users"]->getName()?>">
+        <div class="col-span-10 h-screen-customer scroll overflow-y-auto overflow-x-hidden flex flex-col p-3">
+            <div class="w-11/12 mx-auto mb-3  border-b border-gray-900">
+                  <h1 class="text-gray-400 mb-3"> <i class="fas text-xl fa-info-circle mr-2"></i> <span class="font-semibold text-2xl">Toutes les informations necessaires sur l'utilisateur</span></h1>
+               </div>
+            <div class="w-11/12 mx-auto flex">
+                    <div class="w-4/12">
+                        <img class="object-contain h-60 w-60 rounded-lg" src="/assets/img/<?=$images[0]?>" alt="<?=$_SESSION["users"]->getName()?>">
                     </div>
-                    <div class="w-6/12 px-2 h-56">
-                        <div class="w-full h-16 flex flex-col">
+                    <div class="w-4/12 pl-3 h-56">
+                        <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Informations personnelles</h2>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Id</div>
+                            <div class="text-gray-600"><?=$_SESSION["users"]->getId()?></div>
+                        </div>
+                        <div class="w-10/12 mx-auto h-16">
                             <div class="text-gray-300 font-semibold">Noms</div>
                             <div class="text-gray-600"><?=$_SESSION["users"]->getName()?></div>
                         </div>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Adresse mail</div>
+                            <div class="text-gray-600"><?=$_SESSION["users"]->getEmail()?></div>
+                        </div>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Numéro de téléphone</div>
+                            <div class="text-gray-600"><?=$_SESSION["users"]->getPhone()?></div>
+                        </div>
                     </div>
+                <div class="w-4/12 p-2">
+                    <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Autres informations</h2>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Confirmation mail</div>
+                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
+                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
+                            </div>
+                        </div>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Compte activé</div>
+                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
+                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
+                            </div>
+                        </div>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Peu partager son lien</div>
+                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
+                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
+                            </div>
+                        </div>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Peut retirer</div>
+                            <div class="w-16 h-8 border-red-500  border p-1 rounded-full flex justify-around">
+                                    <span class="text-red-500">Non </span> <i class="fas mt-1 text-red-500 fa-times    "></i>
+                            </div>
+                        </div>
+                        
+                        
                 </div>
-                <div></div>
+            </div>
+            <div class="w-11/12 border-t border-gray-900 mx-auto flex ">
+                <div class="w-4/12 h-56">
+                    <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Information sur le Réseau</h2>
+                    <div class="w-10/12 mx-auto h-16">
+                        <div class="text-gray-300 font-semibold">Parent</div>
+                        <div class="text-gray-600"><?=$_SESSION["users"]->getParent()->getId()?></div>
+                    </div>
+                    <div class="w-10/12 mx-auto h-16">
+                        <div class="text-gray-300 font-semibold">Sponsor</div>
+                        <div class="text-gray-600"><?=$_SESSION["users"]->getSponsor()->getId()?></div>
+                    </div>
+                    
+                    <div class="w-10/12 mx-auto h-16">
+                        <div class="text-gray-300 font-semibold">Capital investi</div>
+                        <div class="w-16 h-8 border-blue-500  border p-1 rounded-full flex justify-around">
+                                <span class="text-blue-500"><?=$_SESSION["users"]->getSold() ?> </span> <i class="fas mt-1 text-blue-500 fa-dollar-sign    "></i>
+                        </div>
+                    </div>
+                    <div class="w-10/12 mx-auto h-16">
+                        <div class="text-gray-300 font-semibold">Dévise</div>
+                        <div class="w-16 h-8 border-blue-500  border p-1 rounded-full flex justify-around">
+                                <span class="text-blue-500">USD</span> <i class="fas mt-1 text-blue-500 fa-dollar-sign    "></i>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="w-4/12 p-2">
+                    <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Autres informations</h2>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Confirmation mail</div>
+                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
+                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
+                            </div>
+                        </div>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Compte activé</div>
+                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
+                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
+                            </div>
+                        </div>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Peu partager son lien</div>
+                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
+                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
+                            </div>
+                        </div>
+                        <div class="w-10/12 mx-auto h-16">
+                            <div class="text-gray-300 font-semibold">Peu retirer</div>
+                            <div class="w-16 h-8 border-red-500  border p-1 rounded-full flex justify-around">
+                                    <span class="text-red-500">Non </span> <i class="fas mt-1 text-red-500 fa-times    "></i>
+                            </div>
+                        </div>
+                        
+                        
+                </div>
             </div>
         </div>
     </div>

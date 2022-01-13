@@ -187,7 +187,11 @@ class UserController extends Controller
     {
         $this->allUsers();
         if ($this->isUsers()) {
+<<<<<<< HEAD
             return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject()]);
+=======
+            return $this->view('pages.user.tree', 'layout_',['user' => $this->userObject()]);
+>>>>>>> 88f67735558f83e9b2b2a85ae21ac3b1ff53a0e5
         }
     }
 

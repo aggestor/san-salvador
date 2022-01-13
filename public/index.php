@@ -26,6 +26,7 @@ $routes->get('/contact', 'Root\App\Controllers\StaticController@contact');
 $routes->get('/security', 'Root\App\Controllers\StaticController@security');
 $routes->get('/politics', 'Root\App\Controllers\StaticController@politics');
 $routes->get('/terms', 'Root\App\Controllers\StaticController@terms');
+$routes->get('/contracts', 'Root\App\Controllers\StaticController@contracts');
 
 //les routes pour l'admin en get
 $routes->get('/admin/destroy', 'Root\App\Controllers\AdminController@destroy');

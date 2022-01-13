@@ -8,7 +8,7 @@
     </div>
 </div>
 <div class="col-span-12 secondary_bg">
-    <div class="w-11/12 lg:h-screen mx-auto flex mt-6 flex-col">
+    <div class="w-11/12 h-v-70 mx-auto flex mt-6 flex-col">
         <div class="w-full flex mt-9  flex-col md:flex-row justify-between">
             <?php
                 foreach($params['pack'] as $pack){ 
@@ -29,6 +29,22 @@
 
                     </div>
                <?php } ?>
+        </div>
+    </div>
+    <div class="lg:w-11/12 w-full flex h-60 items-center justify-center">
+       <p class="text-gray-300 text-center text-2xl lg:text-4xl"> <i class="fas fa-info-circle    "></i> A PROPS DE  NOS PACKS</p>
+    </div>
+    <div class="lg:w-11/12 w-full flex lg:flex-row flex-col h-v-70">
+        <div class="lg:w-6/12 w-11/12 flex justify-center mb-4 lg:mb-0 mx-auto lg:mx-0">
+            <img src="/assets/logos/packages.png" class="lg:w-96 w-72 h-72 lg:h-96" alt="Packages illustrations">
+        </div>
+        <div class="lg:w-6/12 w-11/12 mx-auto lg:mx-0">
+            <h1 class="_green_text mb-2 text-xl font-semibold"> C'est quoi un pack ?</h1>
+            <p class="text-gray-400 mb-4">Un pack c'est un type d'investissement que notre plateforme offre à  ses utilisateurs enfin de profiter plusieurs types bonus dependamment du pack choisi.</p>
+            <h1 class="_green_text text-xl  mb-2  font-semibold"> Comment choisir un pack ?</h1>
+            <p class="text-gray-400 mb-4">Tous les packs que nous possedons sont fixés  sur certaines intervalles de sommes d'argents. Le choix d'un pack dépendra de l'argent que vous voulez investir.</p>
+            <h1 class="_green_text text-xl  mb-2  font-semibold"> Comment les pack gagnet-ils des bonus?</h1>
+            <p class="text-gray-400 mb-4">Nous offrons plusieurs sortes des bonus sur notre plateformes qui gagnent dependamment du pack auquel l'utilisateur a souscri. Tous les bonus ont des pourcentages diffenrents et sont strictément basés sur <span class="_green_text font-semibold"><a href="/terms">notre réglement de travail</a></span>. Les bonus et tout ce qui va avec sont expliqués <span class="_green_text font-semibold"><a href="/help#bonuses">ici</a></span>. </p>
         </div>
     </div>
 

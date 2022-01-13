@@ -11,7 +11,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             <div class="w-8/12 flex flex-col pl-5">
                 <span class="text-gray-300 font-semibold text-lg"><?=$_SESSION["users"]->getName()?></span>
                 <span class="text-gray-400 text-base"><?=$_SESSION["users"]->getEmail()?></span>
-                <span class="_green_text text-sm">Online</span>
+                <span class="text-green-500 border border-green-500 rounded-full w-16 text-center p-0.5 text-sm">En ligne</span>
             </div>
         </div>
         <div class="w-2/12 flex items-center h-full">
@@ -38,23 +38,23 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
         </div>
         <div class="w-3/12 border-gray-800 border p-2 mr-3 h-full rounded-xl">
             <div class="flex relative">
-                <span class="w-4 h-4 animate-ping rounded-full absolute bg-green-400 opacity-75"></span>
-                <span class="w-3 h-3 left-1 top-1 rounded-full absolute bg-green-500"></span>
-                <span class="text-green-500 absolute left-10 "> EVOLUTION DE VOTRE COMPTE</span>
+                <span class="w-3 h-3 animate-ping rounded-full absolute bg-green-400 opacity-75"></span>
+                <span class="w-2 h-2  top-1 rounded-full absolute bg-green-500"></span>
+                <span class="text-green-500 absolute left-10 -top-1 "> Evolution de votre compte</span>
             </div>
-            <div class="w-full h-3 overflow-hidden mt-8 border-green-500 border rounded-full">
-                <div style="width: calc(<?=$params['user']->getBonusToPercent()?>%/3)" class="h-2 bg-green-500">
+            <div class="w-full h-2 overflow-hidden mt-8 border-green-500 border rounded">
+                <div style="width: calc(<?=$params['user']->getBonusToPercent()?>% / 3)" class="h-1 bg-green-500">
 
                 </div>
             </div>
-            <div class="text-gray-500 flex justify-between">
+            <div class="text-gray-500 text-sm flex justify-between">
                 <span><?=$params['user']->getBonusToPercent()?>%</span>
                 <span class="text-green-500">300%</span>
             </div>
         </div>
     </div>
     <div class="w-full mt-4 grid grid-cols-12">
-        <div class="col-span-2 h-96 rounded border border-gray-800 primary_bg_">
+        <div class="col-span-2 relative ml-1 h-screen-customer rounded border border-gray-800 primary_bg_">
             <div data-path-user="/user/dashboard" class="flex p-2 my-2 from-green-500 to-gray-900 text-white transition-all duration-500   cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-school"></i></span>
@@ -97,8 +97,11 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     <span class="w-10/12 mt-0.5">Déconnexion</span>
             </div>
             </div>
+            <div class="absolute bottom-0 left-4 h-16 text-gray-500">
+               <span class="text-center">Usalvagetrade &#169; 2022</span> 
+            </div>
         </div>
-        <div class="col-span-10 flex flex-col p-3">
+        <div class=" col-span-10 h-screen-customer scroll overflow-y-auto overflow-x-hidden flex flex-col p-3">
             <div class="grid grid-cols-12 space-x-2 p-2">
 
                 <div class="col-span-4 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">

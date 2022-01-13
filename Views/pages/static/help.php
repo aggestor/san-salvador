@@ -1,10 +1,6 @@
 <div class="col-span-12 secondary_bg">
     <div style="height:70vh" class="flex flex-col md:flex-row w-full h-auto md:items-center mx-auto md:justify-around">
-    <div data-aos="fade-down"
-    data-aos-duration="1500" class="md:w-4/12 w-full overflow-x-hidden flex justify-center">
-        <img src="assets/logos/help.png" class="md:h-96 h-80 w-80 md:w-96" alt="Joining image" />
-    </div>
-    <div data-aos="fade-down" data-aos-duration="1500" class="md:w-4/12 overflow-x-hidden w-full flex flex-col mt-2 ">
+    <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 overflow-x-hidden w-full flex flex-col mt-2 ">
         <h1 class="md:w-10/12 mx-auto md:text-3xl text-xl text-white font-bold">VOUS RECHERCHER DE L'AIDE ?</span></h1>
         <p class="text-gray-400 my-3 mx-auto _space_text_l3 md:w-10/12 ">Entrer votre inquietude dans le champ ci-bas
             <form autocomplete="off">
@@ -14,7 +10,7 @@
             </form>
         </div>
     <div data-aos="fade-down"
-    data-aos-duration="1500" class="md:w-4/12 w-full overflow-x-hidden flex justify-center">
+    data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
         <img src="assets/logos/faq.png" class="md:h-96 h-80 w-80 md:w-96" alt="Joining image" />
     </div>
     </div>
