@@ -40,7 +40,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             <div class="flex relative">
                 <span class="w-3 h-3 animate-ping rounded-full absolute bg-green-400 opacity-75"></span>
                 <span class="w-2 h-2  top-1 rounded-full absolute bg-green-500"></span>
-                <span class="text-green-500 absolute left-10 "> Evolution de votre compte</span>
+                <span class="text-green-500 absolute left-10 -top-1 "> Evolution de votre compte</span>
             </div>
             <div class="w-full h-2 overflow-hidden mt-8 border-green-500 border rounded">
                 <div style="width: calc(<?=$params['user']->getBonusToPercent()?>% / 3)" class="h-1 bg-green-500">

@@ -38,16 +38,16 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
         </div>
         <div class="w-3/12 border-gray-800 border p-2 mr-3 h-full rounded-xl">
             <div class="flex relative">
-                <span class="w-4 h-4 animate-ping rounded-full absolute bg-green-400 opacity-75"></span>
-                <span class="w-3 h-3 left-1 top-1 rounded-full absolute bg-green-500"></span>
-                <span class="text-green-500 absolute left-10 "> EVOLUTION DE VOTRE COMPTE</span>
+                <span class="w-3 h-3 animate-ping rounded-full absolute bg-green-400 opacity-75"></span>
+                <span class="w-2 h-2  top-1 rounded-full absolute bg-green-500"></span>
+                <span class="text-green-500 absolute left-10 -top-1 "> Evolution de votre compte</span>
             </div>
-            <div class="w-full h-3 overflow-hidden mt-8 border-green-500 border rounded-full">
-                <div style="width: calc(<?=$params['user']->getBonusToPercent()?>%/3)" class="h-2 bg-green-500">
+            <div class="w-full h-2 overflow-hidden mt-8 border-green-500 border rounded">
+                <div style="width: calc(<?=$params['user']->getBonusToPercent()?>% / 3)" class="h-1 bg-green-500">
 
                 </div>
             </div>
-            <div class="text-gray-500 flex justify-between">
+            <div class="text-gray-500 text-sm flex justify-between">
                 <span><?=$params['user']->getBonusToPercent()?>%</span>
                 <span class="text-green-500">300%</span>
             </div>
