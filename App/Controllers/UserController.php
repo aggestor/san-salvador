@@ -7,6 +7,7 @@ use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\Inscription;
 use Root\App\Models\Objects\User;
 use Root\App\Models\UserModel;
+use Root\Core\EnabledCashOut;
 
 class UserController extends Controller
 {
@@ -318,8 +319,15 @@ class UserController extends Controller
      */
     public function cashOut()
     {
+        $dateActuelle = getdate();
         if ($this->isUsers()) {
-            return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject()]);
+            if (EnabledCashOut::isEnabled($dateActuelle)) {
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                }
+                return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject()]);
+            } else {
+                return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'disabled' => false]);
+            }
         }
     }
 
