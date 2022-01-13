@@ -296,3 +296,6 @@ header{
     transform: rotate(0deg);
   }
 }
+.h-screen-customer{
+  height: calc(100vh - 120px);
+}

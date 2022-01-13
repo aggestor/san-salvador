@@ -519,6 +519,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: 0.5rem;
 }
 
+.left-4 {
+  left: 1rem;
+}
+
+.bottom-3 {
+  bottom: 0.75rem;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -959,20 +967,24 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 10rem;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
 .w-56 {
   width: 14rem;
+}
+
+.w-4\/12 {
+  width: 33.333333%;
 }
 
 .w-auto {
   width: auto;
 }
 
-.w-1\/2 {
-  width: 50%;
-}
-
-.w-4\/12 {
-  width: 33.333333%;
+.w-2 {
+  width: 0.5rem;
 }
 
 .flex-shrink-0 {
@@ -1114,6 +1126,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .rounded-lg {
   border-radius: 0.5rem;
+}
+
+.rounded-sm {
+  border-radius: 0.125rem;
 }
 
 .border {
@@ -1339,6 +1355,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .p-6 {
   padding: 1.5rem;
+}
+
+.p-0\.5 {
+  padding: 0.125rem;
+}
+
+.p-0 {
+  padding: 0px;
 }
 
 .px-2 {

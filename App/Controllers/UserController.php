@@ -186,7 +186,7 @@ class UserController extends Controller
     public function tree()
     {
         if ($this->isUsers()) {
-            return $this->view('pages.user.tree', 'layout_',['user' => $this->allUsers()]);
+            return $this->view('pages.user.tree', 'layout_',['user' => $this->userObject()]);
         }
     }
 

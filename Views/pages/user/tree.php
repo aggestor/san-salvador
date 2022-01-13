@@ -11,7 +11,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             <div class="w-8/12 flex flex-col pl-5">
                 <span class="text-gray-300 font-semibold text-lg"><?=$_SESSION["users"]->getName()?></span>
                 <span class="text-gray-400 text-base"><?=$_SESSION["users"]->getEmail()?></span>
-                <span class="_green_text text-sm">Online</span>
+                 <span class="text-green-500 border border-green-500 rounded-full w-16 text-center p-0.5 text-sm">En ligne</span>
             </div>
         </div>
         <div class="w-2/12 flex items-center h-full">
@@ -54,7 +54,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
         </div>
     </div>
     <div class="w-full mt-4 grid grid-cols-12">
-        <div class="col-span-2 h-96 rounded border border-gray-800 primary_bg_">
+        <div class="col-span-2 relative ml-1 h-screen-customer rounded border border-gray-800 primary_bg_">
             <div data-path-user="/user/dashboard" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-school"></i></span>
@@ -96,6 +96,9 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     <span class="w-2/12"><i class="fas fa-power-off"></i></span>
                     <span class="w-10/12 mt-0.5">Déconnexion</span>
             </div>
+            </div>
+            <div class="absolute bottom-0 left-4 h-16 text-gray-500">
+               <span class="text-center">Usalvagetrade &#169; 2022</span> 
             </div>
         </div>
         <div class="col-span-10 flex flex-col p-3">
