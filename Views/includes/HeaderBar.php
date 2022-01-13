@@ -1,5 +1,5 @@
 <header id="header" class="h-16 secondary_bg grid py-3 sticky top-0  z-50 filter blur-2 col-span-12">
-  <div id="other" class="flex  relative lg:w-10/12 w-11/12 mx-auto justify-between">
+  <div id="other" class="flex  relative w-11/12 mx-auto justify-between">
     <span class="text-gray-100 lg:text-lg my-auto text-base font-semibold">USALVAGETRADE</span>
     <nav class="lg:w-6/12 hidden w-full sm:flex my-auto sm:w-7/12">
         <ul class="flex w-full justify-around text-gray-100">

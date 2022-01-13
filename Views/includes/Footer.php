@@ -1,7 +1,7 @@
 <div  class="col-span-12 md:h-96 pt-2 primary_bg_">
     <div class="flex md:flex-row flex-col w-11/12 mx-auto justify-around">
     <div class="w-3/12 flex">
-        <span class="text-gray-100 md:text-4xl font-semibold">Usalvagetrade</span>
+        <span class="text-gray-100 text-lg  font-semibold">USALVAGETRADE</span>
     </div>
     <div class="md:w-3/12 w-8/12 flex flex-col ">
         <p class=" w-11/12 mt-4 text-xl text-white font-bold">Platforme</p>
@@ -56,7 +56,7 @@
                 <a href="/security">Securité</a>
             </span>
             <span class="mt-3">
-                <a href="/contracts">contracts</a>
+                <a href="/contracts">Contracts</a>
             </span>
         </div>  
     </div>
