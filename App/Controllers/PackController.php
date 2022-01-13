@@ -2,6 +2,7 @@
 
 namespace Root\App\Controllers;
 
+use ArrayObject;
 use Root\App\Controllers\Validators\PackValidation;
 use Root\App\Models\InscriptionModel;
 use Root\App\Models\ModelFactory;
@@ -76,27 +77,11 @@ class PackController extends Controller
 
 
     /**
-     * upgrade packages
-     *
-     * @return void
-     */
-    public function upgradePackages()
-    {
-        if (Controller::sessionExist($_SESSION[self::SESSION_USERS])) {
-            /*cette url va prendre en $_GET['inscription'] et $_GET['pack'] qui est respectivement l'id de l'inscription en court et l'id du pqck qu'on n'a selectionner on va verifier si cet id a un pack active et valide
-            */
-        } else {
-            Controller::redirect('/login');
-        }
-    }
-    /**
      * Affichages de touts les pack
      */
     public function packages()
     {
-        $package = $this->packModel->findAll();
-        asort($package);
-        
+        $package = $this->packModel->findAllPack();
         return $this->view('pages.packages.packs', 'layouts', ['pack' => $package]);
     }
 }

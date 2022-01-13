@@ -170,4 +170,35 @@ class PackModel extends AbstractDbOccurenceModel
 
         return $return;
     }
+
+    /**
+     * revoie une collection d'object
+     * *il est possible de recuperer une intervale des donnees
+     * @param int $limit
+     * @param int $offset
+     * @return DBOccurence[]
+     * @throws ModelException s'il y a erreur lors de la communication avec la BDD
+     * soit aucun resultat n'a ete retourner par la requette de selection
+     */
+    public function findAllPack(?int $limit = null, int $offset = 0): array
+    {
+        $data = array();
+        $mount_min=Schema::PACK['amountMin'];
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} ORDER BY {$mount_min} " . ($limit != null ? "LIMIT {$limit} OFFSET {$offset}" : ""), array());
+            if ($row = $statement->fetch()) {
+                $data[] = $this->getDBOccurence($row);
+                while ($row = $statement->fetch()) {
+                    $data[] = $this->getDBOccurence($row);
+                }
+                $statement->closeCursor();
+            } else {
+                $statement->closeCursor();
+                throw new ModelException("Aucun resultat pour la requette executé");
+            }
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        return $data;
+    }
 }

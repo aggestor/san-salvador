@@ -7,6 +7,8 @@ use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\User;
 use Root\App\Models\UserModel;
 use Root\App\Controllers\Controller;
+use Root\App\Models\CashOutModel;
+use Root\App\Models\Objects\CashOut;
 use Root\Core\GenerateId;
 use RuntimeException;
 
@@ -17,6 +19,7 @@ class UserValidator extends AbstractMemberValidator
     const FIELD_PARENT = 'parent';
     const FIELD_SIDE = 'side';
     const FIELD_PASSWORD_CONFIRM = 'confirm_password';
+    const FIELD_CASHOUT_AMOUNT = 'amount';
 
     /**
      * Undocumented variable
@@ -25,11 +28,19 @@ class UserValidator extends AbstractMemberValidator
      */
     private $userModel;
 
+    /**
+     * Undocumented variable
+     *
+     * @var CashOutModel
+     */
+    private $cashOutModel;
+
     const FIELD_IMAGE = 'image';
 
     public function __construct()
     {
         $this->userModel = ModelFactory::getInstance()->getModel('User');
+        //$this->cashOutModel = ModelFactory::getInstance()->getModel('CashOutModel');
     }
 
     /**
@@ -116,28 +127,10 @@ class UserValidator extends AbstractMemberValidator
         }
         return $user;
     }
-    // /**
-    //  * Undocumented function
-    //  *
-    //  * @param boolean $resend
-    //  * @return User
-    //  */
-    // public function sendMailAfterValidation(bool $resend = false)
-    // {
-    //     /**
-    //      * @var User
-    //      */
-    //     $lastInsert = $_REQUEST['lastInsert'];
-    //     $user = $this->userModel->findById($lastInsert->getId());
-    //     if (!$resend) {
-    //         $token = GenerateId::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
-    //         $this->userModel->updateToken($token, $user->getId());
-    //         $lastInsert->setToken($token);
-    //         $user = $lastInsert;
-    //         return $user;
-    //     }
-    //     return $user;
-    // }
+
+    public function cashOutAfterValidation()
+    {
+    }
     /**
      * Login de l'utilisateur apres validation
      * {@inheritDoc}
@@ -149,15 +142,16 @@ class UserValidator extends AbstractMemberValidator
         $mail = $_POST[self::FIELD_EMAIL];
         $password = $_POST[self::FIELD_PASSWORD];
 
-        $this->processingEmail($user, $mail, true,true);
+        $this->processingEmail($user, $mail, true, true);
         $this->processingPassword($user, $password);
 
         $users = !empty($mail) ? $this->userModel->findByMail($mail) : null;
-        $this->caption = ($this->hasError() || $this->getMessage() != null || $user->getValidationMail()==0) ? "Echec de la connexion" : "Connexion faite avec success";
+        $this->caption = ($this->hasError() || $this->getMessage() != null || $user->getValidationMail() == 0) ? "Echec de la connexion" : "Connexion faite avec success";
         return $users;
     }
     public function changeStatusAfterValidation()
     {
+        $cashOut = new CashOut();
     }
     /**
      * Activation du compte apres validation
@@ -229,6 +223,32 @@ class UserValidator extends AbstractMemberValidator
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec d'inscription" : "succes";
         $users = $this->userModel->findById($id);
         return $users;
+    }
+
+    /**
+     * validation du retrait apres validation
+     *
+     * @param [type] $amount
+     * @return void
+     */
+    protected function validationCashOut($amount)
+    {
+        $this->notNullable($amount);
+        if (!is_numeric($amount)) {
+            throw new \RuntimeException("Veuillez entrer les valeurs numeriques");
+        }
+        if (!preg_match("#^[0-9]*$#", $amount)) {
+            throw new \RuntimeException("Veuillez entrer les valeurs numeriques correctes");
+        }
+    }
+
+    protected function processingCashOut(CashOut $cashOut, $amount)
+    {
+        try {
+            $this->validationCashOut($amount);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_CASHOUT_AMOUNT, $e->getMessage());
+        }
     }
     /**
      * Pour la validation du numero de telephone
