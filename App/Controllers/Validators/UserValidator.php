@@ -40,7 +40,7 @@ class UserValidator extends AbstractMemberValidator
     public function __construct()
     {
         $this->userModel = ModelFactory::getInstance()->getModel('User');
-        $this->cashOutModel = ModelFactory::getInstance()->getModel('CashOutModel');
+        //$this->cashOutModel = ModelFactory::getInstance()->getModel('CashOutModel');
     }
 
     /**

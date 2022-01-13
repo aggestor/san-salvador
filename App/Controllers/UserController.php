@@ -187,11 +187,7 @@ class UserController extends Controller
     {
         $this->allUsers();
         if ($this->isUsers()) {
-<<<<<<< HEAD
             return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject()]);
-=======
-            return $this->view('pages.user.tree', 'layout_',['user' => $this->userObject()]);
->>>>>>> 88f67735558f83e9b2b2a85ae21ac3b1ff53a0e5
         }
     }
 
@@ -315,16 +311,16 @@ class UserController extends Controller
             header('Location:/user/dashboard');
         }
     }
-    public function cashOut(){
-        $dateActuelle = getdate();
-        var_dump($this->enabledCashOut($dateActuelle));exit();
-if (condition) {
-    # code...
-}
+    /**
+     * Pour le retrait
+     *
+     * @return void
+     */
+    public function cashOut()
+    {
         if ($this->isUsers()) {
             return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject()]);
         }
-
     }
 
     /**
@@ -335,7 +331,7 @@ if (condition) {
      */
     private function enabledCashOut(array $date)
     {
-        if ($date["wday"]==6 && $date["weekday"]=="Saturday") {
+        if ($date["wday"] == 6 && $date["weekday"] == "Saturday") {
             return true;
         }
         return false;
