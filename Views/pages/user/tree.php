@@ -101,7 +101,14 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                <span class="text-center">Usalvagetrade &#169; 2022</span> 
             </div>
         </div>
-        <div class="col-span-10 flex flex-col p-3">
+        <div class="col-span-10 h-screen-customer items-center justify-center flex flex-col p-3">
+           <div id="binaryTreeContainer" class="w-11/12 mx-auto">
+
+           </div>
+           <div class="w-11/12 text-center flex flex-col mx-auto">
+                <span class="mb-3"><i class="fas text-gray-400 fa-4x fa-info-circle "></i></span>
+                <span class="text-lg text-gray-400 w-8/12 mx-auto">Quand vous aurez un réseau il sera afficher ici, pour l'instant vous n'avez aucun réseau des enfants à afficher. Faites venir des gens sur votre réseau en partagant votre lien de parrainage en cliquant  <span class="_green_text font-semibold"><a href="/user/share/link">ici</a></span> </span>
+           </div>
            
         </div>
     </div>

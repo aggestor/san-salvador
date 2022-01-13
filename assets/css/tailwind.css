@@ -1011,6 +1011,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 0.25rem;
 }
 
+.w-11 {
+  width: 2.75rem;
+}
+
 .flex-shrink-0 {
   flex-shrink: 0;
 }
