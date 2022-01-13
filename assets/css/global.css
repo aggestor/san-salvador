@@ -269,6 +269,9 @@ header{
   .h-v-85{
     height: 80vh;
   }
+  .h-v-70{
+    height: 65vh;
+  }
 }
 .h-screen-admin{
   height: 89vh
@@ -295,4 +298,7 @@ header{
   to{
     transform: rotate(0deg);
   }
+}
+.h-screen-customer{
+  height: calc(100vh - 120px);
 }
