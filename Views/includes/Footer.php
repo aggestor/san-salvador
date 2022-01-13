@@ -55,6 +55,9 @@
             <span class="mt-3">
                 <a href="/security">Securité</a>
             </span>
+            <span class="mt-3">
+                <a href="/contracts">contracts</a>
+            </span>
         </div>  
     </div>
     <div class="md:w-3/12 w-8/12 flex flex-col "></div>

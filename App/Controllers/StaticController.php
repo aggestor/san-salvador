@@ -28,4 +28,20 @@ class StaticController extends Controller
     {
         return $this->view('pages.static.contact');
     }
+    public function security()
+    {
+        return $this->view('pages.static.security');
+    }
+    public function terms()
+    {
+        return $this->view('pages.static.terms');
+    }
+    public function politics()
+    {
+        return $this->view('pages.static.politics');
+    }
+    public function contracts()
+    {
+        return $this->view('pages.static.contracts');
+    }
 }
