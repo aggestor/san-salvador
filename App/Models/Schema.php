@@ -86,6 +86,8 @@ class Schema
         "timeRecord" => "record_time",
         "modifDate" => "last_modif_date",
         "motifTime" => "last_modif_time",
+        "validated" => "validated",
+        "admin" => "admin"
 
     ];
     const RETURN_INVEST = [

@@ -2,12 +2,14 @@
 
 namespace Root\App\Controllers;
 
-use Root\App\Controllers\Validators\UserValidator;
-use Root\App\Models\ModelFactory;
-use Root\App\Models\Objects\Inscription;
-use Root\App\Models\Objects\User;
-use Root\App\Models\UserModel;
 use Root\Core\EnabledCashOut;
+use Root\App\Models\UserModel;
+use Root\App\Models\ModelFactory;
+use Root\App\Models\Objects\User;
+use Root\App\Models\Objects\Inscription;
+use Root\App\Controllers\Validators\UserValidator;
+use Root\Core\TreeFormater;
+use Root\Core\TreeFormatter;
 
 class UserController extends Controller
 {
@@ -186,9 +188,10 @@ class UserController extends Controller
     }
     public function tree()
     {
-        $this->allUsers();
+        $format = new TreeFormater();
+        $tree = $format->format();
         if ($this->isUsers()) {
-            return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject()]);
+            return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject(), 'tree' => $tree]);
         }
     }
 
@@ -311,37 +314,5 @@ class UserController extends Controller
         if (isset($_SESSION[self::SESSION_USERS]) && !empty($_SESSION[self::SESSION_USERS])) {
             header('Location:/user/dashboard');
         }
-    }
-    /**
-     * Pour le retrait
-     *
-     * @return void
-     */
-    public function cashOut()
-    {
-        $dateActuelle = getdate();
-        if ($this->isUsers()) {
-            if (EnabledCashOut::isEnabled($dateActuelle)) {
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                }
-                return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject()]);
-            } else {
-                return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'disabled' => false]);
-            }
-        }
-    }
-
-    /**
-     * La fonction pour active et verifier que le jour du retrait est valide
-     *
-     * @param array $date
-     * @return true|false
-     */
-    private function enabledCashOut(array $date)
-    {
-        if ($date["wday"] == 6 && $date["weekday"] == "Saturday") {
-            return true;
-        }
-        return false;
     }
 }

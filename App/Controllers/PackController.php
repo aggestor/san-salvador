@@ -81,7 +81,7 @@ class PackController extends Controller
      */
     public function packages()
     {
-        $package = $this->packModel->findAllPack();
+        $package = $this->packModel->findAll();
         return $this->view('pages.packages.packs', 'layouts', ['pack' => $package]);
     }
 }

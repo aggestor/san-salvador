@@ -393,6 +393,7 @@ class User extends Member implements BinaryTreeNode
      */
     public function setOperations(array $operations, bool $refresh = false) : void
     {
+        $this->operations = [];
         foreach ($operations as $operation) {
             $this->addOperation($operation);
         }
@@ -889,7 +890,7 @@ class User extends Member implements BinaryTreeNode
      * {@inheritDoc}
      * @see \Root\App\Models\TreeHandling\BinaryTreeNode::getFoot()
      */
-    public function getFoot() : int
+    public function getFoot() : ?int
     {
         return $this->foot;
     }

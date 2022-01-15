@@ -20,6 +20,7 @@ class UserValidator extends AbstractMemberValidator
     const FIELD_SIDE = 'side';
     const FIELD_PASSWORD_CONFIRM = 'confirm_password';
     const FIELD_CASHOUT_AMOUNT = 'amount';
+    const MONTANT_MIN = 20;
 
     /**
      * Undocumented variable
@@ -40,7 +41,7 @@ class UserValidator extends AbstractMemberValidator
     public function __construct()
     {
         $this->userModel = ModelFactory::getInstance()->getModel('User');
-        //$this->cashOutModel = ModelFactory::getInstance()->getModel('CashOutModel');
+        $this->cashOutModel = ModelFactory::getInstance()->getModel('CashOut');
     }
 
     /**
@@ -128,8 +129,31 @@ class UserValidator extends AbstractMemberValidator
         return $user;
     }
 
+    /**
+     * Ajouter un demande de retrait
+     *
+     * @return CashOut
+     */
     public function cashOutAfterValidation()
     {
+        $cashOut = new CashOut();
+        $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
+        $amout = $_POST[self::FIELD_CASHOUT_AMOUNT];
+        $this->processingId($cashOut, $id, true);
+        $this->processingCashOut($cashOut, $amout);
+
+        if (!$this->hasError()) {
+            $cashOut->setRecordDate(new \DateTime());
+            $cashOut->setTimeRecord(new \DateTime());
+            $cashOut->setUser($_SESSION[self::SESSION_USERS]);
+            try {
+                $this->cashOutModel->create($cashOut);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+
+        return $cashOut;
     }
     /**
      * Login de l'utilisateur apres validation
@@ -149,9 +173,14 @@ class UserValidator extends AbstractMemberValidator
         $this->caption = ($this->hasError() || $this->getMessage() != null || $user->getValidationMail() == 0) ? "Echec de la connexion" : "Connexion faite avec success";
         return $users;
     }
+
+    /**
+     * 
+     *
+     * 
+     */
     public function changeStatusAfterValidation()
     {
-        $cashOut = new CashOut();
     }
     /**
      * Activation du compte apres validation
@@ -228,7 +257,7 @@ class UserValidator extends AbstractMemberValidator
     /**
      * validation du retrait apres validation
      *
-     * @param [type] $amount
+     * @param mixed $amount
      * @return void
      */
     protected function validationCashOut($amount)
@@ -240,8 +269,23 @@ class UserValidator extends AbstractMemberValidator
         if (!preg_match("#^[0-9]*$#", $amount)) {
             throw new \RuntimeException("Veuillez entrer les valeurs numeriques correctes");
         }
+        $user = $this->userModel->load($_SESSION[self::SESSION_USERS]);
+
+        if ($user->getSold() < $amount) {
+            throw new \RuntimeException("Valeur incorrect, le montant est superieur a votre solde");
+        }
+        if ($amount < self::MONTANT_MIN) {
+            throw new \RuntimeException("Le montant a retirer doit etre au minimum 20$");
+        }
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param CashOut $cashOut
+     * @param mixed $amount
+     * @return void
+     */
     protected function processingCashOut(CashOut $cashOut, $amount)
     {
         try {
@@ -249,6 +293,7 @@ class UserValidator extends AbstractMemberValidator
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_CASHOUT_AMOUNT, $e->getMessage());
         }
+        $cashOut->setAmount($amount);
     }
     /**
      * Pour la validation du numero de telephone
