@@ -48,6 +48,10 @@ $routes->post('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', '
 //route pour l'authentification de l'utilisateur en post
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
+//les routes pour valider une demande de retrait
+$routes->get('/admin/vailidate/cashout', 'Root\App\Controllers\AdminController@viewAllNonValideCashOut');
+$routes->post('/admin/validate/cashout-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@validationCashOut', 'cashout;user');
+
 //les routes en get vers l'admin pour afficher les users, les admin et les pacl
 $routes->get('/admin/viewpacks', 'Root\App\Controllers\AdminController@allPacks');
 $routes->get('/admin/users-page-([0-9]+)', 'Root\App\Controllers\AdminController@allUsers', 'page');
@@ -80,8 +84,12 @@ $routes->get('/user/dashboard', 'Root\App\Controllers\UserController@dashboard')
 $routes->get('/user/logout', 'Root\App\Controllers\UserController@logout');
 $routes->get('/user/me', 'Root\App\Controllers\UserController@profil');
 $routes->get('/user/tree', 'Root\App\Controllers\UserController@tree');
-$routes->get('/user/cashout', 'Root\App\Controllers\UserController@cashout');
-$routes->post('/user/cashout', 'Root\App\Controllers\UserController@cashout');
+
+//les routes pour le retrait dans le systeme
+$routes->get('/user/cashout', 'Root\App\Controllers\CashOutController@cashout');
+$routes->post('/user/cashout', 'Root\App\Controllers\CashOutController@cashout');
+
+
 
 //route lors du renvoie du mail s'il ya echec
 $routes->get('/user/mail/error', 'Root\App\Controllers\UserController@mailSendError');

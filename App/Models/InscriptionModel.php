@@ -141,7 +141,7 @@ class InscriptionModel extends AbstractOperationModel
                     $binary->setUser($node);
                     if ($node->isEnable() && !$node->isLocked()) { //si le compte est toujours activer
 
-                        if ($node->getMaxBonus() <= ($node->getBonus() + $bonus)) {
+                        if (($node->getMaxBonus() <= ($node->getBonus() + $bonus)) && $node->getSponsor() !== null ) {//la racine n'ast pas de sponsor
                             $surplus =  $bonus + $node->getBonus() - $node->getMaxBonus();
                             $amount =  $bonus - $surplus;
                             $binary->setAmount($amount);
@@ -166,7 +166,7 @@ class InscriptionModel extends AbstractOperationModel
             $parainage->setTimeRecord($now);
             $parainage->setRecordDate($now);
 
-            if ($user->getParent()->getMaxBonus() <= ($user->getParent()->getBonus() + $bonus)) { //si son compte sera sauter
+            if (($user->getParent()->getMaxBonus() <= ($user->getParent()->getBonus() + $bonus)) && ($user->getParent() !== null)) { //si son compte sera sauter
                 $surplus =  $bonus + $user->getParent()->getBonus() - $user->getParent()->getMaxBonus();
                 $amount =  $bonus - $surplus;
                 $parainage->setAmount($amount);
