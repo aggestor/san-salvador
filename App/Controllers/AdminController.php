@@ -194,6 +194,32 @@ class AdminController extends Controller
         }
     }
     /**
+     * Methode pour retourne tous les cashout en attente de validation
+     *
+     * @return void
+     */
+    public function viewAllNonValideCashOut()
+    {
+        if ($this->isAdmin()) {
+            $cashOut = $this->viewAllCashOutNotValide();
+            //non de la vue je l'attend ici
+            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['cashOut' => $cashOut]);
+        }
+    }
+
+    /**
+     * Methode pour active un cashout
+     *
+     * @return void
+     */
+    public function validationCashOut()
+    {
+        if ($this->isAdmin()) {
+            $this->activeCashOut();
+            header("location:" . $_SERVER['HTTP_REFERER']);
+        }
+    }
+    /**
      * Verification de la sessios admin
      *
      * @return boolean

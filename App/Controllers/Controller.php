@@ -2,9 +2,12 @@
 
 namespace Root\App\Controllers;
 
+use ArrayObject;
 use Root\App\Models\BinaryModel;
+use Root\App\Models\CashOutModel;
 use Root\App\Models\InscriptionModel;
 use Root\App\Models\ModelFactory;
+use Root\App\Models\Objects\CashOut;
 use Root\App\Models\Objects\Inscription;
 use Root\App\Models\Objects\User;
 use Root\App\Models\PackModel;
@@ -60,6 +63,13 @@ class Controller
     private $userModel;
 
     /**
+     * CashOut Model
+     *
+     * @var CashOutModel
+     */
+    private $cashOutModel;
+
+    /**
      * Constructeur
      */
     public function __construct()
@@ -70,6 +80,7 @@ class Controller
         $this->binaryModel = ModelFactory::getInstance()->getModel("Binary");
         $this->returnInvestModel = ModelFactory::getInstance()->getModel("ReturnInvest");
         $this->userModel = ModelFactory::getInstance()->getModel("User");
+        $this->cashOutModel = ModelFactory::getInstance()->getModel("CashOut");
     }
 
     /**
@@ -95,9 +106,30 @@ class Controller
         }
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return User
+     */
     public function allUsers()
     {
-        return $this->userModel->findAll();
+        if ($this->sessionExist($_SESSION[self::SESSION_USERS])) {
+            $id = $_SESSION[self::SESSION_USERS]->getId();
+            /**
+             * @var User
+             */
+            $users = $this->userModel->findById($id);
+            $downlines = $this->userModel->loadDownlineLeftRightSides($id);
+            $users->setSides($downlines);
+            // echo '<pre>';
+            // var_dump($users); exit();
+            // echo '</pre>';
+            return $users;
+        }
+    }
+
+    public function treeFormater()
+    {
     }
 
     /**
@@ -132,8 +164,9 @@ class Controller
         return 0;
     }
     /**
-     * Undocumented function
+     * All inscription not active
      *
+     * @return  array
      */
     public function allNonValidateInscription()
     {
@@ -149,6 +182,12 @@ class Controller
         return $return;
     }
 
+
+    /**
+     * Pour valider une inscription
+     *
+     * @return void
+     */
     public function activeInscription()
     {
         $idInscription = $_GET['inscription'];
@@ -162,7 +201,46 @@ class Controller
             if (!$inscription->isValidate()) {
                 $this->inscriptionModel->validate($idInscription, $idAdmin);
             } else {
-                Controller::redirect('/admin/dashboard');
+                Controller::redirect('/admin/destroy');
+            }
+        } else {
+            return $this->view("pages.static.404");
+        }
+    }
+
+    /**
+     * touts les retrait en attente de validation
+     * @return array
+     */
+    public function viewAllCashOutNotValide()
+    {
+        $return = array();
+        if ($this->cashOutModel->checkValidated()) {
+            $allNotActive = $this->cashOutModel->findValidated();
+            foreach ($allNotActive as $nonActive) {
+                $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
+                $return[] = $nonActive;
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * Activation du cashOut
+     *
+     * @return void
+     */
+    public function activeCashOut()
+    {
+        $idCashOut = $_GET['cashout'];
+        $idAdmin = $_SESSION[self::SESSION_ADMIN]->getId();
+        $idUser = $_GET['user'];
+        //var_dump($this->cashOutModel->checkById($idCashOut)); exit();
+        if ($this->cashOutModel->checkById($idCashOut)) {
+            if ($this->cashOutModel->checkValidated($idCashOut, true)) {
+                $this->cashOutModel->validate($idCashOut, $idAdmin);
+            } else {
+                Controller::redirect('/admin/destroy');
             }
         } else {
             return $this->view("pages.static.404");

@@ -97,7 +97,6 @@ class PackModel extends AbstractDbOccurenceModel
         $data = array();
         $keyVal = $keyValue;
         foreach (Schema::PACK as $key => $value) {
-
             if (key_exists($value, $keyVal)) {
                 $data[$key] = $keyVal[$value];
             }
@@ -113,6 +112,33 @@ class PackModel extends AbstractDbOccurenceModel
     public function checkByName(string $name): bool
     {
         return $this->check(Schema::PACK['name'], $name);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Root\App\Models\AbstractDbOccurenceModel::findAll()
+     * @return Pack[]
+     */
+    public function findAll(?int $limit = null, int $offset = 0): array
+    {
+        $data = array();
+        $mount_min=Schema::PACK['amountMin'];
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} ORDER BY {$mount_min} " . ($limit != null ? "LIMIT {$limit} OFFSET {$offset}" : ""), array());
+            if ($row = $statement->fetch()) {
+                $data[] = $this->getDBOccurence($row);
+                while ($row = $statement->fetch()) {
+                    $data[] = $this->getDBOccurence($row);
+                }
+                $statement->closeCursor();
+            } else {
+                $statement->closeCursor();
+                throw new ModelException("Aucun resultat pour la requette executé");
+            }
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+        }
+        return $data;
     }
 
     /**
@@ -170,4 +196,5 @@ class PackModel extends AbstractDbOccurenceModel
 
         return $return;
     }
+
 }

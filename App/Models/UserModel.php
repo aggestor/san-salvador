@@ -2,12 +2,12 @@
 
 namespace Root\App\Models;
 
-use Root\App\Models\Objects\User;
-use Root\App\Models\Objects\Parainage;
+use Root\App\Models\Objects\Binary;
 use Root\App\Models\Objects\CashOut;
 use Root\App\Models\Objects\Inscription;
+use Root\App\Models\Objects\Parainage;
 use Root\App\Models\Objects\ReturnInvest;
-use Root\App\Models\Objects\Binary;
+use Root\App\Models\Objects\User;
 
 /**
  *
@@ -161,7 +161,17 @@ class UserModel extends AbstractMemberModel
      * @param string $id
      * @throws ModelException
      */
-    public function lockAcount (\PDO $pdo, $id) : void {        
+    public function lockAcount (\PDO $pdo, $id) : void {
+        
+        /**
+         * @var \Root\App\Models\Objects\User $user
+         */
+        $user =  $this->findById($id);
+        
+        if ($user->getParent() === null) {
+            return;
+        }
+        
         try {
             Queries::updateDataInTransaction(
                 $pdo,
@@ -328,7 +338,7 @@ class UserModel extends AbstractMemberModel
     /**
      * revoie une collection des piles des utilisateurs en dessous d'un utilisateur 
      * @param string $userId
-     * @return User[]
+     * @return User[]|array
      * @throws ModelException
      */
     public function findDownlineLeftRightSides(string $userId): array
@@ -515,7 +525,7 @@ class UserModel extends AbstractMemberModel
         try {
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . Schema::USER['sponsor'] . "=? AND " . Schema::USER['side'] . " = ?", array($userId, $side));
             if ($row = $statement->fetch()) {
-                $return = new User($row);
+                $return = $this->getDBOccurence($row);
                 $statement->closeCursor();
             } else {
                 $statement->closeCursor();

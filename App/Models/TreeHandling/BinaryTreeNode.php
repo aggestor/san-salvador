@@ -13,7 +13,7 @@ interface BinaryTreeNode
      * revoie le pied sur lequel l'enfant est acrocher 
      * @return int
      */
-    public function getFoot () : int;
+    public function getFoot () : ?int;
     
     /**
      * Oblige le noeud  de recalculer toute tout les montants sur ces peids et les pieds des enfants
