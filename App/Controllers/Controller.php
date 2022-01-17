@@ -121,17 +121,9 @@ class Controller
             $users = $this->userModel->findById($id);
             $downlines = $this->userModel->loadDownlineLeftRightSides($id);
             $users->setSides($downlines);
-            // echo '<pre>';
-            // var_dump($users); exit();
-            // echo '</pre>';
             return $users;
         }
     }
-
-    public function treeFormater()
-    {
-    }
-
     /**
      * Methode pour verifier s'il y'a un pack en attende de validation
      *
@@ -150,8 +142,15 @@ class Controller
 
     public function allUsersHasValidateInscription($limit = 0, $offset = 0)
     {
+        $return = array();
         if ($this->inscriptionModel->checkValidated()) {
-            return $this->inscriptionModel->findValidated($limit, $offset);
+            $allUsersPacks = $this->inscriptionModel->findValidated($limit, $offset);
+            foreach ($allUsersPacks as $allUsers) {
+                $allUsers->setUser($this->userModel->findById($allUsers->getUser()->getId()));
+
+                $return = $allUsers;
+            }
+            return $return;
         }
         return array();
     }
@@ -201,7 +200,7 @@ class Controller
             if (!$inscription->isValidate()) {
                 $this->inscriptionModel->validate($idInscription, $idAdmin);
             } else {
-                Controller::redirect('/admin/destroy');
+                Controller::redirect('admin/login');
             }
         } else {
             return $this->view("pages.static.404");
@@ -240,7 +239,7 @@ class Controller
             if ($this->cashOutModel->checkValidated($idCashOut, true)) {
                 $this->cashOutModel->validate($idCashOut, $idAdmin);
             } else {
-                Controller::redirect('/admin/destroy');
+                Controller::redirect('admin/login');
             }
         } else {
             return $this->view("pages.static.404");

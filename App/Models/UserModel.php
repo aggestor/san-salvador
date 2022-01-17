@@ -17,7 +17,7 @@ use Root\App\Models\Objects\User;
 class UserModel extends AbstractMemberModel
 {
     private static $OPERATIONS = [Parainage::class, CashOut::class, Inscription::class, ReturnInvest::class, Binary::class];
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\App\Models\AbstractDbOccurenceModel::create()
@@ -55,7 +55,7 @@ class UserModel extends AbstractMemberModel
                     $object->getPassword(),
                     $object->getSide(),
                     $object->getStatus() ? 1 : 0,
-                    $object->getValidationMail() ? 1 : 0,
+                    $object->getValidationEmail() ? 1 : 0,
                     $object->getFormatedRecordDate(),
                     $object->getFormatedTimeRecord(),
                     $object->getPhoto(),
@@ -92,12 +92,11 @@ class UserModel extends AbstractMemberModel
                     $id
                 ]
             );
-            
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
         }
     }
-    
+
     /**
      * modification de la photo d'un utilisateur
      * @param string $id
@@ -148,30 +147,31 @@ class UserModel extends AbstractMemberModel
                 [Schema::USER['validationEmail']],
                 "id = ?",
                 [1, $id]
-                );
+            );
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
         }
     }
-    
-    
+
+
     /**
      * verouillage definitive d'un compte
      * @param \PDO $pdo
      * @param string $id
      * @throws ModelException
      */
-    public function lockAcount (\PDO $pdo, $id) : void {
-        
+    public function lockAcount(\PDO $pdo, $id): void
+    {
+
         /**
          * @var \Root\App\Models\Objects\User $user
          */
         $user =  $this->findById($id);
-        
+
         if ($user->getParent() === null) {
             return;
         }
-        
+
         try {
             Queries::updateDataInTransaction(
                 $pdo,
@@ -184,7 +184,7 @@ class UserModel extends AbstractMemberModel
             throw new ModelException($th->getMessage());
         }
     }
-    
+
     /**
      * mis en jour du token de l'utilisateur
      * @param string $token
@@ -203,7 +203,7 @@ class UserModel extends AbstractMemberModel
             throw new ModelException($th->getMessage());
         }
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\App\Models\AbstractDbOccurenceModel::getDBOccurence()
@@ -263,30 +263,32 @@ class UserModel extends AbstractMemberModel
         try {
             switch ($side) {
                 case User::FOOT_LEFT: {
-                    if ($this->hasLeftSide($userId)) {
-                        $user = $this->findLeftSide($userId);
-                        $count++;
+                        if ($this->hasLeftSide($userId)) {
+                            $user = $this->findLeftSide($userId);
+                            $count++;
 
-                        if ($this->hasSides($user->getId())) {
-                            $count += $this->countLeftRightSides($user->getId());
+                            if ($this->hasSides($user->getId())) {
+                                $count += $this->countLeftRightSides($user->getId());
+                            }
                         }
                     }
-                } break;
+                    break;
 
                 case User::FOOT_RIGHT: {
-                    if ($this->hasRightSide($userId)) {
-                        $user = $this->findRightSide($userId);
-                        $count++;
+                        if ($this->hasRightSide($userId)) {
+                            $user = $this->findRightSide($userId);
+                            $count++;
 
-                        if ($this->hasSides($user->getId())) {
-                            $count += $this->countLeftRightSides($user->getId());
+                            if ($this->hasSides($user->getId())) {
+                                $count += $this->countLeftRightSides($user->getId());
+                            }
                         }
                     }
-                } break;
+                    break;
 
                 default: {
-                    throw new ModelException("Side inconnue => {$side}");
-                }
+                        throw new ModelException("Side inconnue => {$side}");
+                    }
             }
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
@@ -345,11 +347,11 @@ class UserModel extends AbstractMemberModel
     {
         $data = array();
         if ($this->hasLeftSide($userId)) {
-            $data[] = $this->findDownlineRightSide($userId);
+            $data[] = $this->findDownlineLeftSide($userId);
         }
 
         if ($this->hasRightSide($userId)) {
-            $data[] = $this->findDownlineLeftSide($userId);
+            $data[] = $this->findDownlineRightSide($userId);
         }
         return $data;
     }
@@ -398,7 +400,7 @@ class UserModel extends AbstractMemberModel
 
         return $return;
     }
-    
+
     /**
      * Renvoie la pile des utilisateurs du reseau de l'utilisateur dont l'id est en premier parametre,
      * sur le side en deuxieme parametre.
@@ -410,43 +412,45 @@ class UserModel extends AbstractMemberModel
      * @throws ModelException
      * @return User
      */
-    private function getDownlineSide (string $userId, int $side, bool $load) : User {
+    private function getDownlineSide(string $userId, int $side, bool $load): User
+    {
         $user = null;
         switch ($side) {
             case User::FOOT_LEFT: {
-                if ($this->hasLeftSide($userId)) {
-                    $user = $this->findLeftSide($userId);
-                } else {
-                    throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
+                    if ($this->hasLeftSide($userId)) {
+                        $user = $this->findLeftSide($userId);
+                    } else {
+                        throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
+                    }
                 }
-            } break;
+                break;
 
             case User::FOOT_RIGHT: {
-                if ($this->hasRightSide($userId)) {
-                    $user = $this->findRightSide($userId);
-                } else {
-                    throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
+                    if ($this->hasRightSide($userId)) {
+                        $user = $this->findRightSide($userId);
+                    } else {
+                        throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
+                    }
                 }
-            } break;
+                break;
 
             default: {
-                throw new ModelException("Side inconue => {$side}");
-            }
+                    throw new ModelException("Side inconue => {$side}");
+                }
         }
 
-        if ($load) {//pour le chargement de tout les informations des comptes des utilisateurs
+        if ($load) { //pour le chargement de tout les informations des comptes des utilisateurs
             if ($this->hasSides($user->getId())) {
                 $user->setSides($this->loadDownlineLeftRightSides($user->getId()));
             }
             $user = $this->load($user);
             $user->refreshNode();
-        }else {// 
+        } else { // 
             if ($this->hasSides($user->getId())) {
                 $user->setSides($this->findDownlineLeftRightSides($user->getId()));
             }
         }
         return $user;
-        
     }
 
     /**
@@ -482,7 +486,7 @@ class UserModel extends AbstractMemberModel
     {
         return $this->findDownlineSide($userId, User::FOOT_RIGHT);
     }
-    
+
 
     /**
      * revoie tout les anfants en dessous d'un utilisateur
@@ -662,7 +666,7 @@ class UserModel extends AbstractMemberModel
         }
         return false;
     }
-        
+
     /**
      * renvoie la pile des anfants de l'utilisateur en parametre, et charge directement les informations pour chaque compte
      * @param string $userId
@@ -675,15 +679,15 @@ class UserModel extends AbstractMemberModel
         if ($this->hasLeftSide($userId)) {
             $data[] = $this->loadDownlineRightSide($userId);
         }
-        
+
         if ($this->hasRightSide($userId)) {
             $data[] = $this->loadDownlineLeftSide($userId);
         }
         return $data;
     }
-    
-    
-    
+
+
+
     /**
      * chargement complet d'un
      * @param string $userId
@@ -695,8 +699,8 @@ class UserModel extends AbstractMemberModel
     {
         return $this->getDownlineSide($userId, $side, true);
     }
-    
-    
+
+
     /**
      * Revoie la pile des anfants du pied gauche et charge directement tout les informations concernant leurs comptes
      * @param string $userId
@@ -706,7 +710,7 @@ class UserModel extends AbstractMemberModel
     {
         return $this->loadDownlineSide($userId, User::FOOT_LEFT);
     }
-    
+
     /**
      * Renvoie la pile des enfant en droit de l'utilisateur en parametre, et charge directement tout les informations des leurs comptes
      * @param string $userId
@@ -723,15 +727,16 @@ class UserModel extends AbstractMemberModel
      * @param User|string $user une instace de la classe user, soit l'identifiant de l'utiilsateur du compte
      * @return User
      */
-    public function load ($user) : User {
-        $data = ($user instanceof User)? ($user) : (is_string($user)? $this->findById($user) : null);
-        
+    public function load($user): User
+    {
+        $data = ($user instanceof User) ? ($user) : (is_string($user) ? $this->findById($user) : null);
+
         if ($data === null) {
             throw new ModelException("Argument invalide en parametre de la methode load");
         }
-        
+
         $operations = [];
-        
+
         foreach (self::$OPERATIONS as $name) {
             /**
              * @var \Root\App\Models\AbstractOperationModel $model
@@ -742,14 +747,14 @@ class UserModel extends AbstractMemberModel
                 $operations = array_merge($model->findByUser($data->getId()), $operations);
             }
         }
-        
+
         $data->setOperations($operations);
         $data->initPacks($this->getFactory()->getModel("Pack")->findAll());
         $data->refresh();
 
         return $data;
     }
-    
+
     /**
      * revoie la collection des compte pour l'itervalle choisie.
      * le compte est revoyer avec le tout les operations du compte
@@ -757,35 +762,36 @@ class UserModel extends AbstractMemberModel
      * @param int $offset
      * @return User[]
      */
-    public function loadAll (?int $limit = null, int $offset=0) : array {
+    public function loadAll(?int $limit = null, int $offset = 0): array
+    {
         if ($this->checkAll($limit, $offset)) {
             $packs = $this->getFactory()->getModel("Pack")->findAll();
-            
+
             $all = $this->findAll($limit, $offset);
-            
+
             foreach ($all as $user) {
                 $operations = [];
-                
+
                 foreach (self::$OPERATIONS as $name) {
                     /**
                      * @var \Root\App\Models\AbstractOperationModel $model
                      */
                     $ref = new \ReflectionClass($name);
                     $model = $this->getFactory()->getModel($ref->getShortName());
-                    
+
                     if ($model->checkByUser($user->getId())) {
                         $operations = array_merge($model->findByUser($user->getId()), $operations);
                     }
                 }
-                
+
                 $user->setOperations($operations);
                 $user->initPacks($packs);
                 $user->refresh();
             }
-            
+
             return $all;
-        } 
-        
+        }
+
         throw new ModelException("Aucun compte pour l'intervale choisie");
     }
 }

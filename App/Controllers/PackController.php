@@ -36,15 +36,20 @@ class PackController extends Controller
      */
     public function addPack()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $validator = new PackValidation();
-            $pack = $validator->createAfterValidation();
-            if ($validator->hasError() || $validator->getMessage() != "") {
-                $errors = $validator->getErrors();
-                return $this->view("pages.packages.dashboard", "layout_admin", ['pack' => $pack, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+        if ($this->sessionExist($_SESSION[self::SESSION_ADMIN])) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $validator = new PackValidation();
+                $pack = $validator->createAfterValidation();
+                if ($validator->hasError() || $validator->getMessage() != "") {
+                    $errors = $validator->getErrors();
+                    return $this->view("pages.packages.dashboard", "layout_admin", ['pack' => $pack, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                }
             }
+            return $this->view('pages.packages.dashboard', 'layout_admin');
         }
-        return $this->view('pages.packages.dashboard', 'layout_admin');
+        else {
+            Controller::redirect('/login');
+        }
     }
 
     /**
