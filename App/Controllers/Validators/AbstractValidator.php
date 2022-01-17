@@ -17,7 +17,7 @@ use Root\Core\GenerateId;
 abstract class AbstractValidator
 {
 
-    const DEFAULT_IMAGE_MAX_SIZE = 1024 * 1024;
+    const DEFAULT_IMAGE_MAX_SIZE = 1024 * 1024 * 10;
 
     const FIELD_ID = "id";
     const SESSION_USERS = 'users';
@@ -198,11 +198,11 @@ abstract class AbstractValidator
             if (!$nullable && !$img->isFile()) {
                 throw new \RuntimeException("Assurez-vous d'avoir uploader une image");
             }
-    
+
             // if (!$nullable && !$img->isImage()) {
             //     throw new \RuntimeException("le fichier uploader doit être une image");
             // }
-    
+
             if (!$nullable && $img->getSize() > self::DEFAULT_IMAGE_MAX_SIZE) {
                 throw new \RuntimeException("Le fichier est trop volumineux");
             }

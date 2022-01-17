@@ -188,9 +188,9 @@ class UserController extends Controller
     }
     public function tree()
     {
-        $format = new TreeFormater();
-        $tree = $format->format();
         if ($this->isUsers()) {
+            $format = new TreeFormater();
+            $tree = $format->format();
             return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject(), 'tree' => $tree]);
         }
     }
@@ -216,7 +216,6 @@ class UserController extends Controller
                 $id = $user->getId();
                 $nom = $user->getName();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
-
                 if ($_GET['action'] == 'activation') {
                     $lien = $domaineName . "activation-$id-$token";
                     if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail", $nom)) {
@@ -280,10 +279,11 @@ class UserController extends Controller
     public function accountActivation()
     {
         unset($_SESSION['mail'], $_SESSION['action']);
+
         $validator = new UserValidator();
         $user = $validator->activeAccountAfterValidation();
         if ($validator->hasError() || $validator->getMessage() != null) {
-            //var_dump($validator->getErrors()); exit();
+           // var_dump($validator->getMessage()); exit();
             return $this->view("pages.static.404");
         } else {
             $_SESSION[self::SESSION_USERS] = $user;
