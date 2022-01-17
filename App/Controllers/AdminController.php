@@ -190,7 +190,7 @@ class AdminController extends Controller
             if ($_GET['page'] > $nombre_pages) {
                 return $this->view("pages.static.404");
             }
-            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['allUsers' => $users, 'nombrePage' => $nombre_pages]);
+            return $this->view('pages.admin.viewAllUsers', 'layout_admin', ['allUsers' => $users, 'nombrePage' => $nombre_pages]);
         }
     }
     /**
@@ -203,7 +203,7 @@ class AdminController extends Controller
         if ($this->isAdmin()) {
             $cashOut = $this->viewAllCashOutNotValide();
             //non de la vue je l'attend ici
-            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['cashOut' => $cashOut]);
+            return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut]);
         }
     }
 
