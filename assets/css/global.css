@@ -78,10 +78,6 @@ span:not(._green_btn) a:hover{
   background: #32e491;
 }
 @media (max-width:768px){
-
-  .h-landing{
-    height:85vh
-  }
   #img_l1{
     height:300px!important
   }
