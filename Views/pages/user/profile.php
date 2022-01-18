@@ -13,7 +13,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                 <span class="text-gray-400 lg:text-base text-sm"><?=$_SESSION["users"]->getEmail()?></span>
                 <span class="text-green-500 border border-green-500 rounded-full w-16 text-center p-0.5 lg:text-sm text-xs">En ligne</span>
             </div>
-            <div class="w-2/12 flex flex-col">
+            <div class="w-2/12 lg:hidden flex flex-col">
                 <span class="bg-yellow-500 text-gray-900 place-items-center px-2 flex h-6 rounded-full">
                     <span class="text-xs font-semibold mr-1"><?=$params['user']->getPack()->getName()?></span> <i class="fas text-xs fa-check-circle "></i>
                 </span>
@@ -152,6 +152,9 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                             <?=$params['user']->getCapital()?>
                             </span>
                         </div>
+                        <p class="text-sm text-gray-500 mt-1 p-1">
+                            Montant avec lequel vous avez soucrit à un pack, en d'autre terme votre capital.
+                        </p>
                     </div>
                 </div>
                 <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
