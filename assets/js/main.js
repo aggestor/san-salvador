@@ -180,3 +180,69 @@ function setActiveSide(side) {
 $("#copy").click(function () {
     var valueToCopy = document.querySelector("#valueToCopy");
 });
+/**
+ * Helps to switch Jquery display for many elements
+ * @param {Array<HTMLElement>} elements elements that will switch to another display
+ * @param {displayType}display  display to give to the elements
+ * @param {animationType} animation  display to give to the elements
+ */
+function displaySwitcher(elements, display, animation) {
+    elements.forEach(function (elt) {
+        if (display === "hide" && animation === "slide") {
+            $(elt).slideUp();
+        }
+        else if (display === "show" && animation === "slide") {
+            $(elt).slideDown();
+        }
+    });
+}
+/**
+ * Transactions buttons don't have nothing to do with admin transactions cheking
+ * We are using these buttons to just switch between transaction sources
+ * All these three buttons are used to just switch them
+ */
+var transactionBtns = document.querySelectorAll(".transaction-btn");
+var defaultTransactionData = document.querySelector("#defaultTransactionData");
+var AMTransactionData = document.querySelector("#AMTransactionData");
+var MPSTransactionData = document.querySelector("#MPSTransactionData");
+var BTCTransactionData = document.querySelector("#BTCTransactionData");
+transactionBtns.forEach(function (btn) {
+    var dataTransType = btn.getAttribute("data-trans-type");
+    $(btn).on("click", function (e) {
+        e.preventDefault();
+        /**
+         * There's still some issues about the design and css logic for the buttons
+         * About functionnality the are working perfectly
+         */
+        var activeBtnClass = "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white rounded-l transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
+        if (dataTransType === "btc") {
+            console.log("ok ok");
+            AMTransactionData &&
+                MPSTransactionData &&
+                displaySwitcher([MPSTransactionData, AMTransactionData], "hide", "slide");
+            BTCTransactionData && displaySwitcher([BTCTransactionData], "show", "slide");
+        }
+        else if (dataTransType === "am") {
+            activeBtnClass =
+                "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white  transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
+            BTCTransactionData &&
+                MPSTransactionData &&
+                displaySwitcher([BTCTransactionData, MPSTransactionData], "hide", "slide");
+            AMTransactionData &&
+                displaySwitcher([AMTransactionData], "show", "slide");
+        }
+        else if (dataTransType === "mps") {
+            activeBtnClass =
+                "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white rounded-r  transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
+            BTCTransactionData &&
+                AMTransactionData &&
+                displaySwitcher([BTCTransactionData, AMTransactionData], "hide", "slide");
+            MPSTransactionData && displaySwitcher([MPSTransactionData], "show", "slide");
+        }
+        defaultTransactionData && displaySwitcher([defaultTransactionData], "hide", "slide");
+        $(btn)
+            .attr("class", activeBtnClass)
+            .siblings()
+            .attr("class", "w-4/12 transaction-btn hover:bg-blue-600 hover:text-white transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center text-gray-300");
+    });
+});
