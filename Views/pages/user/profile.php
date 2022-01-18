@@ -2,16 +2,29 @@
 $images = explode("AND", $_SESSION['users']->getPhoto());
 ?>
 
-<div class="col-span-12  primary_bg">
+<div class="col-span-12 overflow-x-hidden  primary_bg">
     <div class="w-full flex justify-between lg:h-24 h-auto flex-col lg:flex-row p-2 primary_bg_ border-gray-800 border-b">
         <div id="user-identifiers" class="lg:w-3/12 w-full h-full flex ">
             <div class=":h-20 h-16 w-16 overflow-hidden lg:w-20 grid place-items-center border-gray-800 border rounded-full primary_bg">
                 <img class="object-contain" src="/assets/img/<?=$images[0]?>" alt="<?=$_SESSION["users"]->getName()?>">
             </div>
-            <div class="w-8/12 flex flex-col pl-5">
+            <div class="w-7/12 flex flex-col pl-5">
                 <span class="text-gray-300 font-semibold text-base lg:text-lg"><?=$_SESSION["users"]->getName()?></span>
                 <span class="text-gray-400 lg:text-base text-sm"><?=$_SESSION["users"]->getEmail()?></span>
                 <span class="text-green-500 border border-green-500 rounded-full w-16 text-center p-0.5 lg:text-sm text-xs">En ligne</span>
+            </div>
+            <div class="w-2/12 flex flex-col">
+                <span class="bg-yellow-500 text-gray-900 place-items-center px-2 flex h-6 rounded-full">
+                    <span class="text-xs font-semibold mr-1"><?=$params['user']->getPack()->getName()?></span> <i class="fas text-xs fa-check-circle "></i>
+                </span>
+                <span class="flex items-center border-gray-800 border mt-3 rounded-full">
+                    <span class="bg-gray-300 grid mr-4 text-gray-900 place-items-center w-6 h-6 rounded-full">
+                        <i class="fas text-sm fa-dollar-sign "></i>
+                    </span>
+                    <span class="font-semibold text-gray-300 text-sm my-auto">
+                        <?=$params['user']->getSold()?>
+                    </span>
+                </span>
             </div>
         </div>
         <div class="w-2/12 lg:flex hidden items-center h-full">

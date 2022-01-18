@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css" />
 </head>
 
-<body class="w-screen primary_bg bg-opacity-100 scroll grid grid-cols-12 overflow-y-auto ">
+<body class="w-screen primary_bg bg-opacity-100 overflow-x-hidden scroll grid grid-cols-12 overflow-y-auto ">
     <!-- header page beginning-->
 
     <?= $content ?>
