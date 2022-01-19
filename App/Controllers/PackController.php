@@ -44,7 +44,6 @@ class PackController extends Controller
                 return $this->view("pages.packages.dashboard", "layout_admin", ['pack' => $pack, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
             }
         }
-        return $this->view('pages.packages.dashboard', 'layout_admin');
     }
 
     /**

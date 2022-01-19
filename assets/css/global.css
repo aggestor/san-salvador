@@ -298,3 +298,6 @@ header{
 .h-screen-customer{
   height: calc(100vh - 120px);
 }
+.h-screen-customer.mobile{
+  height: auto;
+}

@@ -134,10 +134,10 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             </div>
             </div>
             <div class="absolute bottom-0 left-4 h-16 text-gray-500">
-               <span class="text-center">Usalvagetrade &#169; 2022</span> 
+               <span class="text-center">Usalvagetrade &#169; <span id="year"></span></span> 
             </div>
         </div>
-        <div class="lg:col-span-10 grid-cols-12 h-screen-customer scroll overflow-y-auto overflow-x-hidden flex p-3">
+        <div class="lg:col-span-10 col-span-12 h-screen-customer scroll overflow-y-auto overflow-x-hidden flex p-3">
             <div class="flex flex-col w-11/12 mx-auto">
                 <div class="w-full mb-3 h-10 border-b border-gray-900">
                   <h1 class="text-gray-400"> <i class="fas text-2xl fa-dollar-sign mr-2"></i> <span class="font-semibold text-2xl">Demande d'un retrait</span></h1>

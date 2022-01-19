@@ -137,15 +137,15 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                <span class="text-center">Usalvagetrade &#169; 2022</span> 
             </div>
         </div>
-        <div class="lg:col-span-10 grid-cols-12 h-screen-customer scroll overflow-y-auto overflow-x-hidden flex flex-col p-3">
+        <div class="lg:col-span-10 col-span-12 h-screen-customer mobile scroll overflow-y-auto overflow-x-hidden flex flex-col p-3">
             <div class="w-11/12 mx-auto mb-3  border-b border-gray-900">
-                  <h1 class="text-gray-400 mb-3"> <i class="fas text-xl fa-info-circle mr-2"></i> <span class="font-semibold text-2xl">Toutes les informations necessaires sur l'utilisateur</span></h1>
+                  <h1 class="text-gray-400 mb-3"> <i class="fas text-xl fa-info-circle mr-2"></i> <span class="font-semibold text-base lg:text-2xl">Toutes les informations necessaires sur l'utilisateur</span></h1>
                </div>
-            <div class="w-11/12 mx-auto flex">
-                    <div class="w-4/12">
-                        <img class="object-contain h-60 w-60 rounded-lg" src="/assets/img/<?=$images[0]?>" alt="<?=$_SESSION["users"]->getName()?>">
+            <div class="w-11/12 mx-auto lg:space-x-3 lg:flex-row flex-col flex">
+                    <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 lg:block flex justify-center ">
+                        <img class="object-contain h-60 w-60 rounded-full lg:rounded-lg" src="/assets/img/<?=$images[0]?>" alt="<?=$_SESSION["users"]->getName()?>">
                     </div>
-                    <div class="w-4/12 pl-3 h-56">
+                    <div class="lg:w-4/12 w-11/12 lg:mx-0 mx-auto p-2 h-auto rounded border my-3  lg:bg-transparent border-gray-900 primary_bg_">
                         <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Informations personnelles</h2>
                         <div class="w-10/12 mx-auto h-16">
                             <div class="text-gray-300 font-semibold">Id</div>
@@ -164,7 +164,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                             <div class="text-gray-600"><?=$_SESSION["users"]->getPhone()?></div>
                         </div>
                     </div>
-                <div class="w-4/12 p-2">
+                <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-auto h-auto rounded border my-3  lg:bg-transparent border-gray-900 primary_bg_ p-2">
                     <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Autres informations</h2>
                         <div class="w-10/12 mx-auto h-16">
                             <div class="text-gray-300 font-semibold">Confirmation mail</div>
@@ -194,8 +194,8 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                         
                 </div>
             </div>
-            <div class="w-11/12 border-t border-gray-900 mx-auto flex ">
-                <div class="w-4/12 h-56">
+            <div class="w-11/12 mx-auto flex flex-col lg:flex-row lg:space-x-5 ">
+                <div class="lg:w-4/12 w-11/12 mx-auto border rounded border-gray-900 h-auto primary_bg_ lg:mx-0 p-2">
                     <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Information sur le Réseau</h2>
                     <div class="w-10/12 mx-auto h-16">
                         <div class="text-gray-300 font-semibold">Parent</div>
@@ -209,7 +209,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     <div class="w-10/12 mx-auto h-16">
                         <div class="text-gray-300 font-semibold">Capital investi</div>
                         <div class="w-16 h-8 border-blue-500  border p-1 rounded-full flex justify-around">
-                                <span class="text-blue-500"><?=$_SESSION["users"]->getSold() ?> </span> <i class="fas mt-1 text-blue-500 fa-dollar-sign    "></i>
+                                <span class="text-blue-500"><?=$params["user"]->getCapital() ?> </span> <i class="fas mt-1 text-blue-500 fa-dollar-sign    "></i>
                         </div>
                     </div>
                     <div class="w-10/12 mx-auto h-16">
@@ -220,16 +220,16 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     </div>
                     
                 </div>
-                <div class="w-4/12 p-2">
-                    <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Autres informations</h2>
+                <div class="lg:w-4/12 w-11/12 mx-auto border rounded border-gray-900 h-auto primary_bg_ lg:mx-0 p-2">
+                    <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">...</h2>
                         <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">Confirmation mail</div>
+                            <div class="text-gray-300 font-semibold">A des enfants</div>
                             <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
                                     <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
                             </div>
                         </div>
                         <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">Compte activé</div>
+                            <div class="text-gray-300 font-semibold">A des enfants</div>
                             <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
                                     <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
                             </div>

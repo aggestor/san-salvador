@@ -254,4 +254,9 @@ class AdminController extends Controller
             header('Location:/admin/dashboard');
         }
     }
+    public function currencies(){
+        if($this->isAdmin()){
+            return $this->view("pages.admin.currencies", "layout_admin");
+        }
+    }
 }

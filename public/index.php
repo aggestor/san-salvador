@@ -57,6 +57,8 @@ $routes->get('/admin/viewpacks', 'Root\App\Controllers\AdminController@allPacks'
 $routes->get('/admin/users-page-([0-9]+)', 'Root\App\Controllers\AdminController@allUsers', 'page');
 $routes->get('/admin/administrator', 'Root\App\Controllers\AdminController@administratorDashboard');
 
+$routes->get("/admin/currencies",'Root\App\Controllers\AdminController@currencies');
+
 //route pour afficher les pack
 $routes->get('/packages', 'Root\App\Controllers\PackController@packages');
 //route pour souscrire a une pack

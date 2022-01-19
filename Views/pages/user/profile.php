@@ -133,7 +133,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             </div>
             </div>
             <div class="absolute bottom-0 left-4 h-16 text-gray-500">
-               <span class="text-center">Usalvagetrade &#169; 2022</span>
+               <span class="text-center">Usalvagetrade &#169; <span id="year"></span></span>
             </div>
         </div>
         <div class="lg:col-span-10 col-span-12 h-screen-customer scroll lg:overflow-y-auto lg:overflow-x-hidden flex flex-col lg:p-3">
@@ -203,16 +203,18 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                                 <span class="font-semibold text-gray-500 text-2xl">
                                 12 parrainnés
                                 </span>
-
                             </div>
                         </div>
+                        <p class="text-sm text-gray-500 mt-1 p-1">
+                            Vous recevez ce bonus à chaque fois quelqu'un que vous avez envoyez vorte lien investi.
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="grid lg:grid-cols-12 grid-cols-1 lg:space-x-2 p-2">
                 <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
                     <div class="flex">
-                        <span class="text-blue-500 font-semibold"><i class="fas fa-comment-dollar"></i> MONTANT INVESTI</span>
+                        <span class="text-blue-500 font-semibold"><i class="fas fa-comment-dollar"></i> BONUS JOURNALIER</span>
                     </div>
                     <div class="w-full  rounded-full">
                         <div class="flex">
@@ -224,6 +226,9 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                             </span>
                         </div>
                     </div>
+                    <p class="text-sm text-gray-500 mt-1 p-1">
+                       Chaque jour du lundi au vendredi, vous recevez <?=$params['user']->getPack()->getAcurracy()?>% de votre capital comme bonus.
+                   </p>
                 </div>
                 <div class="lg:col-span-8 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
                     <div class="flex">
