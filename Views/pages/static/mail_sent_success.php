@@ -2,8 +2,7 @@
     <div class="md:w-6/12 lg:w-8/12 flex flex-col lg:flex-row justify-center items-center border mt-16 border-gray-900 mx-auto primary_bg_ shadow rounded md:p-12 p-4">
         <div class="md:w-10/12 w-11/12 lg:w-6/12  mx-auto md:p-3">
             <h1 class="_green_text text-3xl font-bold">Mail envoyé avec succès !!!</h1>
-            <p class="text-gray-400 font-semibold text-lg mt-4"> Nous avons envoyé un mail à l'addresse <span class="text-gray-300">aggeer.aa@gmail.com</span> </p>
-            <p class="mt-6 text-sm text-gray-300">Mail non réçu ? <span class="font-semibold text-black p-2  rounded cursor-pointer hover:bg-green-500 _green_bg">Renvoyer le mail</span></p>
+            <p class="text-gray-400 font-semibold text-lg mt-4"> Nous avons envoyé un mail à l'addresse <span class="text-gray-300"><?php echo isset($params['mail']) ? $params['mail'] : "" ?></span> </p>
         </div>
         <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">
             <span class="h-60 w-60 text-gray-900 relative">

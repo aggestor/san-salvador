@@ -31,7 +31,7 @@ abstract class Member extends DBOccurence
      * confirmation de reception du mail
      * @var boolean
      */
-    protected $validationMail;
+    protected $validationEmail;
     
     /**
      * @var string
@@ -104,17 +104,17 @@ abstract class Member extends DBOccurence
     /**
      * @return boolean
      */
-    public function isValidationMail() :?bool
+    public function isValidationEmail() :?bool
     {
-        return $this->validationMail;
+        return $this->validationEmail;
     }
     
     /**
-     * alias de la @method isValidationMail
+     * alias de la @method isValidationEmail
      * @return bool|NULL
      */
-    public function getValidationMail ()  : ?bool {
-        return $this->isValidationMail();
+    public function getValidationEmail ()  : ?bool {
+        return $this->isValidationEmail();
     }
 
     /**
@@ -142,11 +142,11 @@ abstract class Member extends DBOccurence
     }
 
     /**
-     * @param boolean $validationMail
+     * @param boolean $validationEmail
      */
-    public function setValidationMail($validationMail) : void
+    public function setValidationEmail($validationEmail) : void
     {
-        $this->validationMail = $validationMail;
+        $this->validationEmail = $validationEmail;
     }
     /**
      * @return string

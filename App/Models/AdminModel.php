@@ -39,7 +39,7 @@ class AdminModel extends AbstractMemberModel
                     $object->getEmail(),
                     $object->getRecordDate()->format('Y-m-d'),
                     $object->gettimeRecord()->format('H:i:s'),
-                    $object->getValidationMail() ? 1 : 0,
+                    $object->getValidationEmail() ? 1 : 0,
                     $object->getStatus() ? 1 : 0,
                     $object->getToken()
                 ]

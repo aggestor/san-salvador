@@ -27,7 +27,7 @@ class Schema
         "side" => "side",
         "status" => "user_status",
         "locked" => "locked",
-        "validationMail" => "validation_Status",
+        "validationEmail" => "validation_Status",
         "recordDate" => "record_date",
         "timeRecord" => "record_time",
         "modifDate" => "last_modif_date",
