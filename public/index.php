@@ -74,8 +74,10 @@ $routes->post('/user/pack/upgrade', 'Root\App\Controllers\PackController@upgrade
 //les routes pour les utilisateurs
 $routes->post('/register', 'Root\App\Controllers\UserController@create');
 $routes->get('/register', 'Root\App\Controllers\UserController@create');
-$routes->post('/register-(1|2)-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})/', 'Root\App\Controllers\UserController@create', 'side;parent;sponsor');
-$routes->get('/register-(1|2)-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})/', 'Root\App\Controllers\UserController@create', 'side;parent;sponsor');
+// $routes->post('/register-(1|2)-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\UserController@create', 'side;parent;sponsor');
+// $routes->get('/register-(1|2)-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\UserController@create', 'side;parent;sponsor');
+$routes->post('/register-(1|2)-([a-zA-Z0-9]{11})', 'Root\App\Controllers\UserController@create', 'side;parent');
+$routes->get('/register-(1|2)-([a-zA-Z0-9]{11})', 'Root\App\Controllers\UserController@create', 'side;parent');
 $routes->get('/reset-password', 'Root\App\Controllers\UserController@resetPasswordOnMail');
 $routes->post('/reset-password', 'Root\App\Controllers\UserController@resetPasswordOnMail');
 $routes->post('/login', 'Root\App\Controllers\UserController@login');

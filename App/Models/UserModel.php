@@ -677,11 +677,11 @@ class UserModel extends AbstractMemberModel
     {
         $data = array();
         if ($this->hasLeftSide($userId)) {
-            $data[] = $this->loadDownlineRightSide($userId);
+            $data[] = $this->loadDownlineLeftSide($userId);
         }
 
         if ($this->hasRightSide($userId)) {
-            $data[] = $this->loadDownlineLeftSide($userId);
+            $data[] = $this->loadDownlineRightSide($userId);
         }
         return $data;
     }
