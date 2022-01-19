@@ -49,13 +49,15 @@ $routes->post('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', '
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 //les routes pour valider une demande de retrait
-$routes->get('/admin/vailidate/cashout', 'Root\App\Controllers\AdminController@viewAllNonValideCashOut');
+$routes->get('/admin/validate/cashout', 'Root\App\Controllers\AdminController@viewAllNonValideCashOut');
 $routes->post('/admin/validate/cashout-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@validationCashOut', 'cashout;user');
 
 //les routes en get vers l'admin pour afficher les users, les admin et les pacl
 $routes->get('/admin/viewpacks', 'Root\App\Controllers\AdminController@allPacks');
 $routes->get('/admin/users-page-([0-9]+)', 'Root\App\Controllers\AdminController@allUsers', 'page');
 $routes->get('/admin/administrator', 'Root\App\Controllers\AdminController@administratorDashboard');
+
+$routes->get("/admin/currencies",'Root\App\Controllers\AdminController@currencies');
 
 //route pour afficher les pack
 $routes->get('/packages', 'Root\App\Controllers\PackController@packages');

@@ -1,7 +1,7 @@
 
-<div class="col-span-12 h-v-70 flex items-center secondary_bg">
+<div class="col-span-12 h-v-70 pb-2 flex items-center secondary_bg">
     <div class="w-11/12 mx-auto flex lg:flex-row flex-col space-x-3 ">
-        <div class="w-3/12 rounded border p-4 flex flex-col border-gray-900 h-60">
+        <div data-aos="slide-up" data-aos-duration="1000" class="lg:w-3/12 w-11/12 mx-auto my-1 lg:my-0 rounded border p-4 flex flex-col border-gray-900 h-60">
             <div class="w-full grid place-items-center">
                 <i class="fas text-gray-400 fa-4x  fa-dollar-sign "></i>
             </div>
@@ -12,7 +12,7 @@
                 Plus de 65 000 $ sont déjà  passer sur notre plateforme en tant qu'inverstiment sur divers pack.
             </div>
         </div>
-        <div class="w-3/12 rounded border p-4 flex flex-col border-gray-900 h-60">
+        <div data-aos="slide-up" data-aos-duration="1000" class="lg:w-3/12 w-11/12 mx-auto my-1 lg:my-0 rounded border p-4 flex flex-col border-gray-900 h-60">
             <div class="w-full grid place-items-center">
                 <i class="fas text-gray-400 fa-4x  fa-users "></i>
             </div>
@@ -23,7 +23,7 @@
                 Plus de 100 personnes nous font déjà confiances et gagnent leurs vies grâce à notre platefome.
             </div>
         </div>
-        <div class="w-3/12 rounded border p-4 flex flex-col border-gray-900 h-60">
+        <div data-aos="slide-up" data-aos-duration="1000" class="lg:w-3/12 w-11/12 mx-auto my-1 lg:my-0 rounded border p-4 flex flex-col border-gray-900 h-60">
             <div class="w-full grid place-items-center">
                 <i class="fas text-gray-400 fa-4x  fa-globe-africa"></i>
             </div>
@@ -34,7 +34,7 @@
                 Des personnes avec des grandes visions venant de plus 9 pays du monde entier investissent chez nous.
             </div>
         </div>
-        <div class="w-3/12 rounded border p-4 flex flex-col border-gray-900 h-60">
+        <div data-aos="slide-up" data-aos-duration="1000" class="lg:w-3/12 w-11/12 mx-auto my-1 lg:my-0 rounded border p-4 flex flex-col border-gray-900 h-60">
             <div class="w-full grid place-items-center">
                 <i class="fas text-gray-400 fa-4x  fa-boxes "></i>
             </div>
