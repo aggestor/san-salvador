@@ -398,7 +398,7 @@ class UserValidator extends AbstractMemberValidator
             if ($idSponsor != null && !empty($idSponsor)) {
                 $this->validationSponsor($idSponsor);
             }
-            $node = ($idSponsor == null && empty($idSponsor)) ? $this->userModel->findRoot() : $this->userModel->findById($idSponsor);
+            $node = ($idSponsor == null && empty($idSponsor)) ? ($user->hasParentNode() ? $user->getParent() : $this->userModel->findRoot()) : $this->userModel->findById($idSponsor);
 
             while ($this->userModel->countSides($node->getId()) == 2) {
                 $node = $this->userModel->findRightSide($node->getId());
@@ -407,12 +407,13 @@ class UserValidator extends AbstractMemberValidator
             $right = $this->userModel->hasRightSide($node->getId());
             $left = $this->userModel->hasLeftSide($node->getId());
 
-            if ((!$right && $side == null) || (!$right && $side == User::FOOT_RIGHT)) {
+
+            if ((!$right && $side == null) || (!$right && $side == User::FOOT_RIGHT) || ($side == User::FOOT_LEFT && $left && !$right)) {
                 $user->setFoot(User::FOOT_RIGHT);
                 return;
             }
 
-            if ((!$left && $side == null) || (!$left && $side == User::FOOT_LEFT)) {
+            if ((!$left && $side == null) || (!$left && $side == User::FOOT_LEFT) || ($side == User::FOOT_RIGHT && $right && !$left)) {
                 $user->setFoot(User::FOOT_LEFT);
                 return;
             }

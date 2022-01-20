@@ -148,11 +148,11 @@ class Controller
             foreach ($allUsersPacks as $allUsers) {
                 $allUsers->setUser($this->userModel->findById($allUsers->getUser()->getId()));
 
-                $return = $allUsers;
+                $return[] = $allUsers;
             }
-            return $return;
+            return  $return;
         }
-        return array();
+        return $return;
     }
 
     public function countValidateInscription()

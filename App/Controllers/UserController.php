@@ -139,6 +139,7 @@ class UserController extends Controller
                 $user = $validator->createAfterValidation();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
+                    //var_dump($validator->getMessage(), $errors); exit();
                     return $this->view("pages.user.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 }
                 $mail = $user->getEmail();
@@ -166,7 +167,7 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        //var_dump($this->allUsersHasValidateInscription()); exit();
+        //var_dump($this->userObject()->getSold(),$this->userObject()->isLocked());exit();
         if ($this->isUsers()) {
             if (!$this->userObject()->hasInscription()) {
                 return $this->view("pages.user.hasNotSubscribedYet", "layout_", ['user' => $_SESSION[self::SESSION_USERS]]);
@@ -175,6 +176,8 @@ class UserController extends Controller
                 return $this->view("pages.user.awaitUserPackValidation", "layout_");
             } else if ($this->existOneValidateInscription()) {
                 return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject()]);
+            } else if ($this->userObject()->getSold() <= 0 && $this->userObject()->isLocked() == true) {
+                return $this->view("pages.user.login", "layout_", ['loked' => 'error']);
             }
         }
         //var_dump($this->userObject()->hasPack()); exit();
@@ -191,6 +194,8 @@ class UserController extends Controller
         if ($this->isUsers()) {
             $format = new TreeFormater();
             $tree = $format->format();
+            echo ($tree);
+            exit();
             return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject(), 'tree' => $tree]);
         }
     }
@@ -283,7 +288,7 @@ class UserController extends Controller
         $validator = new UserValidator();
         $user = $validator->activeAccountAfterValidation();
         if ($validator->hasError() || $validator->getMessage() != null) {
-           // var_dump($validator->getMessage()); exit();
+            // var_dump($validator->getMessage()); exit();
             return $this->view("pages.static.404");
         } else {
             $_SESSION[self::SESSION_USERS] = $user;
