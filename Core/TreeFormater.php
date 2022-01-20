@@ -19,11 +19,10 @@ class TreeFormater extends Controller
 
         $root = $this->allUsers();
         $image = $root->getNodeIcon() == null ? "null" : explode(" AND ", $root->getNodeIcon());
-        //var_dump($image[1]); exit();
-
+        $image = str_replace("\\", "/", $image[1]);
         $json = " {";
         $json .= "\"name\":\"{$root->getName()}\"";
-        $json .= ",\"icon\":\"{$image[1]}\"";
+        $json .= ",\"icon\":\"{$image}\"";
         $json .= ",\"foot\":" . ($root->getFoot() == null ? "null" : $root->getFoot());
         if ($root->hasChilds()) {
             $json .= ",\"childs\": [";
@@ -47,9 +46,10 @@ class TreeFormater extends Controller
     {
         //var_dump($node->getId()); exit();
         $image = $node->getNodeIcon() == null ? "null" : explode(" AND ", $node->getNodeIcon());
+        $image = str_replace("\\", "/", $image[1]);
         $json = " {";
         $json .= "\"name\":\"{$node->getName()}\"";
-        $json .= ",\"icon\":\"{$image[1]}\"";
+        $json .= ",\"icon\":\"{$image}\"";
         $json .= ",\"foot\":" . ($node->getFoot() == null ? "null" : $node->getFoot());
         if ($node->hasChilds()) {
             $json .= ",\"childs\": [";

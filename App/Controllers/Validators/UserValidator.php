@@ -398,7 +398,7 @@ class UserValidator extends AbstractMemberValidator
             if ($idSponsor != null && !empty($idSponsor)) {
                 $this->validationSponsor($idSponsor);
             }
-            $node = ($idSponsor == null && empty($idSponsor)) ? $this->userModel->findRoot() : $this->userModel->findById($idSponsor);
+            $node = ($idSponsor == null && empty($idSponsor)) ? ($user->hasParentNode()? $user->getParent() : $this->userModel->findRoot()) : $this->userModel->findById($idSponsor);
 
             while ($this->userModel->countSides($node->getId()) == 2) {
                 $node = $this->userModel->findRightSide($node->getId());
