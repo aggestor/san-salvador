@@ -185,7 +185,7 @@ class AdminController extends Controller
             $nombre_pages = ceil($totalCount / $nombre_element_par_page);
             $debut = ($page - 1) * $nombre_element_par_page;
             $users = $this->allUsersHasValidateInscription($debut, $nombre_element_par_page);
-            var_dump($users);exit();
+            //var_dump($users);exit();
             if ($_GET['page'] > $nombre_pages) {
                 return $this->view("pages.static.404");
             }
@@ -253,8 +253,9 @@ class AdminController extends Controller
             header('Location:/admin/dashboard');
         }
     }
-    public function currencies(){
-        if($this->isAdmin()){
+    public function currencies()
+    {
+        if ($this->isAdmin()) {
             return $this->view("pages.admin.currencies", "layout_admin");
         }
     }

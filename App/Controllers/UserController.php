@@ -139,6 +139,7 @@ class UserController extends Controller
                 $user = $validator->createAfterValidation();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
+                    //var_dump($validator->getMessage(), $errors); exit();
                     return $this->view("pages.user.register", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 }
                 $mail = $user->getEmail();
