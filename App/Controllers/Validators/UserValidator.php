@@ -205,7 +205,7 @@ class UserValidator extends AbstractMemberValidator
         return $users;
     }
     /**
-     * Reinitialisation du compte apres validation de l'email
+     * Reinitialisation du compte on send mail
      * @return User
      */
     public function resetPassword()

@@ -110,7 +110,80 @@ class AdiminValidator extends AbstractMemberValidator
     public function changeStatusAfterValidation()
     {
     }
+
+    /**
+     * Resend mail
+     *
+     * @return Admin
+     */
+    public function resendMail()
+    {
+        $admin = new Admin();
+        $mail = $_POST[self::FIELD_EMAIL];
+        $token = GenerateId::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
+        $this->processingToken($token, $admin);
+        $this->processingEmail($admin, $mail, true);
+        if (!$this->hasError()) {
+            $userInSystem = $this->adminModel->findByMail($mail);
+            $userInSystem->setToken($token);
+            try {
+                $this->adminModel->updateToken($admin->getToken(), $userInSystem->getId());
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+            $admin = $userInSystem;
+        }
+        return $admin;
+    }
+    /**
+     * Reset password on send mail
+     *
+     * @return Admin
+     */
     public function resetPassword()
     {
+        $admin = new Admin();
+        $mail = $_POST[self::FIELD_EMAIL];
+        $token = GenerateId::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
+        $this->processingToken($token, $admin);
+        $this->processingEmail($admin, $mail, true);
+        if (!$this->hasError()) {
+            $adminInSystem = $this->adminModel->findByMail($mail);
+            $adminInSystem->setToken($token);
+            try {
+                $this->adminModel->updateToken($admin->getToken(), $adminInSystem->getId());
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+            $admin = $adminInSystem;
+        }
+        return $admin;
+    }
+
+    /**
+     * Reset password apres validation de l'email
+     *
+     * @return Admin
+     */
+    public function resetPasswordAfterValidation()
+    {
+        $admin = new Admin();
+        $id = $_GET[self::FIELD_ID];
+        $token = $_GET[self::FIELD_TOKEN];
+        $password = $_POST[self::FIELD_PASSWORD];
+        $password_confirm = $_POST[self::FIELD_PASSWORD_CONFIRM];
+        $pass_hash = $this->processingPassword($admin, $password, true, $password_confirm, true);
+        $this->processingAccount($token, $id, $admin);
+        if (!$this->hasError()) {
+            try {
+                $this->adminModel->updatePassword($id, $pass_hash);
+                $this->adminModel->updateToken(null, $id);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+        $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec d'inscription" : "succes";
+        $admins = $this->adminModel->findById($id);
+        return $admins;
     }
 }

@@ -7,8 +7,11 @@ use Root\App\Models\BinaryModel;
 use Root\App\Models\CashOutModel;
 use Root\App\Models\InscriptionModel;
 use Root\App\Models\ModelFactory;
+use Root\App\Models\Objects\Binary;
 use Root\App\Models\Objects\CashOut;
 use Root\App\Models\Objects\Inscription;
+use Root\App\Models\Objects\Parainage;
+use Root\App\Models\Objects\ReturnInvest;
 use Root\App\Models\Objects\User;
 use Root\App\Models\PackModel;
 use Root\App\Models\ParainageModel;
@@ -236,13 +239,96 @@ class Controller
         $idUser = $_GET['user'];
         //var_dump($this->cashOutModel->checkById($idCashOut)); exit();
         if ($this->cashOutModel->checkById($idCashOut)) {
-            if ($this->cashOutModel->checkValidated($idCashOut, true)) {
+            if ($this->cashOutModel->checkValidated($idCashOut)) {
                 $this->cashOutModel->validate($idCashOut, $idAdmin);
             } else {
                 Controller::redirect('admin/login');
             }
         } else {
             return $this->view("pages.static.404");
+        }
+    }
+
+    public function allBinary()
+    {
+        $return = array();
+
+        if ($this->binaryModel->checkAll()) {
+            # code...
+            /**
+             * @var Binary
+             */
+            $binarys = $this->binaryModel->findAll();
+            foreach ($binarys as $binary) {
+                $binary->setUser($this->userModel->findById($binary->getUser()->getId()));
+                if ($binary->getUser()->getSponsor() == null && $binary->getUser()->getParent() == null) {
+                    $montant = $binary->getAmount();
+                    $return[] = (int) $montant;
+                } else {
+                    $surplus = $binary->getSurplus();
+                    $return[] = (int) $surplus;
+                }
+            }
+            return $return;
+        }
+        return $return;
+    }
+
+    public function allReturnInvest()
+    {
+        $return = array();
+
+        if ($this->returnInvestModel->checkAll()) {
+            /**
+             * @var ReturnInvest
+             */
+            $invests = $this->returnInvestModel->findAll();
+            foreach ($invests as $invest) {
+                $invest->setUser($this->userModel->findById($invest->getUser()->getId()));
+                $return = $invest->getSurplus();
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * la fonction pour me retourner touts les montant binaire et les surplus
+     *
+     * @return array
+     */
+    public function allParainage()
+    {
+        $return = array();
+
+        if ($this->parainageModel->checkAll()) {
+            /**
+             * @var Parainage
+             */
+            $parainages = $this->parainageModel->findAll();
+            foreach ($parainages as $parainage) {
+                $parainage->setUser($this->userModel->findById($parainage->getUser()->getId()));
+                if ($parainage->getUser()->getSponsor() == null && $parainage->getUser()->getParent() == null) {
+                    $montant = $parainage->getAmount();
+                    $return[] = (int) $montant;
+                } else {
+                    $surplus = $parainage->getSurplus();
+                    $return[] = (int) $surplus;
+                }
+            }
+            return $return;
+        }
+        return $return;
+    }
+    /**
+     * Destroy all session
+     *
+     * @return void
+     */
+    public static function destroyAllSession()
+    {
+        if (isset($_SESSION)) {
+            $_SESSION = array();
+            session_destroy();
         }
     }
     /**
@@ -378,7 +464,7 @@ class Controller
     /**
      * Pour la redirection automatique
      *
-     * @param string $chemin
+     * @param mixed $chemin
      * @return void
      */
     public static function redirect($chemin)

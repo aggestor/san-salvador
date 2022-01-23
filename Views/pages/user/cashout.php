@@ -149,7 +149,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     <span class="text-lg text-gray-400 w-8/12 mx-auto">Vous ne pouvez pas faire une demande d'un retrait maintenat. La demande d'un retrait s'effectue uniquement le samedi. Plus de renseignement sur le retrait cliquez <span class="_green_text font-semibold"><a href="/help#cashout">ici</a></span> </span>
                </div>
                <?php elseif($params['disabled'] === true): ?>
-               <form class="w-full flex justify-between my-6 h-96 primary_bg_ rounded">
+               <form class="w-full flex justify-between my-6 h-96 primary_bg_ rounded" method="POST">
                     <div class="w-1/2 p-3 h-full">
                         <div class="flex w-11/12 mx-auto mt-12 mb-4 text-gray-200 font-semibold text-lg">
                             Formuler votre retrait enfin de nous l'envoyer

@@ -31,21 +31,21 @@
         <h1 class="text-gray-300 font-semibold text-xl w-full"> <i class="fas fa-user-secret  mr-3"></i> Ajouter un administrateur</h1>
     </div>
     <div class="w-full h-full flex justify-between">
-        <form class="w-6/12 mt-12" method="POST">
+        <form class="w-6/12 mt-12" method="POST" action="/admin/administrator">
             <div class="md:w-11/12 w-full mx-auto mb-4">
-                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="name" name="username" type="text" placeholder="Noms" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="" />
+                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =  (isset($_POST['sendAdminMail']) && !empty($params['errors']['username'])) ?"border-red-500" : " border-gray-400" ?>">
+                    <input id="name" name="username" type="text" placeholder="Noms" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['sendAdminMail']) && empty($params['errors']['username'])) ? $_POST['username'] : ""; ?>" />
                 </div>
-                <?php if (isset($_POST['connexion']) && !empty($params['errors']['userEmail'])) : ?>
-                    <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['userEmail']; ?></span>
+                <?php if (isset($_POST['sendAdminMail']) && !empty($params['errors']['username'])) : ?>
+                    <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['username']; ?></span>
                 <?php endif; ?>
             </div>
             <div class="md:w-11/12 w-full mx-auto mb-4">
-                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                    <input id="mail" name="user_email" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="" />
+                <div class=" mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =  (isset($_POST['sendAdminMail']) && !empty($params['errors']['user_email'])) ?"border-red-500" : " border-gray-400" ?>">
+                    <input id="mail" name="user_email" type="email" placeholder="Addresse mail" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['sendAdminMail']) && empty($params['errors']['user_email'])) ? $_POST['user_email'] : ""; ?>" />
                 </div>
-                <?php if (isset($_POST['connexion']) && !empty($params['errors']['userEmail'])) : ?>
-                    <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['userEmail']; ?></span>
+                <?php if (isset($_POST['sendAdminMail']) && !empty($params['errors']['user_email'])) : ?>
+                    <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['user_email']; ?></span>
                 <?php endif; ?>
             </div>
             <div class="md:w-11/12 mx-auto mt-4">
