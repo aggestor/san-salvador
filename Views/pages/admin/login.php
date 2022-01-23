@@ -33,7 +33,7 @@
                     <label class="text-sm" for="remember">Se souvenir de moi</label>
                 </div>
                 <div class="w-6/12 text-gray-500">
-                    <span class="flex justify-end font-semibold"><a class="text-sm" href="/reset-password">Mot de passe oublié ?</a></span>
+                    <span class="flex justify-end font-semibold"><a class="text-sm" href="/admin/reset-password">Mot de passe oublié ?</a></span>
                 </div>
             </div>
             <div class="md:w-11/12 mx-auto mt-4">

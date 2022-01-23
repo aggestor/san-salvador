@@ -34,15 +34,13 @@ class CashOutController extends Controller
             if (EnabledCashOut::isEnabled($dateActuelle)) {
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $validator = new UserValidator();
-                    $retrait=$validator->cashOutAfterValidation();
+                    $retrait = $validator->cashOutAfterValidation();
                     if ($validator->hasError() || $validator->getMessage() != null) {
                         $errors = $validator->getErrors();
-                        var_dump($errors);
-                        exit();
                         return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'errors' => $errors]);
                     }
                 }
-                return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject()]);
+                return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'disabled' => true]);
             } else {
                 return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'disabled' => false]);
             }

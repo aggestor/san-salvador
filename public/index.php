@@ -31,7 +31,7 @@ $routes->get('/contracts', 'Root\App\Controllers\StaticController@contracts');
 //les routes pour l'admin en get
 $routes->get('/admin/destroy', 'Root\App\Controllers\AdminController@destroy');
 //les routes pour l'admin en post
-$routes->post('/admin/register', 'Root\App\Controllers\AdminController@create');
+//$routes->post('/admin/register', 'Root\App\Controllers\AdminController@create');
 $routes->post('/admin/login', 'Root\App\Controllers\AdminController@login');
 $routes->get('/admin/register', 'Root\App\Controllers\AdminController@create');
 $routes->get('/admin/login', 'Root\App\Controllers\AdminController@login');
@@ -52,12 +52,34 @@ $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App
 $routes->get('/admin/validate/cashout', 'Root\App\Controllers\AdminController@viewAllNonValideCashOut');
 $routes->post('/admin/validate/cashout-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@validationCashOut', 'cashout;user');
 
+//routes pour l'envoie du mail lors de la reinitialisation du mot de passe
+$routes->post('/admin/reset-password', 'Root\App\Controllers\AdminController@resetPasswordOnMail');
+$routes->get('/admin/reset-password', 'Root\App\Controllers\AdminController@resetPasswordOnMail');
+
+//routes pour la reinitialisation du mot de passe
+$routes->get('/admin/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@resetPassword', 'id;token');
+$routes->post('/admin/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@resetPassword', 'id;token');
+
+//routes pour renvoie du mail
+$routes->get('/admin/mail/resend', 'Root\App\Controllers\AdminController@mailResend');
+$routes->post('/admin/mail/resend-(reset|activation)', 'Root\App\Controllers\AdminController@mailResend', 'action');
+
+//route pour le succes du mot de passe
+$routes->get('/admin/password', 'Root\App\Controllers\AdminController@passwordSuccess');
+//route pour mail success
+$routes->get('admin/mail/success', 'Root\App\Controllers\AdminController@mailSendSuccess');
+
+
+
+//route pour le succes du mot de passe
 //les routes en get vers l'admin pour afficher les users, les admin et les pacl
 $routes->get('/admin/viewpacks', 'Root\App\Controllers\AdminController@allPacks');
 $routes->get('/admin/users-page-([0-9]+)', 'Root\App\Controllers\AdminController@allUsers', 'page');
 $routes->get('/admin/administrator', 'Root\App\Controllers\AdminController@administratorDashboard');
+$routes->post('/admin/administrator', 'Root\App\Controllers\AdminController@create');
 
-$routes->get("/admin/currencies",'Root\App\Controllers\AdminController@currencies');
+$routes->get("/admin/currencies", 'Root\App\Controllers\AdminController@currencies');
+$routes->get("/admin/transaction", 'Root\App\Controllers\AdminController@transaction');
 
 //route pour afficher les pack
 $routes->get('/packages', 'Root\App\Controllers\PackController@packages');
@@ -96,10 +118,10 @@ $routes->post('/user/cashout', 'Root\App\Controllers\CashOutController@cashout')
 
 
 //route lors du renvoie du mail s'il ya echec
-$routes->get('/user/mail/error', 'Root\App\Controllers\UserController@mailSendError');
+$routes->get('/mail/error', 'Root\App\Controllers\UserController@mailSendError');
 //route lors du renvoie du mail
-$routes->get('/user/mail/resend', 'Root\App\Controllers\UserController@mailResend');
-$routes->post('/user/mail/resend-(reset|activation)', 'Root\App\Controllers\UserController@mailResend', 'action');
+$routes->get('/mail/resend', 'Root\App\Controllers\UserController@mailResend');
+$routes->post('/mail/resend-(reset|activation)', 'Root\App\Controllers\UserController@mailResend', 'action');
 
 
 /*
@@ -109,7 +131,7 @@ $routes->post('/user/mail/resend-(reset|activation)', 'Root\App\Controllers\User
     3. l'incription terminer avec succes 
     4. view pour le lien de parainage
  */
-$routes->get('/user/mail/success', 'Root\App\Controllers\UserController@mailSendSuccess');
+$routes->get('/mail/success', 'Root\App\Controllers\UserController@mailSendSuccess');
 $routes->get('/user/password', 'Root\App\Controllers\UserController@passwordSuccess');
 $routes->get('/user/account', 'Root\App\Controllers\UserController@registerSuccess');
 $routes->get('/user/share/link', 'Root\App\Controllers\UserController@shareLink');
