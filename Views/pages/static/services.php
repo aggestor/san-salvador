@@ -14,7 +14,7 @@
             </p>
     </div>
     </div>
-    <div class="w-full flex space-x-5">
+    <div class="w-full flex lg:flex-row flex-col lg:justify-around lg:space-x-5">
             <div class="lg:w-3/12 w-11/12 mx-auto hover:bg-opacity-50 duration-500 transition-all overflow-hidden primary_bg rounded-xl relative shadow border border-gray-100 h-96">
                 <span class="w-full"><img src="/assets/logos/exchange.jpg" alt="silver illustration" class="w-full z-0 object-cover h-40 mx-auto"></span>
                 <div class="text-gray-400 p-2">

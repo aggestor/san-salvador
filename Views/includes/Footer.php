@@ -50,13 +50,7 @@
                 <a href="/terms">Conditions </a>
             </span>
             <span class="mt-3">
-                <a href="/politics">Politique</a>
-            </span>
-            <span class="mt-3">
                 <a href="/security">Securité</a>
-            </span>
-            <span class="mt-3">
-                <a href="/contracts">Contracts</a>
             </span>
         </div>  
     </div>
