@@ -3,6 +3,7 @@
 namespace Root\App\Models;
 
 use Root\App\Models\Objects\ReturnInvest;
+use Root\Core\GenerateId;
 
 class ReturnInvestModel extends AbstractOperationModel
 {
@@ -23,6 +24,12 @@ class ReturnInvestModel extends AbstractOperationModel
      * @param ReturnInvest $object
      */
     public function createInTransaction(\PDO $pdo, $object): void{
+        
+        $id = $object->getId() != null ? $object->getId() : GenerateId::generate();
+        while($this->checkById($id)) {//verification de l'unicite de l'id
+            $id = GenerateId::generate();
+        }
+
         $ReturnInvest = Schema::RETURN_INVEST;
         Queries::addData(
             $this->getTableName(),
@@ -35,7 +42,7 @@ class ReturnInvestModel extends AbstractOperationModel
                 $ReturnInvest['surplus'],
             ],
             [
-                $object->getId(),
+                $id,
                 $object->getUser()->getId(),
                 $object->getAmount(),
                 $object->getRecordDate(),
@@ -43,6 +50,8 @@ class ReturnInvestModel extends AbstractOperationModel
                 $object->getSurplus()
             ]
         );
+
+        $object->setId($id);
     }
 
     /**

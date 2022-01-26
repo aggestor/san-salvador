@@ -3,9 +3,11 @@
 namespace Root\App\Models;
 
 use DateTime;
+use Generator;
 use React\EventLoop\Loop;
 use Root\App\Models\Objects\ReturnInvest;
 use Root\App\Models\Objects\User;
+use Root\Core\GenerateId;
 
 /**
  * @author Esaie MUHASA
@@ -131,7 +133,6 @@ class ReturnInvestObserver {
             $return->setUser($user);
             $return->setRecordDate($this->lastTime);
             $return->setTimeRecord($this->lastTime);
-
             $bonus[] = $return;
 
         }
