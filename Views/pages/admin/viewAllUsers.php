@@ -2,7 +2,7 @@
     <div class="col-span-12 flex flex-col">
         <div class="w-11/12 mx-auto mb-4 h-12 border-b border-gray-900 flex justify-between">
             <h1 class="text-gray-300 font-semibold text-xl">Toutes les demandes de retrait en attente.</h1>
-            <span class="bg-blue-500 text-white w-8 h-8 rounded-full grid place-items-center" ><?= count($params['allUsers']) ?></span>
+            <span class="bg-blue-500 text-white w-8 h-8 rounded-full grid place-items-center" ><?var_dump($params['allUsers']); exit() ?></span>
         </div>
         <div class="w-11/12 mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
             <div class="w-2/12">Noms</div>

@@ -321,7 +321,6 @@ class AdminController extends Controller
             $nombre_pages = ceil($totalCount / $nombre_element_par_page);
             $debut = ($page - 1) * $nombre_element_par_page;
             $users = $this->allUsersHasValidateInscription($debut, $nombre_element_par_page);
-            //var_dump($users);exit();
             if ($_GET['page'] > $nombre_pages) {
                 return $this->view("pages.static.404");
             }

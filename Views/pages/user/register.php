@@ -111,11 +111,10 @@
         </div>
     </div>
     <div class="md:w-6/12 w-11/12 md:p-0 p-3  mx-auto mt-12 flex flex-col md:flex-row justify-between">
-        <a class="text-gray-500 font-semibold hover:text-green-500" href="/politics">Politiques</a>
         <a class="text-gray-500 font-semibold hover:text-green-500" href="/terms">Conditions d'utilisations</a>
-        <a class="text-gray-500 font-semibold hover:text-green-500" href="/contracts">Contracts</a>
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/security">Sécurité</a>
         <a class="text-gray-500 font-semibold hover:text-green-500" href="/help">Aide</a>
-        <a class="text-gray-500 font-semibold hover:text-green-500" href="/contact">Contact</a>
+        <a class="text-gray-500 font-semibold hover:text-green-500" href="/contact">Contacts</a>
     </div>
 
 </div>
