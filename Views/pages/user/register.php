@@ -116,5 +116,4 @@
         <a class="text-gray-500 font-semibold hover:text-green-500" href="/help">Aide</a>
         <a class="text-gray-500 font-semibold hover:text-green-500" href="/contact">Contacts</a>
     </div>
-
 </div>
