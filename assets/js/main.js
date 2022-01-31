@@ -148,6 +148,7 @@ formStepsButtons && formStepsButtons.forEach(function (button) {
     }
 });
 var userMenus = document.querySelectorAll("[data-path-user]");
+console.log(userMenus);
 userMenus.forEach(function (menu) {
     menu.addEventListener("click", function () {
         var path = menu.getAttribute("data-path-user");
