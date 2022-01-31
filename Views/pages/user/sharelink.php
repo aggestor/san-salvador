@@ -116,8 +116,8 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             </div>
             <div data-path-user="/" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
-                    <span class="w-2/12"><i class="fas fa-home"></i></span>
-                    <span class="w-10/12 mt-0.5">Acceuil</span>
+                    <span class="w-2/12"><i class="fas fa-arrow-left"></i></span>
+                    <span class="w-10/12 mt-0.5">Retour à l'acceuil</span>
             </div>
             </div>
             <div data-path-user="/user/share/link" class="flex p-2 my-2 from-green-500 to-gray-900 text-white transition-all duration-500   cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
@@ -136,7 +136,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                <span class="text-center">Usalvagetrade &#169; <span id="year"></span></span> 
             </div>
         </div>
-        <div class="lg:col-span-10 col-span-12 h-screen-customer scroll overflow-y-auto overflow-x-hidden flex p-3">
+        <div class="lg:col-span-10 col-span-12 h-screen-customer scroll overflow-y-auto overflow-x-hidden flex lg:p-3 p-0">
             <div class="flex flex-col w-11/12 mx-auto">
                 <div class="w-full mb-3 h-10 border-b border-gray-900">
                   <h1 class="text-gray-400"> <i class="fas text-xl fa-share-alt mr-2"></i> <span class="font-semibold lg:text-2xl text-base">Partage un lien de parrainage</span></h1>
@@ -155,7 +155,6 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                                         <span>Droite</span>
                                         <span class="lg:h-7 h-4 lg:w-7 w-4 rounded-full border"></span>
                                     </div>
-                                    
                                 </div>
                             </div>
                             <div class="flex w-full mt-5 justify-around">
@@ -172,7 +171,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                         <h3 class="w-11/12 text-gray-400"><b>Note :</b> Le partage d'un lien de parrainage permet d'angrandir votre reseau et de gagner un bonus de parrainnage</h3>
                     </div>
                     <div class="w-1/2 hidden lg:flex justify-center p-2 h-full">
-                            <img class="h-96" src="/assets/logos/share-link.png" alt="">
+                        <img class="h-96" src="/assets/logos/share-link.png" alt="Share Link Illustration, https://storyset.com">
                     </div>
                </form>
             </div>
