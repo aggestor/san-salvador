@@ -139,21 +139,21 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
         <div class="lg:col-span-10 col-span-12 h-screen-customer scroll overflow-y-auto overflow-x-hidden flex p-3">
             <div class="flex flex-col w-11/12 mx-auto">
                 <div class="w-full mb-3 h-10 border-b border-gray-900">
-                  <h1 class="text-gray-400"> <i class="fas text-xl fa-share-alt mr-2"></i> <span class="font-semibold text-2xl">Partage un lien de parrainage</span></h1>
+                  <h1 class="text-gray-400"> <i class="fas text-xl fa-share-alt mr-2"></i> <span class="font-semibold lg:text-2xl text-base">Partage un lien de parrainage</span></h1>
                </div>
-               <form class="w-full flex justify-between my-6 h-96 primary_bg_ rounded">
-                    <div class="w-1/2 p-3 h-full">
+               <form class="w-full flex justify-between my-6 lg:h-96 h-auto primary_bg_ rounded">
+                    <div class="lg:w-1/2 w-full p-3 h-full">
                         <div class=" mt-3 h-72 mb-2 flex flex-col justify-center items-center rounded w-full">
                             <div id="pairing-sides" class="h-32 mt-5 p-2 w-full border  border-gray-600 rounded flex flex-col">
                                 <div class="w-10/12 text-gray-300">Choisir côté de parrainage</div>
                                 <div class="mt-3 mx-1 flex  justify-between">
                                     <div data-side="1" class="flex border border-gray-400 cursor-pointer text-gray-300 rounded h-12 p-1 items-center w-4/12 justify-between">
                                         <span>Gauche</span>
-                                        <span class="h-7 w-7 rounded-full border"></span>
+                                        <span class="lg:h-7 h-4 lg:w-7 w-4 rounded-full border"></span>
                                     </div>
                                     <div data-side="2" class="flex border border-gray-400 cursor-pointer text-gray-300 rounded h-12 p-1 items-center w-4/12 justify-between">
                                         <span>Droite</span>
-                                        <span class="h-7 w-7 rounded-full border"></span>
+                                        <span class="lg:h-7 h-4 lg:w-7 w-4 rounded-full border"></span>
                                     </div>
                                     
                                 </div>
@@ -171,7 +171,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                         </div>
                         <h3 class="w-11/12 text-gray-400"><b>Note :</b> Le partage d'un lien de parrainage permet d'angrandir votre reseau et de gagner un bonus de parrainnage</h3>
                     </div>
-                    <div class="w-1/2 flex justify-center p-2 h-full">
+                    <div class="w-1/2 hidden lg:flex justify-center p-2 h-full">
                             <img class="h-96" src="/assets/logos/share-link.png" alt="">
                     </div>
                </form>

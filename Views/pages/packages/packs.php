@@ -44,7 +44,7 @@
             <h1 class="_green_text text-xl  mb-2  font-semibold"> Comment choisir un pack ?</h1>
             <p class="text-gray-400 mb-4">Tous les packs que nous possedons sont fixés  sur certaines intervalles de sommes d'argents. Le choix d'un pack dépendra de l'argent que vous voulez investir.</p>
             <h1 class="_green_text text-xl  mb-2  font-semibold"> Comment les pack gagnet-ils des bonus?</h1>
-            <p class="text-gray-400 mb-4">Nous offrons plusieurs sortes des bonus sur notre plateformes qui gagnent dependamment du pack auquel l'utilisateur a souscri. Tous les bonus ont des pourcentages diffenrents et sont strictément basés sur <span class="_green_text font-semibold"><a href="/terms">notre réglement de travail</a></span>. Les bonus et tout ce qui va avec sont expliqués <span class="_green_text font-semibold"><a href="/help#bonuses">ici</a></span>. </p>
+            <p class="text-gray-400 mb-4">Nous offrons plusieurs sortes des bonus sur notre plateformes qui gagnent dependamment du pack auquel l'utilisateur a souscri. Tous les bonus ont des pourcentages diffenrents et sont strictément basés sur <span class="_green_text font-semibold"><a href="/terms">notre réglement de travail</a></span>. Les bonus et tout ce qui va avec sont expliqués <span class="_green_text font-semibold"><a href="/help">ici</a></span>. </p>
         </div>
     </div>
 
