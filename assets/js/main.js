@@ -245,3 +245,64 @@ transactionBtns.forEach(function (btn) {
             .attr("class", "w-4/12 transaction-btn hover:bg-blue-600 hover:text-white transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center text-gray-300");
     });
 });
+function menuHighLighter() {
+    var knownPaths = [
+        "/",
+        "/packages",
+        "/help",
+        "/services",
+        "/register",
+        "/login",
+        "/reset-password",
+        "/contact",
+        "/about"
+    ];
+    var path = window.location.pathname;
+    var menus = document.querySelectorAll("#defaultMenu li span a");
+    menus.forEach(function (menu) {
+        var menuPath = menu.getAttribute("href");
+        if (menuPath == path) {
+            $(menu).attr("class", "_green_text font-semibold");
+        }
+    });
+    if (knownPaths.indexOf(path) != -1) {
+        switch (path) {
+            case "/":
+                setHeadImportantData({});
+                break;
+            case "/services":
+                setHeadImportantData({ title: "Nos services" });
+                break;
+            case "/help":
+                setHeadImportantData({ title: "Aide, FAQ" });
+                break;
+            case "/packages":
+                setHeadImportantData({ title: "Les packs que nous proposons" });
+                break;
+            case "/register":
+                setHeadImportantData({ title: "Créer un compte" });
+                break;
+            case "/login":
+                setHeadImportantData({ title: "Connectez-vous sur notre plateforme" });
+                break;
+            case "/reset-password":
+                setHeadImportantData({ title: "Réinitialisation du mot de passe" });
+                break;
+            case "/contact":
+                setHeadImportantData({ title: "Soyez en contacts avec nous" });
+                break;
+            case "/about":
+                setHeadImportantData({ title: "A propos de nous" });
+                break;
+            default:
+                setHeadImportantData({ title: "Page non trouvé" });
+                break;
+        }
+    }
+}
+function setHeadImportantData(data) {
+    var preTitle = data.title || "La révolution du commerce de la cryptomonnaie";
+    var title = preTitle + " | USALVAGETRADE";
+    document.title = title;
+}
+menuHighLighter();

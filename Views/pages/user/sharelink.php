@@ -142,7 +142,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                   <h1 class="text-gray-400"> <i class="fas text-xl fa-share-alt mr-2"></i> <span class="font-semibold lg:text-2xl text-base">Partage un lien de parrainage</span></h1>
                </div>
                <form class="w-full flex justify-between my-6 lg:h-96 h-auto primary_bg_ rounded">
-                    <div class="lg:w-1/2 w-full p-3 h-full">
+                    <div class="md:w-1/2 w-full p-3 h-full">
                         <div class=" mt-3 h-72 mb-2 flex flex-col justify-center items-center rounded w-full">
                             <div id="pairing-sides" class="h-32 mt-5 p-2 w-full border  border-gray-600 rounded flex flex-col">
                                 <div class="w-10/12 text-gray-300">Choisir côté de parrainage</div>
@@ -170,7 +170,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                         </div>
                         <h3 class="w-11/12 text-gray-400"><b>Note :</b> Le partage d'un lien de parrainage permet d'angrandir votre reseau et de gagner un bonus de parrainnage</h3>
                     </div>
-                    <div class="w-1/2 hidden lg:flex justify-center p-2 h-full">
+                    <div class="w-1/2 hidden md:flex justify-center p-2 h-full">
                         <img class="h-96" src="/assets/logos/share-link.png" alt="Share Link Illustration, https://storyset.com">
                     </div>
                </form>

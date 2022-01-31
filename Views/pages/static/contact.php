@@ -37,11 +37,6 @@
             <div class="w-full grid place-items-center my-3">
                 <ul class="flex flex-col">
                     <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+1 323 678 5503</a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+243 993 825 243</a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+243 993 825 243</a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+243 993 825 243</a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+243 993 825 243</a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+243 993 825 243</a></li>
                 </ul>
             </div>
         </div>
@@ -51,11 +46,6 @@
             </div>
             <div class="w-full grid place-items-center my-3">
                 <ul class="flex flex-col">
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="mailto:">contact@uslavagetrade.com</a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="mailto:">contact@uslavagetrade.com</a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="mailto:">contact@uslavagetrade.com</a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="mailto:">contact@uslavagetrade.com</a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="mailto:">contact@uslavagetrade.com</a></li>
                     <li class="hover:text-green-500 p-2 text-gray-400"><a href="mailto:">contact@uslavagetrade.com</a></li>
                 </ul>
             </div>
