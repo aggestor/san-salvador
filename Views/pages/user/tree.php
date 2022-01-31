@@ -117,8 +117,8 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             </div>
             <div data-path-user="/" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
-                    <span class="w-2/12"><i class="fas fa-home"></i></span>
-                    <span class="w-10/12 mt-0.5">Acceuil</span>
+                    <span class="w-2/12"><i class="fas fa-arrow-left"></i></span>
+                    <span class="w-10/12 mt-0.5">Retour à l'acceuil</span>
             </div>
             </div>
             <div data-path-user="/user/share/link" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
@@ -139,13 +139,11 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
         </div>
         <div class="lg:col-span-10 col-span-12 h-screen-customer items-center justify-center flex flex-col p-3">
            <div id="binaryTreeContainer" class="w-11/12 mx-auto">
-
            </div>
            <div class="w-11/12 text-center flex flex-col mx-auto">
                 <span class="mb-3"><i class="fas text-gray-400 fa-4x fa-info-circle "></i></span>
                 <span class="lg:text-lg text-base text-gray-400 lg:w-8/12 w-11/12 mx-auto">Quand vous aurez un réseau il sera afficher ici, pour l'instant vous n'avez aucun réseau des enfants à afficher. Faites venir des gens sur votre réseau en partagant votre lien de parrainage en cliquant  <span class="_green_text font-semibold"><a href="/user/share/link">ici</a></span> </span>
            </div>
-           
         </div>
     </div>
 </div>

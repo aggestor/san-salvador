@@ -56,9 +56,8 @@
     </div>
     <div class="md:w-3/12 w-8/12 flex flex-col "></div>
     </div>
-    <div class="flex text-gray-400 border-t pt-2 mt-3 border-gray-400 w-11/12 mx-auto flex-col">
-    <span>&#169; <?= date("Y")?> Usalvagetrade LLC. All rights reserved</span>
-    <span>California, 523 Palace avenue</span>
+    <div class="flex text-gray-400 border-t pt-2 pb-2 mt-3 border-gray-400 w-11/12 mx-auto flex-col">
+    <span>&#169; <?= date("Y")?> Usalvagetrade. All rights reserved</span>
     </div>
 
 </div>

@@ -66,7 +66,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             </div>
         </div>
         <div class="w-full hide-scroll-bar ml-1 h-10 sticky top-0 flex lg:hidden text-sm items-center overflow-y-hidden overflow-x-auto">
-            <div data-path-user="/user/dashboard" class="flex p-1 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:text-white">  
+            <div data-path-user="/user/dashboard" class="flex p-1 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:text-white">
                 <span class="w-10/12 mt-0.5">Dashboard</span>
             </div>
             <div data-path-user="/user/tree" class="flex p-1 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:text-white">
@@ -117,8 +117,8 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             </div>
             <div data-path-user="/" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
-                    <span class="w-2/12"><i class="fas fa-home"></i></span>
-                    <span class="w-10/12 mt-0.5">Acceuil</span>
+                    <span class="w-2/12"><i class="fas fa-arrow-left"></i></span>
+                    <span class="w-10/12 mt-0.5">Retour à l'acceuil</span>
             </div>
             </div>
             <div data-path-user="/user/share/link" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
@@ -134,12 +134,12 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             </div>
             </div>
             <div class="absolute bottom-0 left-4 h-16 text-gray-500">
-               <span class="text-center">Usalvagetrade &#169; 2022</span> 
+               <span class="text-center">Usalvagetrade &#169; 2022</span>
             </div>
         </div>
         <div class="lg:col-span-10 col-span-12 h-screen-customer mobile scroll overflow-y-auto overflow-x-hidden flex flex-col p-3">
             <div class="w-11/12 mx-auto mb-3  border-b border-gray-900">
-                  <h1 class="text-gray-400 mb-3"> <i class="fas text-xl fa-info-circle mr-2"></i> <span class="font-semibold text-base lg:text-2xl">Toutes les informations necessaires sur l'utilisateur</span></h1>
+                  <h1 class="text-gray-400 mb-3"> <i class="fas text-xl fa-info-circle mr-2"></i> <span class="font-semibold text-base lg:text-2xl">Toutes les informations nécessaires sur l'utilisateur</span></h1>
                </div>
             <div class="w-11/12 mx-auto lg:space-x-3 lg:flex-row flex-col flex">
                     <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 lg:block flex justify-center ">
@@ -190,8 +190,8 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                                     <span class="text-red-500">Non </span> <i class="fas mt-1 text-red-500 fa-times    "></i>
                             </div>
                         </div>
-                        
-                        
+
+
                 </div>
             </div>
             <div class="w-11/12 mx-auto flex flex-col lg:flex-row lg:space-x-5 ">
@@ -205,11 +205,11 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                         <div class="text-gray-300 font-semibold">Sponsor</div>
                         <div class="text-gray-600"><?=$_SESSION["users"]->getSponsor()->getId()?></div>
                     </div>
-                    
+
                     <div class="w-10/12 mx-auto h-16">
                         <div class="text-gray-300 font-semibold">Capital investi</div>
                         <div class="w-16 h-8 border-blue-500  border p-1 rounded-full flex justify-around">
-                                <span class="text-blue-500"><?=$params["user"]->getCapital() ?> </span> <i class="fas mt-1 text-blue-500 fa-dollar-sign    "></i>
+                                <span class="text-blue-500"><?=$params["user"]->getCapital()?> </span> <i class="fas mt-1 text-blue-500 fa-dollar-sign    "></i>
                         </div>
                     </div>
                     <div class="w-10/12 mx-auto h-16">
@@ -218,7 +218,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                                 <span class="text-blue-500">USD</span> <i class="fas mt-1 text-blue-500 fa-dollar-sign    "></i>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="lg:w-4/12 w-11/12 mx-auto border rounded border-gray-900 h-auto primary_bg_ lg:mx-0 p-2">
                     <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">...</h2>
@@ -246,8 +246,8 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                                     <span class="text-red-500">Non </span> <i class="fas mt-1 text-red-500 fa-times    "></i>
                             </div>
                         </div>
-                        
-                        
+
+
                 </div>
             </div>
         </div>
