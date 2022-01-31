@@ -3,6 +3,7 @@
 namespace Root\App\Models;
 
 use Root\App\Models\Objects\CashOut;
+
 class CashOutModel extends AbstractOperationModel
 {
 
@@ -32,23 +33,23 @@ class CashOutModel extends AbstractOperationModel
             ]
         );
     }
-    
+
     /**
      * validation de d'un CshOut
      * @param string $id
      * @param string $adminId
      */
-    public function validate (string $id, string $adminId) : void {
-        
+    public function validate(string $id, string $adminId): void
+    {
         if ($this->checkValidated($id, true)) {
             throw new ModelException("Impossible d'effectuer cette operation car ce CashOut est deja valider");
         }
-        
+
         try {
             Queries::updateData(
                 $this->getTableName(),
                 [
-                    Schema::CASHOUT['validated'],
+                    Schema::CASHOUT['admin'],
                 ],
                 "id = ?",
                 [
@@ -56,12 +57,11 @@ class CashOutModel extends AbstractOperationModel
                     $id
                 ]
             );
-            
         } catch (\PDOException $th) {
             throw new ModelException($th->getMessage());
         }
     }
-    
+
     /**
      * 
      * @param string $id
@@ -69,26 +69,27 @@ class CashOutModel extends AbstractOperationModel
      * @throws ModelException
      * @return bool
      */
-    public function checkValidated (?string $id = null, bool $validated = false) : bool {
-        $return = null;
+    public function checkValidated(?string $id = null, bool $validated = false): bool
+    {
+        $return = false;
         $args = [];
-        
+
         if ($id !== null) {
             $args[] = $id;
         }
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE ". ($id!=null? Schema::CASHOUT['id'].'=? AND ' : '').(Schema::CASHOUT['admin']).' IS '.($validated? 'NOT': ''). " NULL", $args);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . ($id != null ? Schema::CASHOUT['id'] . '=? AND ' : '') . (Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . " NULL", $args);
             if ($statement->fetch()) {
                 $return = true;
-            } 
+            }
             $statement->closeCursor();
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
-        
+
         return $return;
     }
-    
+
     /**
      * renvoie les cashout. 
      * @param bool $validated : 
@@ -96,15 +97,16 @@ class CashOutModel extends AbstractOperationModel
      * @throws ModelException
      * @return array|CashOut[]
      */
-    public function findValidated (?bool $validated = false, ?string $adminId = null) : array {
+    public function findValidated(?bool $validated = false, ?string $adminId = null): array
+    {
         $return = [];
         $args = [];
-        
+
         if ($adminId !== null) {
             $args[] = $adminId;
         }
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()}".(($validated !== null || $adminId !== null)? " WHERE " : ''). ($adminId!==null? Schema::CASHOUT['admin'].'=? AND ' : '').($validated !== null? ((Schema::CASHOUT['admin']).' IS '.($validated? 'NOT': ''). " NULL") : ''), $args);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()}" . (($validated !== null || $adminId !== null) ? " WHERE " : '') . ($adminId !== null ? Schema::CASHOUT['admin'] . '=? AND ' : '') . ($validated !== null ? ((Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . " NULL") : ''), $args);
             if ($row = $statement->fetch()) {
                 $return[] = $this->getDBOccurence($row);
                 while ($row = $statement->fetch()) {
@@ -118,7 +120,7 @@ class CashOutModel extends AbstractOperationModel
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
         }
-        
+
         return $return;
     }
 

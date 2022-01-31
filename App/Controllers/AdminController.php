@@ -40,14 +40,14 @@ class AdminController extends Controller
      */
     public function create()
     {
-        if (!$this->redirectAdmin()) {
-
+        if ($this->isAdmin()) {
+            $allAdmin = $this->adminModel->findAll();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $validator = new AdiminValidator();
                 $admin = $validator->createAfterValidation();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
-                    return $this->view("pages.admin.add_test", "layout_admin", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                    return $this->view("pages.admin.administratorsDashboard", "layout_admin", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage(), 'allAdmin' => $allAdmin]);
                 }
                 $mail = $admin->getEmail();
                 $token = $admin->getToken();
@@ -55,14 +55,151 @@ class AdminController extends Controller
                 $nom = $admin->getName();
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "admin/activation-$id-$token";
+                $_SESSION['mail'] = $mail;
                 if ($this->envoieMail($mail, $lien, "Activation et finalisation de la creation du compte", "pages/mail/activationAccoutMail", $nom)) {
-                    Controller::redirect('/user/mail/success');
+                    Controller::redirect('/mail/success');
                 } else {
-                    //view de echec lors de l'envoie du mail
+                    $_SESSION['action'] = 'activation';
+                    Controller::redirect('/admin/mail/resend');
                 }
             }
-            return $this->view('pages.admin.add_test', 'layout_admin');
+            return $this->view('pages.admin.administratorsDashboard', 'layout_admin');
         }
+    }
+
+    /**
+     * Reset password on send mail
+     *
+     * @return void
+     */
+    public function resetPasswordOnMail()
+    {
+        if (!$this->redirectAdmin()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $validator = new AdiminValidator();
+                $admin = $validator->resetPassword();
+                if ($validator->hasError() || $validator->getMessage() != null) {
+                    $errors = $validator->getErrors();
+                    // var_dump($errors);
+                    // exit();
+                    return $this->view("pages.password.reset_pwd_admin", "layout_", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                } else {
+                    /**
+                     * @var Admin
+                     */
+                    $mail = $admin->getEmail();
+                    $token = $admin->getToken();
+                    $id = $admin->getId();
+                    $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
+                    $lien = $domaineName . "admin/reset-$id-$token";
+                    $nom = $admin->getName();
+                    $_SESSION['mail'] = $mail;
+                    if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", $nom)) {
+                        Controller::redirect('admin/mail/success');
+                    } else {
+                        $_SESSION['action'] = 'reset';
+                        Controller::redirect('/admin/mail/resend');
+                    }
+                }
+            }
+            return $this->view("pages.password.reset_pwd_admin", "layout_");
+        }
+    }
+    /**
+     * Resend mail
+     *
+     * @return void
+     */
+    public function mailResend()
+    {
+        $validator = new AdiminValidator();
+        if ($this->sessionExist($_SESSION['action'])) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $admin = $validator->resendMail();
+                if ($validator->hasError() || $validator->getMessage() != null) {
+                    $errors = $validator->getErrors();
+                    return $this->view("pages.admin.mail_sent_error", "layout_", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                }
+                $mail = $admin->getEmail();
+                $token = $admin->getToken();
+                $id = $admin->getId();
+                $nom = $admin->getName();
+                $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
+                if ($_GET['action'] == 'activation') {
+                    $lien = $domaineName . "admin/activation-$id-$token";
+                    if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail", $nom)) {
+                        Controller::redirect('admin/mail/success');
+                    } else {
+                        $_SESSION['action'] = 'activation';
+                        Controller::redirect($_SERVER['HTTP_REFERER']);
+                    }
+                } else if ($_GET['action'] == 'reset') {
+                    $lien = $domaineName . "admin/reset-$id-$token";
+                    if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", $nom)) {
+                        Controller::redirect('admin/mail/success');
+                    } else {
+                        $_SESSION['action'] = 'reset';
+                        Controller::redirect($_SERVER['HTTP_REFERER']);
+                    }
+                }
+            }
+            return $this->view("pages.admin.mail_sent_error", "layout_");
+        } else {
+            Controller::redirect('/admin/login');
+        }
+    }
+
+    /**
+     * Reset password
+     *
+     * @return void
+     */
+    public function resetPassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $validator = new AdiminValidator();
+            $admin = $validator->resetPasswordAfterValidation();
+            if ($validator->hasError() || $validator->getMessage() != null) {
+                $errors = $validator->getErrors();
+                if ($admin->getToken() != "" && $admin->getId() == $_GET['id'] && $admin->getToken() == $_GET['token']) {
+                    return $this->view("pages.password.create_new_pwd_admin", "layout_", ['user' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                } else {
+                    return $this->view('pages.static.404');
+                }
+            } else {
+                Controller::destroyAllSession();
+                Controller::redirect("/admin/password");
+            }
+        }
+        /**
+         * @var Admin $admin
+         */
+        $admin = $this->adminModel->findById($_GET['id']);
+        if ($admin->getToken() != "" && $admin->getToken() == $_GET['token']) {
+            return $this->view("pages.password.create_new_pwd_admin", "layout_");
+        } else {
+            return $this->view('pages.static.404');
+        }
+    }
+
+    /**
+     * Password success
+     *
+     * @return void
+     */
+    public function passwordSuccess()
+    {
+        return $this->view('pages.admin.reset_pwd_success', 'layout_');
+    }
+
+    /**
+     * Mail succes
+     *
+     * @return void
+     */
+    public function mailSendSuccess()
+    {
+        return $this->view('pages.admin.mail_sent_success', 'layout_', ['mail' => $_SESSION['mail']]);
     }
     /**
      * Connexion de l'admin
@@ -94,31 +231,30 @@ class AdminController extends Controller
      */
     public function accountActivation()
     {
-        if (!$this->redirectAdmin()) {
-            $validator = new AdiminValidator();
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $admin = $validator->activeAccountAfterValidation();
-                if ($validator->hasError() || $validator->getMessage() != null) {
-                    $errors = $validator->getErrors();
-                    if ($admin->getToken() != "" && $admin->getId() == $_GET['id']) {
-                        return $this->view("pages.password.create_new_pwd", "layout_admin", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
-                    } else {
-                        return $this->view("pages.static.404");
-                    }
+        Controller::destroyAllSession();
+        $validator = new AdiminValidator();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $admin = $validator->activeAccountAfterValidation();
+            if ($validator->hasError() || $validator->getMessage() != null) {
+                $errors = $validator->getErrors();
+                if ($admin->getToken() != "" && $admin->getId() == $_GET['id']) {
+                    return $this->view("pages.password.create_new_pwd_admin", "layout_admin", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 } else {
-                    $_SESSION[self::SESSION_ADMIN] = $admin;
-                    header('Location:/admin/dashboard');
+                    return $this->view("pages.static.404");
                 }
-            }
-            /**
-             * @var Admin
-             */
-            $admin = $this->adminModel->findById($_GET['id']);
-            if ($admin->getToken() != "") {
-                return $this->view("pages.password.create_new_pwd", "layout_");
             } else {
-                return $this->view("pages.static.404");
+                $_SESSION[self::SESSION_ADMIN] = $admin;
+                header('Location:/admin/dashboard');
             }
+        }
+        /**
+         * @var Admin
+         */
+        $admin = $this->adminModel->findById($_GET['id']);
+        if ($admin->getToken() != "") {
+            return $this->view("pages.password.create_new_pwd_admin", "layout_");
+        } else {
+            return $this->view("pages.static.404");
         }
     }
 
@@ -215,6 +351,22 @@ class AdminController extends Controller
         if ($this->isAdmin()) {
             $this->activeCashOut();
             header("location:" . $_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    /**
+     * All operation systeme
+     *
+     * @return void
+     */
+    public function transaction()
+    {
+        if ($this->isAdmin()) {
+            $binary = array_sum($this->allBinary());
+            $returnInvest = array_sum($this->allReturnInvest());
+            $parainage = array_sum($this->allParainage());
+            //pense a cree cette view. 
+            return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['binary' => $binary, 'returnInvest' => $returnInvest, 'parainage' => $parainage]);
         }
     }
     /**

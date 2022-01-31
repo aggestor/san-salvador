@@ -85,10 +85,10 @@ class UserController extends Controller
                     $nom = $user->getName();
                     $_SESSION['mail'] = $mail;
                     if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", $nom)) {
-                        Controller::redirect('/user/mail/success');
+                        Controller::redirect('/mail/success');
                     } else {
                         $_SESSION['action'] = 'reset';
-                        Controller::redirect('/user/mail/resend');
+                        Controller::redirect('/mail/resend');
                     }
                 }
             }
@@ -113,6 +113,7 @@ class UserController extends Controller
                     return $this->view('pages.static.404');
                 }
             } else {
+                Controller::destroyAllSession();
                 Controller::redirect("/user/password");
             }
         }
@@ -150,10 +151,10 @@ class UserController extends Controller
                 $lien = $domaineName . "activation-$id-$token";
                 $_SESSION['mail'] = $mail;
                 if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail", $nom)) {
-                    Controller::redirect('/user/mail/success');
+                    Controller::redirect('/mail/success');
                 } else {
                     $_SESSION['action'] = 'activation';
-                    Controller::redirect('/user/mail/resend');
+                    Controller::redirect('/mail/resend');
                 }
             }
             return $this->view("pages.user.register", "layout_");
@@ -206,6 +207,12 @@ class UserController extends Controller
             return $this->view('pages.user.sharelink', 'layout_', ['user' => $this->userObject()]);
         }
     }
+
+    /**
+     * Mail resend
+     *
+     * @return void
+     */
     public function mailResend()
     {
         $validator = new UserValidator();
@@ -224,18 +231,18 @@ class UserController extends Controller
                 if ($_GET['action'] == 'activation') {
                     $lien = $domaineName . "activation-$id-$token";
                     if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail", $nom)) {
-                        Controller::redirect('/user/mail/success');
+                        Controller::redirect('/mail/success');
                     } else {
                         $_SESSION['action'] = 'activation';
-                        Controller::redirect('/user/mail/resend');
+                        Controller::redirect('/mail/resend');
                     }
                 } else if ($_GET['action'] == 'reset') {
                     $lien = $domaineName . "reset-$id-$token";
                     if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", $nom)) {
-                        Controller::redirect('/user/mail/success');
+                        Controller::redirect('/mail/success');
                     } else {
                         $_SESSION['action'] = 'reset';
-                        Controller::redirect('/user/mail/resend');
+                        Controller::redirect('/mail/resend');
                     }
                 }
             }
@@ -273,9 +280,7 @@ class UserController extends Controller
     {
         return $this->view('pages.static.registration_success', 'layout_');
     }
-    public function suscribPack(int $id)
-    {
-    }
+
     /**
      * Activation du compte utilisateur
      *
@@ -283,8 +288,7 @@ class UserController extends Controller
      */
     public function accountActivation()
     {
-        unset($_SESSION['mail'], $_SESSION['action']);
-
+        Controller::destroyAllSession();
         $validator = new UserValidator();
         $user = $validator->activeAccountAfterValidation();
         if ($validator->hasError() || $validator->getMessage() != null) {
