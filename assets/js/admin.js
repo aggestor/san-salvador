@@ -90,3 +90,16 @@ $(document).ready(function () {
         showAllAdmin();
     }
 });
+/**
+ * This function handles the admin time each minutes.
+ */
+var timeHandler = function () {
+    var time = new Date;
+    var adminTimer = document.querySelector("#adminTimer");
+    var hours = time.getHours() < 10 ? "0" + time.getHours() : time.getHours();
+    var minutes = time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes();
+    if (adminTimer) {
+        adminTimer.textContent = hours + " : " + minutes;
+    }
+};
+setInterval(function () { return timeHandler(); }, 5000);

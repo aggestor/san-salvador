@@ -32,18 +32,7 @@ toggleButton.addEventListener("click", () => {
 });
 }
 //End of menu humberger code
-/**
- * This function handles the admin time each minutes.
- */
-const timeHandler = (): void => {
-  const time: Date = new Date
-  const adminTimer: Element | null = document.querySelector("#adminTimer");
-  if (adminTimer) {
-      adminTimer.textContent = `${time.getHours()} : ${time.getMinutes()}`;
-  }
-}
 $(document).ready(() => {
-  setInterval(() => timeHandler(), 10000);
      $("#hamburger").on("click", () => {
        $("#other").slideUp("slow");
        $("#mobile").slideDown("slow");

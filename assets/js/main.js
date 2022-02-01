@@ -30,18 +30,7 @@ if (toggleButton) {
     });
 }
 //End of menu humberger code
-/**
- * This function handles the admin time each minutes.
- */
-var timeHandler = function () {
-    var time = new Date;
-    var adminTimer = document.querySelector("#adminTimer");
-    if (adminTimer) {
-        adminTimer.textContent = time.getHours() + " : " + time.getMinutes();
-    }
-};
 $(document).ready(function () {
-    setInterval(function () { return timeHandler(); }, 10000);
     $("#hamburger").on("click", function () {
         $("#other").slideUp("slow");
         $("#mobile").slideDown("slow");
