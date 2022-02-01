@@ -1,7 +1,7 @@
 <div class="w-full flex sticky top-0 justify-between h-14 items-center p-2 border-b border-gray-800">
     <div class="w-2/12 flex justify-between">
         <div class="w-fit rounded text-xl items-center h-11 primary_bg_ p-1 mr-1 text-gray-300 flex my-auto">
-            <span class=" ml-2 font-semibold"> <i class="fa fa-clock mr-2"></i> <span id="adminTimer">12:15</span></span>
+            <span class=" ml-2 font-semibold"> <i class="fa fa-clock mr-2"></i> <span id="adminTimer">Loading...</span></span>
         </div>
     </div>
     <div class="w-5/12">
