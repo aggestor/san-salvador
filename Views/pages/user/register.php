@@ -318,7 +318,7 @@
                         </div>
                         <div class="md:w-11/12  flex justify-between mt-3 mx-auto">
                             <div class="lg:w-9/12 text-gray-500 text-sm">
-                                <b>Note : </b> En cliquant sur  <i>Enregistrer</i>, vous acceptez nos conditions d'utilisations et notre politique de confidentialités.
+                                <b>Note : </b> En cliquant sur  <i>Enregistrer</i>, vous acceptez nos <span class="font-semibold text-green-500"><a href="/terms">conditions d'utilisations</a></span>.
                             </div>
                         </div>
                         <div class="md:w-11/12 w-full flex justify-between mx-auto mt-4">

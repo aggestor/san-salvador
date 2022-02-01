@@ -585,6 +585,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin: 1rem;
 }
 
+.m-5 {
+  margin: 1.25rem;
+}
+
 .my-auto {
   margin-top: auto;
   margin-bottom: auto;
@@ -1419,6 +1423,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding: 0px;
 }
 
+.p-8 {
+  padding: 2rem;
+}
+
+.p-12 {
+  padding: 3rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -2001,6 +2013,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     margin-top: 2rem;
   }
 
+  .lg\:mt-6 {
+    margin-top: 1.5rem;
+  }
+
   .lg\:block {
     display: block;
   }
@@ -2031,6 +2047,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .lg\:h-7 {
     height: 1.75rem;
+  }
+
+  .lg\:h-auto {
+    height: auto;
+  }
+
+  .lg\:h-6 {
+    height: 1.5rem;
   }
 
   .lg\:w-3\/12 {
@@ -2071,6 +2095,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .lg\:w-7 {
     width: 1.75rem;
+  }
+
+  .lg\:w-auto {
+    width: auto;
+  }
+
+  .lg\:w-10\/12 {
+    width: 83.333333%;
   }
 
   .lg\:grid-cols-12 {
@@ -2137,6 +2169,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .lg\:p-3 {
     padding: 0.75rem;
+  }
+
+  .lg\:p-12 {
+    padding: 3rem;
+  }
+
+  .lg\:p-6 {
+    padding: 1.5rem;
   }
 
   .lg\:text-lg {

@@ -20,7 +20,7 @@
                 Pour minimiser ces possibilités et prévenir les attaques de phishing, nous avons développé un
                 ensemble de règles pour sécuriser votre compte.
                 <br> <b>NE donnez PAS</b> votre mot de passe de compte à qui que ce soit. <br> Assurez-vous toujours que
-                vous utilisez notre site Web officiel <span class="font-semibold text-green-500"><a href="https://www.usalvagetrade.com">https: //www.usalvagetrade.com</a></span> 
+                vous utilisez notre site Web officiel <span class="font-semibold text-green-500"><a href="https://www.usalvagetrade.com">https://www.usalvagetrade.com</a></span> 
             </p>
       </div>
       <div class="w-full block mt-2">
