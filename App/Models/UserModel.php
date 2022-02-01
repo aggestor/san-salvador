@@ -205,6 +205,83 @@ class UserModel extends AbstractMemberModel
     }
 
     /**
+     * revuperation des utilisateurs dont leurs compte correspond au premier statut en parametre
+     * @param bool $lock, true pour de compte active, false pour les comptes verrouiller
+     * @param int $limit
+     * @param int $offset
+     * @throws ModelException
+     * @return User[]
+     */
+    public function findByLockState (bool $lock=false, ?int $limit=null, int $offset=0) : array{
+        $data = [];
+        try {
+            $lockColumnName = Schema::USER['locked'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} ?".($limit!==null? " LIMIT {$limit} OFFSET {$offset}":''), [$lock? '1':'0']);
+            if ($row = $statement->fetch()) {
+                $data[] = $this->getDBOccurence($row);
+
+                while ($row = $statement->fetch()) {
+                    $data[] = $this->getDBOccurence($row);
+                }
+
+                $statement->closeCursor();
+            } else {
+                $statement->closeCursor();
+                throw new ModelException("Aucun resultat pour la requette de selection executer");
+            }
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+        }
+        return $data;
+    }
+
+    /**
+     * verification des comptes ayant le status en premier parametre, dans l'intervale specifier en 2 eme 3 eme parametre
+     * @param boolean $lock
+     * @param int $limit
+     * @param int $offset
+     * @return bool
+     * @throws ModelException
+     */
+    public function checkByLockState (bool $lock=false, ?int $limit=null, int $offset=0) : bool {
+        $return = false;
+        try {
+            $lockColumnName = Schema::USER['locked'];
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} ?".($limit!==null? " LIMIT {$limit} OFFSET {$offset}":''), [$lock? '1':'0']);
+            if ($statement->fetch()) {
+                $return = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+        }
+
+        return $return;
+    }
+
+    /**
+     * comptage de compte conforme au status en parametre
+     * @param boolean $lock
+     * @return int
+     * @throws ModelException
+     */
+    public function countByLockState (bool $lock=false) : int {
+        $return = 0;
+        try {
+            $lockColumnName = Schema::USER['locked'];
+            $statement = Queries::executeQuery("SELECT COUNT(id) AS nombre FROM {$this->getTableName()} WHERE {$lockColumnName} ?", [$lock? '1':'0']);
+            if ($row = $statement->fetch()) {
+                $return = $row['nombre'];
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+        }
+
+        return $return;
+    }
+
+    /**
      * {@inheritDoc}
      * @see \Root\App\Models\AbstractDbOccurenceModel::getDBOccurence()
      * @return User
