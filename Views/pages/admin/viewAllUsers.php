@@ -20,9 +20,9 @@
             <div class="w-2/12"><?= $data->getRecordDate()->format("d-m-Y")?></div>
         </div>
         <?php endforeach;?>
-        <div class="w-11/12 h-auto text-gray-200  mx-auto items-center">
+        <div class="w-11/12 h-auto text-gray-400  mx-auto items-center">
            <div class="mb-4">
-               Page <?= $_GET['page'] ." sur <b> ". $params['nombrePage'] . "</b>" ?>
+               Page <?= $_GET['page'] ." sur <b class='text-gray-200'> ". $params['nombrePage'] . "</b>" ?>
            </div> 
            <div>
                <?php

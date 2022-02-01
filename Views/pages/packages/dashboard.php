@@ -33,7 +33,7 @@
                             <div class="w-2/12 p-2 mt-1"><?= $pack->getName()?>$</div>
                             <div class="w-2/12 p-2 mt-1"><?= $pack->getAmountMin()?>$</div>
                             <div class="w-2/12 p-2 mt-1"><?= $pack->getAmountMax()?>$</div>
-                            <div class="w-2/12 p-2 mt-1">Gain journalier</div>
+                            <div class="w-2/12 p-2 mt-1"><?= $pack->getAcurracy()?>%</div>
                         </div>
 
                     <?php endforeach ;?>
