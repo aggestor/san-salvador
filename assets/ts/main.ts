@@ -202,8 +202,6 @@ $("#copy").click(() => {
   
 })
 
-
-
 declare type animationType = "slide" | "fade"
 declare type displayType = "hide" | "show";
 /**
@@ -219,7 +217,6 @@ function displaySwitcher(elements : Array<HTMLElement>, display : displayType, a
     } else if (display === "show" && animation === "slide") {
       $(elt).slideDown();
     }
-     
   })
 }
 /**
@@ -305,7 +302,9 @@ function menuHighLighter(): void {
     "/login",
     "/reset-password",
     "/contact",
-    "/about"
+    "/about",
+    "/security",
+    "/terms"
   ];
   const path = window.location.pathname
   const menus = document.querySelectorAll("#defaultMenu li span a");
@@ -341,8 +340,14 @@ function menuHighLighter(): void {
       case "/contact":
         setHeadImportantData({ title: "Soyez en contacts avec nous" });
         break;
+      case "/security":
+        setHeadImportantData({ title: "La securité chez Usalvagetrade" });
+        break;
       case "/about":
         setHeadImportantData({ title: "A propos de nous" });
+        break;
+      case "/terms":
+        setHeadImportantData({ title: "Conditions d'utilisations" });
         break;
       default :
         setHeadImportantData({ title: "Page non trouvé" });

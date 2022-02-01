@@ -195,8 +195,6 @@ class UserController extends Controller
         if ($this->isUsers()) {
             $format = new TreeFormater();
             $tree = $format->format();
-            echo ($tree);
-            exit();
             return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject(), 'tree' => $tree]);
         }
     }

@@ -16,7 +16,12 @@ adminPaths &&
         var pathname = path.dataset["path"];
         $(path).click(function () {
             if (pathname) {
-                window.location.pathname = "/admin" + pathname;
+                if (pathname == "local") {
+                    window.location.pathname = "/";
+                }
+                else {
+                    window.location.pathname = "/admin" + pathname;
+                }
             }
         });
     });
