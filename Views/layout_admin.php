@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="/assets/css/aos.min.css" />
     <link rel="stylesheet" href="/assets/css/global.css" />
     <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css" />
-    <!--
-        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    -->
 </head>
 
 <body class="w-screen primary_bg bg-opacity-100 grid grid-cols-12 overflow-y-hidden ">
