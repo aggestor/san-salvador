@@ -7,16 +7,15 @@
             <li class="text-base"><span><a href="/help">Aide</a></span></li>
             <li class="text-base"><span><a href="/packages">Packs</a></span></li>
             <li class="text-base"><span><a href="/services">Services</a></span></li>
-            <?php
-if (!isset($_SESSION['users'])): ?>
-                    <li class="text-base">|</li>
-                    <li class="hover:text-green-500 font-semibold text-base"><a href="/register">Créer un compte</a></li>
-                    <li class="text-base">ou</li>
-                    <li class="hover:text-green-500 font-semibold text-base"><a class="_green_btn" href="/login">Connexion</a></li>
-                 <?php else: ?>
-                    <li class="hover:text-green-500 text-base"><a href="/user/dashboard">Profil</a></li>
+            <?php if (!isset($_SESSION['users'])): ?>
+                <li class="text-base">|</li>
+                <li class="hover:text-green-500 font-semibold text-base"><a href="/register">Créer un compte</a></li>
+                <li class="text-base">ou</li>
+                <li class="hover:text-green-500 font-semibold text-base"><a class="_green_btn" href="/login">Connexion</a></li>
+            <?php else: ?>
+                <li class="hover:text-green-500 text-base"><a href="/user/dashboard">Profil</a></li>
                 <li class="hover:text-green-500 font-semibold text-base"><a href="/user/logout">Déconnexion</a></li>
-                <?php endif;?>
+            <?php endif;?>
 
 
         </ul>

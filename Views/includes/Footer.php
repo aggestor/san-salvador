@@ -3,7 +3,7 @@
     <div class="w-3/12 flex">
         <span class="text-gray-100 text-lg  font-semibold">USALVAGETRADE</span>
     </div>
-    <div class="md:w-3/12 w-8/12 flex flex-col ">
+    <div class="md:w-3/12 w-10/12 flex flex-col ">
         <p class=" w-11/12 mt-4 text-xl text-white font-bold">Platforme</p>
          <div class="text-gray-200 flex flex-col">
             <span class="mt-3">
@@ -19,7 +19,7 @@
                 <a href="/contact">Nos Contacts</a>
             </span>
         </div>
-        <div class="flex w-10/12 mt-3 mb-2 text-gray-200 justify-between">
+        <div class="flex md:w-10/12 w-full mt-3 mb-2 text-gray-200 justify-between">
             
             <span>
                 <a href="#"><i class="fab fa-2x fa-facebook "></i></a>
@@ -40,7 +40,7 @@
         </div>
        
     </div>
-    <div class="md:w-3/12 w-8/12 flex flex-col ">
+    <div class="md:w-3/12 w-10/12 flex flex-col ">
         <p class=" w-11/12 mt-4 text-xl text-white font-bold">Entreprise</p> 
         <div class="text-gray-200 flex flex-col">
             <span class="mt-3">
@@ -57,7 +57,7 @@
             </span>
         </div>  
     </div>
-    <div class="md:w-3/12 w-8/12 flex flex-col "></div>
+    <div class="md:w-3/12 w-10/12 flex flex-col "></div>
     </div>
     <div class="flex text-gray-400 border-t pt-2 pb-2 mt-3 border-gray-400 w-11/12 mx-auto flex-col">
     <span>&#169; <?= date("Y")?> Usalvagetrade. All rights reserved</span>
