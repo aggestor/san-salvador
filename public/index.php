@@ -110,6 +110,7 @@ $routes->get('/user/dashboard', 'Root\App\Controllers\UserController@dashboard')
 $routes->get('/user/logout', 'Root\App\Controllers\UserController@logout');
 $routes->get('/user/me', 'Root\App\Controllers\UserController@profil');
 $routes->get('/user/tree', 'Root\App\Controllers\UserController@tree');
+$routes->get('/user/tree-data', 'Root\App\Controllers\UserController@treeData');
 
 //les routes pour le retrait dans le systeme
 $routes->get('/user/cashout', 'Root\App\Controllers\CashOutController@cashout');

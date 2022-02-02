@@ -6,7 +6,7 @@
                 <p class="text-gray-500 w-full"> Notre plateforme vous assure la sécurité dans tous les services qu'elle vous fournit.</p>
             </div>
             <div class="w-1/2 flex justify-center items-center h-96">
-                <img src="/assets/logos/h.png" class="h-80" alt="security illustration">
+                <img src="/assets/logos/security.png" class="h-80" alt="security illustration">
             </div>
         </div>
       <div class="w-full block mt-2">
