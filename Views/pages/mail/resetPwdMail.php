@@ -1,101 +1,76 @@
-<html lang='en'>
+<!doctype html>
+<html lang="en-US">
 
 <head>
-    <meta charset='UTF-8'>
-    <style>
-        *{
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            width: 100vw; background-color: #020613;
-            overflow: hidden;
-        }
-        .parent{
-            height: 70% ;
-            width: 70%;
-            display: flex;  
-            background: #262c3054;
-            border-radius: 10px;   
-            padding: 20px;
-        }
-        .parent h1{
-            color: #39e293;
-        }
-        .text-semi-white{
-            color: #f0f8ff;
-        }
-        .text-exp{
-            color: #a5a5a5;
-        }
-        .child-1, .child-2{
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-        }
-        .link{
-            color:#2c4bff;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .button{
-            background: #2c4bff;
-            padding: 10px 20px;
-            color: white;
-            border-radius: 20px;
-            font-weight: 500;
-            text-decoration: none;
-        }
-        .p-btn{
-             margin: 30px 0;
-        }
-         @media (max-width:992px) {
-             .parent{
-                height: auto ;
-                width: 70%;
-                display: flex;  
-
-                background: #262c3054;
-                border-radius: 10px;   
-                padding: 20px;
-            }
-            .child-2{
-                display: hidden;
-            }
-         }
-         .my-2{
-             margin: 10px 0;
-         }
-        
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Reset Password Email Template</title>
+    <meta name="description" content="Reset Password Email Template.">
+    <style type="text/css">
+        a:hover {text-decoration: underline !important;}
     </style>
 </head>
 
-<body>
-    <div class="parent">
-        <div class="child-1">
-            <h1>Usalvagetrade</h1>
-            <div class="child">
-                <h3 class="text-semi-white">Reinitialisation du mot de passe !!!</h3>
-                <p class="text-exp">
-                    Salut <strong><?= $nom ?></strong>, vous nous avez demander une reinitialisation du mot de passe .</p>
-                <p class="text-exp">Si vous avez vraiment fait cette demande, cliquer sur le bouton ci-bas, pour choisir un nouveau mot de passe !</p>
-                <p class="p-btn">
-                    <a class="button" href='<?php echo $lien ?>'>Choisir un nouveau mot de passe</a>
-                </p>
-                <small class="text-exp my-2"><b>Note : </b>  Si vous n'avez pas fait une demande de reinitialisation de mot passe, vous pouvez ignorer ce mail, votre mot passe ne changera pas.</small>
-                <p class="text-exp">Merci. <br> L'équipe <a class="link" href="https://usalvagetrade.com">USALVAGETRADE Inc.</a> </p>
+<body marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
+    <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor="#f2f3f8"
+        style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;">
+        <tr>
+            <td>
+                <table style="background-color: #f2f3f8; max-width:670px;  margin:0 auto;" width="100%" border="0"
+                    align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="height:80px;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">
+                          <a href="https://uslavagetrade.com" title="logo" target="_blank">
+                            <img width="60" src="https://i.ibb.co/hL4XZp2/android-chrome-192x192.png" title="logo" alt="logo">
+                          </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:20px;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0"
+                                style="max-width:670px;background:#fff; border-radius:3px; text-align:center;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);">
+                                <tr>
+                                    <td style="height:40px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0 35px;">
+                                        <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">Reinitialisation du mot de passe</h1>
+                                        <span
+                                            style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
+                                        <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
+                                             Salut <strong><?= $nom ?></strong>, vous nous avez demander une reinitialisation du mot de passe .<br>
+                                        Si vous avez vraiment fait cette demande, cliquer sur le bouton ci-bas, pour choisir un nouveau mot de passe ! <br>
+                                        <b>Note : </b>  Si vous n'avez pas fait une demande de reinitialisation de mot passe, vous pouvez ignorer ce mail, votre mot passe ne changera pas.</small>
+                                        </p>
+                                        <a href="<?php echo $lien ?>"
+                                            style="background:#1064ff;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Reinitialiser mot de passe</a> <br>
 
-            </div>
-        </div>
-        <div class="child-2">
-            <img src="https://usalvagetrade.com/assets/logos/reset-pwd.png" alt="Reset Password Illustration">
-        </div>
-        
-    </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:40px;">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </td>
+                    <tr>
+                        <td style="height:20px;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">
+                            <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; <strong>www.usalvagetrade.com</strong></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:80px;">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
-
 </html>
