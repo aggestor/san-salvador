@@ -301,3 +301,9 @@ header{
 .h-screen-customer.mobile{
   height: auto;
 }
+#binaryTreeContainer svg{
+  background-color : #020613 
+}
+.node rect {
+    fill: #04c053;
+  }

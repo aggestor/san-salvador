@@ -8,7 +8,6 @@ use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\User;
 use Root\App\Models\Objects\Inscription;
 use Root\App\Controllers\Validators\UserValidator;
-use Root\Core\TreeFormater;
 use Root\Core\TreeFormatter;
 
 class UserController extends Controller
@@ -193,9 +192,15 @@ class UserController extends Controller
     public function tree()
     {
         if ($this->isUsers()) {
-            $format = new TreeFormater();
+            return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject()]);
+        }
+    }
+    public function treeData()
+    {
+        if ($this->isUsers()) {
+            $format = new TreeFormatter();
             $tree = $format->format();
-            return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject(), 'tree' => $tree]);
+            echo $tree;
         }
     }
 

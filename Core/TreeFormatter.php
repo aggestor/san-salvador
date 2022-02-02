@@ -6,7 +6,7 @@ use Root\App\Controllers\Controller;
 use Root\App\Models\Objects\User;
 use Root\App\Models\UserModel;
 
-class TreeFormater extends Controller
+class TreeFormatter extends Controller
 {
 
     /**
@@ -20,7 +20,7 @@ class TreeFormater extends Controller
         $root = $this->allUsers();
         $image = $root->getNodeIcon() == null ? "null" : explode(" AND ", $root->getNodeIcon());
         $image = str_replace("\\", "/", $image[1]);
-        $json = " {";
+        $json = "{";
         $json .= "\"Id\":\"{$root->getId()}\"";
         $json .= ",\"name\":\"{$root->getName()}\"";
         $json .= ",\"icon\":\"{$image}\"";
