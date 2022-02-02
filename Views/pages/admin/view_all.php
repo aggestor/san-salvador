@@ -24,9 +24,9 @@
             </div>
         </div>
         <?php foreach($params['allAdmin'] as $admin): ?>
-        <div class="w-11/12 mx-auto flex justify-between  h-24 my-3 border-b border-gray-500">
+        <div class="w-11/12 mx-auto flex justify-between  h-24 my-3 pb-1">
             <div class="h-full overflow-hidden w-2/12">
-                <img src="/assets/people/2.jpg" class="object-cover" alt="">
+                <img src="/assets/logos/user.png" class="object-contain h-full w-full" alt="User Silhouette">
             </div>
             <div class="h-full flex justify-between overflow-hidden w-10/12">
                 <div class="w-2/12 pl-3 h-8/12 justify-center flex flex-col">
@@ -39,13 +39,12 @@
                     <span class="text-gray-400"><?= $admin->getEmail() ?></span>
                 </div>
                 <div class="w-2/12 pl-3 h-8/12 justify-center flex flex-col">
-                    <form action="/admin/ban">
-                        <button class="text-white hover:bg-blue-600 hover:rounded-lg p-1 transition-all duration-200 bg-blue-500 rounded flex items-center justify-center h-9">Désactiver <i class="fas fa-ban mt-1 ml-1" aria-hidden="true"></i></button>
+                    <form method="POST" action="/admin/ban">
+                        <button class="text-white hover:bg-blue-800 text-sm p-1 transition-all duration-200 bg-blue-600 font-semibold rounded flex items-center justify-center h-9">Désactiver <i class="fas fa-ban mt-1 ml-1" aria-hidden="true"></i></button>
                     </form>
                 </div>
             </div>
         </div>
         <?php endforeach ?>
-        
     </div>
 </div>

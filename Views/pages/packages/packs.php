@@ -2,7 +2,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;" id="pack" class="col-span-12 flex bg-opacity-10 items-center z-10 h-96">
-    <div class="flex flex-col lg:h-36 h-48 bg-black blur-lg w-10/12 p-4 mx-auto bg-opacity-70">
+    <div class="flex flex-col lg:h-36 h-48 bg-black backdrop-blur-md w-10/12 p-4 mx-auto bg-opacity-70">
         <h1 class="lg:text-5xl text-xl _green_text font-bold">Forfaits de démarrage </h1>
         <p class="lg:text-xl text-base lg:w-8/12 w-full my-3 text-gray-100">Pour commencer avec Usalvagetrade en tant qu'affilié, voici les différents forfaits de démarrage parmi lesquels choisir.</p>
     </div>

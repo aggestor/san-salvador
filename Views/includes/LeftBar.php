@@ -30,7 +30,7 @@
         <div data-path="/currencies" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
            <div class="w-11/12 mx-auto flex ">
                 <span class="w-2/12"><i class="fas fa-dollar-sign"></i></span> 
-                <span class="w-10/12 mt-0.5">Devises</span>
+                <span class="w-10/12 mt-0.5">Moyens de paiements</span>
            </div>
         </div>
         <div data-path="/validate/cashout" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
@@ -43,6 +43,12 @@
            <div class="w-11/12 mx-auto flex ">
                 <span class="w-2/12"><i class="fas fa-check-double  "></i></span> 
                 <span class="w-10/12 mt-0.5">Inscriptions</span>
+           </div>
+        </div>
+        <div data-path="local" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+           <div class="w-11/12 mx-auto flex ">
+                <span class="w-2/12"><i class="fas fa-arrow-left  "></i></span> 
+                <span class="w-10/12 mt-0.5">Retour à l'acceuil</span>
            </div>
         </div>
         <div class="absolute left-3 bottom-2">

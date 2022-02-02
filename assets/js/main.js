@@ -1,10 +1,10 @@
 "use strict";
 var $;
-(function () {
-    var handler = document.querySelector("#menuHandler");
-    var menu = document.querySelector("#menu");
+(() => {
+    const handler = document.querySelector("#menuHandler");
+    const menu = document.querySelector("#menu");
     handler &&
-        handler.addEventListener("click", function () {
+        handler.addEventListener("click", () => {
             $("#menuContainer").css("padding", "15px");
             $(menu).slideToggle();
         });
@@ -12,60 +12,49 @@ var $;
 /**
  * All these lines bellow concern menu humberger
  */
-var toggleButton = document.getElementById("toggle-button");
+const toggleButton = document.getElementById("toggle-button");
 if (toggleButton) {
-    var iconButton_1 = toggleButton.querySelector(".fas");
-    var navbar_1 = document.getElementById("navbar");
-    toggleButton.addEventListener("click", function () {
-        navbar_1 && navbar_1.classList.toggle("hidden");
-        if (iconButton_1)
-            if (iconButton_1.classList.contains("fa-bars")) {
-                iconButton_1.classList.remove("fa-bars");
-                iconButton_1.classList.add("fa-times");
+    const iconButton = toggleButton.querySelector(".fas");
+    const navbar = document.getElementById("navbar");
+    toggleButton.addEventListener("click", () => {
+        navbar && navbar.classList.toggle("hidden");
+        if (iconButton)
+            if (iconButton.classList.contains("fa-bars")) {
+                iconButton.classList.remove("fa-bars");
+                iconButton.classList.add("fa-times");
             }
             else {
-                iconButton_1.classList.remove("fa-times");
-                iconButton_1.classList.add("fa-bars");
+                iconButton.classList.remove("fa-times");
+                iconButton.classList.add("fa-bars");
             }
     });
 }
 //End of menu humberger code
-/**
- * This function handles the admin time each minutes.
- */
-var timeHandler = function () {
-    var time = new Date;
-    var adminTimer = document.querySelector("#adminTimer");
-    if (adminTimer) {
-        adminTimer.textContent = time.getHours() + " : " + time.getMinutes();
-    }
-};
-$(document).ready(function () {
-    setInterval(function () { return timeHandler(); }, 10000);
-    $("#hamburger").on("click", function () {
+$(document).ready(() => {
+    $("#hamburger").on("click", () => {
         $("#other").slideUp("slow");
         $("#mobile").slideDown("slow");
     });
-    $("#times").on("click", function () {
+    $("#times").on("click", () => {
         $("#mobile").slideUp("slow");
         $("#other").slideDown("slow");
     });
     $("#year").text(new Date().getFullYear().toString());
 });
-var imageUpload = document.querySelector("#image");
+const imageUpload = document.querySelector("#image");
 $(".hide-b4-save").hide();
 /**
  * Initializing cropper class
  */
 var Cropper;
-var cropper = new Cropper({
+const cropper = new Cropper({
     width: 320,
     height: 320,
     onChange: function () {
-        var image = this.getCroppedImage();
-        var file = dataURLtoFile(image, "user");
+        const image = this.getCroppedImage();
+        const file = dataURLtoFile(image, "user");
         if (imageUpload && file && imageUpload.files) {
-            var dataTransfer = new DataTransfer();
+            const dataTransfer = new DataTransfer();
             dataTransfer.items.add(file);
             imageUpload.files = dataTransfer.files;
         }
@@ -78,19 +67,19 @@ var cropper = new Cropper({
  * @returns {File | undefined}
  */
 function dataURLtoFile(dataUrl, filename) {
-    var array = dataUrl.split(",");
+    let array = dataUrl.split(",");
     if (array !== null) {
-        var matchExtension = array[0].match(/data:(.*);/);
-        var matchMimeType = array[0].match(/:(.*?);/);
-        var extension = void 0;
-        var mime = void 0;
+        const matchExtension = array[0].match(/data:(.*);/);
+        const matchMimeType = array[0].match(/:(.*?);/);
+        let extension;
+        let mime;
         if (matchExtension !== null) {
             extension = matchExtension[1].split("/")[1];
             if (matchMimeType !== null) {
                 mime = matchMimeType[1];
-                var bstr = atob(array[1]);
-                var n = bstr.length;
-                var u8array = new Uint8Array(n);
+                let bstr = atob(array[1]);
+                let n = bstr.length;
+                let u8array = new Uint8Array(n);
                 while (n--) {
                     u8array[n] = bstr.charCodeAt(n);
                 }
@@ -99,58 +88,60 @@ function dataURLtoFile(dataUrl, filename) {
         }
     }
 }
-var imageUploader = document.querySelector("#imageToCrop");
-imageUploader && imageUploader.addEventListener("change", function (evt) {
-    if (evt.target !== null) {
-        var target = evt.target;
-        var image = target.files[0];
-        if (image) {
-            var fileReader_1 = new FileReader();
-            fileReader_1.onload = function () {
-                cropper.loadImage(fileReader_1.result).then(function () { });
-                $("#crop").slideDown();
-                $("#crop").removeClass(".hidden");
-                $(".hide-b4-save").slideDown();
-            };
-            fileReader_1.readAsDataURL(image);
+const imageUploader = document.querySelector("#imageToCrop");
+imageUploader &&
+    imageUploader.addEventListener("change", (evt) => {
+        if (evt.target !== null) {
+            const target = evt.target;
+            const image = target.files[0];
+            if (image) {
+                const fileReader = new FileReader();
+                fileReader.onload = function () {
+                    cropper.loadImage(fileReader.result).then(() => { });
+                    $("#crop").slideDown();
+                    $("#crop").removeClass(".hidden");
+                    $(".hide-b4-save").slideDown();
+                };
+                fileReader.readAsDataURL(image);
+            }
         }
-    }
-});
+    });
 document.querySelector("#crop") && cropper.render("#crop");
 //Add user interactions stars here
-var formStepsButtons = document.querySelectorAll(".form-user-btn");
-formStepsButtons && formStepsButtons.forEach(function (button) {
-    var buttonName = button.name;
-    $(button).on("click", function (e) {
-        e.preventDefault();
-        useFormButtons(buttonName);
-    });
-    var cameraBtn = document.querySelector("#camera");
-    if (cameraBtn && imageUploader)
-        cameraBtn.addEventListener("click", function (e) {
+const formStepsButtons = document.querySelectorAll(".form-user-btn");
+formStepsButtons &&
+    formStepsButtons.forEach((button) => {
+        const buttonName = button.name;
+        $(button).on("click", function (e) {
             e.preventDefault();
-            imageUploader.click();
-            e.stopImmediatePropagation();
+            useFormButtons(buttonName);
         });
-    function useFormButtons(name) {
-        switch (name) {
-            case "2":
-                $(".form-1").slideUp();
-                $("#register-title").text("Ajouter votre photo en cliquant sur le bouton ci-bas");
-                $("#userIcon").slideUp();
-                $(".form-2").slideDown();
-                break;
-            case "-2":
-                $(".form-1").slideDown();
-                $(".form-2").slideUp();
-                break;
+        const cameraBtn = document.querySelector("#camera");
+        if (cameraBtn && imageUploader)
+            cameraBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                imageUploader.click();
+                e.stopImmediatePropagation();
+            });
+        function useFormButtons(name) {
+            switch (name) {
+                case "2":
+                    $(".form-1").slideUp();
+                    $("#register-title").text("Ajouter votre photo en cliquant sur le bouton ci-bas");
+                    $("#userIcon").slideUp();
+                    $(".form-2").slideDown();
+                    break;
+                case "-2":
+                    $(".form-1").slideDown();
+                    $(".form-2").slideUp();
+                    break;
+            }
         }
-    }
-});
-var userMenus = document.querySelectorAll("[data-path-user]");
-userMenus.forEach(function (menu) {
+    });
+const userMenus = document.querySelectorAll("[data-path-user]");
+userMenus.forEach((menu) => {
     menu.addEventListener("click", function () {
-        var path = menu.getAttribute("data-path-user");
+        const path = menu.getAttribute("data-path-user");
         if (path) {
             window.location.pathname = path;
         }
@@ -159,25 +150,27 @@ userMenus.forEach(function (menu) {
 /**
  * Pairing sides
  */
-var paringSides = document.querySelector("#pairing-sides");
-var sides = paringSides === null || paringSides === void 0 ? void 0 : paringSides.querySelectorAll("[data-side]");
-sides === null || sides === void 0 ? void 0 : sides.forEach(function (side) {
-    side.addEventListener("click", function (e) {
-        var sideId = side.getAttribute("data-side");
+const paringSides = document.querySelector("#pairing-sides");
+const sides = paringSides?.querySelectorAll("[data-side]");
+sides?.forEach((side) => {
+    side.addEventListener("click", (e) => {
+        const sideId = side.getAttribute("data-side");
         setActiveSide(side);
     });
 });
 function setActiveSide(side) {
     $(side).attr("class", "flex border border-gray-400 cursor-pointer bg-green-500 text-gray-900 rounded h-12 p-1 items-center w-4/12 justify-between");
-    $(side).siblings().attr("class", "flex border border-gray-400 cursor-pointer text-gray-300 rounded h-12 p-1 items-center w-4/12 justify-between");
-    var sideCircle = side === null || side === void 0 ? void 0 : side.querySelector("span:nth-child(2)");
+    $(side)
+        .siblings()
+        .attr("class", "flex border border-gray-400 cursor-pointer text-gray-300 rounded h-12 p-1 items-center w-4/12 justify-between");
+    const sideCircle = side?.querySelector("span:nth-child(2)");
     $($(side).siblings().children()[1]).html("<i></i>");
     $(sideCircle).attr("class", "h-7 w-7 rounded-full border border-gray-900 grid place-items-center bg-gray-900");
     $(sideCircle).html("<i class='fas fa-check-circle text-green-500'></i>");
-    $("#valueToCopy").text("https://usalvagetrade.com/register-" + $(side).data("side") + "-" + $("#valueToCopy").data("parent") + "-" + $("#valueToCopy").data("sponsor"));
+    $("#valueToCopy").text(`https://usalvagetrade.com/register-${$(side).data("side")}-${$("#valueToCopy").data("parent")}-${$("#valueToCopy").data("sponsor")}`);
 }
-$("#copy").click(function () {
-    var valueToCopy = document.querySelector("#valueToCopy");
+$("#copy").click(() => {
+    const valueToCopy = document.querySelector("#valueToCopy");
 });
 /**
  * Helps to switch Jquery display for many elements
@@ -186,7 +179,7 @@ $("#copy").click(function () {
  * @param {animationType} animation  display to give to the elements
  */
 function displaySwitcher(elements, display, animation) {
-    elements.forEach(function (elt) {
+    elements.forEach((elt) => {
         if (display === "hide" && animation === "slide") {
             $(elt).slideUp();
         }
@@ -200,26 +193,27 @@ function displaySwitcher(elements, display, animation) {
  * We are using these buttons to just switch between transaction sources
  * All these three buttons are used to just switch them
  */
-var transactionBtns = document.querySelectorAll(".transaction-btn");
-var defaultTransactionData = document.querySelector("#defaultTransactionData");
-var AMTransactionData = document.querySelector("#AMTransactionData");
-var MPSTransactionData = document.querySelector("#MPSTransactionData");
-var BTCTransactionData = document.querySelector("#BTCTransactionData");
-transactionBtns.forEach(function (btn) {
-    var dataTransType = btn.getAttribute("data-trans-type");
-    $(btn).on("click", function (e) {
+const transactionBtns = document.querySelectorAll(".transaction-btn");
+const defaultTransactionData = document.querySelector("#defaultTransactionData");
+let AMTransactionData = document.querySelector("#AMTransactionData");
+let MPSTransactionData = document.querySelector("#MPSTransactionData");
+let BTCTransactionData = document.querySelector("#BTCTransactionData");
+transactionBtns.forEach((btn) => {
+    const dataTransType = btn.getAttribute("data-trans-type");
+    $(btn).on("click", (e) => {
         e.preventDefault();
         /**
          * There's still some issues about the design and css logic for the buttons
          * About functionnality the are working perfectly
          */
-        var activeBtnClass = "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white rounded-l transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
+        let activeBtnClass = "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white rounded-l transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
         if (dataTransType === "btc") {
             console.log("ok ok");
             AMTransactionData &&
                 MPSTransactionData &&
                 displaySwitcher([MPSTransactionData, AMTransactionData], "hide", "slide");
-            BTCTransactionData && displaySwitcher([BTCTransactionData], "show", "slide");
+            BTCTransactionData &&
+                displaySwitcher([BTCTransactionData], "show", "slide");
         }
         else if (dataTransType === "am") {
             activeBtnClass =
@@ -236,12 +230,157 @@ transactionBtns.forEach(function (btn) {
             BTCTransactionData &&
                 AMTransactionData &&
                 displaySwitcher([BTCTransactionData, AMTransactionData], "hide", "slide");
-            MPSTransactionData && displaySwitcher([MPSTransactionData], "show", "slide");
+            MPSTransactionData &&
+                displaySwitcher([MPSTransactionData], "show", "slide");
         }
-        defaultTransactionData && displaySwitcher([defaultTransactionData], "hide", "slide");
+        defaultTransactionData &&
+            displaySwitcher([defaultTransactionData], "hide", "slide");
         $(btn)
             .attr("class", activeBtnClass)
             .siblings()
             .attr("class", "w-4/12 transaction-btn hover:bg-blue-600 hover:text-white transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center text-gray-300");
     });
 });
+function menuHighLighter() {
+    const knownPaths = [
+        "/",
+        "/packages",
+        "/help",
+        "/services",
+        "/register",
+        "/login",
+        "/reset-password",
+        "/contact",
+        "/about",
+        "/security",
+        "/terms",
+    ];
+    const path = window.location.pathname;
+    const menus = document.querySelectorAll("#defaultMenu li span a");
+    menus.forEach((menu) => {
+        const menuPath = menu.getAttribute("href");
+        if (menuPath == path) {
+            $(menu).attr("class", "_green_text font-semibold");
+        }
+    });
+    if (knownPaths.indexOf(path) != -1) {
+        switch (path) {
+            case "/":
+                setHeadImportantData({});
+                break;
+            case "/services":
+                setHeadImportantData({ title: "Nos services" });
+                break;
+            case "/help":
+                setHeadImportantData({ title: "Aide, FAQ" });
+                break;
+            case "/packages":
+                setHeadImportantData({ title: "Les packs que nous proposons" });
+                break;
+            case "/register":
+                setHeadImportantData({ title: "Créer un compte" });
+                break;
+            case "/login":
+                setHeadImportantData({ title: "Connectez-vous sur notre plateforme" });
+                break;
+            case "/reset-password":
+                setHeadImportantData({ title: "Réinitialisation du mot de passe" });
+                break;
+            case "/contact":
+                setHeadImportantData({ title: "Soyez en contacts avec nous" });
+                break;
+            case "/security":
+                setHeadImportantData({ title: "La securité chez Usalvagetrade" });
+                break;
+            case "/about":
+                setHeadImportantData({ title: "A propos de nous" });
+                break;
+            case "/terms":
+                setHeadImportantData({ title: "Conditions d'utilisations" });
+                break;
+            default:
+                setHeadImportantData({ title: "Page non trouvé" });
+                break;
+        }
+    }
+}
+function setHeadImportantData(data) {
+    const preTitle = data.title || "La révolution du commerce de la cryptomonnaie";
+    const title = preTitle + " | USALVAGETRADE";
+    document.title = title;
+}
+menuHighLighter();
+class BinaryTree {
+    /**
+     * The actual data we goonna try to work with
+     */
+    data = { Id: "", icon: "", childs: [], name: "" };
+    /**
+     * The tree we gonna render
+     */
+    tree = [];
+    imgPath = "/assets/img/";
+    constructor(data) {
+        if (data)
+            this.data = data;
+    }
+    hasChildren(data) {
+        return Array.isArray(data.childs) && data.childs.length > 0 ? true : false;
+    }
+    getAndSetRoot() {
+        this.tree.push({
+            id: this.data.Id,
+            name: this.data.name,
+            img: this.imgPath + this.data.icon,
+        });
+    }
+    getAllChildrenFrom(data) {
+        if (data.childs) {
+            let length = data.childs.length, i = 0;
+            for (i; i < length; i++) {
+                if (this.hasChildren(data.childs[i])) {
+                    this.getAllChildrenFrom(data.childs[i]);
+                }
+                this.tree.push({
+                    pid: data.Id,
+                    id: data.childs[i].Id,
+                    name: data.childs[i].name,
+                    img: this.imgPath + data.childs[i].icon,
+                });
+            }
+        }
+    }
+    /**
+     * Actually this the method that execute in which order our array will be fill in
+     */
+    drawTree() {
+        this.getAndSetRoot();
+        this.getAllChildrenFrom(this.data);
+    }
+}
+function drawBinaryTree(data) {
+    const treeContainer = document.getElementById("binaryTreeContainer");
+    if (treeContainer) {
+        const bt = new BinaryTree(data);
+        bt.drawTree();
+        const chart = new OrgChart(document.getElementById("binaryTreeContainer"), {
+            enableSearch: false,
+            enableDragDrop: true,
+            mouseScrool: OrgChart.none,
+            nodeBinding: {
+                field_0: "name",
+                img_0: "img",
+            },
+            nodes: bt.tree,
+        });
+    }
+}
+window.location.pathname === "/user/tree" &&
+    $.post({
+        method: "GET",
+        url: "/user/tree-data",
+        success: (data) => {
+            const parsedData = JSON.parse(data);
+            drawBinaryTree(parsedData);
+        },
+    });

@@ -114,16 +114,22 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     <span class="w-10/12 mt-0.5">Retrait</span>
             </div>
             </div>
-            <div data-path-user="/" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
-            <div class="w-11/12 mx-auto flex ">
-                    <span class="w-2/12"><i class="fas fa-arrow-left"></i></span>
-                    <span class="w-10/12 mt-0.5">Retour à l'acceuil</span>
-            </div>
-            </div>
             <div data-path-user="/user/share/link" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
             <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-share"></i></span>
                     <span class="w-10/12 mt-0.5">Partager</span>
+            </div>
+            </div>
+            <div data-path-user="/packages" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div class="w-11/12 mx-auto flex ">
+                    <span class="w-2/12"><i class="fas fa-upload"></i></span>
+                    <span class="w-10/12 mt-0.5">Remonter de pack</span>
+            </div>
+            </div>
+            <div data-path-user="/" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div class="w-11/12 mx-auto flex ">
+                    <span class="w-2/12"><i class="fas fa-arrow-left"></i></span>
+                    <span class="w-10/12 mt-0.5">Retour à l'acceuil</span>
             </div>
             </div>
             <div data-path-user="/user/logout" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">

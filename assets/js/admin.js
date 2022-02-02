@@ -1,51 +1,56 @@
 "use strict";
 var $;
 //handling image uploader by clicking image holder
-$("#imageHolder").click(function (e) {
+$("#imageHolder").click((e) => {
     e.preventDefault();
     $("#packImageUploader").click();
     e.stopImmediatePropagation();
 });
-$("#packImageUploader").on("change", function (e) {
-    var imgTempURL = URL.createObjectURL(e.target.files[0]);
-    $("#imageHolder").html("<img src=\"" + imgTempURL + "\" class=\"object-cover h-52\"  alt=\"Some package image example\">");
+$("#packImageUploader").on("change", (e) => {
+    let imgTempURL = URL.createObjectURL(e.target.files[0]);
+    $("#imageHolder").html(`<img src="${imgTempURL}" class="object-cover h-52"  alt="Some package image example">`);
 });
-var adminPaths = document.querySelectorAll("[data-path]");
+const adminPaths = document.querySelectorAll("[data-path]");
 adminPaths &&
-    adminPaths.forEach(function (path) {
-        var pathname = path.dataset["path"];
-        $(path).click(function () {
+    adminPaths.forEach((path) => {
+        const pathname = path.dataset["path"];
+        $(path).click(() => {
             if (pathname) {
-                window.location.pathname = "/admin" + pathname;
+                if (pathname == "local") {
+                    window.location.pathname = "/";
+                }
+                else {
+                    window.location.pathname = "/admin" + pathname;
+                }
             }
         });
     });
-var showPackAdminSection = $("#showPackAdminSection");
-var addPackAdminSection = $("#addPackAdminSection");
-var showAdminAdminSection = $("#showAdminAdminSection");
-var addAdminAdminSection = $("#addAdminAdminSection");
-$("#closeShowPackAdmin").click(function () {
+const showPackAdminSection = $("#showPackAdminSection");
+const addPackAdminSection = $("#addPackAdminSection");
+const showAdminAdminSection = $("#showAdminAdminSection");
+const addAdminAdminSection = $("#addAdminAdminSection");
+$("#closeShowPackAdmin").click(() => {
     showPackAdminSection.slideUp();
 });
-$("#closeAddPackAdmin").click(function () {
+$("#closeAddPackAdmin").click(() => {
     addPackAdminSection.slideUp();
 });
-$("#btnShowPackSection").click(function () {
+$("#btnShowPackSection").click(() => {
     showAll();
 });
-$("#btnAddPackSection").click(function () {
+$("#btnAddPackSection").click(() => {
     showAdd();
 });
-$("#closeShowAdminAdmin").click(function () {
+$("#closeShowAdminAdmin").click(() => {
     showAdminAdminSection.slideUp();
 });
-$("#closeAddAdminAdmin").click(function () {
+$("#closeAddAdminAdmin").click(() => {
     addAdminAdminSection.slideUp();
 });
-$("#btnShowAdminSection").click(function () {
+$("#btnShowAdminSection").click(() => {
     showAllAdmin();
 });
-$("#btnAddAdminSection").click(function () {
+$("#btnAddAdminSection").click(() => {
     showAddAdmin();
 });
 function showAll() {
@@ -68,9 +73,9 @@ function showAddAdmin() {
     addAdminAdminSection.slideDown();
     showAdminAdminSection.slideUp();
 }
-$(document).ready(function () {
-    var currentPackWindow = window.localStorage.getItem("current_admin_pack_window");
-    var currentAdminWindow = window.localStorage.getItem("curren_admin_admin_window");
+$(document).ready(() => {
+    const currentPackWindow = window.localStorage.getItem("current_admin_pack_window");
+    const currentAdminWindow = window.localStorage.getItem("curren_admin_admin_window");
     if (currentPackWindow == "show") {
         showAll();
     }
@@ -90,3 +95,16 @@ $(document).ready(function () {
         showAllAdmin();
     }
 });
+/**
+ * This function handles the admin time each minutes.
+ */
+const timeHandler = () => {
+    const time = new Date;
+    const adminTimer = document.querySelector("#adminTimer");
+    const hours = time.getHours() < 10 ? "0" + time.getHours() : time.getHours();
+    const minutes = time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes();
+    if (adminTimer) {
+        adminTimer.textContent = `${hours} : ${minutes}`;
+    }
+};
+setInterval(() => timeHandler(), 5000);

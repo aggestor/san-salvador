@@ -2,7 +2,7 @@
   <div id="other" class="flex  relative w-11/12 mx-auto justify-between">
     <span class="text-gray-100 lg:text-lg my-auto text-base font-semibold">USALVAGETRADE</span>
     <nav class="lg:w-6/12 hidden w-full sm:flex my-auto sm:w-7/12">
-        <ul class="flex w-full justify-around text-gray-100">
+        <ul id="defaultMenu" class="flex w-full justify-around text-gray-100">
             <li class="text-base"><span><a href="/">Acceuil</a></span></li>
             <li class="text-base"><span><a href="/help">Aide</a></span></li>
             <li class="text-base"><span><a href="/packages">Packs</a></span></li>
