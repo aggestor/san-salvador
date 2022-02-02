@@ -22,10 +22,10 @@
         <div class="flex w-10/12 mt-3 mb-2 text-gray-200 justify-between">
             
             <span>
-                <a href="#"><i class="fab fa-2x fa-facebook "></i></a>
+                <a href="https://www.facebook.com/UsalvageTrade/"><i class="fab fa-2x fa-facebook "></i></a>
             </span>
             <span>
-                <a href="https: //www.instagram.com/usalvage_trade/"><i class="fab fa-2x fa-instagram    "></i></a>
+                <a href="https://www.instagram.com/usalvage_trade/"><i class="fab fa-2x fa-instagram    "></i></a>
             </span>
             <span>
                 <a href="https://bit.ly/3qaM9KV"><i class="fab fa-2x fa-twitter    "></i></a>
