@@ -28,7 +28,7 @@
                 <a href="https://instagram.com/usalvage_trade/"><i class="fab fa-2x fa-instagram"></i></a>
             </span>
             <span>
-                <a href="https://bit.ly/3qaM9KV"><i class="fab fa-2x fa-twitter    "></i></a>
+                <a href="https://twitter.com/usalvagetrade?t=4lk73G8psZNEDPl-9K5WpQ&s=09"><i class="fab fa-2x fa-twitter    "></i></a>
             </span>
             <span>
                 <a href="https://youtube.com/channel/UCJamYlht8bYE1CVOAKgA_tQ"><i class="fab fa-2x fa-youtube"></i></a>

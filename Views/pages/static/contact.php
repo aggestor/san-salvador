@@ -30,7 +30,7 @@
        <p class="text-gray-300 text-center text-2xl lg:text-3xl"> <i class="fas fa-address-card"></i> AUTRES CONTACTS</p>
     </div>
     <div class="w-11/12 mx-auto flex lg:flex-row flex-col space-x-5 mb-5 lg:h-96 ">
-        <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 mb-2 lg:mb-0 rounded border p-4 flex flex-col border-gray-900 h-80">
+        <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 mb-2 lg:mb-0 rounded border p-4 flex flex-col border-gray-900 lg:h-80 h-auto">
             <div class="w-full grid place-items-center">
                 <span class="text-gray-400 font-semibold text-lg">Téléphones</span>
             </div>
@@ -40,7 +40,7 @@
                 </ul>
             </div>
         </div>
-        <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 mb-2 lg:mb-0 rounded border p-4 flex flex-col border-gray-900 h-80">
+        <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 mb-2 lg:mb-0 rounded border p-4 flex flex-col border-gray-900 lg:h-80 h-auto">
             <div class="w-full grid place-items-center">
                 <span class="text-gray-400 font-semibold text-lg">Adresses Mail</span>
             </div>
@@ -65,5 +65,4 @@
             </div>
         </div>
     </div>
-
 </div>
