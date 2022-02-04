@@ -21,6 +21,7 @@ class UserValidator extends AbstractMemberValidator
     const FIELD_PASSWORD_CONFIRM = 'confirm_password';
     const FIELD_CASHOUT_AMOUNT = 'amount';
     const MONTANT_MIN = 20;
+    const FIELD_CODE_PAYS = 'country_code';
 
     /**
      * Undocumented variable
@@ -303,10 +304,12 @@ class UserValidator extends AbstractMemberValidator
     protected function validationTelephone($telephone): void
     {
         $this->notNullable($telephone);
+        $codePays = $_POST['country_code'];
+        $numTelephone = "+" . $codePays . $telephone;
         if (!preg_match(self::RGX_TELEPHONE, $telephone) && !preg_match(self::RGX_TELEPHONE_RDC, $telephone)) {
             throw new \RuntimeException("Votre numero de telphone est invalide");
         }
-        if ($this->userModel->checkByPhone($telephone)) {
+        if ($this->userModel->checkByPhone($numTelephone)) {
             throw new \RuntimeException("Ce numero de telephone est deja utlise pour une autre compte");
         }
     }
@@ -320,11 +323,13 @@ class UserValidator extends AbstractMemberValidator
     protected function processingTelephone(User $user, $telephone): void
     {
         try {
+            $codePays = $_POST['country_code'];
             $this->validationTelephone($telephone);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_TELEPHONE, $e->getMessage());
         }
-        $user->setPhone($telephone);
+        $numTelephone = "+" . $codePays . $telephone;
+        $user->setPhone($numTelephone);
     }
     /**
      * Traitement de l'image

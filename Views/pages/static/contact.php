@@ -35,16 +35,12 @@
             </div>
             <div class="w-full grid place-items-center my-3">
                 <ul class="flex flex-col">
-<<<<<<< HEAD
                     <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:+1 929-224-5034">+1 929-224-5034</a></li>
                     <!-- <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+243 993 825 243</a></li>
                     <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+243 993 825 243</a></li>
                     <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+243 993 825 243</a></li>
                     <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+243 993 825 243</a></li>
                     <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+243 993 825 243</a></li> -->
-=======
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+1 323 678 5503</a></li>
->>>>>>> bd11fb0b1fcf82bb8d007c6a6baf3f18ebd0944c
                 </ul>
             </div>
         </div>
