@@ -34,7 +34,7 @@
                 <a href="https://youtube.com/channel/UCJamYlht8bYE1CVOAKgA_tQ"><i class="fab fa-2x fa-youtube    "></i></a>
             </span>
             <span>
-                <a href="https://wa.me/13236785503"><i class="fab fa-2x fa-whatsapp    "></i></a>
+                <a href="https://wa.me/19292245034"><i class="fab fa-2x fa-whatsapp"></i></a>
             </span>
             
         </div>

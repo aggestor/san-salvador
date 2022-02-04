@@ -21,9 +21,9 @@
                     <li class="ml-8">L’échange de crypto-actifs contre d’autres crypto-actifs,</li>
                     <li class="ml-8">Le placement garanti, sécurisé et sûr de crypto-actifs,</li>
                     <li class="ml-8">L'exploitation de plateformes de négociation de crypto-actifs,</li>
-                    <li class="ml-8">La réception et la transmission d’ordre sur des crypto- actifs,</li>
-                    <li class="ml-8">La gestion de portefeuille de crypto- actifs,</li>
-                    <li class="ml-8">Le conseil aux investisseurs en crypto- actifs.</li>
+                    <li class="ml-8">La réception et la transmission d’ordre sur des crypto-actifs,</li>
+                    <li class="ml-8">La gestion de portefeuille de crypto-actifs,</li>
+                    <li class="ml-8">Le conseil aux investisseurs en crypto-actifs.</li>
                 </ul>
                 <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
                     Le site est accessible gratuitement depuis n’importe où par tout utilisateur disposant d’un accès
