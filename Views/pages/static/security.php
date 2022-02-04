@@ -1,17 +1,17 @@
 <div class="col-span-12 pb-4">
     <div class="flex flex-col w-11/12 mx-auto">
-        <div class="flex justify-between w-full">
-            <div class="w-1/2 flex items-center justify-center flex-col h-96">
-                <h1 class="text-green-500 font-semibold text-2xl w-full mb-2">SÉCURITÉ DE LA PLATEFORME.</h1>
+        <div class="flex md:flex-row flex-col justify-between w-full">
+            <div class="md:w-1/2 w-full flex items-center justify-center flex-col md:h-96">
+                <h1 class="text-green-500 font-semibold text-xl md:text-2xl w-full mb-2">SÉCURITÉ DE LA PLATEFORME.</h1>
                 <p class="text-gray-500 w-full"> Notre plateforme vous assure la sécurité dans tous les services qu'elle vous fournit.</p>
             </div>
-            <div class="w-1/2 flex justify-center items-center h-96">
-                <img src="/assets/logos/security.png" class="h-80" alt="security illustration">
+            <div class="md:w-1/2 w-full flex justify-center items-center h-96">
+                <img src="/assets/logos/security.png" class="md:h-80 h-72" alt="security illustration">
             </div>
         </div>
       <div class="w-full block mt-2">
            <h3 class="font-semibold text-gray-300 text-lg mb-2"><span class="w-3 h-3 bg-gray-300 rounded-full mr-1"></span>● Consignes de sécurité</h3>
-            <p class="text-gray-500 w-9/12 ml-4">
+            <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
                 UsalvageTrade s'efforce de fournir une expérience de trading sécurisée pour l'intérêt de chaque
                 utilisateur ; ainsi, nous avons adopté des techniques de sécurité avancées. Cependant, en
                 raison de la popularité croissante, notre portefeuille et votre compte en particulier peuvent
@@ -36,7 +36,7 @@
       </div>
       <div class="w-full block mt-2 mb-5">
            <h3 class="font-semibold text-gray-300 text-lg mb-2">● Certaines de mes informations peuvent-elles être transférées à des tiers ?</h3>
-            <p class="text-gray-500 w-9/12 ml-4">
+            <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
                 Chez UsalvageTrade, nous essayons de maintenir un environnement sûr et privé pour nos
                 utilisateurs. <br>
                 Ainsi, nous garantissons qu'aucune des informations que vous fournissez à

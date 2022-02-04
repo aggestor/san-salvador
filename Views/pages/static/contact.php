@@ -30,23 +30,23 @@
        <p class="text-gray-300 text-center text-2xl lg:text-3xl"> <i class="fas fa-address-card"></i> AUTRES CONTACTS</p>
     </div>
     <div class="w-11/12 mx-auto flex lg:flex-row flex-col space-x-5 mb-5 lg:h-96 ">
-        <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 mb-2 lg:mb-0 rounded border p-4 flex flex-col border-gray-900 h-80">
+        <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 mb-2 lg:mb-0 rounded border p-4 flex flex-col border-gray-900 lg:h-80 h-auto">
             <div class="w-full grid place-items-center">
                 <span class="text-gray-400 font-semibold text-lg">Téléphones</span>
             </div>
             <div class="w-full grid place-items-center my-3">
                 <ul class="flex flex-col">
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:">+1 323 678 5503</a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="tel:+19292245034">+1 929-224-5034</a></li>
                 </ul>
             </div>
         </div>
-        <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 mb-2 lg:mb-0 rounded border p-4 flex flex-col border-gray-900 h-80">
+        <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 mb-2 lg:mb-0 rounded border p-4 flex flex-col border-gray-900 lg:h-80 h-auto">
             <div class="w-full grid place-items-center">
                 <span class="text-gray-400 font-semibold text-lg">Adresses Mail</span>
             </div>
             <div class="w-full grid place-items-center my-3">
                 <ul class="flex flex-col">
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="mailto:">contact@uslavagetrade.com</a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="mailto:contact@usalvagetrade.com">contact@usalvagetrade.com</a></li>
                 </ul>
             </div>
         </div>
@@ -56,14 +56,13 @@
             </div>
             <div class="w-full grid place-items-center my-3">
                 <ul class="flex flex-col">
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="#"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-facebook"></i></span><span>Usalvatrade</span></a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="#"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-instagram"></i></span><span>Usalvagetrade</span></a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="#"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-twitter"></i></span><span>uslavagetrade</span></a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="#"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-youtube"></i></span><span>Usalvagetrade</span></a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="#"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-whatsapp"></i></span><span>+1 323 678 5503</span></a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://facebook.com/UsalvageTrade"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-facebook"></i></span><span>Usalvatrade</span></a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://instagram.com/usalvage_trade/"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-instagram"></i></span><span>Usalvagetrade</span></a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://twitter.com/usalvagetrade?t=4lk73G8psZNEDPl-9K5WpQ&s=09"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-twitter"></i></span><span>Usalvatrade</span></a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://youtube.com/channel/UCJamYlht8bYE1CVOAKgA_tQ"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-youtube"></i></span><span>Usalvatrade</span></a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://wa.me/19292245034"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-whatsapp"></i></span><span>+1 929-224-5034</span></a></li>
                 </ul>
             </div>
         </div>
     </div>
-
 </div>
