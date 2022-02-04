@@ -167,11 +167,8 @@ function setActiveSide(side) {
     $($(side).siblings().children()[1]).html("<i></i>");
     $(sideCircle).attr("class", "h-7 w-7 rounded-full border border-gray-900 grid place-items-center bg-gray-900");
     $(sideCircle).html("<i class='fas fa-check-circle text-green-500'></i>");
-    $("#valueToCopy").text(`https://usalvagetrade.com/register-${$(side).data("side")}-${$("#valueToCopy").data("parent")}-${$("#valueToCopy").data("sponsor")}`);
+    $("#valueToCopy").text(`https://usalvagetrade.com/register-${$(side).data("side")}-${$("#valueToCopy").data("parent")}`);
 }
-$("#copy").click(() => {
-    const valueToCopy = document.querySelector("#valueToCopy");
-});
 /**
  * Helps to switch Jquery display for many elements
  * @param {Array<HTMLElement>} elements elements that will switch to another display
@@ -193,6 +190,7 @@ function displaySwitcher(elements, display, animation) {
  * We are using these buttons to just switch between transaction sources
  * All these three buttons are used to just switch them
  */
+const source = document.querySelector("#source");
 const transactionBtns = document.querySelectorAll(".transaction-btn");
 const defaultTransactionData = document.querySelector("#defaultTransactionData");
 let AMTransactionData = document.querySelector("#AMTransactionData");
@@ -201,6 +199,7 @@ let BTCTransactionData = document.querySelector("#BTCTransactionData");
 transactionBtns.forEach((btn) => {
     const dataTransType = btn.getAttribute("data-trans-type");
     $(btn).on("click", (e) => {
+        console.log($(source).val());
         e.preventDefault();
         /**
          * There's still some issues about the design and css logic for the buttons
@@ -208,7 +207,7 @@ transactionBtns.forEach((btn) => {
          */
         let activeBtnClass = "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white rounded-l transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
         if (dataTransType === "btc") {
-            console.log("ok ok");
+            $(source).val("BTC");
             AMTransactionData &&
                 MPSTransactionData &&
                 displaySwitcher([MPSTransactionData, AMTransactionData], "hide", "slide");
@@ -216,6 +215,7 @@ transactionBtns.forEach((btn) => {
                 displaySwitcher([BTCTransactionData], "show", "slide");
         }
         else if (dataTransType === "am") {
+            $(source).val("AirtelMoney");
             activeBtnClass =
                 "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white  transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
             BTCTransactionData &&
@@ -225,6 +225,7 @@ transactionBtns.forEach((btn) => {
                 displaySwitcher([AMTransactionData], "show", "slide");
         }
         else if (dataTransType === "mps") {
+            $(source).val("M-Pesa");
             activeBtnClass =
                 "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white rounded-r  transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
             BTCTransactionData &&
@@ -254,6 +255,8 @@ function menuHighLighter() {
         "/about",
         "/security",
         "/terms",
+        "/user/pack/subscribe",
+        "/user/share/link",
     ];
     const path = window.location.pathname;
     const menus = document.querySelectorAll("#defaultMenu li span a");
@@ -264,6 +267,7 @@ function menuHighLighter() {
         }
     });
     if (knownPaths.indexOf(path) != -1) {
+        //this part will be improved soon
         switch (path) {
             case "/":
                 setHeadImportantData({});
@@ -298,6 +302,12 @@ function menuHighLighter() {
             case "/terms":
                 setHeadImportantData({ title: "Conditions d'utilisations" });
                 break;
+            case "/user/pack/subscribe":
+                setHeadImportantData({ title: "Sourcription sur nos packs" });
+                break;
+            case "/user/share/link":
+                setHeadImportantData({ title: "Pargtade d'un lien de parrainnage" });
+                break;
             default:
                 setHeadImportantData({ title: "Page non trouvé" });
                 break;
@@ -324,9 +334,17 @@ class BinaryTree {
         if (data)
             this.data = data;
     }
+    /**
+     * Checks if any data tree given has children or not
+     * @param data
+     * @returns {boolean} Boolean
+     */
     hasChildren(data) {
         return Array.isArray(data.childs) && data.childs.length > 0 ? true : false;
     }
+    /**
+     * Sets the root of the current treee
+     */
     getAndSetRoot() {
         this.tree.push({
             id: this.data.Id,
@@ -334,6 +352,10 @@ class BinaryTree {
             img: this.imgPath + this.data.icon,
         });
     }
+    /**
+     * Makes a needle tree data type for the library
+     * @param data Tree object data
+     */
     getAllChildrenFrom(data) {
         if (data.childs) {
             let length = data.childs.length, i = 0;
@@ -358,6 +380,10 @@ class BinaryTree {
         this.getAllChildrenFrom(this.data);
     }
 }
+/**
+ * Uses the library to draw our tree and gets the data from ajax response
+ * @param data Tree object data
+ */
 function drawBinaryTree(data) {
     const treeContainer = document.getElementById("binaryTreeContainer");
     if (treeContainer) {
@@ -384,3 +410,31 @@ window.location.pathname === "/user/tree" &&
             drawBinaryTree(parsedData);
         },
     });
+$("#copyMPS").click((e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText($("#copyMPS").data("num")).then(() => {
+        $("#copyMPS").html("Copié ! <i class='fas fa-check-circle ml-2'></i>");
+    });
+});
+$("#copyAM").click((e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText($("#copyAM").data("num")).then(() => {
+        $("#copyAM").html("Copié ! <i class='fas fa-check-circle ml-2'></i>");
+    });
+});
+$("#copyBTC").click((e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText($("#copyBTC").data("addr")).then(() => {
+        $("#copyBTC").html("Copié ! <i class='fas fa-check-circle ml-2'></i>");
+    });
+});
+$("#copy").click((e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText($("#valueToCopy").text()).then(() => {
+        $("#copy").html("<i class='fas fa-check-circle'></i>");
+    });
+});
+$("#showBTCGraph").click((e) => {
+    e.preventDefault();
+    $(BTCTransactionData).slideUp();
+});

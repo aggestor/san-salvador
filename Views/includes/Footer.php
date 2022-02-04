@@ -22,16 +22,16 @@
         <div class="flex md:w-10/12 w-full mt-3 mb-2 text-gray-200 justify-between">
             
             <span>
-                <a href="#"><i class="fab fa-2x fa-facebook "></i></a>
+                <a href="https://facebook.com/UsalvageTrade"><i class="fab fa-2x fa-facebook"></i></a>
             </span>
             <span>
-                <a href="https: //www.instagram.com/usalvage_trade/"><i class="fab fa-2x fa-instagram    "></i></a>
+                <a href="https://instagram.com/usalvage_trade/"><i class="fab fa-2x fa-instagram"></i></a>
             </span>
             <span>
                 <a href="https://bit.ly/3qaM9KV"><i class="fab fa-2x fa-twitter    "></i></a>
             </span>
             <span>
-                <a href="https://youtube.com/channel/UCJamYlht8bYE1CVOAKgA_tQ"><i class="fab fa-2x fa-youtube    "></i></a>
+                <a href="https://youtube.com/channel/UCJamYlht8bYE1CVOAKgA_tQ"><i class="fab fa-2x fa-youtube"></i></a>
             </span>
             <span>
                 <a href="https://wa.me/19292245034"><i class="fab fa-2x fa-whatsapp"></i></a>
