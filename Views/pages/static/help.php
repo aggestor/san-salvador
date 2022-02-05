@@ -2,15 +2,14 @@
     <div class="flex  h-v-70 flex-col md:flex-row w-full lg:w-11/12 h-auto md:items-center mx-auto md:justify-around">
         <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 overflow-x-hidden w-full flex flex-col mt-2 ">
             <h1 class="md:w-11/12 mx-auto md:text-3xl text-xl text-white font-bold">FOIRE AUX QUESTIONS</span></h1>
-            <p class="text-gray-400 my-3 mx-auto md:w-11/12 ">Entrer quelque chose  dans le champ ci-bas
-                <form autocomplete="off">
-                    <div class="w-11/12 mx-auto focus-within:font-semibold text-gray-600 focus-within:text-green-500 group focus-within:border-green-500 my-4 h-14 px-2 flex rounded-xl border-2 border-gray-400">
-                    <i class="fas fa-search text-xl my-auto mx-2 "></i>  <input id="search" class="bg-transparent w-11/12 h-11/12 text-xl focus:text-green-500 focus:outline-none"type="text" placeholder="Rechercher sur cette page" autofocus/>
-                    </div>
-                </form>
-            </div>
-        <div data-aos="fade-down"
-        data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
+            <p class="text-gray-400 my-3 mx-auto md:w-11/12 ">Entrer quelque chose dans le champ ci-bas
+            <form autocomplete="off">
+                <div class="w-11/12 mx-auto focus-within:font-semibold text-gray-600 focus-within:text-green-500 group focus-within:border-green-500 my-4 h-14 px-2 flex rounded-xl border-2 border-gray-400">
+                    <i class="fas fa-search text-xl my-auto mx-2 "></i> <input id="search" class="bg-transparent w-11/12 h-11/12 text-xl focus:text-green-500 focus:outline-none" type="text" placeholder="Rechercher sur cette page" autofocus />
+                </div>
+            </form>
+        </div>
+        <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
             <img src="assets/logos/faq.png" class="md:h-96 h-80 w-80 md:w-96" alt="Joining image" />
         </div>
     </div>
@@ -20,7 +19,7 @@
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
                 Vous pouvez activer le contrat de votre choix en visitant notre page <span class="font-semibold text-green-500"><a href="/packages">Packs</a></span>, ensuite, vous cliquez sur souscrire pour déposer les fonds correspondant au montant choisit.
             </p>
-      </div>
+        </div>
         <div class="w-full block mt-2">
            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">2. QUELS SONT LES BONUS À GAGNER? ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
@@ -48,7 +47,7 @@
                         </tr>
                         <tr class=" border border-gray-900 p-1 w-1/3">
                             <td class=" pl-5 w-1/3">Gold</td>
-                            <td>500$ -  4 999$</td>
+                            <td>500$ - 4 999$</td>
                             <td class=" w-1/3"> 1,5%</td>
                         </tr>
                         <tr class=" border border-gray-900 p-1 w-1/3">
@@ -63,17 +62,17 @@
                         </tr>
                     </tbody>
                 </table>
-                </div>
-                <b class="text-gray-400">● Parrainage direct:</b>, <br>
-                <span class="mb-2 text-gray-500 w-9/12 ml-4">Sur chaque investisseur que vous ramener dans le business, vous gagnez un bonus 10% de
-                    son investissement. <br>
-                    Toutes vos commissions de parrainage sont déposées dans un portefeuille visible sur le
-                    backoffice de votre compte.
-                </span>
-                <br>
-                <b class="text-gray-400">● Bonus binaire :</b>, <br>
-                <span class="mb-2 text-gray-500 w-9/12 ml-4">Avec ce bonus, vous gagnez 10% sur l'argent investi au côté faible de votre réseau.
-                </span>
+            </div>
+            <b class="text-gray-400">● Parrainage direct:</b>, <br>
+            <span class="mb-2 text-gray-500 w-9/12 ml-4">Sur chaque investisseur que vous ramener dans le business, vous gagnez un bonus 10% de
+                son investissement. <br>
+                Toutes vos commissions de parrainage sont déposées dans un portefeuille visible sur le
+                backoffice de votre compte.
+            </span>
+            <br>
+            <b class="text-gray-400">● Bonus binaire :</b>, <br>
+            <span class="mb-2 text-gray-500 w-9/12 ml-4">Avec ce bonus, vous gagnez 10% sur l'argent investi au côté faible de votre réseau.
+            </span>
             </p>
       </div>
       <div class="w-full block mt-2">
@@ -102,8 +101,7 @@
       <div class="w-full block mt-2">
            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">5. APRÈS AVOIR EFFECTUÉ LE PAIEMENT, À QUEL MOMENT MON CONTRAT SERA-T-IL ACTIVÉ ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
-               Votre contrat devrait être activé immédiatement si vous utilisez le E-money( Airtelmoney et
-                M-pesa). <br>
+               Votre contrat devrait être activé immédiatement si vous utilisez le E-money( Airtelmoney et M-pesa). <br>
                 Si vous utilisez la crypto-monnaie(Bitcoin) un certain délai peut être nécessaire pour
                 obtenir des confirmations par le réseau de crypto-monnaie(blockchain). <br>
                 Pour les dépôts en
@@ -114,7 +112,7 @@
       <div class="w-full block mt-2">
            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">6. PUIS-JE ACTIVER PLUSIEURS CONTRATS À LA FOIS SUR UN MÊME COMPTE ?</h3>
             <p class="text-gray-500 w-9/12 ml-4">
-               Oui. Vous pouvez activer n'importe quel nombre de contrats à la fois.
+                Oui. Vous pouvez activer n'importe quel nombre de contrats à la fois.
             </p>
       </div>
       <div class="w-full block mt-2">
@@ -146,6 +144,6 @@
                     <li class="ml-8"><span class="font-semibold text-green-500"><a  href="/contact">Aller sur notre page de contacts</a></span></li>
                 </ul>
             </p>
-      </div>
+        </div>
     </div>
 </div>

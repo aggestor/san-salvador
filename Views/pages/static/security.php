@@ -20,18 +20,18 @@
                 Pour minimiser ces possibilités et prévenir les attaques de phishing, nous avons développé un
                 ensemble de règles pour sécuriser votre compte.
                 <br> <b>NE donnez PAS</b> votre mot de passe de compte à qui que ce soit. <br> Assurez-vous toujours que
-                vous utilisez notre site Web officiel <span class="font-semibold text-green-500"><a href="https://www.usalvagetrade.com">https://www.usalvagetrade.com</a></span> 
+                vous utilisez notre site Web officiel <span class="font-semibold text-green-500"><a href="https://www.usalvagetrade.com">https: //www.usalvagetrade.com</a></span>
             </p>
-      </div>
-      <div class="w-full block mt-2">
-           <h3 class="font-semibold text-gray-300 text-lg mb-2">● A ne pas faire</h3>
+        </div>
+        <div class="w-full block mt-2">
+            <h3 class="font-semibold text-gray-300 text-lg mb-2">● A ne pas faire</h3>
             <p class="text-gray-500 w-9/12 ml-4">
-                <ul class="text-gray-500 w-9/12 pl-2 list-disc">
-                    <li class="ml-8">Ne communiquez à personne le mot de passe de votre compte.</li>
-                    <li class="ml-8">Ne cliquez sur aucun lien anonyme. Assurez-vous toujours que vous utilisez notre site officiel <span class="font-semibold text-green-500"><a href="https://www.usalvagetrade.com">https://www.usalvagetrade.com</a></span></li>
-                    <li class="ml-8">N'utilisez pas un mot de passe à faible sécurité. Assurez-vous d'utiliser quelque chose de secret, d'unique et que vous ne pouvez pas oublier.</li>
-                    <li class="ml-8">N'utilisez à aucun cas des contacts qui ne sont pas sur notre sites web. Tous nos contacts officiels sont retrouvables <span class="font-semibold text-green-500"><a href="/contact">En cliquant ici</a></span></li>
-                </ul>
+            <ul class="text-gray-500 w-9/12 pl-2 list-disc">
+                <li class="ml-8">Ne communiquez à personne le mot de passe de votre compte.</li>
+                <li class="ml-8">Ne cliquez sur aucun lien anonyme. Assurez-vous toujours que vous utilisez notre site officiel <span class="font-semibold text-green-500"><a href="https://www.usalvagetrade.com">https://www.usalvagetrade.com</a></span></li>
+                <li class="ml-8">N'utilisez pas un mot de passe à faible sécurité. Assurez-vous d'utiliser quelque chose de secret, d'unique et que vous ne pouvez pas oublier.</li>
+                <li class="ml-8">N'utilisez à aucun cas des contacts qui ne sont pas sur notre sites web. Tous nos contacts officiels sont retrouvables <span class="font-semibold text-green-500"><a href="/contact">En cliquant ici</a></span></li>
+            </ul>
             </p>
       </div>
       <div class="w-full block mt-2 mb-5">
@@ -40,8 +40,8 @@
                 Chez UsalvageTrade, nous essayons de maintenir un environnement sûr et privé pour nos
                 utilisateurs. <br>
                 Ainsi, nous garantissons qu'aucune des informations que vous fournissez à
-                HashGrid, ses affiliés ou partenaires ne sera divulguée.
+                UsalvageTrade, ses affiliés ou partenaires ne sera divulguée.
             </p>
-      </div>
+        </div>
     </div>
 </div>

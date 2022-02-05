@@ -1,41 +1,20 @@
 {
-    "name": "Usalvagetrade",
-    "icon": "Bbc2Dd155ab2AbcAa5ee/x320.png",
-    "foot": null,
+    "Id": "842f4A38BF1",
+    "name": "Serge Makasi",
+    "icon": "13C2c34C2DCe35BEaCAe/x320.png",
+    "foot": 1,
     "childs": [
         {
-            "name": "Amani Nyumu",
-            "icon": "0dc152bB4DC2AaA3DAdA/x320.png",
-            "foot": 2,
-            "childs": [
-                {
-                    "name": "Aggee Stor",
-                    "icon": "Bbc2Dd155ab2AbcAa5ee/x320.png",
-                    "foot": 2,
-                    "childs": [
-                        {
-                            "name": "Amani Kambale",
-                            "icon": "",
-                            "foot": 2
-                        },
-                        {
-                            "name": "Mwanze Nyumu",
-                            "icon": "Bd2B53dDdD1242c0eadE/x320.png",
-                            "foot": 1
-                        }
-                    ]
-                },
-                {
-                    "name": "Serge Makasi",
-                    "icon": "13C2c34C2DCe35BEaCAe/x320.png",
-                    "foot": 1
-                }
-            ]
+            "Id": "4adCD21FB99",
+            "name": "Mwisa Makasi",
+            "icon": "",
+            "foot": 1
         },
         {
-            "name": "Esaie Muhasa",
-            "icon": "1bEe325EecC4a5114cED/x320.png",
-            "foot": 1
+            "Id": "A434BDdCC05",
+            "name": "Thierry Makasi",
+            "icon": "dD4b1352ee5aE1dA43ab/x320.png",
+            "foot": 2
         }
     ]
 }

@@ -16,8 +16,8 @@ session_start();
 //on recupere l'instance de notre routeur
 $routes = new Router($_SERVER['REQUEST_URI']);
 
-//les routes pour les pages statics
 $routes->get('/', 'Root\App\Controllers\StaticController@home');
+//les routes pour les pages statics
 //$routes->get('/packages-([0-9]+)/(add|update).php', "id,option", 'Root\App\Controllers\StaticController@packages');
 $routes->get('/help', 'Root\App\Controllers\StaticController@help');
 $routes->get('/services', 'Root\App\Controllers\StaticController@service');
@@ -149,14 +149,6 @@ $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controller
  * ROUTES pour test Aggestor
  */
 $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
-
-
-
-$routes->get('/test', function () {
-    //var_dump($_SESSION['users']);
-    unset($_SESSION['users']);
-});
-
 
 try {
     $routes->run();
