@@ -165,8 +165,8 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                             </div>
                             <div class="flex w-full mt-5 justify-around">
                                 <!--PASSWORD BEGIN-->
-                                <div class="w-9/12 flex mb-2">
-                                    <div  id="valueToCopy" data-parent="<?= $_SESSION['users']->getId() ?>"data-sponsor="<?= $_SESSION['users']->getSponsor()->getId() ?>" class="w-full bg-gray-900 text-gray-400 flex-grow-0 flex-shrink-0 flex text-sm cursor-text rounded h-10">
+                                <div class="w-9/12 flex justify-center items-center mb-2">
+                                    <div  id="valueToCopy" data-parent="<?= $_SESSION['users']->getId() ?>"data-sponsor="<?= $_SESSION['users']->getSponsor()->getId() ?>" class="w-full bg-gray-900 text-gray-400 justify-center items-center flex text-base cursor-text rounded h-10">
                                     </div>
                                 </div>
                                 <div class="w-3/12 flex items-center justify-end h-10">
