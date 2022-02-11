@@ -95,7 +95,7 @@ class AdminController extends Controller
                     $nom = $admin->getName();
                     $_SESSION['mail'] = $mail;
                     if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", $nom)) {
-                        Controller::redirect('admin/mail/success');
+                        Controller::redirect('/admin/mail/success');
                     } else {
                         $_SESSION['action'] = 'reset';
                         Controller::redirect('/admin/mail/resend');
