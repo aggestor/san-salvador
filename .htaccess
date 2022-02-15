@@ -4,8 +4,8 @@
 
 #ressource du web-frontend
 RewriteEngine On
-RewriteCond %{REQUEST_URI} ^/(asset)/(.*)
-RewriteRule ^asset/(.*)$ asset/$1 [L]
+RewriteCond %{REQUEST_URI} ^/(assets)/(.*)
+RewriteRule ^assets/(.*)$ assets/$1 [L]
 
 #protection des fichiers sources sensible
 RewriteCond %{REQUEST_URI} ^/(App|Views|Core|vendor|public|routes)/.*
