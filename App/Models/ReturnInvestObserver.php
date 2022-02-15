@@ -14,11 +14,15 @@ use Root\Core\GenerateId;
  * ------------------------------------------
  * Surveille l'heure et envoie le bonus de chaque User chaque 18h.
  * Cette classe est loin d'etre pafaite.
+ * ==============
+ * Pour s'assurer que l'instance de cette classe est inique, peut importe le context d'execution de PHP,
+ * nous creeons un petit fichier tmp lors de l'instatiation, et lors de la destruction on le supprime
+ * Ainsi dans la methode isRunning on verifie uniquement si ce petit fichier tmp exist
  */
 class ReturnInvestObserver {
     const HOURE = 60 * 60 * 2;//60 secondes * 60  * 2 = 2 heure
     const LOGG_PREFIX_FILE_NAME = __DIR__.DIRECTORY_SEPARATOR."logg".DIRECTORY_SEPARATOR;
-
+    const SIGLE_INSTANCE_TMP_FILE = self::LOGG_PREFIX_FILE_NAME.'running-bonus.txt';
     /**
      * Le dernier heure a laquel le bonus a ete envoyer
      * @var \DateTime
@@ -40,10 +44,31 @@ class ReturnInvestObserver {
      */
     private static $instance;
 
+    /**
+     * lors de l'instatiation on cree un petit fichier pour eviter d'avoir deux intance different 
+     * de l'observateur des bonus journaliere.
+     */
     private function __construct()
     {
         $this->userModel = ModelFactory::getInstance()->getModel("User");
         $this->returnInvestModel = ModelFactory::getInstance()->getModel("ReturnInvest");
+
+        if (!is_dir(self::LOGG_PREFIX_FILE_NAME)) {//si le dossier n'existe pas on le cree
+            @mkdir(self::LOGG_PREFIX_FILE_NAME, 0777, true);
+        }
+
+        $file = @fopen(self::SIGLE_INSTANCE_TMP_FILE, 'w');
+        $now = new \DateTime();
+        fwrite($file, "Started at {$now->format('d-m-Y H:i:s')}");
+        fclose($file);
+    }
+
+    //lors de la destruction de l'instance
+    public function __destruct()
+    {
+        if(file_exists(self::SIGLE_INSTANCE_TMP_FILE)) {//suppression du petit fichier
+            @unlink(self::SIGLE_INSTANCE_TMP_FILE);
+        }
     }
 
     /**
@@ -51,6 +76,9 @@ class ReturnInvestObserver {
      * @return boolean
      */
     public static function isRunning () : bool {
+        if(file_exists(self::LOGG_PREFIX_FILE_NAME)) {
+            return true;
+        }
         return static::$instance != null;
     }
 
@@ -80,7 +108,7 @@ class ReturnInvestObserver {
                 $instance->lastTime = $now;
 
                 $filename = self::LOGG_PREFIX_FILE_NAME."bonus-{$now->format('d-m-Y-\a\t-H-i-s')}.xml";
-                if (!file_exists(self::LOGG_PREFIX_FILE_NAME)) {//si le dossier n'existe pas on le cree
+                if (!is_dir(self::LOGG_PREFIX_FILE_NAME)) {//si le dossier n'existe pas on le cree
                     @mkdir(self::LOGG_PREFIX_FILE_NAME, 0777, true);
                 }
 

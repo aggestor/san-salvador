@@ -1,5 +1,16 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteEngine On
+#RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ public/index.php?url=$1 [QSA,L]
+#ressource du web-frontend
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/(asset)/(.*)
+RewriteRule ^asset/(.*)$ asset/$1 [L]
+
+#protection des fichiers sources sensible
+RewriteCond %{REQUEST_URI} ^/(App|Views|Core|vendor|public|routes)/.*
+RewriteRule ^(App|Views|Core|vendor|public|routes)(.*)$ public/index.php [L]
+
+#tout ce qui n'est pas fichier physique sur le serveur
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ public/index.php?url=$1 [QSA,L]
