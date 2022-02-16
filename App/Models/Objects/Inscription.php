@@ -32,7 +32,7 @@ class Inscription extends Operation
     private $transactionOrigi;
 
     /**
-     * l'inscription est-elle deja valider par l'administrateur??
+     * l'inscription est-elle deja ete valider par l'administrateur??
      * @var boolean
      */
     private $validate;
@@ -81,6 +81,7 @@ class Inscription extends Operation
     }
 
     /**
+     * l'investissement est-elle deja valider par l'administrateur????
      * @return boolean
      */
     public function isValidate(): ?bool

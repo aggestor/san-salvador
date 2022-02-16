@@ -1,6 +1,8 @@
 <?php
 namespace Root\App\Models\TreeHandling;
 
+use DateTime;
+
 /**
  *
  * @author Esaie MUHASA
@@ -107,9 +109,12 @@ interface BinaryTreeNode
     
     /**
      * renvoie le capital d'un noeud
+     * si $date != null, alors le capital renvoyer sera la somme de investissement qui ont été 
+     * activer avant la date en parametre
+     * @param \DateTime $date
      * @return int
      */
-    public function getCapital () : int;
+    public function getCapital (?\DateTime $date = null) : int;
     
     /**
      * renvoie le solde des capitaux des anfants qui sont a gauche
