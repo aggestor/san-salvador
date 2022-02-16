@@ -24,10 +24,7 @@ class StaticController extends Controller
     {
         return $this->view('pages.static.about');
     }
-    public function contact()
-    {
-        return $this->view('pages.static.contact');
-    }
+    
     public function security()
     {
         return $this->view('pages.static.security');

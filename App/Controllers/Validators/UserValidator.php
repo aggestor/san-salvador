@@ -22,6 +22,7 @@ class UserValidator extends AbstractMemberValidator
     const FIELD_CASHOUT_AMOUNT = 'amount';
     const MONTANT_MIN = 20;
     const FIELD_CODE_PAYS = 'country_code';
+    const FIELD_MESSAGE_CONTACT = 'message';
 
     /**
      * Undocumented variable
@@ -255,6 +256,87 @@ class UserValidator extends AbstractMemberValidator
         return $users;
     }
 
+    /**
+     * Envoie du message de contact apres validation du formulaire
+     *
+     * @return void
+     */
+    public function sendContactMessageAfterValidation()
+    {
+        $mail = $_POST[self::FIELD_EMAIL];
+        $message = $_POST[self::FIELD_MESSAGE_CONTACT];
+        $this->processingMessage($message);
+        $this->processingMailContact($mail);
+        if (!$this->hasError()) {
+            $headers[] = 'MIME-Version: 1.0';
+            $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+            // En-têtes additionnels
+            $headers[] = "From: $mail";
+            $headers[] = "Repay-To: $mail";
+            $headers[] = 'X-Mailer: PHP/' . phpversion();
+            $to = 'contact@usalvagetrade.com';
+            $sujet = $message;
+            if (mail($to, $sujet, $message, implode("\r\n", $headers))) {
+                Controller::redirect('/contact');
+            }
+        }
+    }
+
+    /**
+     * Validation du message de contact
+     *
+     * @param mixed $message
+     * @return void
+     */
+    protected function validationMessage($message)
+    {
+        $this->notNullable($message);
+    }
+
+
+    /**
+     * Traitement du message de contact apres validation
+     *
+     * @param mixed $message
+     * @return void
+     */
+    protected function processingMessage($message)
+    {
+        try {
+            $this->validationMessage($message);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_MESSAGE_CONTACT, $e->getMessage());
+        }
+    }
+
+    /**
+     * Valiadtion mail contact form
+     *
+     * @param mixed $mail
+     * @return void
+     */
+    protected function validationMailContact($mail)
+    {
+        $this->notNullable($mail);
+        if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+            throw new \RuntimeException("Entrer un e-mail invalide");
+        }
+    }
+
+    /**
+     * Processing mail contact form
+     *
+     * @param mixed $mail
+     * @return void
+     */
+    protected function processingMailContact($mail)
+    {
+        try {
+            $this->validationMailContact($mail);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_EMAIL, $e->getMessage());
+        }
+    }
     /**
      * validation du retrait apres validation
      *

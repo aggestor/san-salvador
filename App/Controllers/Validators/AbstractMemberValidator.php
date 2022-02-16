@@ -73,7 +73,8 @@ abstract class AbstractMemberValidator extends AbstractValidator
         if ($onConnection) {
             if ($onValidation) {
                 $user = $model->findByMail($mail);
-                if (!$user->isValidationEmail()) {
+                //var_dump($user);exit();
+                if (!is_null($user) && !$user->isValidationEmail()) {
                     throw new \RuntimeException("Votre Compte n'est pas encore active, un email d'activavion est déja envoyer dans votre boite mail");
                 }
             }
