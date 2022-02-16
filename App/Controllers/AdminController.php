@@ -317,7 +317,7 @@ class AdminController extends Controller
         if ($this->isAdmin()) {
             $totalCount = $this->countValidateInscription();
             @$page = !empty($_GET['page']) ? $_GET['page'] : 1;
-            $nombre_element_par_page = 10;
+            $nombre_element_par_page = 4;
             $nombre_pages = ceil($totalCount / $nombre_element_par_page);
             $debut = ($page - 1) * $nombre_element_par_page;
             $users = $this->allUsersHasValidateInscription($debut, $nombre_element_par_page);
