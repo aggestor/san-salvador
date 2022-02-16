@@ -10,6 +10,8 @@
 /App/Controllers/testController.php
 /public/index.php
 
+/App/Models/logg
+
 package.json
 tailwind.config.js
 /assets/src

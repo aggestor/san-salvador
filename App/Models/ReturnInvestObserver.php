@@ -64,6 +64,8 @@ class ReturnInvestObserver {
     }
 
     //lors de la destruction de l'instance
+    //le prombe qui s pose est que si php s'arrete prusquement, le destructeur est dans la bar de touche 
+    //et donc le fichier reste sur le serveur, et il devien compriquer de redemarer l'observateur de bonus
     public function __destruct()
     {
         if(file_exists(self::SIGLE_INSTANCE_TMP_FILE)) {//suppression du petit fichier
@@ -76,7 +78,7 @@ class ReturnInvestObserver {
      * @return boolean
      */
     public static function isRunning () : bool {
-        if(file_exists(self::LOGG_PREFIX_FILE_NAME)) {
+        if(file_exists(self::SIGLE_INSTANCE_TMP_FILE)) {
             return true;
         }
         return static::$instance != null;
@@ -88,14 +90,17 @@ class ReturnInvestObserver {
      */
     public static function run () : void {
 
-        if(!static::isRunning()) {
+        if(static::isRunning()) {
             return;
         }
 
         $instance = new self();
         static::$instance = $instance;
 
-        Loop::addPeriodicTimer(self::HOURE, function () use (&$instance){//on passe la reference de l'instance du distributeur de
+        $loop = Loop::get();
+        $period = self::HOURE;
+
+        $loop->addPeriodicTimer($period, function () use (&$instance){//on passe la reference de l'instance du distributeur de
             $now  = new DateTime();
             $day = intval($now->format('w'), 10);
 
