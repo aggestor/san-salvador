@@ -705,7 +705,7 @@ class User extends Member implements BinaryTreeNode
             if (!$this->hasLeftNode()) {
                 $this->leftDownlineCapital = 0;
             } else {
-                $left = $this->getRightNode();
+                $left = $this->getLeftNode();
                 if ($this->requireRefresh()) {
                     $this->refresh();
                 }
