@@ -55,10 +55,10 @@
             </div>
             <div class="w-full grid place-items-center my-3">
                 <ul class="flex flex-col">
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://facebook.com/UsalvageTrade"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-facebook"></i></span><span>Usalvatrade</span></a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://facebook.com/UsalvageTrade"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-facebook"></i></span><span>Usalvagetrade</span></a></li>
                     <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://instagram.com/usalvage_trade/"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-instagram"></i></span><span>Usalvagetrade</span></a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://twitter.com/usalvagetrade?t=4lk73G8psZNEDPl-9K5WpQ&s=09"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-twitter"></i></span><span>Usalvatrade</span></a></li>
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://youtube.com/channel/UCJamYlht8bYE1CVOAKgA_tQ"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-youtube"></i></span><span>Usalvatrade</span></a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://twitter.com/usalvagetrade?t=4lk73G8psZNEDPl-9K5WpQ&s=09"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-twitter"></i></span><span>Usalvagetrade</span></a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://youtube.com/channel/UCJamYlht8bYE1CVOAKgA_tQ"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-youtube"></i></span><span>Usalvagetrade</span></a></li>
                     <li class="hover:text-green-500 p-2 text-gray-400"><a class="flex w-full" href="https://wa.me/19292245034"><span class="mr-4 text-gray-500 grid place-items-center rounded-full"><i class="fab text-2xl fa-whatsapp"></i></span><span>+1 929-224-5034</span></a></li>
                 </ul>
             </div>
