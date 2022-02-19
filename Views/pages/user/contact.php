@@ -6,15 +6,15 @@
         <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 overflow-x-hidden w-11/12 lg:mx-0 mx-auto flex flex-col mt-6 ">
             <h1 class="md:w-11/12 w-full lg:mx-0 mx-auto md:text-2xl text-xl text-white font-bold">CONTACTEZ-NOUS</span></h1>
             <p class="text-gray-500 my-2 md:w-11/12 w-full lg:mx-0 mx-auto">Laissez-nous un message en remplissant ce formulaire ci-dessous.</p>
-            <form class="w-11/12 lg:mx-0 mx-auto flex flex-col">
-                <div class="lg:w-11/12 w-full focus-within:font-semibold text-gray-600 focus-within:text-green-500 group focus-within:border-green-500 mt-3 h-14 px-2 flex rounded-xl border-2 <?= $data = (isset($_POST['send']) && !empty($params['errors']['email'])) ? "border-red-500" : " border-gray-400" ?>">
-                    <input id="mail" name="email" class="bg-transparent w-full h-11/12 text-xl focus:text-green-500 focus:outline-none" type="email" placeholder="Entrer votre adresse mail" value="<?php echo (isset($_POST['send']) && empty($params['errors']['email'])) ? $_POST['email'] : ""; ?>" />
+            <form method="POST" class="w-11/12 lg:mx-0 mx-auto flex flex-col">
+                <div class="lg:w-11/12 w-full focus-within:font-semibold text-gray-600 focus-within:text-green-500 group focus-within:border-green-500 mt-3 h-14 px-2 flex rounded-xl border-2 <?= $data = (isset($_POST['send']) && !empty($params['errors']['user_email'])) ? "border-red-500" : " border-gray-400" ?>">
+                    <input id="mail" name="user_email" class="bg-transparent w-full h-11/12 text-xl focus:text-green-500 focus:outline-none" type="email" placeholder="Entrer votre adresse mail" value="<?php echo (isset($_POST['send']) && empty($params['errors']['user_email'])) ? $_POST['user_email'] : ""; ?>" />
                 </div>
-                <?php if (isset($_POST['send']) && !empty($params['errors']['mail'])) : ?>
-                    <span class="text-red-500  mb-3 text-xs"><?php echo $params['errors']['email']; ?></span>
+                <?php if (isset($_POST['send']) && !empty($params['errors']['user_email'])) : ?>
+                    <span class="text-red-500  mb-3 text-xs"><?php echo $params['errors']['user_email']; ?></span>
                 <?php endif; ?>
                 <div class="lg:w-11/12 w-full focus-within:font-semibold text-gray-600 focus-within:text-green-500 group focus-within:border-green-500 mt-3 h-auto px-2 flex rounded-xl border-2 <?= $data = (isset($_POST['send']) && !empty($params['errors']['message'])) ? "border-red-500" : " border-gray-400" ?>">
-                    <textarea style="resize: none;" id="message" name="message" class="bg-transparent w-full p-1 text-xl resize-none focus:text-green-500 focus:outline-none h-36" type="email" placeholder="Votre message"><?php echo (isset($_POST['send']) && empty($params['errors']['message'])) ? $_POST['message'] : ""; ?></textarea>
+                    <textarea style="resize: none;" id="message" name="message" class="bg-transparent w-full p-1 text-xl resize-none focus:text-green-500 focus:outline-none h-36" placeholder="Votre message"><?php echo (isset($_POST['send']) && empty($params['errors']['message'])) ? $_POST['message'] : ""; ?></textarea>
                 </div>
                 <?php if (isset($_POST['send']) && !empty($params['errors']['message'])) : ?>
                     <span class="text-red-500  mb-3 text-xs"><?php echo $params['errors']['message']; ?></span>

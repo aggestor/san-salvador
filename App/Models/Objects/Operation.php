@@ -38,9 +38,9 @@ abstract class Operation extends DBOccurence
     /**
      * @return number
      */
-    public function getAmount()
+    public function getAmount() : ?float
     {
-        return $this->amount;
+        return (float)$this->amount;
     }
 
     /**

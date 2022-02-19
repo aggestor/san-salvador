@@ -22,7 +22,6 @@ $routes->get('/', 'Root\App\Controllers\StaticController@home');
 $routes->get('/help', 'Root\App\Controllers\StaticController@help');
 $routes->get('/services', 'Root\App\Controllers\StaticController@service');
 $routes->get('/with-us', 'Root\App\Controllers\StaticController@with_us');
-$routes->get('/contact', 'Root\App\Controllers\StaticController@contact');
 $routes->get('/security', 'Root\App\Controllers\StaticController@security');
 $routes->get('/politics', 'Root\App\Controllers\StaticController@politics');
 $routes->get('/terms', 'Root\App\Controllers\StaticController@terms');
@@ -67,7 +66,7 @@ $routes->post('/admin/mail/resend-(reset|activation)', 'Root\App\Controllers\Adm
 //route pour le succes du mot de passe
 $routes->get('/admin/password', 'Root\App\Controllers\AdminController@passwordSuccess');
 //route pour mail success
-$routes->get('admin/mail/success', 'Root\App\Controllers\AdminController@mailSendSuccess');
+$routes->get('/admin/mail/success', 'Root\App\Controllers\AdminController@mailSendSuccess');
 
 
 
@@ -115,6 +114,11 @@ $routes->get('/user/tree-data', 'Root\App\Controllers\UserController@treeData');
 //les routes pour le retrait dans le systeme
 $routes->get('/user/cashout', 'Root\App\Controllers\CashOutController@cashout');
 $routes->post('/user/cashout', 'Root\App\Controllers\CashOutController@cashout');
+
+//les routes pour le contact
+$routes->get('/contact', 'Root\App\Controllers\UserController@contact');
+$routes->post('/contact', 'Root\App\Controllers\UserController@contact');
+
 
 
 

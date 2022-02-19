@@ -303,6 +303,19 @@ class UserController extends Controller
             Controller::redirect('/user/account');
         }
     }
+
+    public function contact()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $validator = new UserValidator();
+            $contact = $validator->sendContactMessageAfterValidation();
+            if ($validator->hasError() || $validator->getMessage()) {
+                $errors = $validator->getErrors();
+                return $this->view('pages.user.contact', 'layouts', ['errors' => $errors]);
+            }
+        }
+        return $this->view('pages.user.contact');
+    }
     /**
      * Verifie si la session existe
      *
