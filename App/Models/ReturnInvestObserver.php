@@ -144,6 +144,11 @@ class ReturnInvestObserver {
                     $xml->writeAttribute('time', $time->format('H:i:s'));
                     $previous = $e->getPrevious()!=null? "{$e->getPrevious()->getMessage()}. CODE: {$e->getPrevious()->getCode()}. LINE: {$e->getPrevious()->getLine()}. FILE: {$e->getPrevious()->getFile()}":"";
                     $xml->text("{$e->getMessage()}. CODE: {$e->getCode()}. LINE: {$e->getLine()}\n Previous: {$previous}");
+                    
+                    $xml->startElement('stacktrace');
+                    $xml->text($e->getTraceAsString());
+                    $xml->endElement();
+
                     $xml->endElement();
                 }
                 $xml->endElement();
