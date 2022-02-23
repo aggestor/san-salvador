@@ -8,6 +8,6 @@ Autoloader::register();
 
 use Root\App\Models\ReturnInvestObserver;
 
-if(!ReturnInvestObserver::isRunning()) {
+//if(!ReturnInvestObserver::isRunning()) {
     ReturnInvestObserver::run();
-}
+//}

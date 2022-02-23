@@ -153,6 +153,12 @@ $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controller
  * ROUTES pour test Aggestor
  */
 $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
+$routes->get('/test', function () {
+    //file_put_contents('exemple.txt', 'essaie');
+    
+});
+
+
 
 try {
     $routes->run();
