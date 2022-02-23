@@ -20,7 +20,8 @@ use Root\Core\GenerateId;
  * Ainsi dans la methode isRunning on verifie uniquement si ce petit fichier tmp exist
  */
 class ReturnInvestObserver {
-    const HOURE = 60 * 60 * 2;//60 secondes * 60  * 2 = 2 heure
+    //const HOURE = 60 * 60 * 2;//60 secondes * 60  * 2 = 2 heure
+    const HOURE = 60 * 3;//60 secondes * 60  * 2 = 2 heure
     const LOGG_PREFIX_FILE_NAME = __DIR__.DIRECTORY_SEPARATOR."logg".DIRECTORY_SEPARATOR;
     const SIGLE_INSTANCE_TMP_FILE = self::LOGG_PREFIX_FILE_NAME.'running-bonus.txt';
     /**
@@ -90,9 +91,9 @@ class ReturnInvestObserver {
      */
     public static function run () : void {
 
-        if(static::isRunning()) {
-            return;
-        }
+        // if(static::isRunning()) {
+        //     return;
+        // }
 
         $instance = new self();
         static::$instance = $instance;
@@ -104,7 +105,7 @@ class ReturnInvestObserver {
             $now  = new DateTime();
             $day = intval($now->format('w'), 10);
 
-            if(intval($now->format('H'), 10) >= 18  && $instance->hasLastTime() && $instance->getLastTime()->format('w') != $now->format('w') && $day != 0 && $day != 6) {
+            //if(intval($now->format('H'), 10) >= 18  && $instance->hasLastTime() && $instance->getLastTime()->format('w') != $now->format('w') && $day != 0 && $day != 6) {
                 //s'il fait deja 18 heure,
                 //le jour est different du dimenche et du samedi
                 //pour le jour actuel, n'ou n'avont pas encore envoyer le bonus
@@ -157,7 +158,7 @@ class ReturnInvestObserver {
 
                 @fwrite($file, $logg);
                 @fclose($file);
-            }
+            //}
 
         });
     }

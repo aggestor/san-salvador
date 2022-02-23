@@ -388,7 +388,7 @@ class UserValidator extends AbstractMemberValidator
         $this->notNullable($telephone);
         $codePays = $_POST['country_code'];
         $numTelephone = "+" . $codePays . $telephone;
-        if (!preg_match(self::RGX_TELEPHONE, $telephone) && !preg_match(self::RGX_TELEPHONE_RDC, $telephone)) {
+        if (!preg_match(self::RGX_TELEPHONE, $telephone) && (!preg_match(self::RGX_TELEPHONE_RDC, $telephone))) {
             throw new \RuntimeException("Votre numero de telphone est invalide");
         }
         if ($this->userModel->checkByPhone($numTelephone)) {

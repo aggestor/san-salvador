@@ -5,7 +5,7 @@ namespace Root\App\Controllers;
 class StaticController extends Controller
 {
     public function home()
-    {
+    {   
         return $this->view('pages.static.home_page', 'layouts');
     }
     public function help()
