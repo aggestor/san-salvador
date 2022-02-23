@@ -155,9 +155,9 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     <span class="text-lg text-gray-400 w-8/12 mx-auto">Vous ne pouvez pas faire une demande d'un retrait maintenat. La demande d'un retrait s'effectue uniquement le samedi. Plus de renseignement sur le retrait cliquez <span class="_green_text font-semibold"><a href="/help#cashout">ici</a></span> </span>
                </div>
                <?php elseif($params['disabled'] === true): ?>
-               <form class="w-full flex justify-between my-6 h-96 primary_bg_ rounded" method="POST">
-                    <div class="w-1/2 p-3 h-full">
-                        <div class="flex w-11/12 mx-auto mt-12 mb-4 text-gray-200 font-semibold text-lg">
+               <form class="w-full flex lg:flex-row flex-col justify-between my-6 lg:h-96 primary_bg_ rounded" method="POST">
+                    <div class="lg:w-1/2 w-full p-3 h-full">
+                        <div class="flex w-11/12 mx-auto lg:mt-12 mt-5 mb-4 text-gray-200 font-semibold text-lg">
                             Formuler votre retrait enfin de nous l'envoyer
                         </div>
                         <div class="w-full flex flex-col  h-48">
@@ -169,13 +169,13 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['amount']; ?></span>
                                 <?php endif;?>
                             </div>
-                            <div class="md:w-11/12 mx-auto mt-4">
+                            <div class="md:w-11/12 w-full mx-auto mt-4">
                                 <button type="submit" name="submit" class="_green_bg text-gray-900 p-2 w-full h-10 rounded">  Envoyer la demande <i class="fas ml-1 fa-paper-plane    "></i></button>
                             </div>
                         </div>
-                        <small class="w-10/12 text-gray-400 mx-auto text-sm"><b>Note :</b> Le retrait de gain se fait uniquement le samedi. Le montant minimun  à retirer est de 20$ et le frais de retrait s'élève à 10% du montant à retirer</small>
+                        <small class="lg:w-10/12 w-full text-gray-400 mx-auto text-sm"><b>Note :</b> Le retrait de gain se fait uniquement le samedi. Le montant minimun  à retirer est de 20$ et le frais de retrait s'élève à 10% du montant à retirer</small>
                     </div>
-                    <div class="w-1/2 flex justify-center p-2 h-full">
+                    <div class="w-1/2 lg:flex hidden justify-center p-2 h-full">
                             <img class="h-96" src="/assets/logos/share-link.png" alt="">
                     </div>
                </form>

@@ -216,7 +216,7 @@ class UserModel extends AbstractMemberModel
         $data = [];
         try {
             $lockColumnName = Schema::USER['locked'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} ?".($limit!==null? " LIMIT {$limit} OFFSET {$offset}":''), [$lock? '1':'0']);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} = ?".($limit!==null? " LIMIT {$limit} OFFSET {$offset}":''), [$lock? '1':'0']);
             if ($row = $statement->fetch()) {
                 $data[] = $this->getDBOccurence($row);
 
@@ -247,7 +247,7 @@ class UserModel extends AbstractMemberModel
         $return = false;
         try {
             $lockColumnName = Schema::USER['locked'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} ?".($limit!==null? " LIMIT {$limit} OFFSET {$offset}":''), [$lock? '1':'0']);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} = ?".($limit!==null? " LIMIT {$limit} OFFSET {$offset}":''), [$lock? '1':'0']);
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -269,7 +269,7 @@ class UserModel extends AbstractMemberModel
         $return = 0;
         try {
             $lockColumnName = Schema::USER['locked'];
-            $statement = Queries::executeQuery("SELECT COUNT(id) AS nombre FROM {$this->getTableName()} WHERE {$lockColumnName} ?", [$lock? '1':'0']);
+            $statement = Queries::executeQuery("SELECT COUNT(id) AS nombre FROM {$this->getTableName()} WHERE {$lockColumnName} = ?", [$lock? '1':'0']);
             if ($row = $statement->fetch()) {
                 $return = $row['nombre'];
             }
