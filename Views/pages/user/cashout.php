@@ -163,10 +163,18 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                         <div class="w-full flex flex-col  h-48">
                             <div class="md:w-11/12 w-full mt-8 mx-auto">
                                 <div class="mx-auto focus-within:font-semibold <?=$data = (isset($_POST['submit']) && !empty($params['errors']['amount'])) ? "border-red-500" : " border-gray-400"?> text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
-                                    <input id="amount" type="number" name="amount" placeholder="Entrer le montant à retirer" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                                    <input value="<?php echo (isset($_POST['submit']) && empty($params['errors']['amount'])) ? $_POST['amount'] : "";?>" id="amount" type="number" name="amount" placeholder="Entrer le montant à retirer" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
                                 </div>
-                                <?php if (isset($_POST['submit']) && !empty($params['errors']['anounr'])): ?>
+                                <?php if (isset($_POST['submit']) && !empty($params['errors']['anount'])): ?>
                                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['amount']; ?></span>
+                                <?php endif;?>
+                            </div>
+                            <div class="md:w-11/12 w-full mt-8 mx-auto">
+                                <div class="mx-auto focus-within:font-semibold <?=$data = (isset($_POST['submit']) && !empty($params['errors']['number'])) ? "border-red-500" : " border-gray-400"?> text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  border-gray-400">
+                                    <input value="<?php echo (isset($_POST['submit']) && empty($params['errors']['number'])) ? $_POST['number'] : "";?>" id="number" type="text" name="number" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" />
+                                </div>
+                                <?php if (isset($_POST['submit']) && !empty($params['errors']['number'])): ?>
+                                    <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['number']; ?></span>
                                 <?php endif;?>
                             </div>
                             <div class="md:w-11/12 w-full mx-auto mt-4">
