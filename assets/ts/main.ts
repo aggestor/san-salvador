@@ -368,6 +368,9 @@ function menuHighLighter(): void {
       case "/user/share/link":
         setHeadImportantData({ title: "Pargtade d'un lien de parrainnage" });
         break;
+      case "/user/dashboard":
+        setHeadImportantData({ title: "Profil de l'utilisateur" });
+        break;
       default:
         setHeadImportantData({ title: "Page non trouvé" });
         break;
