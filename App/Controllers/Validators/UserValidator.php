@@ -9,6 +9,8 @@ use Root\App\Models\UserModel;
 use Root\App\Controllers\Controller;
 use Root\App\Models\CashOutModel;
 use Root\App\Models\Objects\CashOut;
+use Root\App\Models\Objects\DBOccurence;
+use Root\App\Models\Objects\Operation;
 use Root\Core\GenerateId;
 use RuntimeException;
 
@@ -23,6 +25,7 @@ class UserValidator extends AbstractMemberValidator
     const MONTANT_MIN = 20;
     const FIELD_CODE_PAYS = 'country_code';
     const FIELD_MESSAGE_CONTACT = 'message';
+    const FIELD_BITCON = 'btc_address';
 
     /**
      * Undocumented variable
@@ -147,9 +150,12 @@ class UserValidator extends AbstractMemberValidator
         $cashOut = new CashOut();
         $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
         $amout = $_POST[self::FIELD_CASHOUT_AMOUNT];
+        $destinationTelephone = (isset($_POST[self::FIELD_TELEPHONE]) && !empty($_POST[self::FIELD_TELEPHONE])) ? $_POST[self::FIELD_TELEPHONE] : "";
+        $destinationBitcoin =  (isset($_POST[self::FIELD_BITCON]) && !empty($_POST[self::FIELD_BITCON])) ? $_POST[self::FIELD_BITCON] : "";
         $this->processingId($cashOut, $id, true);
         $this->processingCashOut($cashOut, $amout);
-
+        $this->processingBitcoin($cashOut,  $destinationBitcoin);
+        $this->processingDestination($cashOut, $destinationTelephone);
         if (!$this->hasError()) {
             $cashOut->setRecordDate(new \DateTime());
             $cashOut->setTimeRecord(new \DateTime());
@@ -384,6 +390,63 @@ class UserValidator extends AbstractMemberValidator
         }
         $cashOut->setAmount($amount);
     }
+
+    /**
+     * Valiadtion Cashout du type bitcoin
+     *
+     * @param mixed $bitcoin
+     * @return void
+     */
+    protected function validationBitcoin($bitcoin)
+    {
+        $this->notNullable($bitcoin);
+        if (!preg_match("#^[a-zA-Z0-9]*$#", $bitcoin)) {
+            throw new \RuntimeException("Veuillez entre une bonne adresse du porte feuille de reception");
+        }
+    }
+
+    protected function processingBitcoin(CashOut $cashOut, $bitcoin)
+    {
+        try {
+            $this->validationBitcoin($bitcoin);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_BITCON, $e->getMessage());
+        }
+        //$cashOut->setDestination($bitcoin);
+    }
+
+    /**
+     * Valiadation destination transaction type telephone
+     *
+     * @param mixed $telephone
+     * @return void
+     */
+    protected function validationDestination($telephone)
+    {
+        $this->notNullable($telephone);
+        if (!preg_match(self::RGX_TELEPHONE, $telephone) && (!preg_match(self::RGX_TELEPHONE_RDC, $telephone))) {
+            throw new \RuntimeException("Votre numero de telphone est invalide");
+        }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param CashOut $cashOut
+     * @param mixed $telephone
+     * @return void
+     */
+    protected function processingDestination(CashOut $cashOut, $telephone)
+    {
+        try {
+            $codePays = $_POST['country_code'];
+            $this->validationDestination($telephone);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_TELEPHONE, $e->getMessage());
+        }
+        $numTelephone = "+" . $codePays . $telephone;
+        //$cashOut->setPhone($numTelephone);
+    }
     /**
      * Pour la validation du numero de telephone
      * @param string $telephone
@@ -408,7 +471,7 @@ class UserValidator extends AbstractMemberValidator
      * @param string $telephone
      * @return void
      */
-    protected function processingTelephone(User $user, $telephone): void
+    protected function processingTelephone(User $operation, $telephone): void
     {
         try {
             $codePays = $_POST['country_code'];
@@ -417,7 +480,7 @@ class UserValidator extends AbstractMemberValidator
             $this->addError(self::FIELD_TELEPHONE, $e->getMessage());
         }
         $numTelephone = "+" . $codePays . $telephone;
-        $user->setPhone($numTelephone);
+        $operation->setPhone($numTelephone);
     }
     /**
      * Traitement de l'image
