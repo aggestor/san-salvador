@@ -31,7 +31,7 @@
                                     <span id="copyBTC" data-addr="bc1qrrlu8djcwjzjpyqwwphww3d28n09n4yvenyr40" class="primary_bg_ border-gray-800 border rounded w-5/12 text-sm p-1 mt-5 cursor-pointer hover:bg-blue-800 text-white">Copier l'addresse</span>
                                 </div>
                             </div>
-                            <div style="display: none;" id="btcGraph" class="w-full  text-center mx-1 h-36">
+                            <div style="display: none;" id="btcGraph" class="w-full text-center grid place-items-center text-xs mx-1 h-36">
 
                             </div>
                             <div style="display: none;" id="MPSTransactionData" class="my-auto h-36 justify-center flex flex-col">

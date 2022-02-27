@@ -20,7 +20,6 @@
     echo $content;
     require(VIEWS . "includes/Footer.php");
     ?>
-
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/aos.min.js"></script>
     <script src="/assets/js/cropper.min.js"></script>

@@ -199,7 +199,6 @@ let BTCTransactionData = document.querySelector("#BTCTransactionData");
 transactionBtns.forEach((btn) => {
     const dataTransType = btn.getAttribute("data-trans-type");
     $(btn).on("click", (e) => {
-        console.log($(source).val());
         e.preventDefault();
         /**
          * There's still some issues about the design and css logic for the buttons
@@ -207,6 +206,8 @@ transactionBtns.forEach((btn) => {
          */
         let activeBtnClass = "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white rounded-l transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
         if (dataTransType === "btc") {
+            $("#MPSAndAMTransactionData").slideUp();
+            $("#btcGraph").slideUp();
             $(source).val("BTC");
             AMTransactionData &&
                 MPSTransactionData &&
@@ -215,6 +216,8 @@ transactionBtns.forEach((btn) => {
                 displaySwitcher([BTCTransactionData], "show", "slide");
         }
         else if (dataTransType === "am") {
+            $("#MPSAndAMTransactionData").slideDown();
+            $("#btcGraph").slideUp();
             $(source).val("AirtelMoney");
             activeBtnClass =
                 "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white  transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
@@ -225,6 +228,8 @@ transactionBtns.forEach((btn) => {
                 displaySwitcher([AMTransactionData], "show", "slide");
         }
         else if (dataTransType === "mps") {
+            $("#MPSAndAMTransactionData").slideDown();
+            $("#btcGraph").slideUp();
             $(source).val("M-Pesa");
             activeBtnClass =
                 "w-4/12 transaction-btn hover:bg-blue-800 bg-blue-600 text-white hover:text-white rounded-r  transition-all duration-150 cursor-pointer justify-center font-semibold text-center flex items-center";
@@ -307,6 +312,9 @@ function menuHighLighter() {
                 break;
             case "/user/share/link":
                 setHeadImportantData({ title: "Pargtade d'un lien de parrainnage" });
+                break;
+            case "/user/dashboard":
+                setHeadImportantData({ title: "Profil de l'utilisateur" });
                 break;
             default:
                 setHeadImportantData({ title: "Page non trouvé" });
@@ -437,4 +445,48 @@ $("#copy").click((e) => {
 $("#showBTCGraph").click((e) => {
     e.preventDefault();
     $(BTCTransactionData).slideUp();
+    $("#btcGraph").slideDown();
 });
+let socket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
+let prices = [];
+function getPricesArray() {
+    return new Promise((resolve, reject) => {
+        socket.onmessage = (evt) => {
+            let time = new Date().toString();
+            if (time != null) {
+                time = time.match(/(.\d\:){2}\d{2}/gm);
+                if (time) {
+                    time = time[0];
+                    let seconds = time.split(":")[2];
+                    let data_ = evt.data;
+                    data_ = JSON.parse(data_);
+                    if (prices.length > 9) {
+                        prices.shift();
+                    }
+                    prices.push([time, parseInt(data_.p)]);
+                    resolve(prices);
+                }
+            }
+        };
+    });
+}
+setInterval(() => {
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+    async function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ["time", "Price"],
+            ...await getPricesArray(),
+        ]);
+        var options = {
+            title: "Prix BTC - USD",
+            curveType: "function",
+            legend: { position: "bottom" },
+            series: {
+                Price: "#32e491",
+            },
+        };
+        var chart = new google.visualization.LineChart(document.getElementById("btcGraph"));
+        chart.draw(data, options);
+    }
+}, 3000);

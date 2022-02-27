@@ -226,35 +226,6 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     </div>
 
                 </div>
-                <div class="lg:w-4/12 w-11/12 mx-auto border rounded border-gray-900 h-auto primary_bg_ lg:mx-0 p-2">
-                    <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">...</h2>
-                        <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">A des enfants</div>
-                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
-                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
-                            </div>
-                        </div>
-                        <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">A des enfants</div>
-                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
-                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
-                            </div>
-                        </div>
-                        <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">Peu partager son lien</div>
-                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
-                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
-                            </div>
-                        </div>
-                        <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">Peu retirer</div>
-                            <div class="w-16 h-8 border-red-500  border p-1 rounded-full flex justify-around">
-                                    <span class="text-red-500">Non </span> <i class="fas mt-1 text-red-500 fa-times    "></i>
-                            </div>
-                        </div>
-
-
-                </div>
             </div>
         </div>
     </div>

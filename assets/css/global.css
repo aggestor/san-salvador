@@ -307,3 +307,10 @@ header{
 .node rect {
     fill: #262c3054;
 }
+#btcGraph rect {
+  margin: 10px;
+  fill: transparent;
+}
+#btcGraph text{
+  fill: white;
+}

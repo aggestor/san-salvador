@@ -1,13 +1,9 @@
-<div class="col-span-12 secondary_bg">
+<div id="helpPage" class="col-span-12 secondary_bg">
     <div class="flex  h-v-70 flex-col md:flex-row w-full lg:w-11/12 h-auto md:items-center mx-auto md:justify-around">
         <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 overflow-x-hidden w-full flex flex-col mt-2 ">
             <h1 class="md:w-11/12 mx-auto md:text-3xl text-xl text-white font-bold">FOIRE AUX QUESTIONS</span></h1>
-            <p class="text-gray-400 my-3 mx-auto md:w-11/12 ">Entrer quelque chose dans le champ ci-bas
-            <form autocomplete="off">
-                <div class="w-11/12 mx-auto focus-within:font-semibold text-gray-600 focus-within:text-green-500 group focus-within:border-green-500 my-4 h-14 px-2 flex rounded-xl border-2 border-gray-400">
-                    <i class="fas fa-search text-xl my-auto mx-2 "></i> <input id="search" class="bg-transparent w-11/12 h-11/12 text-xl focus:text-green-500 focus:outline-none" type="text" placeholder="Rechercher sur cette page" autofocus />
-                </div>
-            </form>
+            <p class="text-gray-400 my-3 mx-auto md:w-11/12 ">Cette page rassemble les courantes questions que nos utilisateurs peuvent avoir à se poser.
+            
         </div>
         <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
             <img src="assets/logos/faq.png" class="md:h-96 h-80 w-80 md:w-96" alt="Joining image" />

@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="/assets/css/aos.min.css" />
     <link rel="stylesheet" href="/assets/css/global.css" />
     <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css" />
+       <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
 </head>
 
 <body class="w-screen primary_bg bg-opacity-100 overflow-x-hidden scroll grid grid-cols-12 overflow-y-auto ">
