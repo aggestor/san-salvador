@@ -88,7 +88,6 @@ class Schema
         "motifTime" => "last_modif_time",
         "validated" => "validated",
         "admin" => "admin"
-
     ];
     const RETURN_INVEST = [
         "id" => "id",
