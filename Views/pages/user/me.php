@@ -151,12 +151,8 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                     <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 lg:block flex justify-center ">
                         <img class="object-contain h-60 w-60 rounded-full lg:rounded-lg" src="/assets/img/<?=$images[0]?>" alt="<?=$_SESSION["users"]->getName()?>">
                     </div>
-                    <div class="lg:w-4/12 w-11/12 lg:mx-0 mx-auto p-2 h-auto rounded border my-3  lg:bg-transparent border-gray-900 primary_bg_">
+                    <div class="lg:w-4/12 w-11/12 lg:mx-0 mx-auto p-2 h-auto rounded my-3  lg:bg-transparent ">
                         <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Informations personnelles</h2>
-                        <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">Id</div>
-                            <div class="text-gray-600"><?=$_SESSION["users"]->getId()?></div>
-                        </div>
                         <div class="w-10/12 mx-auto h-16">
                             <div class="text-gray-300 font-semibold">Noms</div>
                             <div class="text-gray-600"><?=$_SESSION["users"]->getName()?></div>
@@ -169,64 +165,13 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                             <div class="text-gray-300 font-semibold">Numéro de téléphone</div>
                             <div class="text-gray-600"><?=$_SESSION["users"]->getPhone()?></div>
                         </div>
+                        <div class="w-10/12 mx-auto h-16">
+                            <a href="/user/edit" class="p-2 hover:bg-blue-700 cursor-pointer rounded bg-blue-600 text-white text-center">Modifier</a>
+
+                        </div>
                     </div>
-                <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-auto h-auto rounded border my-3  lg:bg-transparent border-gray-900 primary_bg_ p-2">
-                    <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Autres informations</h2>
-                        <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">Confirmation mail</div>
-                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
-                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
-                            </div>
-                        </div>
-                        <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">Compte activé</div>
-                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
-                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
-                            </div>
-                        </div>
-                        <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">Peu partager son lien</div>
-                            <div class="w-16 h-8 border-green-500  border p-1 rounded-full flex justify-around">
-                                    <span class="text-green-500">Oui </span> <i class="fas mt-1 text-green-500 fa-check-circle    "></i>
-                            </div>
-                        </div>
-                        <div class="w-10/12 mx-auto h-16">
-                            <div class="text-gray-300 font-semibold">Peut retirer</div>
-                            <div class="w-16 h-8 border-red-500  border p-1 rounded-full flex justify-around">
-                                    <span class="text-red-500">Non </span> <i class="fas mt-1 text-red-500 fa-times    "></i>
-                            </div>
-                        </div>
-
-
-                </div>
             </div>
-            <div class="w-11/12 mx-auto flex flex-col lg:flex-row lg:space-x-5 ">
-                <div class="lg:w-4/12 w-11/12 mx-auto border rounded border-gray-900 h-auto primary_bg_ lg:mx-0 p-2">
-                    <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Information sur le Réseau</h2>
-                    <div class="w-10/12 mx-auto h-16">
-                        <div class="text-gray-300 font-semibold">Parent</div>
-                        <div class="text-gray-600"><?=$_SESSION["users"]->getParent()->getId()?></div>
-                    </div>
-                    <div class="w-10/12 mx-auto h-16">
-                        <div class="text-gray-300 font-semibold">Sponsor</div>
-                        <div class="text-gray-600"><?=$_SESSION["users"]->getSponsor()->getId()?></div>
-                    </div>
 
-                    <div class="w-10/12 mx-auto h-16">
-                        <div class="text-gray-300 font-semibold">Capital investi</div>
-                        <div class="w-16 h-8 border-blue-500  border p-1 rounded-full flex justify-around">
-                                <span class="text-blue-500"><?=$params["user"]->getCapital()?> </span> <i class="fas mt-1 text-blue-500 fa-dollar-sign    "></i>
-                        </div>
-                    </div>
-                    <div class="w-10/12 mx-auto h-16">
-                        <div class="text-gray-300 font-semibold">Dévise</div>
-                        <div class="w-16 h-8 border-blue-500  border p-1 rounded-full flex justify-around">
-                                <span class="text-blue-500">USD</span> <i class="fas mt-1 text-blue-500 fa-dollar-sign    "></i>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
     </div>
 </div>
