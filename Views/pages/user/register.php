@@ -41,8 +41,7 @@
                         <div class="md:w-11/12 md:flex w-full md:justify-left mb-2 mx-auto">
                             <div class="md:w-5/12 md:mt-0 mt-1 mr-1">
                                 <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =(isset($_POST['enregistrer']) && !empty($params['errors']['phone_number'])) ?"border-red-500" : " border-gray-400" ?>">
-                                <!-- country codes (ISO 3166) and Dial codes. -->
-                                <select name="country_code" class="primary_bg text-gray-400 scroll outline-none w-44">
+                                <select name="country_code" class="primary_bg text-gray-400 scroll outline-none w-56 lg:w-full">
                                     <option data-countryCode="CD" value="243" Selected>Congo Kinshasa (+243)</option>
                                     <option data-countryCode="US" value="1">USA (+1)</option>
                                     <optgroup class="primary_bg hover:bg-green-500" label="Other countries">
@@ -90,6 +89,7 @@
                                         <option data-countryCode="CK" value="682">Cook Islands (+682)</option>
                                         <option data-countryCode="CR" value="506">Costa Rica (+506)</option>
                                         <option data-countryCode="HR" value="385">Croatia (+385)</option>
+                                        <option data-countryCode="CI" value="225">Cote d'Ivoire (+225)</option>
                                         <option data-countryCode="CU" value="53">Cuba (+53)</option>
                                         <option data-countryCode="CY" value="90392">Cyprus North (+90392)</option>
                                         <option data-countryCode="CY" value="357">Cyprus South (+357)</option>

@@ -878,6 +878,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 8rem;
 }
 
+.h-\[460\] {
+  height: 460;
+}
+
+.h-\[460px\] {
+  height: 460px;
+}
+
 .w-screen {
   width: 100vw;
 }
@@ -1018,10 +1026,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-56 {
   width: 14rem;
-}
-
-.w-44 {
-  width: 11rem;
 }
 
 .transform {
