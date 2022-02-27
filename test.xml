@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+<bonus date="24-02-2022T06:24:02"><error code="0" className="Root\App\Models\ModelException" time="06:24:02">Une erreur est survenue lors de la communication avec la BDD. CODE: 0. LINE: 278
+ Previous: SQLSTATE[HY000]: General error: 2006 MySQL server has gone away. CODE: HY000. LINE: 165. FILE: /home/usalvage/public_html/App/Models/Queries.php</error></bonus>
