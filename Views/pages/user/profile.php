@@ -158,9 +158,6 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                             <?=$params['user']->getCapital()?>
                             </span>
                         </div>
-                        <p class="text-sm text-gray-500 mt-1 p-1">
-                            Montant avec lequel vous avez soucrit à un pack, en d'autre terme votre capital.
-                        </p>
                     </div>
                 </div>
                 <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
@@ -175,18 +172,6 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                             <span class="font-semibold text-yellow-300 mt-3 text-2xl my-auto">
                             <?=$params['user']->getSoldBinary()?>
                             </span>
-                            <div class="border rounded-lg border-gray-900 p-2 ml-2 w-auto mt-2 flex h-10 justify-around items-center">
-                                <span class="bg-gray-500 grid  text-gray-900 place-items-center w-7 h-7 rounded-full">
-                                    <i class="fas fa-dice-two"></i>
-                                </span>
-                                <span class="font-semibold text-gray-500 mx-2 text-lg">
-                                2 personnes
-                                </span>
-                                <span class="bg-green-500 grid  text-gray-900 place-items-center w-7 h-7 rounded-full">
-                                    <i class="fas fa-check-circle rounded-full"></i>
-                                </span>
-
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -202,18 +187,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                             <span class="font-semibold text-pink-500 mt-3 text-2xl my-auto">
                             <?=$params['user']->getSoldParainage()?>
                             </span>
-                            <div class="border rounded-lg border-gray-900 p-2 ml-2 w-56 mt-2 flex h-10 justify-around items-center">
-                                <span class="bg-gray-500 grid  text-gray-900 place-items-center w-7 h-7 rounded-full">
-                                    <i class="fas fa-users"></i>
-                                </span>
-                                <span class="font-semibold text-gray-500 text-2xl">
-                                12 parrainnés
-                                </span>
-                            </div>
                         </div>
-                        <p class="text-sm text-gray-500 mt-1 p-1">
-                            Vous recevez ce bonus à chaque fois quelqu'un que vous avez envoyez vorte lien investi.
-                        </p>
                     </div>
                 </div>
             </div>
@@ -232,38 +206,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                             </span>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1 p-1">
-                       Chaque jour du lundi au vendredi, vous recevez <?=$params['user']->getPack()->getAcurracy()?>% de votre capital comme bonus.
-                   </p>
                 </div>
-                <div class="lg:col-span-8 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
-                    <div class="flex">
-                        <span class="text-yellow-500 font-semibold"><i class="fas fa-object-group    "></i> REVENU BINAIRE</span>
-                    </div>
-                    <div class="w-full  rounded-full">
-                        <div class="flex">
-                            <span class="bg-yellow-500 grid mt-3 mr-4 text-gray-900 place-items-center w-8 h-8 rounded-full">
-                                <i class="fas fa-dollar-sign "></i>
-                            </span>
-                            <span class="font-semibold text-yellow-300 mt-3 text-2xl my-auto">
-                            <?=$params['user']->getPack()->getAcurracy()?>
-                            </span>
-                            <div class="border rounded-lg border-gray-900 p-2 ml-2 w-auto mt-2 flex h-10 justify-around items-center">
-                                <span class="bg-gray-500 grid  text-gray-900 place-items-center w-7 h-7 rounded-full">
-                                    <i class="fas fa-dice-two"></i>
-                                </span>
-                                <span class="font-semibold text-gray-500 mx-2 text-lg">
-                                2 personnes
-                                </span>
-                                <span class="bg-green-500 grid  text-gray-900 place-items-center w-7 h-7 rounded-full">
-                                    <i class="fas fa-check-circle rounded-full"></i>
-                                </span>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

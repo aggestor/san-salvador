@@ -189,6 +189,12 @@ class UserController extends Controller
             return $this->view('pages.user.me', 'layout_', ['user' => $this->userObject()]);
         }
     }
+    public function update()
+    {
+        if ($this->isUsers()) {
+            return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject()]);
+        }
+    }
     public function tree()
     {
         if ($this->isUsers()) {
