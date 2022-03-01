@@ -192,6 +192,20 @@ class UserController extends Controller
     public function update()
     {
         if ($this->isUsers()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $validator = new UserValidator();
+                $user = $validator->updateAfterValidation();
+                if ($validator->hasError() || $validator->getMessage() != null) {
+                    $errors = $validator->getErrors();
+                    var_dump($errors, $validator->getMessage());
+                    exit();
+                    return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject(), 'errors' => $errors]);
+                } else {
+                    var_dump($user->getId());
+                    exit();
+                }
+                //header('Locaton:' . $_SERVER['HTTP_REFERER']);
+            }
             return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject()]);
         }
     }
