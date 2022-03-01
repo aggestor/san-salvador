@@ -87,6 +87,7 @@ class Schema
         "modifDate" => "last_modif_date",
         "motifTime" => "last_modif_time",
         "validated" => "validated",
+        "destination" => "destination",
         "admin" => "admin"
     ];
     const RETURN_INVEST = [

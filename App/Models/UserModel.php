@@ -269,7 +269,7 @@ class UserModel extends AbstractMemberModel
         $return = 0;
         try {
             $lockColumnName = Schema::USER['locked'];
-            $statement = Queries::executeQuery("SELECT COUNT(id) AS nombre FROM {$this->getTableName()} WHERE {$lockColumnName} = ?", [$lock? '1':'0']);
+            $statement = Queries::executeQuery("SELECT COUNT(id) AS nombre FROM {$this->getTableName()} WHERE {$lockColumnName} = ".($lock? '1':'0'));//, [$lock? '1':'0']);
             if ($row = $statement->fetch()) {
                 $return = $row['nombre'];
             }

@@ -596,7 +596,8 @@ class User extends Member implements BinaryTreeNode
         if($date != null) {
             $capital = 0;
             foreach ($this->getInscriptions() as $in) {
-                if(!$in->isValidate() || ($in->isValidate() && ($in->getConfirmationDate()->format('d-m-Y') == $date->format('d-m-Y') || $in->getConfirmationDate()->getTimestamp() >= $date->getTimestamp()))){
+                if(!$in->isValidate() || ($in->isValidate() && 
+                ($in->getConfirmationDate() != null &&  ($in->getConfirmationDate()->format('d-m-Y') == $date->format('d-m-Y') || $in->getConfirmationDate()->getTimestamp() >= $date->getTimestamp())))){ 
                     continue;//on ecarte tout les inscriptions confirmer en date en parametre, est ceux des dates plus recentes que la date en parametre
                 }
                 $capital += intval($in->getAmount(), 10);

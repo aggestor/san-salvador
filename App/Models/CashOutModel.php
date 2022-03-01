@@ -23,13 +23,15 @@ class CashOutModel extends AbstractOperationModel
                 $cashOut['amount'],
                 $cashOut['recordDate'],
                 $cashOut['timeRecord'],
+                $cashOut['destination']
             ],
             [
                 $object->getId(),
                 $object->getUser()->getId(),
                 $object->getAmount(),
                 $object->getFormatedRecordDate(),
-                $object->getFormatedTimeRecord()
+                $object->getFormatedTimeRecord(),
+                $object->getDestination()
             ]
         );
     }
