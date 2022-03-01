@@ -75,10 +75,11 @@ class ReturnInvestCronJob {
         $xml->startDocument('1.0');
         $xml->startElement('bonus');
         $xml->writeAttribute('date', $now->format('d-m-Y\TH:i:s'));
-
+        
         try {
             $count = $instance->userModel->countByLockState();//comptage pour que nous chargons les comptes par groupe de 50
             $steep = 50;
+            $xml->writeAttribute('count', "{$count}");
             
             if($count <= $steep) {
                 $instance->dispatch($instance->userModel->findByLockState(), $xml, $now);
@@ -137,12 +138,18 @@ class ReturnInvestCronJob {
      */
     private function dispatch ($users, \XMLWriter $xml, \DateTime $date) : void {
         $bonus = [];
+        $xml->startElement('group');
+
         foreach ($users as $user) {
-            if ($user->getParent() == null) {//pour le compte racine, pas de bonus journalier
+            $user = $this->userModel->load($user);
+            
+            if ($user->getParent() == null || !$user->hasPack()) {//pour le compte racine, pas de bonus journalier
+                $xml->startElement('skiped');
+                $xml->writeAttribute('userId', "{$user->getId()}");
+                $xml->endElement();
                 continue;
             }
 
-            $user = $this->userModel->load($user);
 
             $return = new ReturnInvest();
 
@@ -158,14 +165,13 @@ class ReturnInvestCronJob {
 
             $return->setAmount($amount);
             $return->setUser($user);
-            $return->setRecordDate($this->date);
-            $return->setTimeRecord($this->date);
+            $return->setRecordDate($date);
+            $return->setTimeRecord($date);
             $bonus[] = $return;
 
         }
         $this->returnInvestModel->createAll($bonus);
 
-        $xml->startElement('group');
         foreach ($bonus as $bn) {
             $xml->startElement('user');
             $xml->writeAttribute('id', $bn->getUser()->getId());

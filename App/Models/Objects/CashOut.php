@@ -18,6 +18,13 @@ class CashOut extends Operation
      * @var bool
      */
     private $validated;
+
+    /**
+     * l'adresse de reception du montant retirer
+     * (tel, btc,...)
+     * @var string
+     */
+    private $destination;
     
     /**
      * {@inheritDoc}
@@ -26,6 +33,20 @@ class CashOut extends Operation
     public function getSurplus()
     {
         throw new \RuntimeException("Operation non pris en charge");
+    }
+
+    /**
+     * @return string
+     */
+    public function getDestination () : ?string {
+        return $this->destination;
+    }
+
+    /**
+     * @return void
+     */
+    public function setDestination (?string $destination) : void {
+        $this->destination = $destination;
     }
 
     /**

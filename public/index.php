@@ -154,9 +154,8 @@ $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controller
  * ROUTES pour test Aggestor
  */
 $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
-$routes->get('/test', function () {
+$routes->get('/teste', function () {
     //file_put_contents('exemple.txt', 'essaie');
-
 
 
     require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Autoloader.php';
