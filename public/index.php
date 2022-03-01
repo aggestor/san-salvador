@@ -3,7 +3,6 @@
 use Root\Autoloader;
 use Root\routes\Router;
 use Root\App\Exceptions\NotFoundException;
-use Root\App\Models\ReturnInvestCronJob;
 
 include("../Autoloader.php");
 Autoloader::register();
@@ -157,15 +156,6 @@ $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controller
  */
 $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
 $routes->get('/teste', function () {
-    //file_put_contents('exemple.txt', 'essaie');
-
-
-    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Autoloader.php';
-    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
-    //Autoloader::register();
-
-
-    ReturnInvestCronJob::run();
 });
 
 

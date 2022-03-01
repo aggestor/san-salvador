@@ -23,7 +23,7 @@ abstract class AbstractValidator
     const SESSION_USERS = 'users';
 
     const RGX_TELEPHONE = "/^([1-9]{1,3})([0-9]{6,15})$/";
-    const RGX_TELEPHONE_RDC = "/^(([98])[0-9]{8}))$/";
+    const RGX_TELEPHONE_RDC = "/^([98])([0-9]{8})$/";
     // const RGX_TELEPHONE = "/^(((\+)|00)([1-9]{1,3})([0-9]{6,15}))$/";
     // const RGX_TELEPHONE_RDC = "/^((0[98])[0-9]{8})$/";
     // const RGX_TELEPHONE_2="^(00?|\+)";

@@ -80,8 +80,8 @@ class UserModel extends AbstractMemberModel
                 [
                     Schema::USER['name'],
                     Schema::USER['phone'],
-                    Schema::USER['lastModifDate'],
-                    Schema::USER['lastModifTime'],
+                    Schema::USER['modifDate'],
+                    Schema::USER['motifTime'],
                 ],
                 "id = ?",
                 [
@@ -212,11 +212,12 @@ class UserModel extends AbstractMemberModel
      * @throws ModelException
      * @return User[]
      */
-    public function findByLockState (bool $lock=false, ?int $limit=null, int $offset=0) : array{
+    public function findByLockState(bool $lock = false, ?int $limit = null, int $offset = 0): array
+    {
         $data = [];
         try {
             $lockColumnName = Schema::USER['locked'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} = ?".($limit!==null? " LIMIT {$limit} OFFSET {$offset}":''), [$lock? '1':'0']);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} = ?" . ($limit !== null ? " LIMIT {$limit} OFFSET {$offset}" : ''), [$lock ? '1' : '0']);
             if ($row = $statement->fetch()) {
                 $data[] = $this->getDBOccurence($row);
 
@@ -243,11 +244,12 @@ class UserModel extends AbstractMemberModel
      * @return bool
      * @throws ModelException
      */
-    public function checkByLockState (bool $lock=false, ?int $limit=null, int $offset=0) : bool {
+    public function checkByLockState(bool $lock = false, ?int $limit = null, int $offset = 0): bool
+    {
         $return = false;
         try {
             $lockColumnName = Schema::USER['locked'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} = ?".($limit!==null? " LIMIT {$limit} OFFSET {$offset}":''), [$lock? '1':'0']);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} = ?" . ($limit !== null ? " LIMIT {$limit} OFFSET {$offset}" : ''), [$lock ? '1' : '0']);
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -265,11 +267,12 @@ class UserModel extends AbstractMemberModel
      * @return int
      * @throws ModelException
      */
-    public function countByLockState (bool $lock=false) : int {
+    public function countByLockState(bool $lock = false): int
+    {
         $return = 0;
         try {
             $lockColumnName = Schema::USER['locked'];
-            $statement = Queries::executeQuery("SELECT COUNT(id) AS nombre FROM {$this->getTableName()} WHERE {$lockColumnName} = ".($lock? '1':'0'));//, [$lock? '1':'0']);
+            $statement = Queries::executeQuery("SELECT COUNT(id) AS nombre FROM {$this->getTableName()} WHERE {$lockColumnName} = " . ($lock ? '1' : '0')); //, [$lock? '1':'0']);
             if ($row = $statement->fetch()) {
                 $return = $row['nombre'];
             }

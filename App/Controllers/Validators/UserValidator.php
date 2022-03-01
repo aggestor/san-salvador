@@ -104,7 +104,6 @@ class UserValidator extends AbstractMemberValidator
         }
 
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec d'inscription" : "succes";
-        $_REQUEST['lastInsert'] = $user;
         return $user;
     }
 
@@ -112,8 +111,31 @@ class UserValidator extends AbstractMemberValidator
     {
     }
 
+    /**
+     * Modification du nom et du numero de telephone de l'utilisateur apres validation
+     *
+     * @return User
+     */
     public function updateAfterValidation()
     {
+        $user = new User();
+        $name = $_POST[self::FIELD_NAME];
+        $phone = $_POST[self::FIELD_TELEPHONE];
+        $idUsers = $_SESSION[self::SESSION_USERS]->getId();
+        $this->processingName($user, $name);
+        $this->processingTelephone($user, $phone);
+        if (!$this->hasError()) {
+            $user->setLastModifDate(new \DateTime());
+            $user->setLastModifTime(new \DateTime());
+            try {
+                var_dump($user->getPhone());
+                exit();
+                $this->userModel->update($user, $idUsers);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+        return $user;
     }
 
     /**
