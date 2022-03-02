@@ -15,17 +15,18 @@
         <form method="POST" class="md:w-10/12 w-11/12  mx-auto md:p-3">
             <div class="md:w-11/12 w-full mx-auto mb-2">
                 <div class=" mx-auto focus-within:font-semibold <?= $data =  (isset($_POST['connexion']) && !empty($params['errors']['username'])) ? "border-red-500" : " border-gray-400" ?> text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border">
-                    <input id="username" name="username" type="text" placeholder="Nom d'utilisateur" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['edit']) && empty($params['errors']['username'])) ? $_POST['username'] : $_SESSION['users']->getName(); ?>" />
+                    <input id="username" name="username" type="text" placeholder="Nom d'utilisateur" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['edit']) && empty($params['errors']['username'])) ? $_POST['username'] : $params['user']->getName(); ?>" />
                 </div>
                 <?php if (isset($_POST['connexion']) && !empty($params['errors']['username'])) : ?>
                     <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['username']; ?></span>
                 <?php endif; ?>
             </div>
+            <?php $telephone = explode("/", $params['user']->getPhone()); ?>
             <div class="md:w-11/12 md:flex w-full md:justify-left mb-2 mx-auto">
                 <div class="md:w-6/12 md:mt-0 mt-1 mr-1">
                     <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data = (isset($_POST['edit']) && !empty($params['errors']['phone_number'])) ? "border-red-500" : " border-gray-400" ?>">
                         <select name="country_code" class="primary_bg text-gray-400 scroll outline-none w-56 lg:w-full">
-                            <option data-countryCode="CD" value="243" Selected>Congo Kinshasa (+243)</option>
+                            <option data-countryCode="CD" value="<?php echo substr($telephone[0], 1) ?>" Selected>Congo Kinshasa (+243)</option>
                             <option data-countryCode="US" value="1">USA (+1)</option>
                             <optgroup class="primary_bg hover:bg-green-500" label="Other countries">
                                 <option data-countryCode="DZ" value="213">Algeria (+213)</option>
@@ -255,7 +256,7 @@
 
                 <div class="md:w-6/12 w-full md:mt-0 mt-1 mr-1">
                     <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border <?= $data = (isset($_POST['edit']) && !empty($params['errors']['phone_number'])) ? "border-red-500" : " border-gray-400" ?>">
-                        <input id="PhoneNumber" name="phone_number" maxlength="15" minlength="9" type="text" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['edit']) && empty($params['errors']['phone_number'])) ? $_POST['phone_number'] : substr($_SESSION['users']->getPhone(), 1); ?>" />
+                        <input id="PhoneNumber" name="phone_number" maxlength="15" minlength="9" type="text" placeholder="Numéro de téléphone" class="bg-transparent focus:text-green-500 focus:outline-none ml-2 w-full" autocomplete="on" value="<?php echo (isset($_POST['edit']) && empty($params['errors']['phone_number'])) ? $_POST['phone_number'] : $telephone[1]; ?>" />
                     </div>
                     <?php if (isset($_POST['edit']) && !empty($params['errors']['phone_number'])) : ?>
                         <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['phone_number']; ?></span>

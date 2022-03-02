@@ -26,6 +26,7 @@ class UserValidator extends AbstractMemberValidator
     const FIELD_CODE_PAYS = 'country_code';
     const FIELD_MESSAGE_CONTACT = 'message';
     const FIELD_BITCON = 'btc_address';
+    const PHONE_BITCON = 'btc_phone';
 
     /**
      * Undocumented variable
@@ -123,13 +124,11 @@ class UserValidator extends AbstractMemberValidator
         $phone = $_POST[self::FIELD_TELEPHONE];
         $idUsers = $_SESSION[self::SESSION_USERS]->getId();
         $this->processingName($user, $name);
-        $this->processingTelephone($user, $phone);
+        $this->processingTelephone($user, $phone, true);
         if (!$this->hasError()) {
             $user->setLastModifDate(new \DateTime());
             $user->setLastModifTime(new \DateTime());
             try {
-                var_dump($user->getPhone());
-                exit();
                 $this->userModel->update($user, $idUsers);
             } catch (ModelException $e) {
                 $this->setMessage($e->getMessage());
@@ -178,6 +177,7 @@ class UserValidator extends AbstractMemberValidator
         $this->processingCashOut($cashOut, $amout);
         $this->processingBitcoin($cashOut,  $destinationBitcoin);
         $this->processingDestination($cashOut, $destinationTelephone);
+        $this->processingBtc_Phone($destinationBitcoin, $destinationTelephone);
         if (!$this->hasError()) {
             $cashOut->setRecordDate(new \DateTime());
             $cashOut->setTimeRecord(new \DateTime());
@@ -414,6 +414,37 @@ class UserValidator extends AbstractMemberValidator
     }
 
     /**
+     * Validation Phone and Bitcoin
+     *
+     * @param mixed $bitcoin
+     * @param mixed $telephone
+     * @return void
+     */
+    protected function validationBtc_Phone($bitcoin, $telephone)
+    {
+        if (empty($bitcoin) && empty($telephone)) {
+            throw new \RuntimeException("Veuillez renseigner le champs");
+        } elseif (!empty($bitcoin) && !empty($telephone)) {
+            throw new \RuntimeException("Données incorrecte, impossible d'exectuer votre demande");
+        }
+    }
+
+    /**
+     * Traitement 
+     *
+     * @param mixed $bitcoin
+     * @param mixed $telephone
+     * @return void
+     */
+    protected function processingBtc_Phone($bitcoin, $telephone)
+    {
+        try {
+            $this->validationBtc_Phone($bitcoin, $telephone);
+        } catch (\Throwable $e) {
+            $this->addError(self::PHONE_BITCON, $e->getMessage());
+        }
+    }
+    /**
      * Valiadtion Cashout du type bitcoin
      *
      * @param mixed $bitcoin
@@ -421,8 +452,7 @@ class UserValidator extends AbstractMemberValidator
      */
     protected function validationBitcoin($bitcoin)
     {
-        $this->notNullable($bitcoin);
-        if (!preg_match("#^[a-zA-Z0-9]*$#", $bitcoin)) {
+        if (!preg_match("#^[a-zA-Z0-9]*$#", $bitcoin) && !empty($bitcoin)) {
             throw new \RuntimeException("Veuillez entre une bonne adresse du porte feuille de reception");
         }
     }
@@ -434,7 +464,7 @@ class UserValidator extends AbstractMemberValidator
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_BITCON, $e->getMessage());
         }
-        //$cashOut->setDestination($bitcoin);
+        $cashOut->setDestination($bitcoin);
     }
 
     /**
@@ -445,14 +475,13 @@ class UserValidator extends AbstractMemberValidator
      */
     protected function validationDestination($telephone)
     {
-        $this->notNullable($telephone);
-        if (!preg_match(self::RGX_TELEPHONE, $telephone) && (!preg_match(self::RGX_TELEPHONE_RDC, $telephone))) {
+        if (!preg_match(self::RGX_TELEPHONE, $telephone) && (!preg_match(self::RGX_TELEPHONE_RDC, $telephone) && !empty($telephone))) {
             throw new \RuntimeException("Votre numero de telphone est invalide");
         }
     }
 
     /**
-     * Undocumented function
+     * Undocumente
      *
      * @param CashOut $cashOut
      * @param mixed $telephone
@@ -467,23 +496,30 @@ class UserValidator extends AbstractMemberValidator
             $this->addError(self::FIELD_TELEPHONE, $e->getMessage());
         }
         $numTelephone = "+" . $codePays . $telephone;
-        //$cashOut->setPhone($numTelephone);
+        $cashOut->setDestination($numTelephone);
     }
     /**
      * Pour la validation du numero de telephone
      * @param string $telephone
      * @return void
      */
-    protected function validationTelephone($telephone): void
+    protected function validationTelephone($telephone, $onUpdate = false): void
     {
         $this->notNullable($telephone);
         $codePays = $_POST['country_code'];
-        $numTelephone = "+" . $codePays . $telephone;
+        $numTelephone = "+" . $codePays . "/" . $telephone;
         if (!preg_match(self::RGX_TELEPHONE, $telephone) && (!preg_match(self::RGX_TELEPHONE_RDC, $telephone))) {
             throw new \RuntimeException("Votre numero de telphone est invalide");
         }
-        if ($this->userModel->checkByPhone($numTelephone)) {
-            throw new \RuntimeException("Ce numero de telephone est deja utlise pour une autre compte");
+        if ($onUpdate) {
+            $user = $this->userModel->findByPhone($numTelephone);
+            if ($user->getId() != $_SESSION[self::SESSION_USERS]->getId()) {
+                throw new \RuntimeException("Ce numero de telephone est deja utlise pour une autre compte");
+            }
+        } else {
+            if ($this->userModel->checkByPhone($numTelephone)) {
+                throw new \RuntimeException("Ce numero de telephone est deja utlise pour une autre compte");
+            }
         }
     }
     /**
@@ -493,15 +529,15 @@ class UserValidator extends AbstractMemberValidator
      * @param string $telephone
      * @return void
      */
-    protected function processingTelephone(User $operation, $telephone): void
+    protected function processingTelephone(User $operation, $telephone, $onUpdate = false): void
     {
         try {
             $codePays = $_POST['country_code'];
-            $this->validationTelephone($telephone);
+            $this->validationTelephone($telephone, $onUpdate);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_TELEPHONE, $e->getMessage());
         }
-        $numTelephone = "+" . $codePays . $telephone;
+        $numTelephone = "+" . $codePays . "/" . $telephone;
         $operation->setPhone($numTelephone);
     }
     /**

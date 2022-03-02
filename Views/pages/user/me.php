@@ -6,11 +6,11 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
     <div class="w-full flex justify-between lg:h-24 h-auto flex-col lg:flex-row p-2 primary_bg_ border-gray-800 border-b">
         <div id="user-identifiers" class="lg:w-3/12 w-full h-full flex ">
             <div class=":h-20 h-16 w-16 overflow-hidden lg:w-20 grid place-items-center border-gray-800 border rounded-full primary_bg">
-                <img class="object-contain" src="/assets/img/<?= $images[0] ?>" alt="<?= $_SESSION["users"]->getName() ?>">
+                <img class="object-contain" src="/assets/img/<?= $images[0] ?>" alt="<?= $params['user']->getName() ?>">
             </div>
             <div class="w-7/12 flex flex-col pl-5">
-                <span class="text-gray-300 font-semibold text-base lg:text-lg"><?= $_SESSION["users"]->getName() ?></span>
-                <span class="text-gray-400 lg:text-base text-sm"><?= $_SESSION["users"]->getEmail() ?></span>
+                <span class="text-gray-300 font-semibold text-base lg:text-lg"><?= $params['user']->getName() ?></span>
+                <span class="text-gray-400 lg:text-base text-sm"><?= $params['user']->getEmail() ?></span>
                 <span class="text-green-500 border border-green-500 rounded-full w-16 text-center p-0.5 lg:text-sm text-xs">En ligne</span>
             </div>
             <div class="w-2/12 lg:hidden flex flex-col">
@@ -149,24 +149,24 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             </div>
             <div class="w-11/12 mx-auto lg:space-x-3 lg:flex-row flex-col flex">
                 <div class="lg:w-4/12 w-11/12 mx-auto lg:mx-0 lg:block flex justify-center ">
-                    <img class="object-contain h-60 w-60 rounded-full lg:rounded-lg" src="/assets/img/<?= $images[0] ?>" alt="<?= $_SESSION["users"]->getName() ?>">
+                    <img class="object-contain h-60 w-60 rounded-full lg:rounded-lg" src="/assets/img/<?= $images[0] ?>" alt="<?= $params['user']->getName() ?>">
                 </div>
                 <div class="lg:w-4/12 w-11/12 lg:mx-0 mx-auto p-2 h-auto rounded my-3  lg:bg-transparent ">
                     <h2 class=" w-10/12 mx-auto text-blue-500 mb-2 font-semibold">Informations personnelles</h2>
                     <div class="w-10/12 mx-auto h-16">
                         <div class="text-gray-300 font-semibold">Noms</div>
-                        <div class="text-gray-600"><?= $_SESSION["users"]->getName() ?></div>
+                        <div class="text-gray-600"><?= $params['user']->getName() ?></div>
                     </div>
                     <div class="w-10/12 mx-auto h-16">
                         <div class="text-gray-300 font-semibold">Adresse mail</div>
-                        <div class="text-gray-600"><?= $_SESSION["users"]->getEmail() ?></div>
+                        <div class="text-gray-600"><?= $params['user']->getEmail() ?></div>
                     </div>
                     <div class="w-10/12 mx-auto h-16">
                         <div class="text-gray-300 font-semibold">Numéro de téléphone</div>
-                        <div class="text-gray-600"><?= $_SESSION["users"]->getPhone() ?></div>
+                        <div class="text-gray-600"><?= str_replace("/", "", $params['user']->getPhone()) ?></div>
                     </div>
                     <div class="w-10/12 mx-auto h-16">
-                        <a href="#" class="p-2 hover:bg-blue-700 cursor-pointer rounded bg-blue-600 text-white text-center">Modifier</a>
+                        <a href="/user/edit" class="p-2 hover:bg-blue-700 cursor-pointer rounded bg-blue-600 text-white text-center">Modifier</a>
 
                     </div>
                 </div>
