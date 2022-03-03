@@ -69,7 +69,8 @@ class UserValidator extends AbstractMemberValidator
         $side = isset($_GET[self::FIELD_SIDE]) ? $_GET[self::FIELD_SIDE] : null;
         $parent = isset($_GET[self::FIELD_PARENT]) ? $_GET[self::FIELD_PARENT] : null;
         $sponsor = isset($_GET[self::FIELD_SPONSOR]) ? $_GET[self::FIELD_SPONSOR] : null;
-
+        // var_dump($image);
+        // exit();
         $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
         $token = GenerateId::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
         $this->processingId($user, $id, true);
@@ -82,19 +83,13 @@ class UserValidator extends AbstractMemberValidator
         $this->processingSponsor($user, $sponsor, $side);
         $this->processingToken($token, $user);
         if (!$this->hasError()) {
-            if ($image['name'] == "" && $image['type'] == "") {
+            if (empty($image['name']) && empty($image['type'])) {
                 $chemin = 'default\user.jpg AND default\x320.jpg';
-            } else {
+            } else if (!empty($image['name']) && !empty($image['type'])) {
                 $controller = new Controller();
-                $chemin = $controller->addImage($image);
+                $chemin = $controller->addImage(self::FIELD_IMAGE);
             }
             $user->setPhoto($chemin);
-            // if (!empty($image) && isset($image)) {
-            //     $chemin = $controller->addImage($image);
-            //     $user->setPhoto($chemin);
-            // } else {
-            //     $user->setPhoto("default\user.jpg AND default\x320.jpg");
-            // }
             $user->setRecordDate(new \DateTime());
             $user->settimeRecord(new \DateTime());
             try {
