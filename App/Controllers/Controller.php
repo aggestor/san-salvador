@@ -432,7 +432,6 @@ class Controller
      */
     public function addImage($nom)
     {
-
         $image = $_FILES[$nom]['name'];
         $temporaire = $_FILES[$nom]['tmp_name'];
         $directory = $this->createFolder(GenerateId::generate(20, '123450ABCDEabcde'));
