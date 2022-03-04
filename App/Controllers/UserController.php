@@ -167,6 +167,10 @@ class UserController extends Controller
      */
     public function dashboard()
     {
+        // $user = $this->userModel->load($this->userObject());
+        // $user->setSides($this->userModel->loadDownlineLeftRightSides($user->getId()));
+        // die("{$user->getLeftDownlineCapital()} <=> {$user->getRightDownlineCapital()}");
+
         //var_dump($this->userObject()->getSold(),$this->userObject()->isLocked());exit();
         if ($this->isUsers()) {
             if (!$this->userObject()->hasInscription()) {

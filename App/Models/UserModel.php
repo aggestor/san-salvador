@@ -482,6 +482,27 @@ class UserModel extends AbstractMemberModel
     }
 
     /**
+     * On verifie si l'utilisateur en parametre est bien la racine.
+     * @param string|User $user l'identifiant  de l'utilisateur ou l'utilisateur carement
+     * @return bool
+     */
+    public function isRoot ($user) : bool {
+        $return = false;
+        $userId = ($user instanceof User) ? $user->getId() : $user;
+        try  {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE id = ? AND " . (Schema::USER['sponsor']) . ' IS NULL AND ' . (Schema::USER['parent']) . " IS NULL", array($userId));
+            if ($statement->fetch()) {
+                $return = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+        }
+
+        return $return;
+    }
+
+    /**
      * Renvoie la pile des utilisateurs du reseau de l'utilisateur dont l'id est en premier parametre,
      * sur le side en deuxieme parametre.
      * Lors du chargement des informations du compte, il est possible de recuperer directement tout les operations deja effectuer dans le compte
@@ -697,6 +718,7 @@ class UserModel extends AbstractMemberModel
         return $return;
     }
 
+
     /**
      * verification si l'utilisateur a un afant su le pied gauche
      * @param string $userId
@@ -800,6 +822,35 @@ class UserModel extends AbstractMemberModel
     public function loadDownlineRightSide(string $userId): User
     {
         return $this->loadDownlineSide($userId, User::FOOT_RIGHT);
+    }
+
+    /**
+     * recuperation du foot sur le quel c trouve un User dans un reseau d'un User
+     * @param string|User $parent le parent du reseau
+     * @param string|User $child l'enfant appartenant au reseau du parant en premier parametre
+     * @return int le foot sur lequel ce trouve l'enfant dans le reseau du parent
+     * @throws ModelException dans le cas où l'enfant n'appartien pas au reseau du parent
+     */
+    public function findBindingSide ($parent, $child) : int {
+        $childId = ($child instanceof User)? $child->getId() : $child;
+
+        $user = ($parent instanceof User)? $parent : $this->findById($parent);
+        /**
+         * @var User $userChild
+         */
+        $userChild = ($child instanceof User)? $child : $this->findById($child);
+
+        if($userChild->getSponsor()->getId() == $user->getId())
+            return $userChild->getSide();
+
+        while($this->hasSponsor($childId)) {
+            $node = $this->findSponsor($childId);
+            if ($node->getSponsor() != null && $user->getId() == $node->getSponsor()->getId()) {
+                return $node->getSide();
+            }
+            $childId = $node->getId();
+        }
+        throw new ModelException("Impossible de determier la position du user dans le reseau");
     }
 
     /**

@@ -56,7 +56,7 @@ abstract class Member extends DBOccurence
      */
     public function setStatus($status) : void
     {
-        $this->status = $status;
+        $this->status = is_bool($status)? $status : $status == 1;
     }
     
     
