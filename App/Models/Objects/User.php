@@ -153,7 +153,7 @@ class User extends Member implements BinaryTreeNode
     
 
     /**
-     * @return number
+     * @return int
      */
     public function getSide () {
         return $this->getFoot();

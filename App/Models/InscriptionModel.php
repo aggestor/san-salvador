@@ -112,35 +112,42 @@ class InscriptionModel extends AbstractOperationModel
                 throw new ModelException("Une erreur est survenue au demarrage de la transaction");
             }
 
-            if ($userModel->countLeftRightSides($user->getParent()->getId())) { //si le parent aumoin un enfant
-                $user->getParent()->setSides($userModel->findDownlineLeftRightSides($user->getParent()->getId())); //recuperation des enfants du parent de l'actuel
-                //                 die("=> ".$userModel->countLeftRightSides($user->getParent()->getId()));
-
+            if ($userModel->hasSides($user->getParent()->getId())) { //si le parent aumoin un enfant
+                $user->getParent()->setSides($userModel->loadDownlineLeftRightSides($user->getParent()->getId())); //recuperation des enfants du parent de l'actuel
             }
 
             $bonus = ($inscription->getAmount() / 100) * 10; // 10 % du montant investie
             $now = new \DateTime(); //heure actuel
 
             //bonsus binaire
+            $foot  = $userModel->findBindingSide($user->getParent(), $user);
+            // die("Left: {$user->getParent()->getLeftDownlineCapital()}. Right {$user->getParent()->getRightDownlineCapital()}. Foot: {$foot}");
             if (
-                ($user->getFoot() == User::FOOT_LEFT && ($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()))
-                || ($user->getFoot() == User::FOOT_RIGHT && ($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()))
+                ($foot == User::FOOT_LEFT && ($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()))
+                || ($foot == User::FOOT_RIGHT && ($user->getParent()->getLeftDownlineCapital() > $user->getParent()->getRightDownlineCapital()))
             ) {
 
-                //die("binaire");
+                // die("binaire");
                 $binary = new Binary();
                 $binary->setGenerator($inscription);
                 $binary->setRecordDate($now);
                 $binary->setTimeRecord($now);
 
+                //pour la racine du systeme
+                if($userModel->isRoot($user->getParent())) {
+                    $binary->setAmount($bonus);
+                    $binary->setSurplus(0);
+                    $this->sendBinary($pdo, $binary);
+                }
+                
                 //on remonte de l'arbre pour donner le bonus binaire aux uplines
                 $node = $user;
-                while ($userModel->hasSponsor($node->getId()) && $node->getSponsor()->getId() != $user->getParent()->getId()) {
+                $sponsorParent = $userModel->hasSponsor($user->getParent()->getId())? $userModel->findSponsor($user->getParent()->getId()) : null;
+                while ($userModel->hasSponsor($node->getId()) && (!$userModel->isRoot($node->getId()) &&  $node->getSponsor()->getId() != $sponsorParent->getId())) {
                     $node = $userModel->findSponsor($node->getId());
+                    $binary->setUser($userModel->load($node));
 
-                    $binary->setUser($node);
-                    if ($node->isEnable() && !$node->isLocked()) { //si le compte est toujours activer
-
+                    if ($node->isValidationEmail() && !$node->isLocked()) { //si le compte est toujours activer
                         if (($node->getMaxBonus() <= ($node->getBonus() + $bonus)) && $node->getSponsor() !== null ) {//la racine n'ast pas de sponsor
                             $surplus =  $bonus + $node->getBonus() - $node->getMaxBonus();
                             $amount =  $bonus - $surplus;
@@ -152,14 +159,17 @@ class InscriptionModel extends AbstractOperationModel
                             $binary->setAmount($bonus);
                             $binary->setSurplus(0);
                         }
-
+                        
+                        // die("binaire {$binary->getAmount()}");
                         $this->sendBinary($pdo, $binary);
                     }
                 }
                 //--
-
+                
             }
 
+            // die("die");
+                
             $parainage  = new Parainage();
             $parainage->setUser($user->getParent());
             $parainage->setGenerator($inscription);

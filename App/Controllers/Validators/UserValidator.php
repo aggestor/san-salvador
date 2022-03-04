@@ -607,7 +607,24 @@ class UserValidator extends AbstractMemberValidator
             if ($idSponsor != null && !empty($idSponsor)) {
                 $this->validationSponsor($idSponsor);
             }
-            $node = ($idSponsor == null && empty($idSponsor)) ? ($user->hasParentNode() ? $user->getParent() : $this->userModel->findRoot()) : $this->userModel->findById($idSponsor);
+
+            /**
+             * La determination du side de l'utilisateur c fait a 2 etapes
+             * 1. si le side est donnees implicitement, alors on verifie si, le dit side est disponible. 
+             *  s'il ne lest pas, on recupere la personne qui l'occupe pour enfin cherche un point vide dans son reseau
+             * 
+             * ->le 2eme etape est necesaire dans le cas ou, pas de solution pour le 1er
+             * 2. dans ce on essais de determier le noeud sponsor pour enfin finir par determier le side
+             */
+
+            $node = ($idSponsor == null && $side != null && $user->getParent() != null)? 
+                ($this->userModel->hasSide($user->getParent()->getId(), $side) ? $this->userModel->findSide($user->getParent()->getId(), $side): null ) : null;
+
+            $node = $node == null? 
+                (($idSponsor == null && empty($idSponsor)) ? 
+                    ($user->hasParentNode() ? $user->getParent() : $this->userModel->findRoot()) : 
+                    $this->userModel->findById($idSponsor)) : $node;
+
 
             while ($this->userModel->countSides($node->getId()) == 2) {
                 $node = $this->userModel->findRightSide($node->getId());
