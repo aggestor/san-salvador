@@ -2,7 +2,7 @@
     <div class="w-full h-20 flex flex-col items-center border-b border-gray-900">
         <div class="flex w-10/12 mx-auto mt-5">
             <a href="javascript:history.go(-1)" class="w-6 h-6 my-auto rounded-full grid place-items-center text-gray-900 bg-gray-300 mr-4"><i class="fas fa-arrow-left"></i></a>
-            <h1 class="text-gray-300 font-bold text-2xl text-left mx-a">USALVAGETRADE</h1>
+            <a href="/" class=" cursor-pointer"><h1 class="text-gray-300 hover:text-green-500 font-bold text-xl text-left mx-a">USALVAGETRADE</h1></a>
         </div>
         <h2 class="text-gray-400 w-10/12 font-semibold text-base mx-auto pl-10 text-left">Bienvenu(e) sur universal salvage trade</h2>
     </div>
