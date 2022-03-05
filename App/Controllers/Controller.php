@@ -499,24 +499,13 @@ class Controller
         $content = ob_get_clean();
         require VIEWS . $template . '.php';
     }
-    // /**
-    //  * Pour genener un melnge de chaine de caractere
-    //  *
-    //  * @param integer $length. La longueur de la chaine de caractere a genener
-    //  * @param string $carateres. Les caracteres a melanger
-    //  * @return string
-    //  */
-    // public static function generate(int $length, string $carateres)
-    // {
-    //     return substr(str_shuffle(str_repeat($carateres, $length)), 0, $length);
-    // }
 
     /**
      * Pour envoyer les mails d'actiavation du compte
      * @param string $to. Le destinataire du mail
      * @param mixed $lien. Le lien d'activation de compte
      */
-    public function envoieMail($to, string $lien, string $sujet = null, $path, $nom)
+    public function envoieMail($to, string $lien, string $sujet = null, $path, $nom, array $params = null)
     {
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';
@@ -528,6 +517,9 @@ class Controller
         $sujet = $sujet;
         ob_start();
         require VIEWS . $path . '.php';
+        if ($params) {
+            $params = extract($params);
+        }
         $message = ob_get_clean();
 
         return mail($to, $sujet, $message, implode("\r\n", $headers));
