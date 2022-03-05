@@ -6,6 +6,7 @@ use Root\App\Controllers\Validators\AdiminValidator;
 use Root\App\Models\AdminModel;
 use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\Admin;
+use Root\App\Models\Objects\User;
 
 class AdminController extends Controller
 {
@@ -29,8 +30,14 @@ class AdminController extends Controller
      */
     public function index()
     {
+        //var_dump($this->amountAllCashOutNotValide());exit;
         if ($this->isAdmin()) {
-            return $this->view('pages.admin.dashboard', 'layout_admin');
+            $amountBinary = $this->allBinary();
+            $amountInvest = $this->allReturnInvest();
+            $amountParainnage = $this->allParainage();
+            $amountSurplus = $this->allSurplus();
+            $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
+            return $this->view('pages.admin.dashboard', 'layout_admin', ['binaire' => $amountBinary, 'invest' => $amountInvest, 'parainnage' => $amountParainnage, 'surplus' => $amountSurplus, 'cashoutNotValidate' => $amountCashOutNotValidated]);
         }
     }
     /**
@@ -316,8 +323,8 @@ class AdminController extends Controller
 
         if ($this->isAdmin()) {
             $totalCount = $this->countValidateInscription();
-            @$page = !empty($_GET['page']) ? $_GET['page'] : 1;
-            $nombre_element_par_page = 4;
+            $page = !empty($_GET['page']) ? $_GET['page'] : 1;
+            $nombre_element_par_page = 5;
             $nombre_pages = ceil($totalCount / $nombre_element_par_page);
             $debut = ($page - 1) * $nombre_element_par_page;
             $users = $this->allUsersHasValidateInscription($debut, $nombre_element_par_page);

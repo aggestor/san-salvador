@@ -56,7 +56,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                 <span class="text-green-500 absolute left-10 -top-1 "> Evolution de votre compte</span>
             </div>
             <div class="w-full h-2 overflow-hidden lg:mt-8 mt-2 mr-3 border-green-500 border rounded">
-                <div style="width: calc(<?= $params['user']->getBonusToPercent() ?>)" class="h-1 bg-green-500">
+                <div style="width: calc(<?= $params['user']->getBonusToPercent() ?>%/3)" class="h-1 bg-green-500">
 
                 </div>
             </div>

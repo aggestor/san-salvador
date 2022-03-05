@@ -56,12 +56,12 @@ $images = explode("AND", $params['user']->getPhoto());
                 <span class="text-green-500 absolute left-10 -top-1 "> Evolution de votre compte</span>
             </div>
             <div class="w-full h-2 overflow-hidden lg:mt-8 mt-2 mr-3 border-green-500 border rounded">
-                <div style="width: calc(<?= $params['user']->getBonusToPercent() ?>)" class="h-1 bg-green-500">
+                <div style="width: calc(<?= $params['user']->getBonusToPercent() ?>%/3)" class="h-1 bg-green-500">
 
                 </div>
             </div>
             <div class="text-gray-500 text-sm flex justify-between">
-                <span><?= $params['user']->getBonusToPercent() ?>%</span>
+                <span><?= $params['user']->getBonusToPercent() == 100 ? "300" : $params['user']->getBonusToPercent() ?>%</span>
                 <span class="text-green-500">300%</span>
             </div>
         </div>
@@ -207,7 +207,41 @@ $images = explode("AND", $params['user']->getPhoto());
                         </div>
                     </div>
                 </div>
+
+                <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
+                    <div class="flex">
+                        <span class="text-yellow-500 font-semibold"><i class="fas fa-comment-dollar"></i> CAPITAUX INVESTI A GAUCHE</span>
+                    </div>
+                    <div class="w-full  rounded-full">
+                        <div class="flex">
+                            <span class="bg-yellow-500 grid mt-3 mr-4 text-gray-900 place-items-center w-8 h-8 rounded-full">
+                                <i class="fas fa-dollar-sign "></i>
+                            </span>
+                            <span class="font-semibold text-yellow-300 mt-3 text-2xl my-auto">
+                                <?= $params['gauche'] ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
+                    <div class="flex">
+                        <span class="text-pink-500 font-semibold"><i class="fas fa-comment-dollar"></i> CAPITAUX INVESTI A DROITE</span>
+                    </div>
+                    <div class="w-full  rounded-full">
+                        <div class="flex">
+                            <span class="bg-pink-500 grid mt-3 mr-4 text-gray-900 place-items-center w-8 h-8 rounded-full">
+                                <i class="fas fa-dollar-sign "></i>
+                            </span>
+                            <span class="font-semibold text-pink-500 mt-3 text-2xl my-auto">
+                                <?= $params['droite'] ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
     </div>
 </div>

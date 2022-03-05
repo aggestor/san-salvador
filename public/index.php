@@ -138,7 +138,7 @@ $routes->post('/mail/resend-(reset|activation)', 'Root\App\Controllers\UserContr
     3. l'incription terminer avec succes 
     4. view pour le lien de parainage
  */
-$routes->get('/mail/success', 'Root\App\Controllers\UserController@mailSendSuccess');
+$routes->get('/mail/success', 'Root\App\Controllers\Controller@mailSendSuccess');
 $routes->get('/user/password', 'Root\App\Controllers\UserController@passwordSuccess');
 $routes->get('/user/account', 'Root\App\Controllers\UserController@registerSuccess');
 $routes->get('/user/share/link', 'Root\App\Controllers\UserController@shareLink');
