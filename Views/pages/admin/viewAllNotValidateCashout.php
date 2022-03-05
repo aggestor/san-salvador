@@ -6,7 +6,7 @@
         </div>
         <div class="w-11/12 mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
             <div class="w-1/12">Noms</div>
-            <div class="w-2/12">Téléphone</div>
+            <div class="w-2/12">Destination</div>
             <div class="w-2/12">Email</div>
             <div class="w-1/12">Montant</div>
             <div class="w-1/12">Date</div>
@@ -15,7 +15,7 @@
         <?php foreach ($params['cashOut'] as $data) : ?>
             <div class="w-11/12 mx-auto p-1 items-center text-gray-500  my-2 border border-gray-500 flex justify-between rounded">
                 <div class="w-1/12"><?= $data->getUser()->getName() ?></div>
-                <div class="w-2/12"><?= str_replace("/", "", $data->getUser()->getPhone()) ?></div>
+                <div class="w-2/12"><?= str_replace("/", "", $data->getDestination()) ?></div>
                 <div class="w-2/12"><?= $data->getUser()->getEmail() ?></div>
                 <div class="w-1/12 font-semibold text-white"><?= $data->getAmount() ?> USD</div>
                 <div class="w-1/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>

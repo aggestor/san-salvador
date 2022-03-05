@@ -5,7 +5,8 @@ namespace Root\App\Controllers;
 class StaticController extends Controller
 {
     public function home()
-    {   
+    {
+        unset($_SESSION['mail']);
         return $this->view('pages.static.home_page', 'layouts');
     }
     public function help()
@@ -24,7 +25,7 @@ class StaticController extends Controller
     {
         return $this->view('pages.static.about');
     }
-    
+
     public function security()
     {
         return $this->view('pages.static.security');

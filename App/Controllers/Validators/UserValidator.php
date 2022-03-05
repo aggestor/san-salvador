@@ -166,6 +166,7 @@ class UserValidator extends AbstractMemberValidator
         $cashOut = new CashOut();
         $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
         $amout = $_POST[self::FIELD_CASHOUT_AMOUNT];
+        $idUser = $_SESSION[self::SESSION_USERS]->getId();
         $destinationTelephone = (isset($_POST[self::FIELD_TELEPHONE]) && !empty($_POST[self::FIELD_TELEPHONE])) ? $_POST[self::FIELD_TELEPHONE] : "";
         $destinationBitcoin =  (isset($_POST[self::FIELD_BITCON]) && !empty($_POST[self::FIELD_BITCON])) ? $_POST[self::FIELD_BITCON] : "";
         $this->processingId($cashOut, $id, true);
@@ -176,14 +177,14 @@ class UserValidator extends AbstractMemberValidator
         if (!$this->hasError()) {
             $cashOut->setRecordDate(new \DateTime());
             $cashOut->setTimeRecord(new \DateTime());
-            $cashOut->setUser($_SESSION[self::SESSION_USERS]);
+            $cashOut->setUser($idUser);
             try {
                 $this->cashOutModel->create($cashOut);
             } catch (ModelException $e) {
                 $this->setMessage($e->getMessage());
             }
         }
-
+        $cashOut->setUser($this->userModel->findById($idUser));
         return $cashOut;
     }
     /**
@@ -617,12 +618,12 @@ class UserValidator extends AbstractMemberValidator
              * 2. dans ce on essais de determier le noeud sponsor pour enfin finir par determier le side
              */
 
-            $node = ($idSponsor == null && $side != null && $user->getParent() != null)? 
-                ($this->userModel->hasSide($user->getParent()->getId(), $side) ? $this->userModel->findSide($user->getParent()->getId(), $side): null ) : null;
+            $node = ($idSponsor == null && $side != null && $user->getParent() != null) ?
+                ($this->userModel->hasSide($user->getParent()->getId(), $side) ? $this->userModel->findSide($user->getParent()->getId(), $side) : null) : null;
 
-            $node = $node == null? 
-                (($idSponsor == null && empty($idSponsor)) ? 
-                    ($user->hasParentNode() ? $user->getParent() : $this->userModel->findRoot()) : 
+            $node = $node == null ?
+                (($idSponsor == null && empty($idSponsor)) ?
+                    ($user->hasParentNode() ? $user->getParent() : $this->userModel->findRoot()) :
                     $this->userModel->findById($idSponsor)) : $node;
 
 

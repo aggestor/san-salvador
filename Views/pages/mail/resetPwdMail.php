@@ -23,7 +23,7 @@
                     <tr>
                         <td style="text-align:center;">
                           <a href="https://usalvagetrade.com" title="logo" target="_blank">
-                            <img width="60" src="https://usalvagetrade.com/assets/logos/Logo-usalva-All-Face.png" title="logo" alt="logo">
+                            <img width="200" src="https://usalvagetrade.com/assets/logos/Logo-usalva-All-Face.png" title="logo" alt="logo">
                           </a>
                         </td>
                     </tr>
