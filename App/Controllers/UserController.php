@@ -200,11 +200,8 @@ class UserController extends Controller
                     var_dump($errors, $validator->getMessage());
                     exit();
                     return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject(), 'errors' => $errors]);
-                } else {
-                    var_dump($user->getId());
-                    exit();
                 }
-                //header('Locaton:' . $_SERVER['HTTP_REFERER']);
+                Controller::redirect('/user/me');
             }
             return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject()]);
         }

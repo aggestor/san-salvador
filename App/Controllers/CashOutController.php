@@ -39,6 +39,7 @@ class CashOutController extends Controller
                         $errors = $validator->getErrors();
                         return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'errors' => $errors, 'disabled' => true]);
                     }
+                    Controller::redirect('/user/dashboard');
                 }
                 return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'disabled' => true]);
             } else {

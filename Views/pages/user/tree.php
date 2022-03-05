@@ -1,16 +1,16 @@
 <?php
-$images = explode("AND", $_SESSION['users']->getPhoto());
+$images = explode("AND", $params['user']->getPhoto());
 ?>
 
 <div class="col-span-12  primary_bg">
     <div class="w-full flex justify-between lg:h-24 h-auto flex-col lg:flex-row p-2 primary_bg_ border-gray-800 border-b">
         <div id="user-identifiers" class="lg:w-3/12 w-full h-full flex ">
             <div class=":h-20 h-16 w-16 overflow-hidden lg:w-20 grid place-items-center border-gray-800 border rounded-full primary_bg">
-                <img class="object-contain" src="/assets/img/<?=$images[0]?>" alt="<?=$_SESSION["users"]->getName()?>">
+                <img class="object-contain" src="/assets/img/<?=$images[0]?>" alt="<?=$params['user']->getName()?>">
             </div>
             <div class="w-7/12 flex flex-col pl-5">
-                <span class="text-gray-300 font-semibold text-base lg:text-lg"><?=$_SESSION["users"]->getName()?></span>
-                <span class="text-gray-400 lg:text-base text-sm"><?=$_SESSION["users"]->getEmail()?></span>
+                <span class="text-gray-300 font-semibold text-base lg:text-lg"><?=$params['user']->getName()?></span>
+                <span class="text-gray-400 lg:text-base text-sm"><?=$params['user']->getEmail()?></span>
                 <span class="text-green-500 border border-green-500 rounded-full w-16 text-center p-0.5 lg:text-sm text-xs">En ligne</span>
             </div>
             <div class="w-2/12 lg:hidden flex flex-col">
@@ -46,7 +46,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             </span>
             <span class="text-gray-300 flex pl-2 flex-col my-auto">
                 <span>Membre depuis </span>
-                <span><?=$_SESSION['users']->getrecordDate()->format("F Y")?></span>
+                <span><?=$params['user']->getrecordDate()->format("F Y")?></span>
             </span>
         </div>
         <div class="lg:w-3/12 w-full border-gray-800 lg:border lg:p-2 p-1 lg:mr-3 h-full rounded-xl">
