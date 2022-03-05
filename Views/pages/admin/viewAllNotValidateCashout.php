@@ -19,8 +19,9 @@
                 <div class="w-2/12"><?= $data->getUser()->getEmail() ?></div>
                 <div class="w-1/12 font-semibold text-white"><?= $data->getAmount() ?> USD</div>
                 <div class="w-1/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
-                <div>
-                    <form method="POST" action="/admin/validate/cashout-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="_green_bg rounded text-gray-800 p-1.5" type="submit">Valider <i class="fas fa-check-circle    "></i></button></form>
+                <div class="flex w-1/12 justify-between">
+                    <form method="POST" action="/admin/validate/cashout-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="_green_bg rounded text-gray-800 p-1.5 m-1 " type="submit"><i class="fas fa-check-circle   "></i></button></form>
+                <form method="POST" action="/admin/canceled/cashout-<?= $data->getId()?>"><button class="bg-red-500 rounded text-white p-1.5 m-1" type="submit"><i class="fas fa-times-circle    "></i></button></form>
                 </div>
             </div>
         <?php endforeach; ?>
