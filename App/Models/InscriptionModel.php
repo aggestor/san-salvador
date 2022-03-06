@@ -275,7 +275,7 @@ class InscriptionModel extends AbstractOperationModel
             }
             $statement->closeCursor();
         } catch (\PDOException $e) {
-            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD {$e->getMessage()}", intval($e->getCode(), 10), $e);
         }
 
         return $return;
