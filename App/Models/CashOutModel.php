@@ -86,7 +86,7 @@ class CashOutModel extends AbstractOperationModel
             }
             $statement->closeCursor();
         } catch (\PDOException $e) {
-            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD: {$e->getMessage()}", intval($e->getCode()), $e);
         }
 
         return $return;
@@ -108,7 +108,7 @@ class CashOutModel extends AbstractOperationModel
             $args[] = $adminId;
         }
         try {
-            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE " . ($adminId !== null ? Schema::CASHOUT['admin'] . '=? ' : (Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . " NULL"), $args);
+            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE " .Schema::CASHOUT['admin'] . ($adminId !== null ?  '=? ' : ' IS ' . ($validated ? 'NOT' : '') . " NULL"), $args);
             if ($row = $statement->fetch()) {
                 $return = $row['nombre'];
             }
@@ -135,7 +135,7 @@ class CashOutModel extends AbstractOperationModel
      * @throws ModelException
      * @return CashOut[]
      */
-    public function findValidated (?bool $validated = false, ?string $adminId = null, ?int $limit = null, $offset = 0): array
+    public function findValidated (bool $validated = false, ?string $adminId = null, ?int $limit = null, $offset = 0): array
     {
         $return = [];
         $args = [];
@@ -145,7 +145,10 @@ class CashOutModel extends AbstractOperationModel
         }
         $SQL= (($validated !== null || $adminId !== null) ? " WHERE " : '') ;
         $SQL .= ($adminId !== null ? Schema::CASHOUT['admin'] . '=?' : '');
-        $SQL .= ($validated !== null ? (' AND ('.(Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . ' NULL OR '.(Schema::CASHOUT['validated']).' = '.($validated? '1':'0').')') : '');
+        
+        if($adminId === null)
+            $SQL .= (Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . ' NULL ';
+
         $SQL_LIMIT = $limit !== null? "LIMIT {$limit} OFFSET {$offset}" : '';
         try {
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} {$SQL} {$SQL_LIMIT}" , $args);
@@ -160,7 +163,7 @@ class CashOutModel extends AbstractOperationModel
                 throw new ModelException("Aucun resultat pour la requette executer");
             }
         } catch (\PDOException $e) {
-            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD: {$e->getMessage()}", intval($e->getCode()), $e);
         }
 
         return $return;
