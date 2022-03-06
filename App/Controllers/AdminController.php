@@ -30,9 +30,11 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //var_dump($this->amountAllCashOutNotValide());exit;
+        var_dump($this->viewAllCashOutNotValide());
+        exit;
         if ($this->isAdmin()) {
-            $amountBinary = $this->allBinary();
+            // $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
+            $amountBinary = $this->allBinary();;
             $amountInvest = $this->allReturnInvest();
             $amountParainnage = $this->allParainage();
             $amountSurplus = $this->allSurplus();

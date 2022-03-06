@@ -17,7 +17,7 @@
                             <i class="fas fa-dollar-sign "></i>
                         </span>
                         <span class="font-semibold text-blue-500 mt-3 text-2xl my-auto">
-                            <?= $params['parainnage'] ?>
+                            <?php echo $params['parainnage']; ?>
                         </span>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                             <i class="fas fa-dollar-sign "></i>
                         </span>
                         <span class="font-semibold text-yellow-300 mt-3 text-2xl my-auto">
-                            <?= $params['invest'] ?>
+                            <?php echo $params['invest'] ?>
                         </span>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                             <i class="fas fa-dollar-sign "></i>
                         </span>
                         <span class="font-semibold text-pink-500 mt-3 text-2xl my-auto">
-                            <?= $params['binaire'] ?>
+                            <?php echo $params['binaire'] ?>
                         </span>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                             <i class="fas fa-dollar-sign "></i>
                         </span>
                         <span class="font-semibold text-blue-500 mt-3 text-2xl my-auto">
-                            <?= $params['surplus'] ?>
+                            <?php echo $params['surplus'] ?>
                         </span>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                             <i class="fas fa-dollar-sign "></i>
                         </span>
                         <span class="font-semibold text-pink-500 mt-3 text-2xl my-auto">
-                            <?= $params['cashoutNotValidate'] ?>
+                            <?php echo $params['cashoutNotValidate'] ?>
                         </span>
                     </div>
                 </div>
