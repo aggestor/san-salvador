@@ -32,12 +32,12 @@
         <div class="col-span-12  primary_bg grid place-items-center">
     <div class="md:w-6/12 lg:w-8/12 flex flex-col lg:flex-row justify-center items-center border mt-16 border-gray-900 mx-auto primary_bg_ shadow rounded md:p-12 p-4">
         <div class="md:w-10/12 w-11/12 lg:w-6/12  mx-auto md:p-3">
-            <h1 class="text-gray-200 text-3xl font-bold">Aucune inscription en attente de validation.</h1>
-            <p class="text-gray-400 font-semibold text-lg mt-4">Toutes les inscriptions en attente de validation seront affichées  ici.</p>
+            <h1 class="text-gray-200 text-3xl font-bold">Aucun retrait effectué pour le moment.</h1>
+            <p class="text-gray-400 font-semibold text-lg mt-4">Tous les retrait validés seront affichés  sur cette page.</p>
         </div>
         <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">
             <span class="w-full h-full justify-center flex items-center text-gray-900">
-                <span class='w-40 h-40 bg-gray-500  rounded-full grid place-items-center'><i class="fas fa-check-double fa-5x"></i></span>
+                <span class='w-40 h-40 bg-gray-500  rounded-full grid place-items-center'><i class="fas fa-dollar-sign fa-5x"></i></span>
             </span>
         </div>
     </div>
