@@ -191,12 +191,23 @@ class UserController extends Controller
         //var_dump($this->userObject()->hasPack()); exit();
     }
 
+    /**
+     * Affichage du profil de l'utilisateur
+     *
+     * @return void
+     */
     public function profil()
     {
         if ($this->isUsers()) {
             return $this->view('pages.user.me', 'layout_', ['user' => $this->userObject()]);
         }
     }
+
+    /**
+     * Mise en jour du profil de l'utilisateur
+     *
+     * @return void
+     */
     public function update()
     {
         if ($this->isUsers()) {
@@ -214,15 +225,29 @@ class UserController extends Controller
             return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject()]);
         }
     }
+
+    /**
+     * Affichage du reseau de l'utilsateur
+     *
+     * @return void
+     */
     public function tree()
     {
         if ($this->isUsers()) {
             return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject()]);
         }
     }
+
+    /**
+     * Affichage des historique de retrait de l'utilisateur 
+     *
+     * @return void
+     */
     public function history()
     {
         if ($this->isUsers()) {
+            // var_dump($this->viewAllHistoryCashOutForUser());
+            // exit();
             return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject()]);
         }
     }
@@ -235,6 +260,11 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Partage du lien de parrainnage
+     *
+     * @return void
+     */
     public function shareLink()
     {
         if ($this->isUsers()) {

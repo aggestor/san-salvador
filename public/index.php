@@ -48,7 +48,7 @@ $routes->post('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', '
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 //les routes pour valider une demande de retrait
-$routes->get('/admin/validate/cashout', 'Root\App\Controllers\AdminController@viewAllNonValideCashOut');
+$routes->get('/admin/validate/cashout-([0-9]+)', 'Root\App\Controllers\AdminController@viewAllNonValideCashOut', 'page');
 $routes->post('/admin/validate/cashout-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@validationCashOut', 'cashout;user');
 
 //routes pour l'envoie du mail lors de la reinitialisation du mot de passe
@@ -77,7 +77,7 @@ $routes->get('/admin/users-page-([0-9]+)', 'Root\App\Controllers\AdminController
 $routes->get('/admin/administrator', 'Root\App\Controllers\AdminController@administratorDashboard');
 $routes->post('/admin/administrator', 'Root\App\Controllers\AdminController@create');
 
-$routes->get("/admin/history", 'Root\App\Controllers\AdminController@history');
+$routes->get("/admin/history-([0-9]+)", 'Root\App\Controllers\AdminController@history', 'page');
 $routes->get("/admin/transaction", 'Root\App\Controllers\AdminController@transaction');
 
 //route pour afficher les pack

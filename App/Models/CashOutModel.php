@@ -183,7 +183,7 @@ class CashOutModel extends AbstractOperationModel
      * @param string $adminId
      * @param bool $validated
      * @throws ModelException
-     * @return bool
+     * @return int
      */
     public function countValidated(?string $adminId = null, bool $validated = false): int
     {
@@ -194,7 +194,7 @@ class CashOutModel extends AbstractOperationModel
             $args[] = $adminId;
         }
         try {
-            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE " .Schema::CASHOUT['admin'] . ($adminId !== null ?  '=? ' : ' IS ' . ($validated ? 'NOT' : '') . " NULL"), $args);
+            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE " . Schema::CASHOUT['admin'] . ($adminId !== null ?  '=? ' : ' IS ' . ($validated ? 'NOT' : '') . " NULL"), $args);
             if ($row = $statement->fetch()) {
                 $return = $row['nombre'];
             }
@@ -221,7 +221,7 @@ class CashOutModel extends AbstractOperationModel
      * @throws ModelException
      * @return CashOut[]
      */
-    public function findValidated (bool $validated = false, ?string $adminId = null, ?int $limit = null, $offset = 0): array
+    public function findValidated(bool $validated = false, ?string $adminId = null, ?int $limit = null, $offset = 0): array
     {
         $return = [];
         $args = [];
@@ -229,15 +229,15 @@ class CashOutModel extends AbstractOperationModel
         if ($adminId !== null) {
             $args[] = $adminId;
         }
-        $SQL= (($validated !== null || $adminId !== null) ? " WHERE " : '') ;
+        $SQL = (($validated !== null || $adminId !== null) ? " WHERE " : '');
         $SQL .= ($adminId !== null ? Schema::CASHOUT['admin'] . '=?' : '');
-        
-        if($adminId === null)
+
+        if ($adminId === null)
             $SQL .= (Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . ' NULL ';
 
-        $SQL_LIMIT = $limit !== null? "LIMIT {$limit} OFFSET {$offset}" : '';
+        $SQL_LIMIT = $limit !== null ? "LIMIT {$limit} OFFSET {$offset}" : '';
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} {$SQL} {$SQL_LIMIT}" , $args);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} {$SQL} {$SQL_LIMIT}", $args);
             if ($row = $statement->fetch()) {
                 $return[] = $this->getDBOccurence($row);
                 while ($row = $statement->fetch()) {
