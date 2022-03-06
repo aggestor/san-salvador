@@ -2,7 +2,8 @@
 $images = explode("AND", $params['user']->getPhoto());
 ?>
 
-<div class="col-span-12  primary_bg">
+<div class="col-span-12 overflow-x-hidden  primary_bg">
+
     <div class="w-full flex justify-between lg:h-24 h-auto flex-col lg:flex-row p-2 primary_bg_ border-gray-800 border-b">
         <div class="flex lg:hidden my-2 justify-between">
             <h1 class="text-gray-200 font-semibold">USALVAGETRADE</h1>
@@ -84,20 +85,20 @@ $images = explode("AND", $params['user']->getPhoto());
                 </div>
             </div>
             <div class="text-gray-500 text-sm flex justify-between">
-                <span><?= $params['user']->getBonusToPercent() ?>%</span>
+                <span><?= $params['user']->getBonusToPercent() == 100 ? "300" : $params['user']->getBonusToPercent() ?>%</span>
                 <span class="text-green-500">300%</span>
             </div>
         </div>
     </div>
     <div class="w-full mt-4 grid grid-cols-12">
-        <div class="col-span-2 hidden lg:block relative ml-1 h-screen-customer rounded border border-gray-800 primary_bg_">
-            <div data-path-user="/user/dashboard" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+        <div class="col-span-2 relative hidden lg:block ml-1 h-screen-customer rounded border border-gray-800 primary_bg_">
+            <div data-path-user="/user/dashboard" class="flex p-2 my-2 from-green-500 to-gray-900 text-white transition-all duration-500   cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
                 <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-school"></i></span>
                     <span class="w-10/12 mt-0.5">Dashboard</span>
                 </div>
             </div>
-            <div data-path-user="/user/tree" class="flex p-2 my-2 from-green-500 to-gray-900 text-white transition-all duration-500   cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div data-path-user="/user/tree" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
                 <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-tree"></i></span>
                     <span class="w-10/12 mt-0.5">Arbre</span>
@@ -149,14 +150,54 @@ $images = explode("AND", $params['user']->getPhoto());
                 <span class="text-center">Usalvagetrade &#169; <span id="year"></span></span>
             </div>
         </div>
-
-        <div class="lg:col-span-10 col-span-12 h-screen-customer items-center justify-center flex flex-col p-3">
-            <div id="binaryTreeContainer" class="w-11/12 h-auto overflow-auto mx-auto">
+        <div class="lg:col-span-10 col-span-12 h-screen-customer scroll lg:overflow-y-auto lg:overflow-x-hidden flex flex-col lg:p-3">
+            <div class="w-full mt-4 h-screen-admin scroll overflow-y-scroll grid grid-cols-12">
+    <?php if(isset($params['message']) AND $params['message'] != 1): ?>
+        <div class="col-span-12 flex flex-col">
+        <div class="w-11/12 mx-auto mb-4 h-12 border-b border-gray-900 flex justify-between">
+            <h1 class="text-gray-300 font-semibold text-xl">Toutes les inscriptions en attente.</h1>
+            <span class="bg-blue-500 text-white w-8 h-8 rounded-full grid place-items-center"><?= count($params['nonAllInscription']) ?></span>
+        </div>
+        <div class="w-11/12 mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
+            <div class="w-1/12">Noms</div>
+            <div class="w-2/12">Email</div>
+            <div class="w-1/12">Téléphone</div>
+            <div class="w-1/12">Montant</div>
+            <div class="w-1/12">Origine</div>
+            <div class="w-2/12">Référence</div>
+            <div class="w-1/12">Action</div>
+        </div>
+        <?php foreach ($params['allInscription'] as $data) : ?>
+            <div class="w-11/12 mx-auto p-1 items-center text-gray-500  my-2 border border-gray-500 flex justify-between rounded">
+                <div class="w-1/12"><?= $data->getUser()->getName() ?></div>
+                <div class="w-2/12"><?= $data->getUser()->getEmail() ?></div>
+                <div class="w-1/12"><?= str_replace("/", "", $data->getUser()->getPhone()) ?></div>
+                <div class="w-1/12"><?= $data->getAmount() ?></div>
+                <div class="w-1/12"><?= $data->getTransactionOrigi() ?></div>
+                <div class="w-2/12"><?= $data->getTransactionCode() ?></div>
+                <div>
+                    <form method="POST" action="/admin/active/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="_green_bg rounded text-gray-800 p-1.5" type="submit">Valider <i class="fas fa-check-circle    "></i></button></form>
+                </div>
             </div>
-            <!-- <div id="no-data" class="w-11/12 text-center flex flex-col mx-auto">
-                <span class="mb-3"><i class="fas text-gray-400 fa-4x fa-info-circle "></i></span>
-                <span class="lg:text-lg text-base text-gray-400 lg:w-8/12 w-11/12 mx-auto">Quand vous aurez un réseau il sera afficher ici, pour l'instant vous n'avez aucun réseau des enfants à afficher. Faites venir des gens sur votre réseau en partagant votre lien de parrainage en cliquant  <span class="_green_text font-semibold"><a href="/user/share/link">ici</a></span> </span>
-           </div> -->
+        <?php endforeach; ?>
+    </div>
+    <?php else: ?>
+        <div class="col-span-12  primary_bg grid place-items-center">
+    <div class="md:w-6/12 lg:w-8/12 flex flex-col lg:flex-row justify-center items-center border mt-16 border-gray-900 mx-auto primary_bg_ shadow rounded md:p-12 p-4">
+        <div class="md:w-10/12 w-11/12 lg:w-6/12  mx-auto md:p-3">
+            <h1 class="text-gray-200 text-3xl font-bold">Aucun retrait effectué pour le moment.</h1>
+            <p class="text-gray-400 font-semibold text-lg mt-4">Tous les retrait validés seront affichés  sur cette page.</p>
+        </div>
+        <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">
+            <span class="w-full h-full justify-center flex items-center text-gray-900">
+                <span class='w-40 h-40 bg-gray-500  rounded-full grid place-items-center'><i class="fas fa-dollar-sign fa-5x"></i></span>
+            </span>
+        </div>
+    </div>
+</div>
+        <?php endif;?>
+</div>
+
         </div>
     </div>
 </div>
