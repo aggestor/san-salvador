@@ -230,11 +230,11 @@ class Controller
      * touts les retrait en attente de validation
      * @return array
      */
-    public function viewAllCashOutNotValide()
+    public function viewAllCashOutNotValide(?int $limit = 0, ?int $offset = 0)
     {
         $return = array();
         if ($this->cashOutModel->checkValidated()) {
-            $allNotActive = $this->cashOutModel->findValidated();
+            $allNotActive = $this->cashOutModel->findValidated(false, null, $limit, $offset);
             foreach ($allNotActive as $nonActive) {
                 $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
                 $return[] = $nonActive;

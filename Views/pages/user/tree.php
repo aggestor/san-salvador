@@ -88,32 +88,6 @@ $images = explode("AND", $params['user']->getPhoto());
                 <span class="text-green-500">300%</span>
             </div>
         </div>
-<<<<<<< HEAD
-=======
-        <div class="w-full hide-scroll-bar ml-1 h-10 sticky top-0 flex lg:hidden text-sm items-center overflow-y-hidden overflow-x-auto">
-            <div data-path-user="/user/dashboard" class="flex p-1 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:text-white">
-                <span class="w-10/12 mt-0.5">Dashboard</span>
-            </div>
-            <div data-path-user="/user/tree" class="flex p-1 my-2  text-white transition-all duration-500   cursor-pointer bg-gradient-to-r bg-green-600 rounded  hover:text-white">
-                <span class="w-auto mx-2">Arbre</span>
-            </div>
-            <div data-path-user="/user/me" class="flex p-1 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:text-white">
-                <span class="w-auto mx-2 flex"><span class="mr-1">Mon</span> <span>Compte</span></span>
-            </div>
-            <div data-path-user="/user/cashout" class="flex p-1 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:text-white">
-                <span class="w-auto mx-2">Retrait</span>
-            </div>
-            <div data-path-user="/" class="flex p-1 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:text-white">
-                <span class="w-auto mx-2">Acceuil</span>
-            </div>
-            <div data-path-user="/user/share/link" class="flex p-1 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:text-white">
-                <span class="w-auto mx-2">Partager</span>
-            </div>
-            <div data-path-user="/user/logout" class="flex p-1 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:text-white">
-                <span class="w-auto mx-2">Déconnexion</span>
-            </div>
-        </div>
->>>>>>> 18b5b5f826e0917c814f131705def5c8c4f879ec
     </div>
     <div class="w-full mt-4 grid grid-cols-12">
         <div class="col-span-2 hidden lg:block relative ml-1 h-screen-customer rounded border border-gray-800 primary_bg_">

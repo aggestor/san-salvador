@@ -30,14 +30,15 @@ class AdminController extends Controller
      */
     public function index()
     {
+        //var_dump($this->countCashOut());exit;
         if ($this->isAdmin()) {
-            // $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
             $amountBinary = $this->allBinary();;
             $amountInvest = $this->allReturnInvest();
             $amountParainnage = $this->allParainage();
             $amountSurplus = $this->allSurplus();
             $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
             $amountCashOutValidated = $this->amountAllCashOutValide();
+            $amountCashOutNotValidated = 0;
             return $this->view('pages.admin.dashboard', 'layout_admin', ['binaire' => $amountBinary, 'invest' => $amountInvest, 'parainnage' => $amountParainnage, 'surplus' => $amountSurplus, 'cashoutNotValidate' => $amountCashOutNotValidated, 'cashoutValidate' => $amountCashOutValidated]);
         }
     }
@@ -352,8 +353,15 @@ class AdminController extends Controller
     public function viewAllNonValideCashOut()
     {
         if ($this->isAdmin()) {
-            $cashOut = $this->viewAllCashOutNotValide();
-            return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut]);
+            $totalCount = $this->countCashOut();
+            $page = !empty($_GET['page']) ? $_GET['page'] : 1;
+            $nombre_element_par_page = 5;
+            $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
+            $cashOut = $this->allUsersHasValidateInscription($data[0], $nombre_element_par_page);
+            if ($_GET['page'] > $data[1]) {
+                return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['message' => 1]);
+            }
+            return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut, 'nombrePage' => $data[1]]);
         }
     }
 
