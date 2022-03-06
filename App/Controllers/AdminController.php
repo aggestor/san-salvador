@@ -30,7 +30,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //var_dump($this->countCashOut());exit;
         if ($this->isAdmin()) {
             $amountBinary = $this->allBinary();;
             $amountInvest = $this->allReturnInvest();
@@ -357,13 +356,14 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            $cashOut = $this->allUsersHasValidateInscription($data[0], $nombre_element_par_page);
+            $cashOut = $this->viewAllCashOutNotValide($data[0]==0?null:$data[0], $nombre_element_par_page);
             if ($_GET['page'] > $data[1]) {
                 return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['message' => 1]);
             }
             return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut, 'nombrePage' => $data[1]]);
         }
     }
+
 
     /**
      * Methode pour active un cashout

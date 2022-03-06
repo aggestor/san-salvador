@@ -153,7 +153,7 @@ class Controller
         return $this->inscriptionModel->hasPack($_SESSION[self::SESSION_USERS]->getId());
     }
 
-    public function allUsersHasValidateInscription($limit = 0, $offset = 0)
+    public function allUsersHasValidateInscription($limit = null, $offset = 0)
     {
         $return = array();
         if ($this->inscriptionModel->checkValidated()) {
@@ -230,10 +230,10 @@ class Controller
      * touts les retrait en attente de validation
      * @return array
      */
-    public function viewAllCashOutNotValide(?int $limit = 0, ?int $offset = 0)
+    public function viewAllCashOutNotValide(?int $limit = null, ?int $offset = 0)
     {
         $return = array();
-        if ($this->cashOutModel->checkValidated()) {
+        if ($this->cashOutModel->checkValidated(null,false)) {
             $allNotActive = $this->cashOutModel->findValidated(false, null, $limit, $offset);
             foreach ($allNotActive as $nonActive) {
                 $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
