@@ -112,36 +112,43 @@ class InscriptionModel extends AbstractOperationModel
                 throw new ModelException("Une erreur est survenue au demarrage de la transaction");
             }
 
-            if ($userModel->countLeftRightSides($user->getParent()->getId())) { //si le parent aumoin un enfant
-                $user->getParent()->setSides($userModel->findDownlineLeftRightSides($user->getParent()->getId())); //recuperation des enfants du parent de l'actuel
-                //                 die("=> ".$userModel->countLeftRightSides($user->getParent()->getId()));
-
+            if ($userModel->hasSides($user->getParent()->getId())) { //si le parent aumoin un enfant
+                $user->getParent()->setSides($userModel->loadDownlineLeftRightSides($user->getParent()->getId())); //recuperation des enfants du parent de l'actuel
             }
 
             $bonus = ($inscription->getAmount() / 100) * 10; // 10 % du montant investie
             $now = new \DateTime(); //heure actuel
 
             //bonsus binaire
+            $foot  = $userModel->findBindingSide($user->getParent(), $user);
+            // die("Left: {$user->getParent()->getLeftDownlineCapital()}. Right {$user->getParent()->getRightDownlineCapital()}. Foot: {$foot}");
             if (
-                ($user->getFoot() == User::FOOT_LEFT && ($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()))
-                || ($user->getFoot() == User::FOOT_RIGHT && ($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()))
+                ($foot == User::FOOT_LEFT && ($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()))
+                || ($foot == User::FOOT_RIGHT && ($user->getParent()->getLeftDownlineCapital() > $user->getParent()->getRightDownlineCapital()))
             ) {
 
-                //die("binaire");
+                // die("binaire");
                 $binary = new Binary();
                 $binary->setGenerator($inscription);
                 $binary->setRecordDate($now);
                 $binary->setTimeRecord($now);
 
+                //pour la racine du systeme
+                if ($userModel->isRoot($user->getParent())) {
+                    $binary->setAmount($bonus);
+                    $binary->setSurplus(0);
+                    $this->sendBinary($pdo, $binary);
+                }
+
                 //on remonte de l'arbre pour donner le bonus binaire aux uplines
                 $node = $user;
-                while ($userModel->hasSponsor($node->getId()) && $node->getSponsor()->getId() != $user->getParent()->getId()) {
+                $sponsorParent = $userModel->hasSponsor($user->getParent()->getId()) ? $userModel->findSponsor($user->getParent()->getId()) : null;
+                while ($userModel->hasSponsor($node->getId()) && (!$userModel->isRoot($node->getId()) &&  $node->getSponsor()->getId() != $sponsorParent->getId())) {
                     $node = $userModel->findSponsor($node->getId());
+                    $binary->setUser($userModel->load($node));
 
-                    $binary->setUser($node);
-                    if ($node->isEnable() && !$node->isLocked()) { //si le compte est toujours activer
-
-                        if (($node->getMaxBonus() <= ($node->getBonus() + $bonus)) && $node->getSponsor() !== null ) {//la racine n'ast pas de sponsor
+                    if ($node->isValidationEmail() && !$node->isLocked()) { //si le compte est toujours activer
+                        if (($node->getMaxBonus() <= ($node->getBonus() + $bonus)) && $node->getSponsor() !== null) { //la racine n'ast pas de sponsor
                             $surplus =  $bonus + $node->getBonus() - $node->getMaxBonus();
                             $amount =  $bonus - $surplus;
                             $binary->setAmount($amount);
@@ -153,12 +160,15 @@ class InscriptionModel extends AbstractOperationModel
                             $binary->setSurplus(0);
                         }
 
+                        // die("binaire {$binary->getAmount()}");
                         $this->sendBinary($pdo, $binary);
                     }
                 }
                 //--
 
             }
+
+            // die("die");
 
             $parainage  = new Parainage();
             $parainage->setUser($user->getParent());
@@ -265,7 +275,7 @@ class InscriptionModel extends AbstractOperationModel
             }
             $statement->closeCursor();
         } catch (\PDOException $e) {
-            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD {$e->getMessage()}", intval($e->getCode(), 10), $e);
         }
 
         return $return;
@@ -302,10 +312,13 @@ class InscriptionModel extends AbstractOperationModel
     }
 
     /**
-     * verifie s'il existe une inscription a un a pack en  attente d'acivation
+     * Verifie s'il existe une inscription en  attente d'acivation.
+     * dans le cas ou $userId != null, la verification est uniquement fait sur le compte 
+     * proprietaire de la valeur de $userId
+     * @param string|null $userId l'id du compte d'un utilisateur
      * @return bool
      */
-    public function checkAwait($userId = null): bool
+    public function checkAwait(?string $userId = null): bool
     {
         $return = false;
         try {
@@ -329,21 +342,28 @@ class InscriptionModel extends AbstractOperationModel
     }
 
     /**
-     * revoie tout les informations des souscription en attante de validation
+     * renvoie une collection des souscription en attante de validation.
+     * Dans le cas userId != null, alors le filtrage est fait uniquement pour les compte 
+     * proprietaire de la valeur du $userId
+     * @param int|null $limit
+     * @param int $offset
+     * @param string $userId
      * @throws ModelException
      * @return Inscription[]
      */
-    public function findAwait($userId = null): array
+    public function findAwait(?int $limit = null, int $offset = 0, ?string $userId = null): array
     {
         $return = array();
         try {
             $statement = "";
             $user = Schema::INSCRIPTION['user'];
             $validation = Schema::INSCRIPTION['validate'];
+
+            $SQL_END = ($limit != null) ? " LIMIT {$limit} OFSSET {$offset}" : "";
             if ($userId === null) {
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation} = 0 ", array());
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation} = 0 ORDER BY record_date {$SQL_END}", array());
             } else {
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$user}=? AND {$validation} = 0 ", array($userId));
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$user}=? AND {$validation} = 0 {$SQL_END}", array($userId));
             }
             if ($row = $statement->fetch()) {
                 $return[] = $this->getDBOccurence($row);
@@ -362,23 +382,26 @@ class InscriptionModel extends AbstractOperationModel
     }
 
     /**
-     * revoie tout les informations des souscription deja valide
-     * @param string $userId
+     * renvoie une collection des souscription deja valide
+     * dans le cas ou $userId != null, alors les inscriptions renvoyer concerne le compte 
+     * proprietaire de la valeur du $suerId
      * @param int $limit
      * @param int $offset
+     * @param string $userId
      * @throws ModelException
      * @return array
      */
-    public function findValidated(?int $limit = 0, ?int $offset = null, $userId = null): array
+    public function findValidated(?int $limit = null, int $offset = 0, ?string $userId = null): array
     {
         $return = array();
         try {
             $user = Schema::INSCRIPTION['user'];
             $validation = Schema::INSCRIPTION['validate'];
+            $SQL_END = ($limit != null) ? " LIMIT {$limit} OFSSET {$offset}" : "";
             if (is_null($userId) && !is_null($limit) && !is_null($limit)) {
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=? LIMIT {$limit},{$offset}", array(1));
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=? ORDER BY record_date DESC LIMIT {$limit},{$offset}", array(1));
             } else {
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$user}=? AND  {$validation}=?" . ($limit != null ? "LIMIT {$limit} OFFSET {$offset}" : ""), array($userId, 1));
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$user}=? AND  {$validation}=? {$SQL_END}", array($userId, 1));
             }
             if ($row = $statement->fetch()) {
                 $return[] = $this->getDBOccurence($row);
@@ -397,16 +420,19 @@ class InscriptionModel extends AbstractOperationModel
     }
 
     /**
-     * comptage de tout les occurences d'une table
+     * comptage de tout les inscriptions deja valider ou en attante.
+     * @param boolean $validated
+     * => true= inscription deja valider, comportement par defaut.<br/>
+     * => false= inscription en attente
      * @throws ModelException
      * @return int
      */
-    public function countValidate(): int
+    public function countValidate(bool $validated = true): int
     {
         $nombre = 0;
         $validation = Schema::INSCRIPTION['validate'];
         try {
-            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE {$validation}=1", array());
+            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE {$validation}= " . ($validated ? '1' : '0'), array());
             if ($row = $statement->fetch()) {
                 $nombre = $row['nombre'];
             }

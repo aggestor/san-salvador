@@ -3,7 +3,6 @@
 use Root\Autoloader;
 use Root\routes\Router;
 use Root\App\Exceptions\NotFoundException;
-use Root\App\Models\ReturnInvestCronJob;
 
 include("../Autoloader.php");
 Autoloader::register();
@@ -43,7 +42,7 @@ $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@index');
 $routes->post('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 $routes->get('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 //route d'activation de l'inscrption
-$routes->get('/admin/active/inscription', 'Root\App\Controllers\AdminController@viewAllNonActiveInscription');
+$routes->get('/admin/active/inscription-([0-9]+)', 'Root\App\Controllers\AdminController@viewAllNonActiveInscription', 'page');
 $routes->post('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@activeInscriptions', 'inscription;user');
 //route pour l'authentification de l'utilisateur en post
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
@@ -137,7 +136,7 @@ $routes->post('/mail/resend-(reset|activation)', 'Root\App\Controllers\UserContr
     3. l'incription terminer avec succes 
     4. view pour le lien de parainage
  */
-$routes->get('/mail/success', 'Root\App\Controllers\UserController@mailSendSuccess');
+$routes->get('/mail/success', 'Root\App\Controllers\Controller@mailSendSuccess');
 $routes->get('/user/password', 'Root\App\Controllers\UserController@passwordSuccess');
 $routes->get('/user/account', 'Root\App\Controllers\UserController@registerSuccess');
 $routes->get('/user/share/link', 'Root\App\Controllers\UserController@shareLink');
@@ -154,17 +153,7 @@ $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controller
  * ROUTES pour test Aggestor
  */
 $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
-$routes->get('/test', function () {
-    //file_put_contents('exemple.txt', 'essaie');
-
-
-
-    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Autoloader.php';
-    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
-    //Autoloader::register();
-
-
-    ReturnInvestCronJob::run();
+$routes->get('/teste', function () {
 });
 try {
     $routes->run();

@@ -9,6 +9,8 @@ use Root\App\Models\UserModel;
 use Root\App\Controllers\Controller;
 use Root\App\Models\CashOutModel;
 use Root\App\Models\Objects\CashOut;
+use Root\App\Models\Objects\DBOccurence;
+use Root\App\Models\Objects\Operation;
 use Root\Core\GenerateId;
 use RuntimeException;
 
@@ -23,6 +25,8 @@ class UserValidator extends AbstractMemberValidator
     const MONTANT_MIN = 20;
     const FIELD_CODE_PAYS = 'country_code';
     const FIELD_MESSAGE_CONTACT = 'message';
+    const FIELD_BITCON = 'btc_address';
+    const PHONE_BITCON = 'btc_phone';
 
     /**
      * Undocumented variable
@@ -65,7 +69,8 @@ class UserValidator extends AbstractMemberValidator
         $side = isset($_GET[self::FIELD_SIDE]) ? $_GET[self::FIELD_SIDE] : null;
         $parent = isset($_GET[self::FIELD_PARENT]) ? $_GET[self::FIELD_PARENT] : null;
         $sponsor = isset($_GET[self::FIELD_SPONSOR]) ? $_GET[self::FIELD_SPONSOR] : null;
-
+        // var_dump($image);
+        // exit();
         $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
         $token = GenerateId::generate(60, "AZERTYUIOPQSDFGHJKLWXCVBNMazertyuiopqsdfghjklwxcvbnm1234567890");
         $this->processingId($user, $id, true);
@@ -78,19 +83,13 @@ class UserValidator extends AbstractMemberValidator
         $this->processingSponsor($user, $sponsor, $side);
         $this->processingToken($token, $user);
         if (!$this->hasError()) {
-            if ($image['name'] == "" && $image['type'] == "") {
+            if (empty($image['name']) && empty($image['type'])) {
                 $chemin = 'default\user.jpg AND default\x320.jpg';
-            } else {
+            } else if (!empty($image['name']) && !empty($image['type'])) {
                 $controller = new Controller();
-                $chemin = $controller->addImage($image);
+                $chemin = $controller->addImage(self::FIELD_IMAGE);
             }
             $user->setPhoto($chemin);
-            // if (!empty($image) && isset($image)) {
-            //     $chemin = $controller->addImage($image);
-            //     $user->setPhoto($chemin);
-            // } else {
-            //     $user->setPhoto("default\user.jpg AND default\x320.jpg");
-            // }
             $user->setRecordDate(new \DateTime());
             $user->settimeRecord(new \DateTime());
             try {
@@ -101,7 +100,6 @@ class UserValidator extends AbstractMemberValidator
         }
 
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec d'inscription" : "succes";
-        $_REQUEST['lastInsert'] = $user;
         return $user;
     }
 
@@ -109,8 +107,29 @@ class UserValidator extends AbstractMemberValidator
     {
     }
 
+    /**
+     * Modification du nom et du numero de telephone de l'utilisateur apres validation
+     *
+     * @return User
+     */
     public function updateAfterValidation()
     {
+        $user = new User();
+        $name = $_POST[self::FIELD_NAME];
+        $phone = $_POST[self::FIELD_TELEPHONE];
+        $idUsers = $_SESSION[self::SESSION_USERS]->getId();
+        $this->processingName($user, $name);
+        $this->processingTelephone($user, $phone, true);
+        if (!$this->hasError()) {
+            $user->setLastModifDate(new \DateTime());
+            $user->setLastModifTime(new \DateTime());
+            try {
+                $this->userModel->update($user, $idUsers);
+            } catch (ModelException $e) {
+                $this->setMessage($e->getMessage());
+            }
+        }
+        return $user;
     }
 
     /**
@@ -147,20 +166,25 @@ class UserValidator extends AbstractMemberValidator
         $cashOut = new CashOut();
         $id = GenerateId::generate(11, "1234567890ABCDEFabcdef");
         $amout = $_POST[self::FIELD_CASHOUT_AMOUNT];
+        $idUser = $_SESSION[self::SESSION_USERS]->getId();
+        $destinationTelephone = (isset($_POST[self::FIELD_TELEPHONE]) && !empty($_POST[self::FIELD_TELEPHONE])) ? $_POST[self::FIELD_TELEPHONE] : "";
+        $destinationBitcoin =  (isset($_POST[self::FIELD_BITCON]) && !empty($_POST[self::FIELD_BITCON])) ? $_POST[self::FIELD_BITCON] : "";
         $this->processingId($cashOut, $id, true);
         $this->processingCashOut($cashOut, $amout);
-
+        $this->processingBitcoin($cashOut,  $destinationBitcoin);
+        $this->processingDestination($cashOut, $destinationTelephone);
+        $this->processingBtc_Phone($destinationBitcoin, $destinationTelephone);
         if (!$this->hasError()) {
             $cashOut->setRecordDate(new \DateTime());
             $cashOut->setTimeRecord(new \DateTime());
-            $cashOut->setUser($_SESSION[self::SESSION_USERS]);
+            $cashOut->setUser($idUser);
             try {
                 $this->cashOutModel->create($cashOut);
             } catch (ModelException $e) {
                 $this->setMessage($e->getMessage());
             }
         }
-
+        $cashOut->setUser($this->userModel->findById($idUser));
         return $cashOut;
     }
     /**
@@ -384,21 +408,114 @@ class UserValidator extends AbstractMemberValidator
         }
         $cashOut->setAmount($amount);
     }
+
+    /**
+     * Validation Phone and Bitcoin
+     *
+     * @param mixed $bitcoin
+     * @param mixed $telephone
+     * @return void
+     */
+    protected function validationBtc_Phone($bitcoin, $telephone)
+    {
+        if (empty($bitcoin) && empty($telephone)) {
+            throw new \RuntimeException("Veuillez renseigner le champs");
+        } elseif (!empty($bitcoin) && !empty($telephone)) {
+            throw new \RuntimeException("Données incorrecte, impossible d'exectuer votre demande");
+        }
+    }
+
+    /**
+     * Traitement 
+     *
+     * @param mixed $bitcoin
+     * @param mixed $telephone
+     * @return void
+     */
+    protected function processingBtc_Phone($bitcoin, $telephone)
+    {
+        try {
+            $this->validationBtc_Phone($bitcoin, $telephone);
+        } catch (\Throwable $e) {
+            $this->addError(self::PHONE_BITCON, $e->getMessage());
+        }
+    }
+    /**
+     * Valiadtion Cashout du type bitcoin
+     *
+     * @param mixed $bitcoin
+     * @return void
+     */
+    protected function validationBitcoin($bitcoin)
+    {
+        if (!preg_match("#^[a-zA-Z0-9]*$#", $bitcoin) && !empty($bitcoin)) {
+            throw new \RuntimeException("Veuillez entre une bonne adresse du porte feuille de reception");
+        }
+    }
+
+    protected function processingBitcoin(CashOut $cashOut, $bitcoin)
+    {
+        try {
+            $this->validationBitcoin($bitcoin);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_BITCON, $e->getMessage());
+        }
+        $cashOut->setDestination($bitcoin);
+    }
+
+    /**
+     * Valiadation destination transaction type telephone
+     *
+     * @param mixed $telephone
+     * @return void
+     */
+    protected function validationDestination($telephone)
+    {
+        if (!preg_match(self::RGX_TELEPHONE, $telephone) && (!preg_match(self::RGX_TELEPHONE_RDC, $telephone) && !empty($telephone))) {
+            throw new \RuntimeException("Votre numero de telphone est invalide");
+        }
+    }
+
+    /**
+     * Undocumente
+     *
+     * @param CashOut $cashOut
+     * @param mixed $telephone
+     * @return void
+     */
+    protected function processingDestination(CashOut $cashOut, $telephone)
+    {
+        try {
+            $codePays = $_POST['country_code'];
+            $this->validationDestination($telephone);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_TELEPHONE, $e->getMessage());
+        }
+        $numTelephone = "+" . $codePays . $telephone;
+        $cashOut->setDestination($numTelephone);
+    }
     /**
      * Pour la validation du numero de telephone
      * @param string $telephone
      * @return void
      */
-    protected function validationTelephone($telephone): void
+    protected function validationTelephone($telephone, $onUpdate = false): void
     {
         $this->notNullable($telephone);
         $codePays = $_POST['country_code'];
-        $numTelephone = "+" . $codePays . $telephone;
+        $numTelephone = "+" . $codePays . "/" . $telephone;
         if (!preg_match(self::RGX_TELEPHONE, $telephone) && (!preg_match(self::RGX_TELEPHONE_RDC, $telephone))) {
             throw new \RuntimeException("Votre numero de telphone est invalide");
         }
-        if ($this->userModel->checkByPhone($numTelephone)) {
-            throw new \RuntimeException("Ce numero de telephone est deja utlise pour une autre compte");
+        if ($onUpdate) {
+            $user = $this->userModel->findByPhone($numTelephone);
+            if ($user->getId() != $_SESSION[self::SESSION_USERS]->getId()) {
+                throw new \RuntimeException("Ce numero de telephone est deja utlise pour une autre compte");
+            }
+        } else {
+            if ($this->userModel->checkByPhone($numTelephone)) {
+                throw new \RuntimeException("Ce numero de telephone est deja utlise pour une autre compte");
+            }
         }
     }
     /**
@@ -408,16 +525,16 @@ class UserValidator extends AbstractMemberValidator
      * @param string $telephone
      * @return void
      */
-    protected function processingTelephone(User $user, $telephone): void
+    protected function processingTelephone(User $operation, $telephone, $onUpdate = false): void
     {
         try {
             $codePays = $_POST['country_code'];
-            $this->validationTelephone($telephone);
+            $this->validationTelephone($telephone, $onUpdate);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_TELEPHONE, $e->getMessage());
         }
-        $numTelephone = "+" . $codePays . $telephone;
-        $user->setPhone($numTelephone);
+        $numTelephone = "+" . $codePays . "/" . $telephone;
+        $operation->setPhone($numTelephone);
     }
     /**
      * Traitement de l'image
@@ -491,7 +608,24 @@ class UserValidator extends AbstractMemberValidator
             if ($idSponsor != null && !empty($idSponsor)) {
                 $this->validationSponsor($idSponsor);
             }
-            $node = ($idSponsor == null && empty($idSponsor)) ? ($user->hasParentNode() ? $user->getParent() : $this->userModel->findRoot()) : $this->userModel->findById($idSponsor);
+
+            /**
+             * La determination du side de l'utilisateur c fait a 2 etapes
+             * 1. si le side est donnees implicitement, alors on verifie si, le dit side est disponible. 
+             *  s'il ne lest pas, on recupere la personne qui l'occupe pour enfin cherche un point vide dans son reseau
+             * 
+             * ->le 2eme etape est necesaire dans le cas ou, pas de solution pour le 1er
+             * 2. dans ce on essais de determier le noeud sponsor pour enfin finir par determier le side
+             */
+
+            $node = ($idSponsor == null && $side != null && $user->getParent() != null) ?
+                ($this->userModel->hasSide($user->getParent()->getId(), $side) ? $this->userModel->findSide($user->getParent()->getId(), $side) : null) : null;
+
+            $node = $node == null ?
+                (($idSponsor == null && empty($idSponsor)) ?
+                    ($user->hasParentNode() ? $user->getParent() : $this->userModel->findRoot()) :
+                    $this->userModel->findById($idSponsor)) : $node;
+
 
             while ($this->userModel->countSides($node->getId()) == 2) {
                 $node = $this->userModel->findRightSide($node->getId());

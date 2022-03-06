@@ -45,8 +45,8 @@ class ReturnInvestModel extends AbstractOperationModel
                 $id,
                 $object->getUser()->getId(),
                 $object->getAmount(),
-                $object->getRecordDate(),
-                $object->gettimeRecord(),
+                $object->getFormatedRecordDate(),
+                $object->getFormatedTimeRecord(),
                 $object->getSurplus()
             ]
         );

@@ -38,6 +38,13 @@ class CashOutController extends Controller
                     if ($validator->hasError() || $validator->getMessage() != null) {
                         $errors = $validator->getErrors();
                         return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'errors' => $errors, 'disabled' => true]);
+                    } else {
+                        $nom = $retrait->getUser()->getName();
+                        $mail = $retrait->getUser()->getEmail();
+                        $_SESSION['mail'] = $mail;
+                        if ($this->envoieMail($mail, "", "Demande de retrait", "pages/mail/cahOutMail", $nom)) {
+                            Controller::redirect('/mail/success');
+                        }
                     }
                 }
                 return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'disabled' => true]);

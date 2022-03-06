@@ -30,7 +30,7 @@ class Binary extends Operation
     {
         if ($generator == null || $generator instanceof Inscription) {
             $this->generator = $generator;
-        }else if (is_int($generator)) {
+        }else if (is_string($generator)) {
             $this->generator = new Inscription(array('id' => $generator));
         }else {
             throw new \InvalidArgumentException("valeur de type invalide en parametre de la methode setGenerator");

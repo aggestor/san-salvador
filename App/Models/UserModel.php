@@ -80,8 +80,8 @@ class UserModel extends AbstractMemberModel
                 [
                     Schema::USER['name'],
                     Schema::USER['phone'],
-                    Schema::USER['lastModifDate'],
-                    Schema::USER['lastModifTime'],
+                    Schema::USER['modifDate'],
+                    Schema::USER['motifTime'],
                 ],
                 "id = ?",
                 [
@@ -212,11 +212,12 @@ class UserModel extends AbstractMemberModel
      * @throws ModelException
      * @return User[]
      */
-    public function findByLockState (bool $lock=false, ?int $limit=null, int $offset=0) : array{
+    public function findByLockState(bool $lock = false, ?int $limit = null, int $offset = 0): array
+    {
         $data = [];
         try {
             $lockColumnName = Schema::USER['locked'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} = ?".($limit!==null? " LIMIT {$limit} OFFSET {$offset}":''), [$lock? '1':'0']);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} = ?" . ($limit !== null ? " LIMIT {$limit} OFFSET {$offset}" : ''), [$lock ? '1' : '0']);
             if ($row = $statement->fetch()) {
                 $data[] = $this->getDBOccurence($row);
 
@@ -243,11 +244,12 @@ class UserModel extends AbstractMemberModel
      * @return bool
      * @throws ModelException
      */
-    public function checkByLockState (bool $lock=false, ?int $limit=null, int $offset=0) : bool {
+    public function checkByLockState(bool $lock = false, ?int $limit = null, int $offset = 0): bool
+    {
         $return = false;
         try {
             $lockColumnName = Schema::USER['locked'];
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} = ?".($limit!==null? " LIMIT {$limit} OFFSET {$offset}":''), [$lock? '1':'0']);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$lockColumnName} = ?" . ($limit !== null ? " LIMIT {$limit} OFFSET {$offset}" : ''), [$lock ? '1' : '0']);
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -265,11 +267,12 @@ class UserModel extends AbstractMemberModel
      * @return int
      * @throws ModelException
      */
-    public function countByLockState (bool $lock=false) : int {
+    public function countByLockState(bool $lock = false): int
+    {
         $return = 0;
         try {
             $lockColumnName = Schema::USER['locked'];
-            $statement = Queries::executeQuery("SELECT COUNT(id) AS nombre FROM {$this->getTableName()} WHERE {$lockColumnName} = ?", [$lock? '1':'0']);
+            $statement = Queries::executeQuery("SELECT COUNT(id) AS nombre FROM {$this->getTableName()} WHERE {$lockColumnName} = " . ($lock ? '1' : '0')); //, [$lock? '1':'0']);
             if ($row = $statement->fetch()) {
                 $return = $row['nombre'];
             }
@@ -467,6 +470,27 @@ class UserModel extends AbstractMemberModel
         $return = false;
         try {
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . (Schema::USER['sponsor']) . ' IS NULL AND ' . (Schema::USER['parent']) . " IS NULL", array());
+            if ($statement->fetch()) {
+                $return = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode(), 10), $e);
+        }
+
+        return $return;
+    }
+
+    /**
+     * On verifie si l'utilisateur en parametre est bien la racine.
+     * @param string|User $user l'identifiant  de l'utilisateur ou l'utilisateur carement
+     * @return bool
+     */
+    public function isRoot ($user) : bool {
+        $return = false;
+        $userId = ($user instanceof User) ? $user->getId() : $user;
+        try  {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE id = ? AND " . (Schema::USER['sponsor']) . ' IS NULL AND ' . (Schema::USER['parent']) . " IS NULL", array($userId));
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -694,6 +718,7 @@ class UserModel extends AbstractMemberModel
         return $return;
     }
 
+
     /**
      * verification si l'utilisateur a un afant su le pied gauche
      * @param string $userId
@@ -797,6 +822,35 @@ class UserModel extends AbstractMemberModel
     public function loadDownlineRightSide(string $userId): User
     {
         return $this->loadDownlineSide($userId, User::FOOT_RIGHT);
+    }
+
+    /**
+     * recuperation du foot sur le quel c trouve un User dans un reseau d'un User
+     * @param string|User $parent le parent du reseau
+     * @param string|User $child l'enfant appartenant au reseau du parant en premier parametre
+     * @return int le foot sur lequel ce trouve l'enfant dans le reseau du parent
+     * @throws ModelException dans le cas où l'enfant n'appartien pas au reseau du parent
+     */
+    public function findBindingSide ($parent, $child) : int {
+        $childId = ($child instanceof User)? $child->getId() : $child;
+
+        $user = ($parent instanceof User)? $parent : $this->findById($parent);
+        /**
+         * @var User $userChild
+         */
+        $userChild = ($child instanceof User)? $child : $this->findById($child);
+
+        if($userChild->getSponsor()->getId() == $user->getId())
+            return $userChild->getSide();
+
+        while($this->hasSponsor($childId)) {
+            $node = $this->findSponsor($childId);
+            if ($node->getSponsor() != null && $user->getId() == $node->getSponsor()->getId()) {
+                return $node->getSide();
+            }
+            $childId = $node->getId();
+        }
+        throw new ModelException("Impossible de determier la position du user dans le reseau");
     }
 
     /**

@@ -15,7 +15,7 @@
             <div class="w-11/12 mx-auto p-1 items-center text-gray-500  my-2 border border-gray-800 flex justify-between rounded">
                 <div class="w-2/12"><?= $data->getUser()->getId() ?></div>
                 <div class="w-3/12"><?= $data->getUser()->getName() ?></div>
-                <div class="w-3/12"><?= $data->getUser()->getPhone() ?></div>
+                <div class="w-3/12"><?= str_replace("/", "", $data->getUser()->getPhone()); ?></div>
                 <div class="w-3/12"><?= $data->getUser()->getEmail() ?></div>
                 <div class="w-2/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
             </div>
@@ -28,16 +28,15 @@
                 <?php
                 $page = $_GET['page'];
                 $nombre_de_pages = $params['nombrePage'];
-
                 if ($page < $nombre_de_pages and $page != 1) : ?>
                     <div class="w-3/12 flex justify-between">
-                        <a href="/admin/user-page-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
-                        <a href="/admin/user-page-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
+                        <a href="/admin/users-page-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
+                        <a href="/admin/users-page-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
                     </div>
-                <?php elseif ($page = $nombre_de_pages and $page != 1) : ?>
-                    <a href="/admin/user-page-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
-                <?php elseif ($page = 1 and $nombre_de_pages > 1) : ?>
-                    <a href="/admin/user-page-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
+                <?php elseif ($page == $nombre_de_pages and $page != 1) : ?>
+                    <a href="/admin/users-page-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
+                <?php elseif ($page == 1 and $nombre_de_pages > 1) : ?>
+                    <a href="/admin/users-page-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
                 <?php endif; ?>
             </div>
         </div>

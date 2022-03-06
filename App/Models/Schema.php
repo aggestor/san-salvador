@@ -76,8 +76,8 @@ class Schema
         "modifDate" => "last_modif_date",
         "motifTime" => "last_modif_time",
         "surplus" => "surplus",
-
     ];
+    
     const CASHOUT = [
         "id" => "id",
         "user" => "user_id",
@@ -87,8 +87,8 @@ class Schema
         "modifDate" => "last_modif_date",
         "motifTime" => "last_modif_time",
         "validated" => "validated",
+        "destination" => "destination",
         "admin" => "admin"
-
     ];
     const RETURN_INVEST = [
         "id" => "id",

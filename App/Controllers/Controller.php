@@ -110,6 +110,16 @@ class Controller
     }
 
     /**
+     * La fonction pour retourner les operation des plusieurs utilisateurs
+     *
+     * @return User[]
+     */
+    public function allUsersObjects()
+    {
+        return $this->userModel->loadAll();
+    }
+
+    /**
      * Undocumented function
      *
      * @return User
@@ -158,10 +168,10 @@ class Controller
         return $return;
     }
 
-    public function countValidateInscription()
+    public function countInscription(bool $valiadte = true)
     {
         if ($this->inscriptionModel->checkValidated()) {
-            return $this->inscriptionModel->countValidate();
+            return $this->inscriptionModel->countValidate($valiadte);
         }
         return 0;
     }
@@ -170,11 +180,11 @@ class Controller
      *
      * @return  array
      */
-    public function allNonValidateInscription()
+    public function allNonValidateInscription($limit = 0, $offset = 0)
     {
         $return = array();
         if ($this->inscriptionModel->checkAwait()) {
-            $allValidate = $this->inscriptionModel->findAwait();
+            $allValidate = $this->inscriptionModel->findAwait($limit, $offset);
             //var_dump($allValidate); exit();
             foreach ($allValidate as $validate) {
                 $validate->setUser($this->userModel->findById($validate->getUser()->getId()));
@@ -226,6 +236,22 @@ class Controller
         }
         return $return;
     }
+    /**
+     * touts les retrait deja valider
+     * @return array
+     */
+    public function viewAllCashOutValidate()
+    {
+        $return = array();
+        if ($this->cashOutModel->checkValidated()) {
+            $allNotActive = $this->cashOutModel->findValidated();
+            foreach ($allNotActive as $nonActive) {
+                $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
+                $return[] = $nonActive;
+            }
+        }
+        return $return;
+    }
 
     /**
      * Activation du cashOut
@@ -249,31 +275,38 @@ class Controller
         }
     }
 
+
+
+    /**
+     * Fonction pour retourner la sommes des tous les montants binaires du systeme
+     *
+     * @return mixed
+     */
     public function allBinary()
     {
         $return = array();
 
         if ($this->binaryModel->checkAll()) {
-            # code...
+
             /**
              * @var Binary
              */
             $binarys = $this->binaryModel->findAll();
             foreach ($binarys as $binary) {
                 $binary->setUser($this->userModel->findById($binary->getUser()->getId()));
-                if ($binary->getUser()->getSponsor() == null && $binary->getUser()->getParent() == null) {
-                    $montant = $binary->getAmount();
-                    $return[] = (int) $montant;
-                } else {
-                    $surplus = $binary->getSurplus();
-                    $return[] = (int) $surplus;
-                }
+                $montant = $binary->getAmount();
+                $return[] = (int) $montant;
             }
-            return $return;
+            return array_sum($return);
         }
         return $return;
     }
 
+    /**
+     * Fonction pour retourner le montant total des bonus journaliers du systeme
+     *
+     * @return mixed
+     */
     public function allReturnInvest()
     {
         $return = array();
@@ -285,16 +318,17 @@ class Controller
             $invests = $this->returnInvestModel->findAll();
             foreach ($invests as $invest) {
                 $invest->setUser($this->userModel->findById($invest->getUser()->getId()));
-                $return = $invest->getSurplus();
+                $return[] = $invest->getAmount();
             }
+            return round(array_sum($return), 2);
         }
         return $return;
     }
 
     /**
-     * la fonction pour me retourner touts les montant binaire et les surplus
+     * la fonction pour me retourner touts les montant binaire du systeme
      *
-     * @return array
+     * @return mixed
      */
     public function allParainage()
     {
@@ -307,17 +341,74 @@ class Controller
             $parainages = $this->parainageModel->findAll();
             foreach ($parainages as $parainage) {
                 $parainage->setUser($this->userModel->findById($parainage->getUser()->getId()));
-                if ($parainage->getUser()->getSponsor() == null && $parainage->getUser()->getParent() == null) {
-                    $montant = $parainage->getAmount();
-                    $return[] = (int) $montant;
-                } else {
-                    $surplus = $parainage->getSurplus();
-                    $return[] = (int) $surplus;
-                }
+                $montant = $parainage->getAmount();
+                $return[] = $montant;
             }
-            return $return;
+            return array_sum($return);
         }
         return $return;
+    }
+
+    /**
+     * Calcul des surplus du systeme
+     *
+     * @return mixed
+     */
+    public function allSurplus()
+    {
+        $totalSurplus = 0;
+        $surplusBinary = array();
+        $surplusParainage = array();
+        $surplusReturnInvest = array();
+        if ($this->parainageModel->checkAll() || $this->returnInvestModel->checkAll() || $this->binaryModel->checkAll()) {
+            /**
+             * @var Parainage
+             */
+            $parainages = $this->parainageModel->findAll();
+            foreach ($parainages as $parainage) {
+                $parainage->setUser($this->userModel->findById($parainage->getUser()->getId()));
+                $surplus = $parainage->getSurplus();
+                $surplusParainage[] = $surplus;
+            }
+
+            /**
+             * @var ReturnInvest
+             */
+            $returnInvests = $this->returnInvestModel->findAll();
+            foreach ($returnInvests as $returnInvest) {
+                $returnInvest->setUser($this->userModel->findById($parainage->getUser()->getId()));
+                $surplusInvest = $returnInvest->getSurplus();
+                $surplusReturnInvest[] = $surplusInvest;
+            }
+
+            /**
+             * @var Binary
+             */
+            $binarys = $this->binaryModel->findAll();
+            foreach ($binarys as $binary) {
+                $binary->setUser($this->userModel->findById($parainage->getUser()->getId()));
+                $surplusBinary = $binary->getSurplus();
+                $surplusBinaryReturn[] = $surplusBinary;
+            }
+            $totalSurplus = array_sum($surplusParainage) + array_sum($surplusReturnInvest) + array_sum($surplusBinaryReturn);
+            return $totalSurplus;
+        }
+        return $totalSurplus;
+    }
+
+    /**
+     * Function pour calculer le montant total des cashOuts en attente de validation
+     * @return mixed
+     */
+    public function amountAllCashOutNotValide()
+    {
+        $return = array();
+        $cashOuts = $this->viewAllCashOutNotValide();
+        foreach ($cashOuts as $cashOut) {
+            $montant = $cashOut->getAmount();
+            $return[] = $montant;
+        }
+        return array_sum($return);
     }
     /**
      * Destroy all session
@@ -432,7 +523,6 @@ class Controller
      */
     public function addImage($nom)
     {
-
         $image = $_FILES[$nom]['name'];
         $temporaire = $_FILES[$nom]['tmp_name'];
         $directory = $this->createFolder(GenerateId::generate(20, '123450ABCDEabcde'));
@@ -482,5 +572,29 @@ class Controller
         if (isset($session) && !empty($session)) {
             return true;
         }
+    }
+
+    /**
+     * Pour l'envoie du mail avec success
+     *
+     * @return void
+     */
+    public function mailSendSuccess()
+    {
+        return $this->view('pages.static.mail_sent_success', 'layout_', ['mail' => $_SESSION['mail']]);
+    }
+
+    /**
+     * Function pour afficher les donnees subdiviser sous forme des pages 
+     * @param integer $totalCount
+     * @param integer $page
+     * @param integer $nombre_element_par_page
+     * @return array($debut[0],$nombre_pages[1])
+     */
+    public static function drowData($totalCount, $page, $nombre_element_par_page = 5)
+    {
+        $nombre_pages = ceil($totalCount / $nombre_element_par_page);
+        $debut = ($page - 1) * $nombre_element_par_page;
+        return array($debut, $nombre_pages);
     }
 }
