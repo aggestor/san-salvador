@@ -234,7 +234,7 @@ class Controller
     {
         $return = array();
         if ($this->cashOutModel->checkValidated()) {
-            $allNotActive = $this->cashOutModel->findValidated(false);
+            $allNotActive = $this->cashOutModel->findValidated();
             foreach ($allNotActive as $nonActive) {
                 $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
                 $return[] = $nonActive;
@@ -250,7 +250,7 @@ class Controller
     public function viewAllCashOutValidate()
     {
         $return = array();
-        if ($this->cashOutModel->checkValidated(true)) {
+        if ($this->cashOutModel->checkValidated(null, true)) {
             $allNotActive = $this->cashOutModel->findValidated(true);
             foreach ($allNotActive as $nonActive) {
                 $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
@@ -288,7 +288,7 @@ class Controller
         $idUser = $_GET['user'];
         //var_dump($this->cashOutModel->checkById($idCashOut)); exit();
         if ($this->cashOutModel->checkById($idCashOut)) {
-            if ($this->cashOutModel->checkValidated($idCashOut)) {
+            if ($this->cashOutModel->checkValidated()) {
                 $this->cashOutModel->validate($idCashOut, $idAdmin);
             } else {
                 Controller::redirect('admin/login');
@@ -427,6 +427,20 @@ class Controller
     {
         $return = array();
         $cashOuts = $this->viewAllCashOutNotValide();
+        foreach ($cashOuts as $cashOut) {
+            $montant = $cashOut->getAmount();
+            $return[] = $montant;
+        }
+        return array_sum($return);
+    }
+    /**
+     * Function pour calculer le montant total des cashOuts en attente deja valider
+     * @return mixed
+     */
+    public function amountAllCashOutValide()
+    {
+        $return = array();
+        $cashOuts = $this->viewAllCashOutValidate();
         foreach ($cashOuts as $cashOut) {
             $montant = $cashOut->getAmount();
             $return[] = $montant;

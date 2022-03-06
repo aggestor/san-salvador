@@ -83,7 +83,7 @@
                             <i class="fas fa-dollar-sign "></i>
                         </span>
                         <span class="font-semibold text-yellow-300 mt-3 text-2xl my-auto">
-                            <?= "0" ?>
+                            <?= $params['cashoutValidate'] ?>
                         </span>
                     </div>
                 </div>
