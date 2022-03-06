@@ -79,12 +79,12 @@ $images = explode("AND", $params['user']->getPhoto());
                 <span class="text-green-500 absolute left-10 -top-1 "> Evolution de votre compte</span>
             </div>
             <div class="w-full h-2 overflow-hidden lg:mt-8 mt-2 mr-3 border-green-500 border rounded">
-                <div style="width: calc(<?= $params['user']->getBonusToPercent() ?>%/3)" class="h-1 bg-green-500">
+                <div style="width: calc(<?= $params['user']->getBonusToPercent() ?>%)" class="h-full bg-green-500">
 
                 </div>
             </div>
             <div class="text-gray-500 text-sm flex justify-between">
-                <span><?= $params['user']->getBonusToPercent() ?>%</span>
+                <span><?= $params['user']->getBonusToPercent() * 3?>%</span>
                 <span class="text-green-500">300%</span>
             </div>
         </div>
