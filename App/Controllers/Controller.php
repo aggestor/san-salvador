@@ -168,10 +168,10 @@ class Controller
         return $return;
     }
 
-    public function countValidateInscription()
+    public function countInscription(bool $valiadte = true)
     {
         if ($this->inscriptionModel->checkValidated()) {
-            return $this->inscriptionModel->countValidate();
+            return $this->inscriptionModel->countValidate($valiadte);
         }
         return 0;
     }
@@ -180,11 +180,11 @@ class Controller
      *
      * @return  array
      */
-    public function allNonValidateInscription()
+    public function allNonValidateInscription($limit = 0, $offset = 0)
     {
         $return = array();
         if ($this->inscriptionModel->checkAwait()) {
-            $allValidate = $this->inscriptionModel->findAwait();
+            $allValidate = $this->inscriptionModel->findAwait($limit, $offset);
             //var_dump($allValidate); exit();
             foreach ($allValidate as $validate) {
                 $validate->setUser($this->userModel->findById($validate->getUser()->getId()));
@@ -582,5 +582,19 @@ class Controller
     public function mailSendSuccess()
     {
         return $this->view('pages.static.mail_sent_success', 'layout_', ['mail' => $_SESSION['mail']]);
+    }
+
+    /**
+     * Function pour afficher les donnees subdiviser sous forme des pages 
+     * @param integer $totalCount
+     * @param integer $page
+     * @param integer $nombre_element_par_page
+     * @return array($debut[0],$nombre_pages[1])
+     */
+    public static function drowData($totalCount, $page, $nombre_element_par_page = 5)
+    {
+        $nombre_pages = ceil($totalCount / $nombre_element_par_page);
+        $debut = ($page - 1) * $nombre_element_par_page;
+        return array($debut, $nombre_pages);
     }
 }

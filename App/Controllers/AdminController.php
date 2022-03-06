@@ -286,7 +286,16 @@ class AdminController extends Controller
     public function viewAllNonActiveInscription()
     {
         if ($this->isAdmin()) {
-            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['nonValidate' => $this->allNonValidateInscription()]);
+            $totalCount = $this->countInscription(false);
+            $page = !empty($_GET['page']) ? $_GET['page'] : 1;
+            $nombre_element_par_page = 5;
+            $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
+            $inscription = $this->allNonValidateInscription($data[0], $nombre_element_par_page);
+            if ($_GET['page'] > $data[1]) {
+                return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['message' => 1]);
+            }
+            //var_dump($inscription);exit;
+            return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['allInscription' => $inscription, 'nombrePage' => $data[1]]);
         }
     }
     /**
@@ -314,24 +323,24 @@ class AdminController extends Controller
         }
     }
 
+
+
     /**
      * All users operation
      * @return void
      */
     public function allUsers()
     {
-
         if ($this->isAdmin()) {
-            $totalCount = $this->countValidateInscription();
+            $totalCount = $this->countInscription();
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
-            $nombre_pages = ceil($totalCount / $nombre_element_par_page);
-            $debut = ($page - 1) * $nombre_element_par_page;
-            $users = $this->allUsersHasValidateInscription($debut, $nombre_element_par_page);
-            if ($_GET['page'] > $nombre_pages) {
+            $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
+            $users = $this->allUsersHasValidateInscription($data[0], $nombre_element_par_page);
+            if ($_GET['page'] > $data[1]) {
                 return $this->view("pages.static.404");
             }
-            return $this->view('pages.admin.viewAllUsers', 'layout_admin', ['allUsers' => $users, 'nombrePage' => $nombre_pages]);
+            return $this->view('pages.admin.viewAllUsers', 'layout_admin', ['allUsers' => $users, 'nombrePage' => $data[1]]);
         }
     }
     /**
