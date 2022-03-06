@@ -42,6 +42,31 @@ abstract class AbstractOperationModel extends AbstractDbOccurenceModel
         
         return $return;
     }
+
+    /**
+     * Comptage des operations d'un user
+     * @param string $userId l'identifiant du compte d'un user
+     * @return int le nombre d'operations deja faits au nom du compte dont l'id est en parametre
+     * @throws ModelException, s'il y a erreur lors de la communication avec la BDD
+     */
+    public function countByUser (string $userId)  : int {
+        $userIdName = Schema::INSCRIPTION['user'];
+        $SQL = "SELECT COUNT(*) AS nombre FROM {$this->getTableName()}  WHERE {$userIdName} = ?";
+        
+        $return = 0;
+        
+        try {
+            $statement = Queries::executeQuery($SQL, array($userId));
+            if ($row = $statement->fetch()) {
+                $return = $row['nombre'];
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException($e->getMessage(), intval($e->getCode(), 10), $e);
+        }
+        
+        return $return;
+    }
     
     
     /**
