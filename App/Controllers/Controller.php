@@ -168,6 +168,12 @@ class Controller
         return $return;
     }
 
+    /**
+     * Count Inscription valide et not valide
+     *
+     * @param boolean $valiadte
+     * @return mixed
+     */
     public function countInscription(bool $valiadte = true)
     {
         if ($this->inscriptionModel->checkValidated()) {
@@ -233,6 +239,7 @@ class Controller
                 $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
                 $return[] = $nonActive;
             }
+            return $return;
         }
         return $return;
     }
@@ -243,14 +250,30 @@ class Controller
     public function viewAllCashOutValidate()
     {
         $return = array();
-        if ($this->cashOutModel->checkValidated()) {
-            $allNotActive = $this->cashOutModel->findValidated();
+        if ($this->cashOutModel->checkValidated(null, true)) {
+            $allNotActive = $this->cashOutModel->findValidated(true);
             foreach ($allNotActive as $nonActive) {
                 $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
                 $return[] = $nonActive;
             }
+            return $return;
         }
         return $return;
+    }
+
+    /**
+     *Function pour compte les cashOut
+     *
+     * @param boolean $validated
+     * @return mixed
+     */
+    public function countCashOut(bool $validated = false)
+    {
+        if ($this->cashOutModel->checkValidated(null, $validated)) {
+            $cashOut = $this->cashOutModel->countValidated(null, $validated);
+            return $cashOut;
+        }
+        return 0;
     }
 
     /**
@@ -265,7 +288,7 @@ class Controller
         $idUser = $_GET['user'];
         //var_dump($this->cashOutModel->checkById($idCashOut)); exit();
         if ($this->cashOutModel->checkById($idCashOut)) {
-            if ($this->cashOutModel->checkValidated($idCashOut)) {
+            if ($this->cashOutModel->checkValidated()) {
                 $this->cashOutModel->validate($idCashOut, $idAdmin);
             } else {
                 Controller::redirect('admin/login');
@@ -404,6 +427,20 @@ class Controller
     {
         $return = array();
         $cashOuts = $this->viewAllCashOutNotValide();
+        foreach ($cashOuts as $cashOut) {
+            $montant = $cashOut->getAmount();
+            $return[] = $montant;
+        }
+        return array_sum($return);
+    }
+    /**
+     * Function pour calculer le montant total des cashOuts en attente deja valider
+     * @return mixed
+     */
+    public function amountAllCashOutValide()
+    {
+        $return = array();
+        $cashOuts = $this->viewAllCashOutValidate();
         foreach ($cashOuts as $cashOut) {
             $montant = $cashOut->getAmount();
             $return[] = $montant;

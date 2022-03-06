@@ -30,14 +30,15 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //var_dump($this->amountAllCashOutNotValide());exit;
         if ($this->isAdmin()) {
-            $amountBinary = $this->allBinary();
+            // $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
+            $amountBinary = $this->allBinary();;
             $amountInvest = $this->allReturnInvest();
             $amountParainnage = $this->allParainage();
             $amountSurplus = $this->allSurplus();
             $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
-            return $this->view('pages.admin.dashboard', 'layout_admin', ['binaire' => $amountBinary, 'invest' => $amountInvest, 'parainnage' => $amountParainnage, 'surplus' => $amountSurplus, 'cashoutNotValidate' => $amountCashOutNotValidated]);
+            $amountCashOutValidated = $this->amountAllCashOutValide();
+            return $this->view('pages.admin.dashboard', 'layout_admin', ['binaire' => $amountBinary, 'invest' => $amountInvest, 'parainnage' => $amountParainnage, 'surplus' => $amountSurplus, 'cashoutNotValidate' => $amountCashOutNotValidated, 'cashoutValidate' => $amountCashOutValidated]);
         }
     }
     /**
@@ -352,7 +353,6 @@ class AdminController extends Controller
     {
         if ($this->isAdmin()) {
             $cashOut = $this->viewAllCashOutNotValide();
-            //non de la vue je l'attend ici
             return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut]);
         }
     }
