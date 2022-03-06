@@ -93,13 +93,99 @@ class CashOutModel extends AbstractOperationModel
     }
 
     /**
+     * verification des cachouts d'un user, ayant pour status en deuxieme parametre
+     * @param string $userId l'id du compte de l'utilisateur
+     * @param bool|null $validated le status du cashout
+     * <br/>=> true : verifie le cashout deja confirmer
+     * <br/>=> false : verifie le cashout en attante
+     * <br/>=> null : verifie s'il y a de cashout pour le compte du user (on s'enfou du status du cashout)
+     * NB: $validated === null => aliace de la methode checkByUser() de la super classe
+     * @return bool
+     * @throws ModelException
+     */
+    public function checkByUserWithStatus(string $userId, ?bool $validated = false): bool
+    {
+        if($validated === null) 
+            return $this->checkByUser($userId);
+
+        $return = false;
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . Schema::CASHOUT['user'] . '=? '.($validated!==null? (' AND '.Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . " NULL" : ''), [$userId]);
+            if ($statement->fetch()) {
+                $return = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD: {$e->getMessage()}", intval($e->getCode()), $e);
+        }
+
+        return $return;
+    }
+
+    /**
+     * Recuperation des cashout d'un user
+     * pour plus d'information sur le parametre $validated => consulter la docs de la methode checkByUserWithStatus
+     * @param string $userId
+     * @param bool|null $validated
+     * @throws ModelException
+     * @return CashOut[]
+     */
+    public function findByUserWithStatus (string $userId, ?bool $validated = false) : array
+    {
+        if($validated === null) 
+            return $this->findByUser($userId);
+
+        $data = [];
+        try {
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . Schema::CASHOUT['user'] . '=? '.($validated!==null? (' AND '.Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . " NULL" : ''), [$userId]);
+            while ($row = $statement->fetch()) {
+                $data[] = $this->getDBOccurence($row);
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD: {$e->getMessage()}", intval($e->getCode()), $e);
+        }
+
+        if(empty($data))
+            throw new ModelException("Aucune operation de cashout pour le compte {$userId} n'a le status {$validated}");
+
+        return $data;
+    }
+
+    /**
+     * Comptage des cashout du compte d'un User
+     * N.B: pour plus d'info sur le parametre $validated, => confert la @method checkByUserWithStatus
+     * @param string $userId
+     * @param bool|null $validated
+     * @return int
+     */
+    public function countkByUserWithStatus(string $userId, ?bool $validated = false): int
+    {
+        if($validated === null) 
+            return $this->countByUser($userId);
+
+        $return = 0;
+        try {
+            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE " . Schema::CASHOUT['user'] . '=? '.($validated!==null? (' AND '.Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . " NULL" : ''), [$userId]);
+            if ($row = $statement->fetch()) {
+                $return = $row['nombre'];
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException("Une erreur est survenue lors de la communication avec la BDD: {$e->getMessage()}", intval($e->getCode()), $e);
+        }
+
+        return $return;
+    }
+
+    /**
      * comptage des cashouts
      * @param string $adminId
      * @param bool $validated
      * @throws ModelException
-     * @return bool
+     * @return int
      */
-    public function countValidated(?string $adminId = null, bool $validated = false): bool
+    public function countValidated(?string $adminId = null, bool $validated = false): int
     {
         $return = 0;
         $args = [];
@@ -108,7 +194,7 @@ class CashOutModel extends AbstractOperationModel
             $args[] = $adminId;
         }
         try {
-            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE " .Schema::CASHOUT['admin'] . ($adminId !== null ?  '=? ' : ' IS ' . ($validated ? 'NOT' : '') . " NULL"), $args);
+            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE " . Schema::CASHOUT['admin'] . ($adminId !== null ?  '=? ' : ' IS ' . ($validated ? 'NOT' : '') . " NULL"), $args);
             if ($row = $statement->fetch()) {
                 $return = $row['nombre'];
             }
@@ -135,7 +221,7 @@ class CashOutModel extends AbstractOperationModel
      * @throws ModelException
      * @return CashOut[]
      */
-    public function findValidated (bool $validated = false, ?string $adminId = null, ?int $limit = null, $offset = 0): array
+    public function findValidated(bool $validated = false, ?string $adminId = null, ?int $limit = null, $offset = 0): array
     {
         $return = [];
         $args = [];
@@ -143,15 +229,15 @@ class CashOutModel extends AbstractOperationModel
         if ($adminId !== null) {
             $args[] = $adminId;
         }
-        $SQL= (($validated !== null || $adminId !== null) ? " WHERE " : '') ;
+        $SQL = (($validated !== null || $adminId !== null) ? " WHERE " : '');
         $SQL .= ($adminId !== null ? Schema::CASHOUT['admin'] . '=?' : '');
-        
-        if($adminId === null)
+
+        if ($adminId === null)
             $SQL .= (Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . ' NULL ';
 
-        $SQL_LIMIT = $limit !== null? "LIMIT {$limit} OFFSET {$offset}" : '';
+        $SQL_LIMIT = $limit !== null ? "LIMIT {$limit} OFFSET {$offset}" : '';
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} {$SQL} {$SQL_LIMIT}" , $args);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} {$SQL} {$SQL_LIMIT}", $args);
             if ($row = $statement->fetch()) {
                 $return[] = $this->getDBOccurence($row);
                 while ($row = $statement->fetch()) {
