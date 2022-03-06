@@ -89,8 +89,6 @@ $routes->post('/user/pack/subscribe', 'Root\App\Controllers\PackController@sucri
 //routes pour upgrade packages
 $routes->get('/user/pack/upgrade', 'Root\App\Controllers\PackController@upgradePackages');
 $routes->post('/user/pack/upgrade', 'Root\App\Controllers\PackController@upgradePackages');
-
-
 // les routes pour l'activation du pack
 // $routes->get('/user/pack/activation-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@activationPackages', 'inscription');
 // $routes->post('/user/pack/activation-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@activationPackages', 'inscription');
@@ -168,9 +166,6 @@ $routes->get('/test', function () {
 
     ReturnInvestCronJob::run();
 });
-
-
-
 try {
     $routes->run();
 } catch (NotFoundException $e) {
