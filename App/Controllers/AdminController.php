@@ -36,7 +36,7 @@ class AdminController extends Controller
             $amountSurplus = $this->allSurplus();
             $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
             $amountCashOutValidated = $this->amountAllCashOutValide();
-            $amountCashOutNotValidated = 0;
+            $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
             return $this->view('pages.admin.dashboard', 'layout_admin', ['binaire' => $amountBinary, 'invest' => $amountInvest, 'parainnage' => $amountParainnage, 'surplus' => $amountSurplus, 'cashoutNotValidate' => $amountCashOutNotValidated, 'cashoutValidate' => $amountCashOutValidated]);
         }
     }
@@ -290,14 +290,14 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            $inscription = $this->allNonValidateInscription($data[0], $nombre_element_par_page);
+            $inscription = $this->allNonValidateInscription($data[0] == 0 ? null : $data[0], $nombre_element_par_page);
             if ($_GET['page'] > $data[1]) {
                 return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['message' => 1]);
             }
-            //var_dump($inscription);exit;
             return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['allInscription' => $inscription, 'nombrePage' => $data[1]]);
         }
     }
+
     /**
      * Gestion des operations des admin
      *
@@ -353,11 +353,31 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            $cashOut = $this->viewAllCashOutNotValide($data[0]==0?null:$data[0], $nombre_element_par_page);
+            $cashOut = $this->viewAllCashOutNotValide($data[0] == 0 ? null : $data[0], $nombre_element_par_page);
             if ($_GET['page'] > $data[1]) {
                 return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['message' => 1]);
             }
             return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut, 'nombrePage' => $data[1]]);
+        }
+    }
+
+    /**
+     * Historique des touts les retraits deja valide
+     *
+     * @return void
+     */
+    public function history()
+    {
+        if ($this->isAdmin()) {
+            $totalCount = $this->countCashOut(true);
+            $page = !empty($_GET['page']) ? $_GET['page'] : 1;
+            $nombre_element_par_page = 5;
+            $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
+            $cashOut = $this->viewAllCashOutValidate($data[0] == 0 ? null : $data[0], $nombre_element_par_page);
+            if ($_GET['page'] > $data[1]) {
+                return $this->view("pages.admin.history", "layout_admin", ['message' => 1]);
+            }
+            return $this->view("pages.admin.history", "layout_admin", ['cashOut' => $cashOut, 'nombrePage' => $data[1]]);
         }
     }
 
@@ -423,12 +443,6 @@ class AdminController extends Controller
     {
         if (isset($_SESSION[self::SESSION_ADMIN]) && !empty($_SESSION[self::SESSION_ADMIN])) {
             header('Location:/admin/dashboard');
-        }
-    }
-    public function history()
-    {
-        if ($this->isAdmin()) {
-            return $this->view("pages.admin.history", "layout_admin");
         }
     }
 }

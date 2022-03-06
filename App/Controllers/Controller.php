@@ -186,7 +186,7 @@ class Controller
      *
      * @return  array
      */
-    public function allNonValidateInscription($limit = 0, $offset = 0)
+    public function allNonValidateInscription(?int $limit = null, ?int $offset = 0)
     {
         $return = array();
         if ($this->inscriptionModel->checkAwait()) {
@@ -233,7 +233,7 @@ class Controller
     public function viewAllCashOutNotValide(?int $limit = null, ?int $offset = 0)
     {
         $return = array();
-        if ($this->cashOutModel->checkValidated(null,false)) {
+        if ($this->cashOutModel->checkValidated(null, false)) {
             $allNotActive = $this->cashOutModel->findValidated(false, null, $limit, $offset);
             foreach ($allNotActive as $nonActive) {
                 $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
@@ -257,6 +257,21 @@ class Controller
                 $return[] = $nonActive;
             }
             return $return;
+        }
+        return $return;
+    }
+
+    public function viewAllHistoryCashOutForUser(?bool $validate = false)
+    {
+        $return = array();
+        $idUser = $_SESSION[self::SESSION_USERS];
+        if ($this->cashOutModel->checkByUserWithStatus($idUser, $validate)) {
+            $cashOuts = $this->cashOutModel->findByUserWithStatus($idUser, $validate);
+            foreach ($cashOuts as $cashOut) {
+                $cashOut->setUser($this->userModel->findById($idUser));
+                $return[] = $cashOut;
+            }
+            return $cashOut;
         }
         return $return;
     }

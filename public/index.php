@@ -77,7 +77,7 @@ $routes->get('/admin/users-page-([0-9]+)', 'Root\App\Controllers\AdminController
 $routes->get('/admin/administrator', 'Root\App\Controllers\AdminController@administratorDashboard');
 $routes->post('/admin/administrator', 'Root\App\Controllers\AdminController@create');
 
-$routes->get("/admin/history", 'Root\App\Controllers\AdminController@history');
+$routes->get("/admin/history-([0-9]+)", 'Root\App\Controllers\AdminController@history', 'page');
 $routes->get("/admin/transaction", 'Root\App\Controllers\AdminController@transaction');
 
 //route pour afficher les pack
