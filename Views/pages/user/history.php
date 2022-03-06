@@ -92,7 +92,7 @@ $images = explode("AND", $params['user']->getPhoto());
     </div>
     <div class="w-full mt-4 grid grid-cols-12">
         <div class="col-span-2 relative hidden lg:block ml-1 h-screen-customer rounded border border-gray-800 primary_bg_">
-            <div data-path-user="/user/dashboard" class="flex p-2 my-2 from-green-500 to-gray-900 text-white transition-all duration-500   cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div data-path-user="/user/dashboard" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
                 <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-school"></i></span>
                     <span class="w-10/12 mt-0.5">Dashboard</span>
@@ -116,7 +116,7 @@ $images = explode("AND", $params['user']->getPhoto());
                     <span class="w-10/12 mt-0.5">Retrait</span>
                 </div>
             </div>
-            <div data-path-user="/user/history" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+            <div data-path-user="/user/history" class="flex p-2 my-2 from-green-500 to-gray-900 text-white transition-all duration-500   cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
                 <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-history"></i></span>
                     <span class="w-10/12 mt-0.5">Historique de retrait</span>
@@ -151,104 +151,52 @@ $images = explode("AND", $params['user']->getPhoto());
             </div>
         </div>
         <div class="lg:col-span-10 col-span-12 h-screen-customer scroll lg:overflow-y-auto lg:overflow-x-hidden flex flex-col lg:p-3">
-            <div class="grid lg:grid-cols-12 col-span-1 lg:space-x-2 p-2">
-
-                <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
-                    <div class="flex">
-                        <span class="text-blue-500 font-semibold"><i class="fas fa-comment-dollar"></i> MONTANT INVESTI</span>
-                    </div>
-                    <div class="w-full  rounded-full">
-                        <div class="flex">
-                            <span class="bg-blue-500 grid mt-3 mr-4 text-gray-900 place-items-center w-8 h-8 rounded-full">
-                                <i class="fas fa-dollar-sign "></i>
-                            </span>
-                            <span class="font-semibold text-blue-500 mt-3 text-2xl my-auto">
-                                <?= $params['user']->getCapital() ?>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
-                    <div class="flex">
-                        <span class="text-yellow-500 font-semibold"><i class="fas fa-object-group    "></i> REVENU BINAIRE</span>
-                    </div>
-                    <div class="w-full  rounded-full">
-                        <div class="flex">
-                            <span class="bg-yellow-500 grid mt-3 mr-4 text-gray-900 place-items-center w-8 h-8 rounded-full">
-                                <i class="fas fa-dollar-sign "></i>
-                            </span>
-                            <span class="font-semibold text-yellow-300 mt-3 text-2xl my-auto">
-                                <?= $params['user']->getSoldBinary() ?>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
-                    <div class="flex">
-                        <span class="text-pink-500 font-semibold"><i class="fas fa-users"></i> REVENU DIRECT</span>
-                    </div>
-                    <div class="w-full  rounded-full">
-                        <div class="flex">
-                            <span class="bg-pink-500 grid mt-3 mr-4 text-gray-900 place-items-center w-8 h-8 rounded-full">
-                                <i class="fas fa-dollar-sign "></i>
-                            </span>
-                            <span class="font-semibold text-pink-500 mt-3 text-2xl my-auto">
-                                <?= $params['user']->getSoldParainage() ?>
-                            </span>
-                        </div>
-                    </div>
+            <div class="w-full mt-4 h-screen-admin scroll overflow-y-scroll grid grid-cols-12">
+    <?php if(isset($params['message']) AND $params['message'] != 1): ?>
+        <div class="col-span-12 flex flex-col">
+        <div class="w-11/12 mx-auto mb-4 h-12 border-b border-gray-900 flex justify-between">
+            <h1 class="text-gray-300 font-semibold text-xl">Toutes les inscriptions en attente.</h1>
+            <span class="bg-blue-500 text-white w-8 h-8 rounded-full grid place-items-center"><?= count($params['nonAllInscription']) ?></span>
+        </div>
+        <div class="w-11/12 mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
+            <div class="w-1/12">Noms</div>
+            <div class="w-2/12">Email</div>
+            <div class="w-1/12">Téléphone</div>
+            <div class="w-1/12">Montant</div>
+            <div class="w-1/12">Origine</div>
+            <div class="w-2/12">Référence</div>
+            <div class="w-1/12">Action</div>
+        </div>
+        <?php foreach ($params['allInscription'] as $data) : ?>
+            <div class="w-11/12 mx-auto p-1 items-center text-gray-500  my-2 border border-gray-500 flex justify-between rounded">
+                <div class="w-1/12"><?= $data->getUser()->getName() ?></div>
+                <div class="w-2/12"><?= $data->getUser()->getEmail() ?></div>
+                <div class="w-1/12"><?= str_replace("/", "", $data->getUser()->getPhone()) ?></div>
+                <div class="w-1/12"><?= $data->getAmount() ?></div>
+                <div class="w-1/12"><?= $data->getTransactionOrigi() ?></div>
+                <div class="w-2/12"><?= $data->getTransactionCode() ?></div>
+                <div>
+                    <form method="POST" action="/admin/active/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="_green_bg rounded text-gray-800 p-1.5" type="submit">Valider <i class="fas fa-check-circle    "></i></button></form>
                 </div>
             </div>
-            <div class="grid lg:grid-cols-12 grid-cols-1 lg:space-x-2 p-2">
-                <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
-                    <div class="flex">
-                        <span class="text-blue-500 font-semibold"><i class="fas fa-comment-dollar"></i> BONUS JOURNALIER</span>
-                    </div>
-                    <div class="w-full  rounded-full">
-                        <div class="flex">
-                            <span class="bg-blue-500 grid mt-3 mr-4 text-gray-900 place-items-center w-8 h-8 rounded-full">
-                                <i class="fas fa-dollar-sign "></i>
-                            </span>
-                            <span class="font-semibold text-blue-500 mt-3 text-2xl my-auto">
-                                <?= "{$params['user']->getSoldResturn()}   "  . " Taux de : " . $params['user']->getPack()->getAcurracy() ?> % / Jour
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
-                    <div class="flex">
-                        <span class="text-yellow-500 font-semibold"><i class="fas fa-comment-dollar"></i> CAPITAUX INVESTI A GAUCHE</span>
-                    </div>
-                    <div class="w-full  rounded-full">
-                        <div class="flex">
-                            <span class="bg-yellow-500 grid mt-3 mr-4 text-gray-900 place-items-center w-8 h-8 rounded-full">
-                                <i class="fas fa-dollar-sign "></i>
-                            </span>
-                            <span class="font-semibold text-yellow-300 mt-3 text-2xl my-auto">
-                                <?= $params['gauche'] ?>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-4 col-span-1 primary_bg_  p-4 mt-6 h-36 rounded-xl shadow">
-                    <div class="flex">
-                        <span class="text-pink-500 font-semibold"><i class="fas fa-comment-dollar"></i> CAPITAUX INVESTI A DROITE</span>
-                    </div>
-                    <div class="w-full  rounded-full">
-                        <div class="flex">
-                            <span class="bg-pink-500 grid mt-3 mr-4 text-gray-900 place-items-center w-8 h-8 rounded-full">
-                                <i class="fas fa-dollar-sign "></i>
-                            </span>
-                            <span class="font-semibold text-pink-500 mt-3 text-2xl my-auto">
-                                <?= $params['droite'] ?>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <?php endforeach; ?>
+    </div>
+    <?php else: ?>
+        <div class="col-span-12  primary_bg grid place-items-center">
+    <div class="md:w-6/12 lg:w-8/12 flex flex-col lg:flex-row justify-center items-center border mt-16 border-gray-900 mx-auto primary_bg_ shadow rounded md:p-12 p-4">
+        <div class="md:w-10/12 w-11/12 lg:w-8/12  mx-auto md:p-3">
+            <h1 class="text-gray-200 text-3xl font-bold">Vous n'avez  effectué aucun retrait pour le moment.</h1>
+            <p class="text-gray-400 font-semibold text-lg mt-4">Tous les retrait validés ou non-validés seront affichés  sur cette page.</p>
+        </div>
+        <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">
+            <span class="w-full h-full justify-center flex items-center text-gray-900">
+                <span class='w-40 h-40 bg-gray-500  rounded-full grid place-items-center'><i class="fas fa-dollar-sign fa-5x"></i></span>
+            </span>
+        </div>
+    </div>
+</div>
+        <?php endif;?>
+</div>
 
         </div>
     </div>

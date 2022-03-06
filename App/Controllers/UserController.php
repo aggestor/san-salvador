@@ -220,6 +220,12 @@ class UserController extends Controller
             return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject()]);
         }
     }
+    public function history()
+    {
+        if ($this->isUsers()) {
+            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject()]);
+        }
+    }
     public function treeData()
     {
         if ($this->isUsers()) {

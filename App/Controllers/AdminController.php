@@ -17,7 +17,6 @@ class AdminController extends Controller
      */
     private $adminModel;
 
-
     public function __construct()
     {
         parent::__construct();
@@ -324,8 +323,6 @@ class AdminController extends Controller
         }
     }
 
-
-
     /**
      * All users operation
      * @return void
@@ -389,7 +386,7 @@ class AdminController extends Controller
             $binary = array_sum($this->allBinary());
             $returnInvest = array_sum($this->allReturnInvest());
             $parainage = array_sum($this->allParainage());
-            //pense a cree cette view. 
+            //pense a cree cette view.
             return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['binary' => $binary, 'returnInvest' => $returnInvest, 'parainage' => $parainage]);
         }
     }
@@ -428,10 +425,10 @@ class AdminController extends Controller
             header('Location:/admin/dashboard');
         }
     }
-    public function currencies()
+    public function history()
     {
         if ($this->isAdmin()) {
-            return $this->view("pages.admin.currencies", "layout_admin");
+            return $this->view("pages.admin.history", "layout_admin");
         }
     }
 }

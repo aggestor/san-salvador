@@ -77,7 +77,7 @@ $routes->get('/admin/users-page-([0-9]+)', 'Root\App\Controllers\AdminController
 $routes->get('/admin/administrator', 'Root\App\Controllers\AdminController@administratorDashboard');
 $routes->post('/admin/administrator', 'Root\App\Controllers\AdminController@create');
 
-$routes->get("/admin/currencies", 'Root\App\Controllers\AdminController@currencies');
+$routes->get("/admin/history", 'Root\App\Controllers\AdminController@history');
 $routes->get("/admin/transaction", 'Root\App\Controllers\AdminController@transaction');
 
 //route pour afficher les pack
@@ -109,6 +109,7 @@ $routes->get('/user/me', 'Root\App\Controllers\UserController@profil');
 $routes->get('/user/edit', 'Root\App\Controllers\UserController@update');
 $routes->post('/user/edit', 'Root\App\Controllers\UserController@update');
 $routes->get('/user/tree', 'Root\App\Controllers\UserController@tree');
+$routes->get('/user/history', 'Root\App\Controllers\UserController@history');
 $routes->get('/user/tree-data', 'Root\App\Controllers\UserController@treeData');
 
 //les routes pour le retrait dans le systeme

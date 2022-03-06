@@ -79,12 +79,12 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                 <span class="text-green-500 absolute left-10 -top-1 "> Evolution de votre compte</span>
             </div>
             <div class="w-full h-2 overflow-hidden lg:mt-8 mt-2 mr-3 border-green-500 border rounded">
-                <div style="width: calc(<?= $params['user']->getBonusToPercent() ?>%/3)" class="h-1 bg-green-500">
+                <div style="width: calc(<?= $params['user']->getBonusToPercent() ?>%)" class="h-full bg-green-500">
 
                 </div>
             </div>
             <div class="text-gray-500 text-sm flex justify-between">
-                <span><?= $params['user']->getBonusToPercent() ?>%</span>
+                <span><?= $params['user']->getBonusToPercent() * 3?>%</span>
                 <span class="text-green-500">300%</span>
             </div>
         </div>
@@ -113,6 +113,12 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                 <div class="w-11/12 mx-auto flex ">
                     <span class="w-2/12"><i class="fas fa-dollar-sign"></i></span>
                     <span class="w-10/12 mt-0.5">Retrait</span>
+                </div>
+            </div>
+            <div data-path-user="/user/history" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
+                <div class="w-11/12 mx-auto flex ">
+                    <span class="w-2/12"><i class="fas fa-history"></i></span>
+                    <span class="w-10/12 mt-0.5">Historique de retrait</span>
                 </div>
             </div>
             <div data-path-user="/user/share/link" class="flex p-2 my-2 transition-all duration-500  text-gray-500 cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white">
