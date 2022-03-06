@@ -134,21 +134,21 @@ class InscriptionModel extends AbstractOperationModel
                 $binary->setTimeRecord($now);
 
                 //pour la racine du systeme
-                if($userModel->isRoot($user->getParent())) {
+                if ($userModel->isRoot($user->getParent())) {
                     $binary->setAmount($bonus);
                     $binary->setSurplus(0);
                     $this->sendBinary($pdo, $binary);
                 }
-                
+
                 //on remonte de l'arbre pour donner le bonus binaire aux uplines
                 $node = $user;
-                $sponsorParent = $userModel->hasSponsor($user->getParent()->getId())? $userModel->findSponsor($user->getParent()->getId()) : null;
+                $sponsorParent = $userModel->hasSponsor($user->getParent()->getId()) ? $userModel->findSponsor($user->getParent()->getId()) : null;
                 while ($userModel->hasSponsor($node->getId()) && (!$userModel->isRoot($node->getId()) &&  $node->getSponsor()->getId() != $sponsorParent->getId())) {
                     $node = $userModel->findSponsor($node->getId());
                     $binary->setUser($userModel->load($node));
 
                     if ($node->isValidationEmail() && !$node->isLocked()) { //si le compte est toujours activer
-                        if (($node->getMaxBonus() <= ($node->getBonus() + $bonus)) && $node->getSponsor() !== null ) {//la racine n'ast pas de sponsor
+                        if (($node->getMaxBonus() <= ($node->getBonus() + $bonus)) && $node->getSponsor() !== null) { //la racine n'ast pas de sponsor
                             $surplus =  $bonus + $node->getBonus() - $node->getMaxBonus();
                             $amount =  $bonus - $surplus;
                             $binary->setAmount($amount);
@@ -159,17 +159,17 @@ class InscriptionModel extends AbstractOperationModel
                             $binary->setAmount($bonus);
                             $binary->setSurplus(0);
                         }
-                        
+
                         // die("binaire {$binary->getAmount()}");
                         $this->sendBinary($pdo, $binary);
                     }
                 }
                 //--
-                
+
             }
 
             // die("die");
-                
+
             $parainage  = new Parainage();
             $parainage->setUser($user->getParent());
             $parainage->setGenerator($inscription);
@@ -359,9 +359,9 @@ class InscriptionModel extends AbstractOperationModel
             $user = Schema::INSCRIPTION['user'];
             $validation = Schema::INSCRIPTION['validate'];
 
-            $SQL_END = ($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"";
+            $SQL_END = ($limit != null) ? " LIMIT {$limit} OFSSET {$offset}" : "";
             if ($userId === null) {
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation} = 0 {$SQL_END}", array());
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation} = 0 ORDER BY record_date {$SQL_END}", array());
             } else {
                 $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$user}=? AND {$validation} = 0 {$SQL_END}", array($userId));
             }
@@ -397,7 +397,7 @@ class InscriptionModel extends AbstractOperationModel
         try {
             $user = Schema::INSCRIPTION['user'];
             $validation = Schema::INSCRIPTION['validate'];
-            $SQL_END = ($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"";
+            $SQL_END = ($limit != null) ? " LIMIT {$limit} OFSSET {$offset}" : "";
             if (is_null($userId) && !is_null($limit) && !is_null($limit)) {
                 $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=? ORDER BY record_date DESC LIMIT {$limit},{$offset}", array(1));
             } else {
@@ -432,7 +432,7 @@ class InscriptionModel extends AbstractOperationModel
         $nombre = 0;
         $validation = Schema::INSCRIPTION['validate'];
         try {
-            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE {$validation}= ".($validated? '1':'0'), array());
+            $statement = Queries::executeQuery("SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE {$validation}= " . ($validated ? '1' : '0'), array());
             if ($row = $statement->fetch()) {
                 $nombre = $row['nombre'];
             }
@@ -442,5 +442,4 @@ class InscriptionModel extends AbstractOperationModel
         }
         return $nombre;
     }
-
 }
