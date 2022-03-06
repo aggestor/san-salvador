@@ -1,9 +1,9 @@
 <div class="w-full mt-4 h-screen-admin scroll overflow-y-scroll grid grid-cols-12">
-    <?php if(isset($params['message']) AND $params['message'] != 1): ?>
+    <?php if(isset($params['allInscription'])): ?>
         <div class="col-span-12 flex flex-col">
         <div class="w-11/12 mx-auto mb-4 h-12 border-b border-gray-900 flex justify-between">
             <h1 class="text-gray-300 font-semibold text-xl">Toutes les inscriptions en attente.</h1>
-            <span class="bg-blue-500 text-white w-8 h-8 rounded-full grid place-items-center"><?= count($params['nonAllInscription']) ?></span>
+            <span class="bg-blue-500 text-white w-8 h-8 rounded-full grid place-items-center"><?= count($params['allInscription']) ?></span>
         </div>
         <div class="w-11/12 mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
             <div class="w-1/12">Noms</div>
@@ -27,6 +27,26 @@
                 </div>
             </div>
         <?php endforeach; ?>
+        <div class="w-11/12 h-auto text-gray-400  mx-auto items-center">
+            <div class="mb-4">
+                Page <?= $_GET['page'] . " sur <b class='text-gray-200'> " . $params['nombrePage'] . "</b>" ?>
+            </div>
+            <div>
+                <?php
+                $page = $_GET['page'];
+                $nombre_de_pages = $params['nombrePage'];
+                if ($page < $nombre_de_pages and $page != 1) : ?>
+                    <div class="w-3/12 flex justify-between">
+                        <a href="/admin/inscription-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
+                        <a href="/admin/inscription-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
+                    </div>
+                <?php elseif ($page == $nombre_de_pages and $page != 1) : ?>
+                    <a href="/admin/inscription-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
+                <?php elseif ($page == 1 and $nombre_de_pages > 1) : ?>
+                    <a href="/admin/inscription-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
     <?php else: ?>
         <div class="col-span-12  primary_bg grid place-items-center">
