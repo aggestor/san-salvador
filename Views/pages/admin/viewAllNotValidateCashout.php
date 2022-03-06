@@ -24,5 +24,25 @@
                 </div>
             </div>
         <?php endforeach; ?>
+        <div class="w-11/12 h-auto text-gray-400  mx-auto items-center">
+            <div class="mb-4">
+                Page <?= $_GET['page'] . " sur <b class='text-gray-200'> " . $params['nombrePage'] . "</b>" ?>
+            </div>
+            <div>
+                <?php
+                $page = $_GET['page'];
+                $nombre_de_pages = $params['nombrePage'];
+                if ($page < $nombre_de_pages and $page != 1) : ?>
+                    <div class="w-3/12 flex justify-between">
+                        <a href="/admin/cashout-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
+                        <a href="/admin/cashout-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
+                    </div>
+                <?php elseif ($page == $nombre_de_pages and $page != 1) : ?>
+                    <a href="/admin/cashout-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
+                <?php elseif ($page == 1 and $nombre_de_pages > 1) : ?>
+                    <a href="/admin/cashout-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
 </div>
