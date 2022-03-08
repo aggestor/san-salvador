@@ -415,7 +415,6 @@ window.location.pathname === "/user/tree" &&
         url: "/user/tree-data",
         success: (data) => {
             const parsedData = JSON.parse(data);
-            console.log(parsedData);
             drawBinaryTree(parsedData);
         },
     });
@@ -448,46 +447,58 @@ $("#showBTCGraph").click((e) => {
     $(BTCTransactionData).slideUp();
     $("#btcGraph").slideDown();
 });
-let socket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
-let prices = [];
-function getPricesArray() {
-    return new Promise((resolve, reject) => {
-        socket.onmessage = (evt) => {
-            let time = new Date().toString();
-            if (time != null) {
-                time = time.match(/(.\d\:){2}\d{2}/gm);
-                if (time) {
-                    time = time[0];
-                    let seconds = time.split(":")[2];
-                    let data_ = evt.data;
-                    data_ = JSON.parse(data_);
-                    if (prices.length > 9) {
-                        prices.shift();
+if (window.location.pathname === "") {
+    let socket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
+    let prices = [];
+    function getPricesArray() {
+        return new Promise((resolve, reject) => {
+            socket.onmessage = (evt) => {
+                let time = new Date().toString();
+                if (time != null) {
+                    time = time.match(/(.\d\:){2}\d{2}/gm);
+                    if (time) {
+                        time = time[0];
+                        let seconds = time.split(":")[2];
+                        let data_ = evt.data;
+                        data_ = JSON.parse(data_);
+                        if (prices.length > 9) {
+                            prices.shift();
+                        }
+                        prices.push([time, parseInt(data_.p)]);
+                        resolve(prices);
                     }
-                    prices.push([time, parseInt(data_.p)]);
-                    resolve(prices);
                 }
-            }
-        };
-    });
-}
-setInterval(() => {
-    google.charts.load("current", { packages: ["corechart"] });
-    google.charts.setOnLoadCallback(drawChart);
-    async function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ["time", "Price"],
-            ...await getPricesArray(),
-        ]);
-        var options = {
-            title: "Prix BTC - USD",
-            curveType: "function",
-            legend: { position: "bottom" },
-            series: {
-                Price: "#32e491",
-            },
-        };
-        var chart = new google.visualization.LineChart(document.getElementById("btcGraph"));
-        chart.draw(data, options);
+            };
+        });
     }
-}, 3000);
+    setInterval(() => {
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        async function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ["time", "Price"],
+                ...await getPricesArray(),
+            ]);
+            var options = {
+                title: "Prix BTC - USD",
+                curveType: "function",
+                legend: { position: "bottom" },
+                series: {
+                    Price: "#32e491",
+                },
+            };
+            var chart = new google.visualization.LineChart(document.getElementById("btcGraph"));
+            chart.draw(data, options);
+        }
+    }, 3000);
+}
+$("#validatedBtn").on("click", () => {
+    $("#validated").slideUp();
+    $("#unvalidated").slideDown();
+    $("#historyTitle").text("Liste des retraits déjà confirmés");
+});
+$("#unvalidatedBtn").on("click", () => {
+    $("#validated").slideDown();
+    $("#unvalidated").slideUp();
+    $("#historyTitle").text("Liste des retraits non confirmés");
+});

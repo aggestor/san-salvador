@@ -248,7 +248,7 @@ class UserController extends Controller
         if ($this->isUsers()) {
             $cashOutNotValideUser = $this->viewAllHistoryCashOutForUser();
             $cashOutValideUser = $this->viewAllHistoryCashOutForUser(true);
-            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject(), 'valide' => $cashOutValideUser, 'nonValide' => $cashOutNotValideUser]);
+            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject(), 'validated' => $cashOutValideUser, 'unvalidated' => $cashOutNotValideUser]);
         }
     }
     public function treeData()

@@ -533,8 +533,10 @@ $("#showBTCGraph").click((e: Event): void => {
   $("#btcGraph").slideDown();
 });
 
+if (window.location.pathname === "") {
+  
   let socket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
-
+  
   let prices: Array<string | number | any> = []
   function getPricesArray() {
     return new Promise((resolve, reject) => {
@@ -560,13 +562,13 @@ $("#showBTCGraph").click((e: Event): void => {
   setInterval(() => {
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(drawChart);
-
+  
     async function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ["time", "Price"],
         ...(await getPricesArray() as []),
       ]);
-
+  
       var options = {
         title: "Prix BTC - USD",
         curveType: "function",
@@ -575,11 +577,24 @@ $("#showBTCGraph").click((e: Event): void => {
           Price: "#32e491",
         },
       };
-
+  
       var chart = new google.visualization.LineChart(
         document.getElementById("btcGraph")
       );
-
+  
       chart.draw(data, options);
     }
   }, 3000);
+}
+
+
+$("#validatedBtn").on("click", () => {
+  $("#validated").slideUp()
+  $("#unvalidated").slideDown()
+  $("#historyTitle").text("Liste des retraits déjà confirmés")
+})
+$("#unvalidatedBtn").on("click", () => {
+  $("#validated").slideDown()
+  $("#unvalidated").slideUp()
+  $("#historyTitle").text("Liste des retraits non confirmés")
+})

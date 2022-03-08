@@ -146,7 +146,7 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                 </div>
             </div>
             <div class="absolute bottom-0 left-4 h-16 text-gray-500">
-                <span class="text-center">Usalvagetrade &#169; 2022</span>
+                <span class="text-center">Usalvagetrade &#169; <?= date("Y")?></span>
             </div>
         </div>
         <div class="lg:col-span-10 col-span-12 h-screen-customer mobile scroll overflow-y-auto overflow-x-hidden flex flex-col p-3">
