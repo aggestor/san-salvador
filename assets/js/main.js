@@ -415,6 +415,7 @@ window.location.pathname === "/user/tree" &&
         url: "/user/tree-data",
         success: (data) => {
             const parsedData = JSON.parse(data);
+            console.log(parsedData);
             drawBinaryTree(parsedData);
         },
     });
