@@ -49,9 +49,9 @@ interface BinaryTreeNode
     /**
      * revoie l'adresse vers l'icone de l'utilisateur.
      * Ex: une le minuature de sa photo de profil
-     * @return string
+     * @return string|null
      */
-    public function getNodeIcon () : string;
+    public function getNodeIcon () : ?string;
     
     /**
      * le noeud est toujours active???

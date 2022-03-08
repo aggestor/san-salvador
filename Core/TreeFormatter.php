@@ -18,7 +18,7 @@ class TreeFormatter extends Controller
     {
 
         $root = $this->allUsers();
-        $image = $root->getNodeIcon() == null ? "null" : explode(" AND ", $root->getNodeIcon());
+        $image = $root->getNodeIcon() == "" ? "" : explode(" AND ", $root->getNodeIcon());
         $image = str_replace("\\", "/", $image[1]);
         $json = "{";
         $json .= "\"Id\":\"{$root->getId()}\"";
@@ -45,9 +45,9 @@ class TreeFormatter extends Controller
      */
     private function formatChild($node)
     {
-        //var_dump($node->getId()); exit();
-        $image = $node->getNodeIcon() == null ? "null" : explode(" AND ", $node->getNodeIcon());
+        $image = $node->getNodeIcon() == "" ? "" : explode(" AND ", $node->getNodeIcon());
         $image = str_replace("\\", "/", $image[1]);
+        //var_dump($image);exit();
         $json = " {";
         $json .= "\"Id\":\"{$node->getId()}\"";
         $json .= ",\"name\":\"{$node->getName()}\"";
@@ -57,6 +57,7 @@ class TreeFormatter extends Controller
             $json .= ",\"childs\": [";
             foreach ($node->getChilds() as $key => $child) {
                 $json .= $this->formatChild($child) . (($key != (count($node->getChilds()) - 1)) ? "," : "");
+                // var_dump($node->getChilds()); exit();
             }
             $json .= "]";
         }

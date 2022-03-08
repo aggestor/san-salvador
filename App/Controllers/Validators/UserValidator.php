@@ -304,7 +304,7 @@ class UserValidator extends AbstractMemberValidator
             $headers[] = "From: $mail";
             $headers[] = "Repay-To: $mail";
             $headers[] = 'X-Mailer: PHP/' . phpversion();
-            $to = 'contact@usalvagetrade.com';
+            $to = 'support@usalvagetrade.com';
             $sujet = $message;
             if (mail($to, $sujet, $message, implode("\r\n", $headers))) {
                 Controller::redirect('/contact');

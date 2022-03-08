@@ -396,6 +396,20 @@ class AdminController extends Controller
     }
 
     /**
+     * Methode pour annuler la demande de retrait
+     *
+     * @return void
+     */
+    public function annulationCashOut()
+    {
+        //ca c'{/admin/canceled/cashout-$params['cashOut']->getId()}
+        if ($this->isAdmin()) {
+            $this->cancelCashOut();
+            header("location:" . $_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    /**
      * All operation systeme
      *
      * @return void
