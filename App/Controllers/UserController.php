@@ -216,8 +216,8 @@ class UserController extends Controller
                 $user = $validator->updateAfterValidation();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
-                    var_dump($errors, $validator->getMessage());
-                    exit();
+                    // var_dump($errors, $validator->getMessage());
+                    // exit();
                     return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject(), 'errors' => $errors]);
                 }
                 Controller::redirect('/user/me');
@@ -248,7 +248,7 @@ class UserController extends Controller
         if ($this->isUsers()) {
             $cashOutNotValideUser = $this->viewAllHistoryCashOutForUser();
             $cashOutValideUser = $this->viewAllHistoryCashOutForUser(true);
-            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject(), 'valide' => $cashOutValideUser, 'nonValide' => $cashOutNotValideUser]);
+            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject(), 'validated' => $cashOutValideUser, 'unvalidated' => $cashOutNotValideUser]);
         }
     }
     public function treeData()

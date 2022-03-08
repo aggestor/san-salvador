@@ -146,7 +146,7 @@ $images = explode("AND", $params['user']->getPhoto());
                 </div>
             </div>
             <div class="absolute bottom-0 left-4 h-16 text-gray-500">
-                <span class="text-center">Usalvagetrade &#169; <span id="year"></span></span>
+                <span class="text-center">Usalvagetrade &#169; <?= date("Y")?></span>
             </div>
         </div>
         <div class="lg:col-span-10 col-span-12 h-screen-customer scroll overflow-y-auto overflow-x-hidden flex lg:p-3 p-0">

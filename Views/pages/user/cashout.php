@@ -146,7 +146,7 @@ $images = explode("AND", $params['user']->getPhoto());
                 </div>
             </div>
             <div class="absolute bottom-0 left-4 h-16 text-gray-500">
-                <span class="text-center">Usalvagetrade &#169; <span id="year"></span></span>
+                <span class="text-center">Usalvagetrade &#169; <?= date("Y")?></span>
             </div>
         </div>
         <div class="lg:col-span-10 col-span-12 h-screen-customer scroll overflow-y-auto overflow-x-hidden flex p-3">
@@ -439,7 +439,6 @@ $images = explode("AND", $params['user']->getPhoto());
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div style="display: none;" id="BTCTransactionData" class=" mr-2 h-36 justify-center flex-col flex">
                                                 <div class="md:w-11/12 w-full mt-2 mx-auto">
@@ -463,7 +462,7 @@ $images = explode("AND", $params['user']->getPhoto());
                             </div>
                         </div>
                         <div class="w-1/2 lg:flex hidden justify-center p-2 h-full">
-                            <img class="h-96" src="/assets/logos/share-link.png" alt="">
+                            <img class="h-96" src="/assets/logos/share-link.png" alt="Share illustration">
                         </div>
                     </form>
                 <?php endif; ?>
