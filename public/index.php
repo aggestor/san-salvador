@@ -50,6 +50,7 @@ $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App
 //les routes pour valider une demande de retrait
 $routes->get('/admin/validate/cashout-([0-9]+)', 'Root\App\Controllers\AdminController@viewAllNonValideCashOut', 'page');
 $routes->post('/admin/validate/cashout-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@validationCashOut', 'cashout;user');
+$routes->post('/admin/canceled/cashout-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@annulationCashOut', 'cashout');
 
 //routes pour l'envoie du mail lors de la reinitialisation du mot de passe
 $routes->post('/admin/reset-password', 'Root\App\Controllers\AdminController@resetPasswordOnMail');
