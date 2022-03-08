@@ -246,9 +246,9 @@ class UserController extends Controller
     public function history()
     {
         if ($this->isUsers()) {
-            // var_dump($this->viewAllHistoryCashOutForUser());
-            // exit();
-            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject()]);
+            $cashOutNotValideUser = $this->viewAllHistoryCashOutForUser();
+            $cashOutValideUser = $this->viewAllHistoryCashOutForUser(true);
+            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject(), 'valide' => $cashOutValideUser, 'nonValide' => $cashOutNotValideUser]);
         }
     }
     public function treeData()

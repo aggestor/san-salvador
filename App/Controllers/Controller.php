@@ -264,7 +264,7 @@ class Controller
     public function viewAllHistoryCashOutForUser(?bool $validate = false)
     {
         $return = array();
-        $idUser = $_SESSION[self::SESSION_USERS];
+        $idUser = $_SESSION[self::SESSION_USERS]->getId();
         if ($this->cashOutModel->checkByUserWithStatus($idUser, $validate)) {
             $cashOuts = $this->cashOutModel->findByUserWithStatus($idUser, $validate);
             foreach ($cashOuts as $cashOut) {
@@ -305,16 +305,23 @@ class Controller
         if ($this->cashOutModel->checkById($idCashOut)) {
             if ($this->cashOutModel->checkValidated()) {
                 $this->cashOutModel->validate($idCashOut, $idAdmin);
-            } else {
-                Controller::redirect('admin/login');
             }
         } else {
             return $this->view("pages.static.404");
         }
     }
 
-
-
+    public function cancelCashOut()
+    {
+        $idCashOut = $_GET['cashout'];
+        if ($this->cashOutModel->checkById($idCashOut)) {
+            if ($this->cashOutModel->checkValidated()) {
+                $this->cashOutModel->delete($idCashOut);
+            }
+        } else {
+            return $this->view("pages.static.404");
+        }
+    }
     /**
      * Fonction pour retourner la sommes des tous les montants binaires du systeme
      *
