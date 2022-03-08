@@ -532,27 +532,26 @@ $("#showBTCGraph").click((e: Event): void => {
   $(BTCTransactionData).slideUp();
   $("#btcGraph").slideDown();
 });
-
-if (window.location.pathname === "") {
-  
+const passablePaths = "/user/pack/subscribe" || "/user/cashout";
+if (passablePaths) {
   let socket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
-  
-  let prices: Array<string | number | any> = []
+
+  let prices: Array<string | number | any> = [];
   function getPricesArray() {
     return new Promise((resolve, reject) => {
       socket.onmessage = (evt) => {
-        let time:  string | RegExpMatchArray | null = new Date().toString();
+        let time: string | RegExpMatchArray | null = new Date().toString();
         if (time != null) {
-          time = time.match(/(.\d\:){2}\d{2}/gm)
+          time = time.match(/(.\d\:){2}\d{2}/gm);
           if (time) {
             time = time[0];
             let seconds = time.split(":")[2];
             let data_: any | string = evt.data;
             data_ = JSON.parse(data_);
-              if (prices.length > 9) {
-                prices.shift();
-              }
-              prices.push([time, parseInt(data_.p)]);
+            if (prices.length > 9) {
+              prices.shift();
+            }
+            prices.push([time, parseInt(data_.p)]);
             resolve(prices);
           }
         }
@@ -562,13 +561,13 @@ if (window.location.pathname === "") {
   setInterval(() => {
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(drawChart);
-  
+
     async function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ["time", "Price"],
-        ...(await getPricesArray() as []),
+        ...((await getPricesArray()) as []),
       ]);
-  
+
       var options = {
         title: "Prix BTC - USD",
         curveType: "function",
@@ -577,11 +576,11 @@ if (window.location.pathname === "") {
           Price: "#32e491",
         },
       };
-  
+
       var chart = new google.visualization.LineChart(
         document.getElementById("btcGraph")
       );
-  
+
       chart.draw(data, options);
     }
   }, 3000);

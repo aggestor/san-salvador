@@ -447,7 +447,8 @@ $("#showBTCGraph").click((e) => {
     $(BTCTransactionData).slideUp();
     $("#btcGraph").slideDown();
 });
-if (window.location.pathname === "") {
+const passablePaths = "/user/pack/subscribe" || "/user/cashout";
+if (passablePaths) {
     let socket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
     let prices = [];
     function getPricesArray() {
@@ -477,7 +478,7 @@ if (window.location.pathname === "") {
         async function drawChart() {
             var data = google.visualization.arrayToDataTable([
                 ["time", "Price"],
-                ...await getPricesArray(),
+                ...(await getPricesArray()),
             ]);
             var options = {
                 title: "Prix BTC - USD",
