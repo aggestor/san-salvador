@@ -110,6 +110,16 @@ class Controller
     }
 
     /**
+     * La fonction pour retourner les operation des plusieurs utilisateurs
+     *
+     * @return User[]
+     */
+    public function allUsersObjects()
+    {
+        return $this->userModel->loadAll();
+    }
+
+    /**
      * Undocumented function
      *
      * @return User
@@ -143,7 +153,7 @@ class Controller
         return $this->inscriptionModel->hasPack($_SESSION[self::SESSION_USERS]->getId());
     }
 
-    public function allUsersHasValidateInscription($limit = 0, $offset = 0)
+    public function allUsersHasValidateInscription($limit = null, $offset = 0)
     {
         $return = array();
         if ($this->inscriptionModel->checkValidated()) {
@@ -158,10 +168,16 @@ class Controller
         return $return;
     }
 
-    public function countValidateInscription()
+    /**
+     * Count Inscription valide et not valide
+     *
+     * @param boolean $valiadte
+     * @return mixed
+     */
+    public function countInscription(bool $valiadte = true)
     {
         if ($this->inscriptionModel->checkValidated()) {
-            return $this->inscriptionModel->countValidate();
+            return $this->inscriptionModel->countValidate($valiadte);
         }
         return 0;
     }
@@ -170,11 +186,11 @@ class Controller
      *
      * @return  array
      */
-    public function allNonValidateInscription()
+    public function allNonValidateInscription(?int $limit = null, ?int $offset = 0)
     {
         $return = array();
         if ($this->inscriptionModel->checkAwait()) {
-            $allValidate = $this->inscriptionModel->findAwait();
+            $allValidate = $this->inscriptionModel->findAwait($limit, $offset);
             //var_dump($allValidate); exit();
             foreach ($allValidate as $validate) {
                 $validate->setUser($this->userModel->findById($validate->getUser()->getId()));
@@ -214,17 +230,65 @@ class Controller
      * touts les retrait en attente de validation
      * @return array
      */
-    public function viewAllCashOutNotValide()
+    public function viewAllCashOutNotValide(?int $limit = null, ?int $offset = 0)
     {
         $return = array();
-        if ($this->cashOutModel->checkValidated()) {
-            $allNotActive = $this->cashOutModel->findValidated();
+        if ($this->cashOutModel->checkValidated(null, false)) {
+            $allNotActive = $this->cashOutModel->findValidated(false, null, $limit, $offset);
             foreach ($allNotActive as $nonActive) {
                 $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
                 $return[] = $nonActive;
             }
+            return $return;
         }
         return $return;
+    }
+    /**
+     * touts les retrait deja valider
+     * @return array
+     */
+    public function viewAllCashOutValidate()
+    {
+        $return = array();
+        if ($this->cashOutModel->checkValidated(null, true)) {
+            $allNotActive = $this->cashOutModel->findValidated(true);
+            foreach ($allNotActive as $nonActive) {
+                $nonActive->setUser($this->userModel->findById($nonActive->getUser()->getId()));
+                $return[] = $nonActive;
+            }
+            return $return;
+        }
+        return $return;
+    }
+
+    public function viewAllHistoryCashOutForUser(?bool $validate = false)
+    {
+        $return = array();
+        $idUser = $_SESSION[self::SESSION_USERS]->getId();
+        if ($this->cashOutModel->checkByUserWithStatus($idUser, $validate)) {
+            $cashOuts = $this->cashOutModel->findByUserWithStatus($idUser, $validate);
+            foreach ($cashOuts as $cashOut) {
+                $cashOut->setUser($this->userModel->findById($idUser));
+                $return[] = $cashOut;
+            }
+            return $return;
+        }
+        return $return;
+    }
+
+    /**
+     *Function pour compte les cashOut
+     *
+     * @param boolean $validated
+     * @return mixed
+     */
+    public function countCashOut(bool $validated = false)
+    {
+        if ($this->cashOutModel->checkValidated(null, $validated)) {
+            $cashOut = $this->cashOutModel->countValidated(null, $validated);
+            return $cashOut;
+        }
+        return 0;
     }
 
     /**
@@ -239,41 +303,55 @@ class Controller
         $idUser = $_GET['user'];
         //var_dump($this->cashOutModel->checkById($idCashOut)); exit();
         if ($this->cashOutModel->checkById($idCashOut)) {
-            if ($this->cashOutModel->checkValidated($idCashOut)) {
+            if ($this->cashOutModel->checkValidated()) {
                 $this->cashOutModel->validate($idCashOut, $idAdmin);
-            } else {
-                Controller::redirect('admin/login');
             }
         } else {
             return $this->view("pages.static.404");
         }
     }
 
+    public function cancelCashOut()
+    {
+        $idCashOut = $_GET['cashout'];
+        if ($this->cashOutModel->checkById($idCashOut)) {
+            if ($this->cashOutModel->checkValidated()) {
+                $this->cashOutModel->delete($idCashOut);
+            }
+        } else {
+            return $this->view("pages.static.404");
+        }
+    }
+    /**
+     * Fonction pour retourner la sommes des tous les montants binaires du systeme
+     *
+     * @return mixed
+     */
     public function allBinary()
     {
         $return = array();
 
         if ($this->binaryModel->checkAll()) {
-            # code...
+
             /**
              * @var Binary
              */
             $binarys = $this->binaryModel->findAll();
             foreach ($binarys as $binary) {
                 $binary->setUser($this->userModel->findById($binary->getUser()->getId()));
-                if ($binary->getUser()->getSponsor() == null && $binary->getUser()->getParent() == null) {
-                    $montant = $binary->getAmount();
-                    $return[] = (int) $montant;
-                } else {
-                    $surplus = $binary->getSurplus();
-                    $return[] = (int) $surplus;
-                }
+                $montant = $binary->getAmount();
+                $return[] = (int) $montant;
             }
-            return $return;
+            return array_sum($return);
         }
         return $return;
     }
 
+    /**
+     * Fonction pour retourner le montant total des bonus journaliers du systeme
+     *
+     * @return mixed
+     */
     public function allReturnInvest()
     {
         $return = array();
@@ -285,16 +363,17 @@ class Controller
             $invests = $this->returnInvestModel->findAll();
             foreach ($invests as $invest) {
                 $invest->setUser($this->userModel->findById($invest->getUser()->getId()));
-                $return = $invest->getSurplus();
+                $return[] = $invest->getAmount();
             }
+            return round(array_sum($return), 2);
         }
         return $return;
     }
 
     /**
-     * la fonction pour me retourner touts les montant binaire et les surplus
+     * la fonction pour me retourner touts les montant binaire du systeme
      *
-     * @return array
+     * @return mixed
      */
     public function allParainage()
     {
@@ -307,17 +386,88 @@ class Controller
             $parainages = $this->parainageModel->findAll();
             foreach ($parainages as $parainage) {
                 $parainage->setUser($this->userModel->findById($parainage->getUser()->getId()));
-                if ($parainage->getUser()->getSponsor() == null && $parainage->getUser()->getParent() == null) {
-                    $montant = $parainage->getAmount();
-                    $return[] = (int) $montant;
-                } else {
-                    $surplus = $parainage->getSurplus();
-                    $return[] = (int) $surplus;
-                }
+                $montant = $parainage->getAmount();
+                $return[] = $montant;
             }
-            return $return;
+            return array_sum($return);
         }
         return $return;
+    }
+
+    /**
+     * Calcul des surplus du systeme
+     *
+     * @return mixed
+     */
+    public function allSurplus()
+    {
+        $totalSurplus = 0;
+        $surplusBinary = array();
+        $surplusParainage = array();
+        $surplusReturnInvest = array();
+        if ($this->parainageModel->checkAll() || $this->returnInvestModel->checkAll() || $this->binaryModel->checkAll()) {
+            /**
+             * @var Parainage
+             */
+            $parainages = $this->parainageModel->findAll();
+            foreach ($parainages as $parainage) {
+                $parainage->setUser($this->userModel->findById($parainage->getUser()->getId()));
+                $surplus = $parainage->getSurplus();
+                $surplusParainage[] = $surplus;
+            }
+
+            /**
+             * @var ReturnInvest
+             */
+            $returnInvests = $this->returnInvestModel->findAll();
+            foreach ($returnInvests as $returnInvest) {
+                $returnInvest->setUser($this->userModel->findById($parainage->getUser()->getId()));
+                $surplusInvest = $returnInvest->getSurplus();
+                $surplusReturnInvest[] = $surplusInvest;
+            }
+
+            /**
+             * @var Binary
+             */
+            $binarys = $this->binaryModel->findAll();
+            foreach ($binarys as $binary) {
+                $binary->setUser($this->userModel->findById($parainage->getUser()->getId()));
+                $surplusBinary = $binary->getSurplus();
+                $surplusBinaryReturn[] = $surplusBinary;
+            }
+            $totalSurplus = array_sum($surplusParainage) + array_sum($surplusReturnInvest) + array_sum($surplusBinaryReturn);
+            return $totalSurplus;
+        }
+        return $totalSurplus;
+    }
+
+    /**
+     * Function pour calculer le montant total des cashOuts en attente de validation
+     * @return mixed
+     */
+    public function amountAllCashOutNotValide()
+    {
+        $return = array();
+        $cashOuts = $this->viewAllCashOutNotValide();
+        foreach ($cashOuts as $cashOut) {
+            $montant = $cashOut->getAmount();
+            $return[] = $montant;
+        }
+        return array_sum($return);
+    }
+    /**
+     * Function pour calculer le montant total des cashOuts en attente deja valider
+     * @return mixed
+     */
+    public function amountAllCashOutValide()
+    {
+        $return = array();
+        $cashOuts = $this->viewAllCashOutValidate();
+        foreach ($cashOuts as $cashOut) {
+            $montant = $cashOut->getAmount();
+            $return[] = $montant;
+        }
+        return array_sum($return);
     }
     /**
      * Destroy all session
@@ -349,24 +499,13 @@ class Controller
         $content = ob_get_clean();
         require VIEWS . $template . '.php';
     }
-    // /**
-    //  * Pour genener un melnge de chaine de caractere
-    //  *
-    //  * @param integer $length. La longueur de la chaine de caractere a genener
-    //  * @param string $carateres. Les caracteres a melanger
-    //  * @return string
-    //  */
-    // public static function generate(int $length, string $carateres)
-    // {
-    //     return substr(str_shuffle(str_repeat($carateres, $length)), 0, $length);
-    // }
 
     /**
      * Pour envoyer les mails d'actiavation du compte
      * @param string $to. Le destinataire du mail
      * @param mixed $lien. Le lien d'activation de compte
      */
-    public function envoieMail($to, string $lien, string $sujet = null, $path, $nom)
+    public function envoieMail($to, string $lien, string $sujet = null, $path, $nom, array $params = null)
     {
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';
@@ -378,6 +517,9 @@ class Controller
         $sujet = $sujet;
         ob_start();
         require VIEWS . $path . '.php';
+        if ($params) {
+            $params = extract($params);
+        }
         $message = ob_get_clean();
 
         return mail($to, $sujet, $message, implode("\r\n", $headers));
@@ -481,5 +623,29 @@ class Controller
         if (isset($session) && !empty($session)) {
             return true;
         }
+    }
+
+    /**
+     * Pour l'envoie du mail avec success
+     *
+     * @return void
+     */
+    public function mailSendSuccess()
+    {
+        return $this->view('pages.static.mail_sent_success', 'layout_', ['mail' => $_SESSION['mail']]);
+    }
+
+    /**
+     * Function pour afficher les donnees subdiviser sous forme des pages 
+     * @param integer $totalCount
+     * @param integer $page
+     * @param integer $nombre_element_par_page
+     * @return array($debut[0],$nombre_pages[1])
+     */
+    public static function drowData($totalCount, $page, $nombre_element_par_page = 5)
+    {
+        $nombre_pages = ceil($totalCount / $nombre_element_par_page);
+        $debut = ($page - 1) * $nombre_element_par_page;
+        return array($debut, $nombre_pages);
     }
 }

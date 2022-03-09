@@ -168,18 +168,22 @@ class UserController extends Controller
     public function dashboard()
     {
         // $user = $this->userModel->load($this->userObject());
-        // $user->setSides($this->userModel->loadDownlineLeftRightSides($user->getId()));
-        // die("{$user->getLeftDownlineCapital()} <=> {$user->getRightDownlineCapital()}");
 
         //var_dump($this->userObject()->getSold(),$this->userObject()->isLocked());exit();
         if ($this->isUsers()) {
+            $user = $this->userObject();
+            $user->setSides($this->userModel->loadDownlineLeftRightSides($user->getId()));
+            $capitauxGauche = $user->getLeftDownlineCapital();
+            $capitauxDroite = $user->getRightDownlineCapital();
+            //die($user);
+            //die("{$user->getLeftDownlineCapital()} <=> {$user->getRightDownlineCapital()}");
             if (!$this->userObject()->hasInscription()) {
                 return $this->view("pages.user.hasNotSubscribedYet", "layout_", ['user' => $_SESSION[self::SESSION_USERS]]);
             } elseif ($this->existValidateInscription()) {
                 //retourne une vue avec le message de veuillez votre inscription est en court de validation 
                 return $this->view("pages.user.awaitUserPackValidation", "layout_");
             } else if ($this->existOneValidateInscription()) {
-                return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject()]);
+                return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject(), 'gauche' => $capitauxGauche, 'droite' => $capitauxDroite]);
             } else if ($this->userObject()->getSold() <= 0 && $this->userObject()->isLocked() == true) {
                 return $this->view("pages.user.login", "layout_", ['loked' => 'error']);
             }
@@ -187,12 +191,23 @@ class UserController extends Controller
         //var_dump($this->userObject()->hasPack()); exit();
     }
 
+    /**
+     * Affichage du profil de l'utilisateur
+     *
+     * @return void
+     */
     public function profil()
     {
         if ($this->isUsers()) {
             return $this->view('pages.user.me', 'layout_', ['user' => $this->userObject()]);
         }
     }
+
+    /**
+     * Mise en jour du profil de l'utilisateur
+     *
+     * @return void
+     */
     public function update()
     {
         if ($this->isUsers()) {
@@ -201,8 +216,8 @@ class UserController extends Controller
                 $user = $validator->updateAfterValidation();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
-                    var_dump($errors, $validator->getMessage());
-                    exit();
+                    // var_dump($errors, $validator->getMessage());
+                    // exit();
                     return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject(), 'errors' => $errors]);
                 }
                 Controller::redirect('/user/me');
@@ -210,10 +225,30 @@ class UserController extends Controller
             return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject()]);
         }
     }
+
+    /**
+     * Affichage du reseau de l'utilsateur
+     *
+     * @return void
+     */
     public function tree()
     {
         if ($this->isUsers()) {
             return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject()]);
+        }
+    }
+
+    /**
+     * Affichage des historique de retrait de l'utilisateur 
+     *
+     * @return void
+     */
+    public function history()
+    {
+        if ($this->isUsers()) {
+            $cashOutNotValideUser = $this->viewAllHistoryCashOutForUser();
+            $cashOutValideUser = $this->viewAllHistoryCashOutForUser(true);
+            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject(), 'validated' => $cashOutValideUser, 'unvalidated' => $cashOutNotValideUser]);
         }
     }
     public function treeData()
@@ -225,6 +260,11 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Partage du lien de parrainnage
+     *
+     * @return void
+     */
     public function shareLink()
     {
         if ($this->isUsers()) {
@@ -275,15 +315,7 @@ class UserController extends Controller
             Controller::redirect('/login');
         }
     }
-    /**
-     * Pour l'envoie du mail avec success
-     *
-     * @return void
-     */
-    public function mailSendSuccess()
-    {
-        return $this->view('pages.static.mail_sent_success', 'layout_', ['mail' => $_SESSION['mail']]);
-    }
+
 
     /**
      * Pour la reinitialisation du mode passe avec success

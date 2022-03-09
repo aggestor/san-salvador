@@ -1,5 +1,7 @@
 <?php
+
 namespace Root\App\Models\Objects;
+
 use Root\App\Models\ModelException;
 use Root\App\Models\TreeHandling\BinaryTreeNode;
 
@@ -46,116 +48,117 @@ class User extends Member implements BinaryTreeNode
      * peid gauche
      * @var integer
      */
-    const FOOT_LEFT = 1;//
-    
+    const FOOT_LEFT = 1; //
+
     /**
      * peid droite
      * @var integer
      */
     const FOOT_RIGHT = 2;
-    
+
     /**
      * pied du parent direct (cote)
      * @var int
      */
     private $foot;
-    
+
     /**
      * parent directe d'une utilisateur
      * @var User
      */
     private $sponsor;
-    
+
     /**
      * e parent de l'utilisateur (personne qui aurait envoyer le lien de parainage)
      * @var User
      */
     private $parent;
-    
+
     /**
      * Liste des enfants directes
      * @var User[]
      */
     private $sides = [];
-    
+
     /**
      * cillection des pack pour faciliter de choisir le pack auquel apartiens l'utilisateur
      * @var Pack[]
      */
     private $packs = [];
-    
+
     /**
      * L'actuel packet d'un utilisateur
      * @var Pack
      */
     private $pack;
-    
+
     /**
      * verouillage du compte
      * @var boolean
      */
     private $locked;
-    
+
     /**
      * collection des operations deja effectuer au compte d'un utilisateur
      * @var Operation[]
      */
     private $operations = [];
-    
+
     //CONSERVATION TEMPORAIRE DES RESULTAT DES CALCULS
     //===================================================
-    
+
     /**
      * determie s'il y a eux changement des operations dans le compte
      * @var boolean
      */
     private $requireRefresh = true;
-    
+
     /**
      * Capital investie par l'utilisateur
      * @var int
      */
     private $capital;
-    
+
     /**
      * @var number
      */
     private $soldBinary;
-    
+
     /**
      * @var number
      */
     private $soldParainage;
-    
+
     /**
      * @var number
      */
     private $soldResturn;
-    
+
     /**
      * montant deja retirer
      * @var number
      */
     private $soldWithdrawal;
-    
+
     /**
      * le solde actuel du compte
      * @var number
      */
     private $sold;
-    
-    
+
+
     //le capitaux
     //=========================
     private $leftDownlineCapital = null;
     private $rightDownlineCapital = null;
     private $downlineCapital = null;
-    
+
 
     /**
      * @return int
      */
-    public function getSide () {
+    public function getSide()
+    {
         return $this->getFoot();
     }
 
@@ -164,7 +167,7 @@ class User extends Member implements BinaryTreeNode
      * {@inheritDoc}
      * @see \Root\App\Models\TreeHandling\BinaryTreeNode::isLocked()
      */
-    public function isLocked() : ?bool
+    public function isLocked(): ?bool
     {
         return $this->locked;
     }
@@ -172,7 +175,7 @@ class User extends Member implements BinaryTreeNode
     /**
      * @param boolean $locked
      */
-    public function setLocked($locked) : void
+    public function setLocked($locked): void
     {
         $this->locked = is_bool($locked) ? $locked : $locked == 1;
     }
@@ -180,7 +183,7 @@ class User extends Member implements BinaryTreeNode
     /**
      * @returnUser
      */
-    public function getSponsor() : ?User
+    public function getSponsor(): ?User
     {
         return $this->sponsor;
     }
@@ -188,7 +191,7 @@ class User extends Member implements BinaryTreeNode
     /**
      * @returnUser
      */
-    public function getParent() : ?User
+    public function getParent(): ?User
     {
         return $this->parent;
     }
@@ -198,15 +201,16 @@ class User extends Member implements BinaryTreeNode
      * @param number $foot
      * 
      */
-    public function setFoot($foot) : void
+    public function setFoot($foot): void
     {
         $this->foot = $foot;
     }
-    
+
     /**
      * @param int $side
      */
-    public function setSide($side) : void {
+    public function setSide($side): void
+    {
         $this->setFoot($side);
     }
 
@@ -214,13 +218,13 @@ class User extends Member implements BinaryTreeNode
      * @paramUser $sponsor
      * @throws \InvalidArgumentException
      */
-    public function setSponsor($sponsor) : void
+    public function setSponsor($sponsor): void
     {
         if ($sponsor instanceof User || $sponsor === null) {
             $this->sponsor = $sponsor;
-        }else if(is_string($sponsor)) {
+        } else if (is_string($sponsor)) {
             $this->sponsor = new User(array('id' => $sponsor));
-        }else {
+        } else {
             throw new \InvalidArgumentException("Argument de type invalide en parametre de la methode setSponsor()");
         }
     }
@@ -229,18 +233,18 @@ class User extends Member implements BinaryTreeNode
      * @paramUser $parent
      * @throws \InvalidArgumentException
      */
-    public function setParent($parent) : void
+    public function setParent($parent): void
     {
 
         if ($parent instanceof User || $parent === null) {
             $this->parent = $parent;
-        }else if(is_string($parent)) {
+        } else if (is_string($parent)) {
             $this->parent = new User(array('id' => $parent));
-        }else {
+        } else {
             throw new \InvalidArgumentException("Argument de type invalide en parametre de la methode setParent()");
         }
     }
-    
+
     /**
      * @return User[]
      */
@@ -256,59 +260,62 @@ class User extends Member implements BinaryTreeNode
     {
         $this->sides = $sides;
     }
-    
+
     /**
      * Renvoie les operations d'inscription dans le compte
      * @return \Root\App\Models\Objects\Inscription[]
      */
-    public function getInscriptions() : array
+    public function getInscriptions(): array
     {
         $inscriptions = [];
         foreach ($this->getOperations() as $opt) {
             if ($opt instanceof Inscription) {
-                $inscriptions [] = $opt;
+                $inscriptions[] = $opt;
             }
         }
         return $inscriptions;
     }
-    
+
     /**
      * Renvoie les retraits de l'utiilsateur
      * @return CashOut[]
      */
-    public function getCashOuts () : array {
+    public function getCashOuts(): array
+    {
         $cash = [];
         foreach ($this->getOperations() as $opt) {
             if ($opt instanceof CashOut) {
-                $cash [] = $opt;
+                $cash[] = $opt;
             }
         }
         return $cash;
     }
-    
+
     /**
      * revoie les operations des parainage
      * @return Parainage[]
      */
-    public function getParainages () : array {
+    public function getParainages(): array
+    {
         $parainages = [];
         foreach ($this->getOperations() as $opt) {
             if ($opt instanceof Parainage) {
-                $parainages [] = $opt;
+                $parainages[] = $opt;
             }
         }
         return $parainages;
     }
-    
+
     /**
      * renvoie la collection des operations binaires
      * @return Binary[]
      */
-    public function getBinarys () : array {
+    public function getBinarys(): array
+    {
         $binarys = [];
         foreach ($this->getOperations() as $opt) {
             if ($opt instanceof Binary) {
-                $binarys [] = $opt;
+                $binarys[] = $opt;
             }
         }
         return $binarys;
@@ -317,18 +324,19 @@ class User extends Member implements BinaryTreeNode
     /**
      * @return \Root\App\Models\Objects\Operation []
      */
-    public function getOperations() : array
+    public function getOperations(): array
     {
         return $this->operations;
     }
-    
+
     /**
      * Les inscription du compte sont deja charger??
      * @return bool
      */
-    public function hasInscription (?bool $validated=null) : bool {
+    public function hasInscription(?bool $validated = null): bool
+    {
         foreach ($this->getOperations() as $opt) {
-            if ($opt instanceof Inscription ) {
+            if ($opt instanceof Inscription) {
                 if ($validated === true) {
                     if ($opt->isValidate()) {
                         return true;
@@ -337,19 +345,20 @@ class User extends Member implements BinaryTreeNode
                     if (!$opt->isValidate()) {
                         return true;
                     }
-                } else {                    
+                } else {
                     return true;
                 }
             }
         }
         return false;
     }
-    
+
     /**
      * y-a-il une operation des retrait dans le compte ??
      * @return bool
      */
-    public function hasCashOut() : bool {
+    public function hasCashOut(): bool
+    {
         foreach ($this->getOperations() as $opt) {
             if ($opt instanceof CashOut) {
                 return true;
@@ -357,12 +366,13 @@ class User extends Member implements BinaryTreeNode
         }
         return false;
     }
-    
+
     /**
      * y-a-il une operations de parainage dans le compte??
      * @return bool
      */
-    public function hasParainage() : bool {
+    public function hasParainage(): bool
+    {
         foreach ($this->getOperations() as $opt) {
             if ($opt instanceof Parainage) {
                 return true;
@@ -370,12 +380,13 @@ class User extends Member implements BinaryTreeNode
         }
         return false;
     }
-    
+
     /**
      * y-a-il une operations de bonus bunaire dans le compte???
      * @return bool
      */
-    public function hasBinary() : bool {
+    public function hasBinary(): bool
+    {
         foreach ($this->getOperations() as $opt) {
             if ($opt instanceof CashOut) {
                 return true;
@@ -383,7 +394,7 @@ class User extends Member implements BinaryTreeNode
         }
         return false;
     }
-    
+
 
     /**
      * @param \Root\App\Models\Objects\Operation[] $operations
@@ -391,36 +402,37 @@ class User extends Member implements BinaryTreeNode
      * @throws ModelException l'operation dans la collection en parametre n'est pas une classe fille
      * de la classe Operation, soit une operation dont l'identifient ne fait pas reference de l'ID du proprietaire du compte 
      */
-    public function setOperations(array $operations, bool $refresh = false) : void
+    public function setOperations(array $operations, bool $refresh = false): void
     {
         $this->operations = [];
         foreach ($operations as $operation) {
             $this->addOperation($operation);
         }
-        
+
         if ($refresh) {
             $this->refresh();
         }
     }
-    
+
     /**
      * ajoute une operation dans la collection d'operations
      * @param Operation $operation
      * @param bool $refresh
      * @throws ModelException
      */
-    public function addOperation (Operation $operation, bool $refresh = false) : void {
+    public function addOperation(Operation $operation, bool $refresh = false): void
+    {
         if ($operation->getUser() == null || $operation->getUser()->getId() != $this->getId()) {
             throw new ModelException("Impossible d'integrer une operation qui ne fait pas refernce à l'actuel compte, dans la collection des operation du dit compte");
-        }        
+        }
         $this->operations[] = $operation;
         $this->requireRefresh = true;
-        
+
         if ($refresh) {
             $this->refresh();
         }
     }
-    
+
     /**
      * 
      * Ajout d'une suite d'operations.
@@ -428,50 +440,55 @@ class User extends Member implements BinaryTreeNode
      * @param Operation ...$operations
      * @throws ModelException
      */
-    public function addOperations (Operation ...$operations) : void {
+    public function addOperations(Operation ...$operations): void
+    {
         foreach ($operations as $operation) {
             $this->addOperation($operation);
         }
     }
-    
+
     /**
      * y-a-il aumoin une operation deja effectuer par l'utilisateur du compte
      * @return bool
      */
-    public function hasOperations () : bool {
+    public function hasOperations(): bool
+    {
         return !empty($this->getOperations());
     }
-    
+
     /**
      * initialisation des packets pour faciliter le compte de faire sa classification facilement
      * @param Pack[] $packs
      * @param boolean $refresh, doit-on directement determiner le pack du compte??
      * @throws ModelException une exception peut etre levee dans le cas ou on doit determier le Pack du compte
      */
-    public function initPacks (array $packs, bool $refresh = false) : void {
+    public function initPacks(array $packs, bool $refresh = false): void
+    {
         $this->packs = $packs;
-        
+
         if ($refresh) {
             $this->refresh();
         }
     }
-    
+
     /**
      * est-ce que le pack de l'utilisateur est deja determiner???
      * @return bool
      */
-    public function hasPack () : bool {
+    public function hasPack(): bool
+    {
         return $this->pack != null;
     }
-    
+
     /**
      * est-ce possible de choisir le packet de l'utilisateur???
      * @return bool
      */
-    public function canChoosePack () : bool {
-        return (!empty($this->hasInscription(true)) && !empty($this->packs));      
+    public function canChoosePack(): bool
+    {
+        return (!empty($this->hasInscription(true)) && !empty($this->packs));
     }
-    
+
     /**
      * @author Esaie MUHASA
      * Revoie le packet actuel d'un utilisateur
@@ -490,58 +507,62 @@ class User extends Member implements BinaryTreeNode
      * <li>@method canChoosePack() : @return bool, pour savoie s'il est possible de determier le pack actuel de l'utilisateur </li>
      * </ul>
      */
-    public function getPack () : Pack {
+    public function getPack(): Pack
+    {
         if ($this->pack == null) {
             $this->pack = $this->choosePack();
         }
-        
+
         return $this->pack;
     }
-    
+
     /**
      * determine le pack actuel  du compte de l'utilisateur
      * @param int $capital
      * @throws ModelException
      * @return Pack
      */
-    protected function choosePack (int $capital) : Pack {
+    protected function choosePack(int $capital): Pack
+    {
         if (!$this->canChoosePack()) {
             throw new ModelException("Impossible d'effectuer l'operation de classement du compte '{$this->getId()}'");
-        } 
+        }
         foreach ($this->packs as $pack) {
             if ($pack->inPack($capital)) {
                 return $pack;
             }
         }
-        
+
         throw new ModelException("Impossible de determier le pack du compte {$this->getId()}");
     }
-    
+
     /**
      * faut-il recalculer les solds des operations deja effectuer pas le compte
      * @return bool
      */
-    public function requireRefresh () : bool {
+    public function requireRefresh(): bool
+    {
         return $this->requireRefresh;
     }
-    
+
     /**
      * oblige de recalculer tout les operations du compte de l'utlisateur.
      * @return void
      */
-    public function refresh () : void {
-        
+    public function refresh(): void
+    {
+
         if (!$this->requireRefresh()) {
             return;
         }
-        
+
         $this->capital = 0;
         $this->soldBinary = 0;
         $this->soldParainage = 0;
         $this->soldResturn = 0;
         $this->sold = 0;
         $this->soldWithdrawal = 0;
-        
+
         if ($this->hasOperations()) {
             //les operations
             /**
@@ -549,7 +570,7 @@ class User extends Member implements BinaryTreeNode
              */
             foreach ($this->getOperations() as $operation) {
                 if ($operation instanceof Inscription) {
-                    $this->capital += ($operation->isValidate()? $operation->getAmount() : 0);
+                    $this->capital += ($operation->isValidate() ? $operation->getAmount() : 0);
                 } else if ($operation instanceof CashOut) {
                     $this->soldWithdrawal += $operation->getAmount();
                 } else if ($operation instanceof Parainage) {
@@ -562,43 +583,45 @@ class User extends Member implements BinaryTreeNode
                     throw new ModelException("Impossible de poursouvre les calculs dans le compte {$this->getId()} car une operation non prise en charge c trouve dans la collection des operations des ce compte");
                 }
             }
-            
+
             $this->sold = ($this->soldBinary + $this->soldParainage +  $this->soldResturn) - $this->soldWithdrawal;
-            
+
             if ($this->canChoosePack()) {
                 $this->pack = $this->choosePack($this->capital);
             }
         }
-        
-        
+
+
         $this->requireRefresh = false;
     }
-    
+
     /**
      * utilitaire de verification des la mise en jours des solde calculer
      * @throws ModelException
      */
-    protected function doRefreshed () : void {        
-        if($this->requireRefresh()) {
+    protected function doRefreshed(): void
+    {
+        if ($this->requireRefresh()) {
             $this->refresh();
         }
-//         if ($this->requireRefresh() === true) {
-//             throw new ModelException("Veille appeler la methode refresh() pour calculer les soldes des operations qui touche le compte");
-//         }
+        //         if ($this->requireRefresh() === true) {
+        //             throw new ModelException("Veille appeler la methode refresh() pour calculer les soldes des operations qui touche le compte");
+        //         }
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\App\Models\TreeHandling\BinaryTreeNode::getCapital()
      * @throws ModelException
      */
-    public function getCapital (?\DateTime $date = null) : int {
-        if($date != null) {
+    public function getCapital(?\DateTime $date = null): int
+    {
+        if ($date != null) {
             $capital = 0;
             foreach ($this->getInscriptions() as $in) {
-                if(!$in->isValidate() || ($in->isValidate() && 
-                ($in->getConfirmationDate() != null &&  ($in->getConfirmationDate()->format('d-m-Y') == $date->format('d-m-Y') || $in->getConfirmationDate()->getTimestamp() >= $date->getTimestamp())))){ 
-                    continue;//on ecarte tout les inscriptions confirmer en date en parametre, est ceux des dates plus recentes que la date en parametre
+                if (!$in->isValidate() || ($in->isValidate() &&
+                    ($in->getConfirmationDate() != null &&  ($in->getConfirmationDate()->format('d-m-Y') == $date->format('d-m-Y') || $in->getConfirmationDate()->getTimestamp() >= $date->getTimestamp())))) {
+                    continue; //on ecarte tout les inscriptions confirmer en date en parametre, est ceux des dates plus recentes que la date en parametre
                 }
                 $capital += intval($in->getAmount(), 10);
             }
@@ -607,35 +630,38 @@ class User extends Member implements BinaryTreeNode
         $this->doRefreshed();
         return $this->capital;
     }
-    
+
     /**
      * revoie le max que peut consolmer un utilisateur
      * @return int
      */
-    public function getMaxBonus () : int {
+    public function getMaxBonus(): int
+    {
         return $this->getCapital() * 3;
     }
-    
+
     /**
      * renvoie les soldes des montants deja consomer par l'utilisateur
      * @return number
      */
-    public function getBonus () {
+    public function getBonus()
+    {
         return $this->getSoldBinary() + $this->getSoldParainage() + $this->getSoldResturn();
     }
-    
+
     /**
      * renvoie le solde en pourcentage
      * @return number
      */
-    public function getBonusToPercent () {
-        if ($this->getMaxBonus()==0) {
+    public function getBonusToPercent()
+    {
+        if ($this->getMaxBonus() == 0) {
             return 0;
         }
-        return ($this->getBonus()/$this->getMaxBonus()) * 100.0;
+        return ($this->getBonus() / $this->getMaxBonus()) * 100.0;
     }
-    
-    
+
+
     /**
      * Renvoei le solde de bonus binaire
      * @return number
@@ -645,7 +671,7 @@ class User extends Member implements BinaryTreeNode
         $this->doRefreshed();
         return $this->soldBinary;
     }
-    
+
     /**
      * renvoie le solde des parainages
      * @return number
@@ -655,7 +681,7 @@ class User extends Member implements BinaryTreeNode
         $this->doRefreshed();
         return $this->soldParainage;
     }
-    
+
     /**
      * Renvoie le solde des bonus journaliere
      * @return number
@@ -665,7 +691,7 @@ class User extends Member implements BinaryTreeNode
         $this->doRefreshed();
         return $this->soldResturn;
     }
-    
+
     /**
      * amount withdrawaled by user
      * @return number
@@ -675,7 +701,7 @@ class User extends Member implements BinaryTreeNode
         $this->doRefreshed();
         return $this->soldWithdrawal;
     }
-    
+
     /**
      * montant retirable a l'heure actuel
      * @return number
@@ -685,13 +711,13 @@ class User extends Member implements BinaryTreeNode
         $this->doRefreshed();
         return $this->sold;
     }
-    
-    
+
+
     /**
      * {@inheritDoc}
      * @see \Root\App\Models\TreeHandling\BinaryTreeNode::getChilds()
      */
-    public function getChilds (): array
+    public function getChilds(): array
     {
         return $this->getSides();
     }
@@ -713,7 +739,7 @@ class User extends Member implements BinaryTreeNode
                 $this->leftDownlineCapital = ($left->getCapital() + $left->getDownlineCapital());
             }
         }
-        
+
         return $this->leftDownlineCapital;
     }
 
@@ -728,7 +754,7 @@ class User extends Member implements BinaryTreeNode
                 return $ch;
             }
         }
-        
+
         throw new ModelException("Aucun noeud sur le pied gauche de cette utilisateur");
     }
 
@@ -736,7 +762,7 @@ class User extends Member implements BinaryTreeNode
      * {@inheritDoc}
      * @see \Root\App\Models\TreeHandling\BinaryTreeNode::getNodeIcon()
      */
-    public function getNodeIcon(): string
+    public function getNodeIcon(): ?string
     {
         return $this->getPhoto() == null ? '' : $this->getPhoto();
     }
@@ -779,7 +805,7 @@ class User extends Member implements BinaryTreeNode
                 $this->rightDownlineCapital = ($right->getCapital() + $right->getDownlineCapital());
             }
         }
-        
+
         return $this->rightDownlineCapital;
     }
 
@@ -795,7 +821,7 @@ class User extends Member implements BinaryTreeNode
                 $left = $this->getLeftNode();
                 $capital += $left->getCapital() + $left->getDownlineCapital();
             }
-            
+
             if ($this->hasRightNode()) {
                 $right = $this->getRightNode();
                 $capital += $right->getCapital() + $right->getDownlineCapital();
@@ -816,7 +842,7 @@ class User extends Member implements BinaryTreeNode
                 return $ch;
             }
         }
-        
+
         throw new ModelException("Aucun noeud sur le pied droit de cette utilisateur");
     }
 
@@ -829,8 +855,8 @@ class User extends Member implements BinaryTreeNode
         if ($this->getSponsor() == null) {
             throw new ModelException("Aucun sponsor pour ce compte");
         }
-        
-        return $this->getSponsor();        
+
+        return $this->getSponsor();
     }
 
     /**
@@ -896,16 +922,16 @@ class User extends Member implements BinaryTreeNode
         return false;
     }
 
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\App\Models\TreeHandling\BinaryTreeNode::getFoot()
      */
-    public function getFoot() : ?int
+    public function getFoot(): ?int
     {
         return $this->foot;
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Root\App\Models\TreeHandling\BinaryTreeNode::refreshNode()
@@ -917,6 +943,4 @@ class User extends Member implements BinaryTreeNode
         $this->rightDownlineCapital = null;
         $this->refresh();
     }
-
 }
-

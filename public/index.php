@@ -43,14 +43,15 @@ $routes->get('/admin/dashboard', 'Root\App\Controllers\AdminController@index');
 $routes->post('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 $routes->get('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 //route d'activation de l'inscrption
-$routes->get('/admin/active/inscription', 'Root\App\Controllers\AdminController@viewAllNonActiveInscription');
+$routes->get('/admin/active/inscription-([0-9]+)', 'Root\App\Controllers\AdminController@viewAllNonActiveInscription', 'page');
 $routes->post('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@activeInscriptions', 'inscription;user');
 //route pour l'authentification de l'utilisateur en post
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 //les routes pour valider une demande de retrait
-$routes->get('/admin/validate/cashout', 'Root\App\Controllers\AdminController@viewAllNonValideCashOut');
+$routes->get('/admin/validate/cashout-([0-9]+)', 'Root\App\Controllers\AdminController@viewAllNonValideCashOut', 'page');
 $routes->post('/admin/validate/cashout-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@validationCashOut', 'cashout;user');
+$routes->post('/admin/canceled/cashout-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@annulationCashOut', 'cashout');
 
 //routes pour l'envoie du mail lors de la reinitialisation du mot de passe
 $routes->post('/admin/reset-password', 'Root\App\Controllers\AdminController@resetPasswordOnMail');
@@ -78,7 +79,7 @@ $routes->get('/admin/users-page-([0-9]+)', 'Root\App\Controllers\AdminController
 $routes->get('/admin/administrator', 'Root\App\Controllers\AdminController@administratorDashboard');
 $routes->post('/admin/administrator', 'Root\App\Controllers\AdminController@create');
 
-$routes->get("/admin/currencies", 'Root\App\Controllers\AdminController@currencies');
+$routes->get("/admin/history-([0-9]+)", 'Root\App\Controllers\AdminController@history', 'page');
 $routes->get("/admin/transaction", 'Root\App\Controllers\AdminController@transaction');
 
 //route pour afficher les pack
@@ -89,8 +90,6 @@ $routes->post('/user/pack/subscribe', 'Root\App\Controllers\PackController@sucri
 //routes pour upgrade packages
 $routes->get('/user/pack/upgrade', 'Root\App\Controllers\PackController@upgradePackages');
 $routes->post('/user/pack/upgrade', 'Root\App\Controllers\PackController@upgradePackages');
-
-
 // les routes pour l'activation du pack
 // $routes->get('/user/pack/activation-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@activationPackages', 'inscription');
 // $routes->post('/user/pack/activation-([a-zA-Z0-9]{11})', 'Root\App\Controllers\PackController@activationPackages', 'inscription');
@@ -112,6 +111,7 @@ $routes->get('/user/me', 'Root\App\Controllers\UserController@profil');
 $routes->get('/user/edit', 'Root\App\Controllers\UserController@update');
 $routes->post('/user/edit', 'Root\App\Controllers\UserController@update');
 $routes->get('/user/tree', 'Root\App\Controllers\UserController@tree');
+$routes->get('/user/history', 'Root\App\Controllers\UserController@history');
 $routes->get('/user/tree-data', 'Root\App\Controllers\UserController@treeData');
 
 //les routes pour le retrait dans le systeme
@@ -139,7 +139,7 @@ $routes->post('/mail/resend-(reset|activation)', 'Root\App\Controllers\UserContr
     3. l'incription terminer avec succes 
     4. view pour le lien de parainage
  */
-$routes->get('/mail/success', 'Root\App\Controllers\UserController@mailSendSuccess');
+$routes->get('/mail/success', 'Root\App\Controllers\Controller@mailSendSuccess');
 $routes->get('/user/password', 'Root\App\Controllers\UserController@passwordSuccess');
 $routes->get('/user/account', 'Root\App\Controllers\UserController@registerSuccess');
 $routes->get('/user/share/link', 'Root\App\Controllers\UserController@shareLink');
@@ -159,9 +159,6 @@ $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestControl
 $routes->get('/teste', function () {
     var_dump(ModelFactory::getInstance()->getModel('CashOut')->findValidated());
 });
-
-
-
 try {
     $routes->run();
 } catch (NotFoundException $e) {
