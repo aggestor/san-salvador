@@ -217,7 +217,15 @@ class Controller
         $inscription = $this->inscriptionModel->findById($idInscription);
         if ($this->inscriptionModel->checkById($idInscription)) {
             if (!$inscription->isValidate()) {
+                $inscription->setUser($this->userModel->findById($idUser));
+
+                //les informations du mail
+                $name = $inscription->getUser()->getName();
+                $mail = $inscription->getUser()->getEmail();
+                $montant = $inscription->getAmount();
+                $this->envoieMail($mail, "Activation de l'inscription", "pages/mail/suscrubeMail", ['nom' => $name, 'montant' => $montant]);
                 $this->inscriptionModel->validate($idInscription, $idAdmin);
+                header("location:" . $_SERVER['HTTP_REFERER']);
             } else {
                 Controller::redirect('admin/login');
             }
@@ -271,7 +279,7 @@ class Controller
                 $cashOut->setUser($this->userModel->findById($idUser));
                 $return[] = $cashOut;
             }
-            return $return;
+            return $cashOut;
         }
         return $return;
     }
@@ -301,10 +309,24 @@ class Controller
         $idCashOut = $_GET['cashout'];
         $idAdmin = $_SESSION[self::SESSION_ADMIN]->getId();
         $idUser = $_GET['user'];
-        //var_dump($this->cashOutModel->checkById($idCashOut)); exit();
+
+        /**
+         * @var CashOut
+         */
+        $cashOut = $this->cashOutModel->findById($idCashOut);
         if ($this->cashOutModel->checkById($idCashOut)) {
             if ($this->cashOutModel->checkValidated()) {
+                $cashOut->setUser($this->userModel->findById($idUser));
+
+                //Les information pour le mail
+                $nom = $cashOut->getUser()->getName();
+                $mail = $cashOut->getUser()->getEmail();
+                $montant = $cashOut->getAmount();
+                $destination = $cashOut->getDestination();
+
+                $this->envoieMail($mail, "Validation du retrait", "pages/mail/cashOutMailValide", ['nom' => $nom, 'montant' => $montant, 'destination' => $destination]);
                 $this->cashOutModel->validate($idCashOut, $idAdmin);
+                header("location:" . $_SERVER['HTTP_REFERER']);
             }
         } else {
             return $this->view("pages.static.404");
@@ -505,7 +527,7 @@ class Controller
      * @param string $to. Le destinataire du mail
      * @param mixed $lien. Le lien d'activation de compte
      */
-    public function envoieMail($to, string $lien, string $sujet = null, $path, $nom, array $params = null)
+    public function envoieMail($to,  string $sujet = null, $path, array $params = null)
     {
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';
