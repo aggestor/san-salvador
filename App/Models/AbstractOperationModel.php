@@ -78,8 +78,9 @@ abstract class AbstractOperationModel extends AbstractDbOccurenceModel
     public function findByUser ($userId)  : array {
         
         $userIdName = Schema::INSCRIPTION['user'];
+        $recordDate = Schema::INSCRIPTION['recordDate'];
 
-        $SQL = "SELECT * FROM {$this->getTableName()} WHERE {$userIdName} = ?";
+        $SQL = "SELECT * FROM {$this->getTableName()} WHERE {$userIdName} = ? ORDER BY {$recordDate} DESC ";
         
         $return = array();
         
