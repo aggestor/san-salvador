@@ -19,7 +19,7 @@ class TreeFormatter extends Controller
 
         $root = $this->allUsers();
         $image = $root->getNodeIcon() == "" ? "" : explode(" AND ", $root->getNodeIcon());
-        $image = str_replace("\\", "/", $image[1]);
+        $image = is_array($image) ? str_replace("\\", "/", $image[1]) : "";
         $json = "{";
         $json .= "\"Id\":\"{$root->getId()}\"";
         $json .= ",\"name\":\"{$root->getName()}\"";
@@ -46,7 +46,7 @@ class TreeFormatter extends Controller
     private function formatChild($node)
     {
         $image = $node->getNodeIcon() == "" ? "" : explode(" AND ", $node->getNodeIcon());
-        $image = str_replace("\\", "/", $image[1]);
+        $image = is_array($image) ? str_replace("\\", "/", $image[1]) : "";
         //var_dump($image);exit();
         $json = " {";
         $json .= "\"Id\":\"{$node->getId()}\"";
