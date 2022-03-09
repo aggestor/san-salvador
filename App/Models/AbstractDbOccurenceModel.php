@@ -186,8 +186,9 @@ abstract class AbstractDbOccurenceModel
     public function findAll(?int $limit = null, int $offset = 0): array
     {
         $data = array();
+        $recordDate = Schema::INSCRIPTION['recordDate'];
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} " . ($limit != null ? "LIMIT {$limit} OFFSET {$offset}" : ""), array());
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} ORDER BY {$recordDate} DESC " . ($limit != null ? "LIMIT {$limit} OFFSET {$offset}" : ""), array());
             if ($row = $statement->fetch()) {
                 $data[] = $this->getDBOccurence($row);
                 while ($row = $statement->fetch()) {
@@ -242,7 +243,7 @@ abstract class AbstractDbOccurenceModel
             if ($dateMax != null) {
                 $args[] = $dateMax->format('Y-m-d');
             }
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE record_date " . ($dateMax != null ? "BETWEEN (? AND ?)" : "= ?") . "  LIMIT 1", $args);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE record_date " . ($dateMax != null ? "BETWEEN (? AND ?)" : "= ?") . " ORDER BY record_date DESC ", $args);
             if ($row = $statement->fetch()) {
                 $data[] = $this->getDBOccurence($row);
                 while ($row = $statement->fetch()) {

@@ -738,7 +738,7 @@ class User extends Member implements BinaryTreeNode
      */
     public function getNodeIcon(): string
     {
-        return $this->getPhoto();
+        return $this->getPhoto() == null ? '' : $this->getPhoto();
     }
 
     /**

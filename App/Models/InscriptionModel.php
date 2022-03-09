@@ -121,10 +121,12 @@ class InscriptionModel extends AbstractOperationModel
 
             //bonsus binaire
             $foot  = $userModel->findBindingSide($user->getParent(), $user);
+            $leftCapital = $user->getParent()->getLeftDownlineCapital();
+            $rigthCapital =  $user->getParent()->getRightDownlineCapital();
             // die("Left: {$user->getParent()->getLeftDownlineCapital()}. Right {$user->getParent()->getRightDownlineCapital()}. Foot: {$foot}");
             if (
-                ($foot == User::FOOT_LEFT && ($user->getParent()->getLeftDownlineCapital() < $user->getParent()->getRightDownlineCapital()))
-                || ($foot == User::FOOT_RIGHT && ($user->getParent()->getLeftDownlineCapital() > $user->getParent()->getRightDownlineCapital()))
+                ($foot == User::FOOT_LEFT && (($leftCapital + $inscription->getAmount()) < $rigthCapital))
+                || ($foot == User::FOOT_RIGHT && ($leftCapital > ($rigthCapital + $inscription->getAmount())))
             ) {
 
                 // die("binaire");
@@ -358,8 +360,8 @@ class InscriptionModel extends AbstractOperationModel
             $statement = "";
             $user = Schema::INSCRIPTION['user'];
             $validation = Schema::INSCRIPTION['validate'];
-
-            $SQL_END = ($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"";
+            $dateColumn = Schema::INSCRIPTION['recordDate'];
+            $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"");
             if ($userId === null) {
                 $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation} = 0 {$SQL_END}", array());
             } else {
@@ -397,7 +399,8 @@ class InscriptionModel extends AbstractOperationModel
         try {
             $user = Schema::INSCRIPTION['user'];
             $validation = Schema::INSCRIPTION['validate'];
-            $SQL_END = ($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"";
+            $dateColumn = Schema::INSCRIPTION['recordDate'];
+            $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"");
             if (is_null($userId) && !is_null($limit) && !is_null($limit)) {
                 $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=? {$SQL_END}", array(1));
             } else {

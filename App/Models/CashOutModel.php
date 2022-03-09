@@ -75,12 +75,13 @@ class CashOutModel extends AbstractOperationModel
     {
         $return = false;
         $args = [];
+        $recordDate =  Schema::CASHOUT['recordDate'];
 
         if ($adminId !== null) {
             $args[] = $adminId;
         }
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . ($adminId !== null ? Schema::CASHOUT['admin'] . '=? ' : (Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . " NULL"), $args);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE " . ($adminId !== null ? Schema::CASHOUT['admin'] . '=? ' : (Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . " NULL")." ORDER BY {$recordDate} DESC", $args);
             if ($statement->fetch()) {
                 $return = true;
             }
@@ -235,9 +236,11 @@ class CashOutModel extends AbstractOperationModel
         if($adminId === null)
             $SQL .= (Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . ' NULL ';
 
-        $SQL_LIMIT = $limit !== null? "LIMIT {$limit} OFFSET {$offset}" : '';
+        $dateColumn = Schema::CASHOUT['recordDate'];
+        $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"");
+
         try {
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} {$SQL} {$SQL_LIMIT}" , $args);
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} {$SQL} {$SQL_END}" , $args);
             if ($row = $statement->fetch()) {
                 $return[] = $this->getDBOccurence($row);
                 while ($row = $statement->fetch()) {
