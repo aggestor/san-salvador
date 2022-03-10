@@ -117,16 +117,21 @@ class InscriptionModel extends AbstractOperationModel
             }
 
             $bonus = ($inscription->getAmount() / 100) * 10; // 10 % du montant investie
+            $bonus = round($bonus, 2, PHP_ROUND_HALF_DOWN);
             $now = new \DateTime(); //heure actuel
 
             //bonsus binaire
             $foot  = $userModel->findBindingSide($user->getParent(), $user);
             $leftCapital = $user->getParent()->getLeftDownlineCapital();
             $rigthCapital =  $user->getParent()->getRightDownlineCapital();
-            // die("Left: {$user->getParent()->getLeftDownlineCapital()}. Right {$user->getParent()->getRightDownlineCapital()}. Foot: {$foot}");
+
+            $leftCapitalSomme = $leftCapital + $inscription->getAmount();
+            $rightCapitalSomme = $rigthCapital + $inscription->getAmount();
+            
+            // die("Left: {$leftCapitalSomme}. Right {$rightCapitalSomme}. Foot: {$foot}");
             if (
-                ($foot == User::FOOT_LEFT && (($leftCapital + $inscription->getAmount()) < $rigthCapital))
-                || ($foot == User::FOOT_RIGHT && ($leftCapital > ($rigthCapital + $inscription->getAmount())))
+                ($foot == User::FOOT_LEFT && ($leftCapitalSomme < $rigthCapital))
+                || ($foot == User::FOOT_RIGHT && ($leftCapital > $rightCapitalSomme))
             ) {
 
                 // die("binaire");
@@ -146,23 +151,22 @@ class InscriptionModel extends AbstractOperationModel
                 $node = $user;
                 $sponsorParent = $userModel->hasSponsor($user->getParent()->getId()) ? $userModel->findSponsor($user->getParent()->getId()) : null;
                 while ($userModel->hasSponsor($node->getId()) && (!$userModel->isRoot($node->getId()) &&  $node->getSponsor()->getId() != $sponsorParent->getId())) {
+                    
                     $node = $userModel->findSponsor($node->getId());
-                    $binary->setUser($userModel->load($node));
 
                     if ($node->isValidationEmail() && !$node->isLocked()) { //si le compte est toujours activer
-                        if (($node->getMaxBonus() <= ($node->getBonus() + $bonus)) && $node->getSponsor() !== null) { //la racine n'ast pas de sponsor
-                            $surplus =  $bonus + $node->getBonus() - $node->getMaxBonus();
-                            $amount =  $bonus - $surplus;
-                            $binary->setAmount($amount);
-                            $binary->setSurplus($surplus);
-                            //on block definitivement le compte
-                            $userModel->lockAcount($pdo, $node->getId());
-                        } else { //dans le cas ou le compte  n'est pas encore saturer
-                            $binary->setAmount($bonus);
-                            $binary->setSurplus(0);
+                        
+                        $amount =  $this->getMaxAdmissible($node, $bonus);
+                        $surplus =  $bonus - $amount;
+                        
+                        $binary->setAmount($amount);
+                        $binary->setSurplus($surplus);
+                        
+                        if ( ($node->getBonus() + $amount) == $node->getMaxBonus() ) { // le compte viens d'attendre 300%
+                            $userModel->lockAcount($pdo, $node->getId());//on block definitivement le compte
                         }
 
-                        // die("binaire {$binary->getAmount()}");
+                        die("binaire {$amount}");
                         $this->sendBinary($pdo, $binary);
                     }
                 }
@@ -178,19 +182,15 @@ class InscriptionModel extends AbstractOperationModel
             $parainage->setTimeRecord($now);
             $parainage->setRecordDate($now);
 
-            if (($user->getParent()->getMaxBonus() <= ($user->getParent()->getBonus() + $bonus)) && ($user->getParent() !== null)) { //si son compte sera sauter
-                $surplus =  $bonus + $user->getParent()->getBonus() - $user->getParent()->getMaxBonus();
-                $amount =  $bonus - $surplus;
-                $parainage->setAmount($amount);
-                $parainage->setSurplus($surplus);
-
-                //on block definitivement le compte
-                $userModel->lockAcount($pdo, $user->getParent()->getId());
-            } else {
-                $parainage->setAmount($bonus);
-                $parainage->setSurplus(0);
+            $amount =  $this->getMaxAdmissible($user->getParent(), $bonus);
+            $surplus =  $bonus - $amount;
+            
+            $parainage->setAmount($amount);
+            $parainage->setSurplus($surplus);
+            
+            if ( ($user->getParent()->getBonus() + $amount) == $user->getParent()->getMaxBonus() ) { // le compte viens d'attendre 300%
+                $userModel->lockAcount($pdo, $user->getParent()->getId());//on block definitivement le compte
             }
-
 
             $this->sendParainage($pdo, $parainage);
 
@@ -405,7 +405,7 @@ class InscriptionModel extends AbstractOperationModel
             $dateColumn = Schema::INSCRIPTION['recordDate'];
             $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"");
             if (is_null($userId) && !is_null($limit) && !is_null($limit)) {
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=? ORDER BY record_date DESC LIMIT {$limit},{$offset}", array(1));
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=? {$SQL_END}", array(1));
             } else {
                 $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$user}=? AND  {$validation}=? {$SQL_END}", array($userId, 1));
             }

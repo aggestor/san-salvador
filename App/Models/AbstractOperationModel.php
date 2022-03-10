@@ -2,6 +2,7 @@
 namespace Root\App\Models;
 
 use Root\App\Models\Objects\Operation;
+use Root\App\Models\Objects\User;
 
 /**
  *
@@ -101,6 +102,41 @@ abstract class AbstractOperationModel extends AbstractDbOccurenceModel
         }
         
         return $return;
+    }
+
+    /**
+     * Calcule le motant maximum admissible pour le compte du user en premier parametre.
+     * En supposant que vous avez un compte utilisateur, et vous avez bien charger tout les operations 
+     * deja effectuer par ce compte.
+     * Vous voulez effectuer une operation d'ajout d'un montant (bonus binaire, parainage, etc.) sur ce compte:
+     * en premier vue, voue devez savoir combiens le compte a deja eu et combiens il peut recevoie au max, 
+     * sans depasser le 300% du capital investie.
+     * => Cette methode fait de petit calculs et vous renvoie le montant max sur la valeur de $amount
+     *    que peut recevoie le compte. Et donc en faisant $amount - la valeur retourner par cette fonction,
+     *    on trouve  le reste (autrement la valeur a affecter a l'arrtibut $surplus d'un operation)
+     * => Si le compte utilisateur en premier parametre n'est pas charger, alors cette methode s'en occuper.
+     *    S'il est charger partielement, alors cela posera pobleme au niveau des calcules car le chargement du compte n'aura pas liex
+     * @param User $user
+     * @param float $amount, le montrant qu'on pretant ajouter au compte
+     * @return float le montant admisssible
+     * @throws ModelException
+     */
+    public function getMaxAdmissible (User $user, $amount) : float{
+        if($user->hasOperations()){
+            /**
+             * @var UserModel $userModel */
+            $userModel = $this->getFactory()->getModel('User');
+            $userModel->load($user);
+        }
+
+        $solde = $amount + $user->getSold();
+        die("=> {$solde} => {$user->getId()}");
+        if( $solde >= $user->getMaxBonus()) {
+            $reste = $solde - $user->getMaxBonus();
+            return $amount - $reste;
+        }
+
+        return $amount;
     }
 
 }
