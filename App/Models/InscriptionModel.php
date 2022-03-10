@@ -120,6 +120,26 @@ class InscriptionModel extends AbstractOperationModel
             $bonus = round($bonus, 2, PHP_ROUND_HALF_DOWN);
             $now = new \DateTime(); //heure actuel
 
+            
+            $parainage  = new Parainage();
+            $parainage->setUser($user->getParent());
+            $parainage->setGenerator($inscription);
+            $parainage->setTimeRecord($now);
+            $parainage->setRecordDate($now);
+
+            $amount =  $this->getMaxAdmissible($user->getParent(), $bonus);
+            $surplus =  $bonus - $amount;
+            
+            $parainage->setAmount($amount);
+            $parainage->setSurplus($surplus);
+            $user->getParent()->addOperation($parainage);
+            
+            if ( ($user->getParent()->getBonus() + $amount) == $user->getParent()->getMaxBonus() ) { // le compte viens d'attendre 300%
+                $userModel->lockAcount($pdo, $user->getParent()->getId());//on block definitivement le compte
+            }
+
+            $this->sendParainage($pdo, $parainage);
+
             //bonsus binaire
             $foot  = $userModel->findBindingSide($user->getParent(), $user);
             $leftCapital = $user->getParent()->getLeftDownlineCapital();
@@ -161,12 +181,13 @@ class InscriptionModel extends AbstractOperationModel
                         
                         $binary->setAmount($amount);
                         $binary->setSurplus($surplus);
+                        $binary->setUser($node->getId() == $user->getParent()->getId()? $user->getParent() : $node);
                         
                         if ( ($node->getBonus() + $amount) == $node->getMaxBonus() ) { // le compte viens d'attendre 300%
+                            // die("binaire -> {$amount} -> {$bonus} -> {$surplus}");
                             $userModel->lockAcount($pdo, $node->getId());//on block definitivement le compte
                         }
-
-                        die("binaire {$amount}");
+                        // die("binaire {$amount}");
                         $this->sendBinary($pdo, $binary);
                     }
                 }
@@ -175,25 +196,6 @@ class InscriptionModel extends AbstractOperationModel
             }
 
             // die("die");
-
-            $parainage  = new Parainage();
-            $parainage->setUser($user->getParent());
-            $parainage->setGenerator($inscription);
-            $parainage->setTimeRecord($now);
-            $parainage->setRecordDate($now);
-
-            $amount =  $this->getMaxAdmissible($user->getParent(), $bonus);
-            $surplus =  $bonus - $amount;
-            
-            $parainage->setAmount($amount);
-            $parainage->setSurplus($surplus);
-            
-            if ( ($user->getParent()->getBonus() + $amount) == $user->getParent()->getMaxBonus() ) { // le compte viens d'attendre 300%
-                $userModel->lockAcount($pdo, $user->getParent()->getId());//on block definitivement le compte
-            }
-
-            $this->sendParainage($pdo, $parainage);
-
 
             //finalisation des metadonnes de confirmation de l'inscription
             Queries::updateDataInTransaction(
