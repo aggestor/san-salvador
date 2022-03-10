@@ -132,11 +132,11 @@ class InscriptionModel extends AbstractOperationModel
             
             $parainage->setAmount($amount);
             $parainage->setSurplus($surplus);
-            $user->getParent()->addOperation($parainage);
             
-            if ( ($user->getParent()->getBonus() + $amount) == $user->getParent()->getMaxBonus() ) { // le compte viens d'attendre 300%
+            if ( ($user->getParent()->getBonus() + $amount) >= $user->getParent()->getMaxBonus() ) { // le compte viens d'attendre 300%
                 $userModel->lockAcount($pdo, $user->getParent()->getId());//on block definitivement le compte
             }
+            $user->getParent()->addOperation($parainage);
 
             $this->sendParainage($pdo, $parainage);
 
