@@ -84,7 +84,7 @@ class UserController extends Controller
                     $nom = $user->getName();
                     $_SESSION['mail'] = $mail;
                     //$mail "Reinitialisation du mot de passe", "pages/mail/resetPwdMail"
-                    if ($this->envoieMail($mail,"Reinitialisation du mot de passe","pages/mail/resetPwdMail",['nom'=>$nom,'lien'=>$lien])) {
+                    if ($this->envoieMail($mail, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", ['nom' => $nom, 'lien' => $lien])) {
                         Controller::redirect('/mail/success');
                     } else {
                         $_SESSION['action'] = 'reset';
@@ -151,7 +151,7 @@ class UserController extends Controller
                 $lien = $domaineName . "activation-$id-$token";
                 $_SESSION['mail'] = $mail;
                 //$mail,"Reinitialisation du mot de passe","pages/mail/resetPwdMail",['nom'=>$nom,'lien'=>$lien]
-                if ($this->envoieMail($mail, "Activation du compte", "pages/mail/activationAccoutMail",['nom'=>$nom,'lien'=>$lien])) {
+                if ($this->envoieMail($mail, "Activation du compte", "pages/mail/activationAccoutMail", ['nom' => $nom, 'lien' => $lien])) {
                     Controller::redirect('/mail/success');
                 } else {
                     $_SESSION['action'] = 'activation';
@@ -169,28 +169,16 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        // $user = $this->userModel->load($this->userObject());
-
-        //var_dump($this->userObject()->getSold(),$this->userObject()->isLocked());exit();
         if ($this->isUsers()) {
             $user = $this->userObject();
             $user->setSides($this->userModel->loadDownlineLeftRightSides($user->getId()));
             $capitauxGauche = $user->getLeftDownlineCapital();
             $capitauxDroite = $user->getRightDownlineCapital();
-            //die($user);
-            //die("{$user->getLeftDownlineCapital()} <=> {$user->getRightDownlineCapital()}");
-            if (!$this->userObject()->hasInscription()) {
-                return $this->view("pages.user.hasNotSubscribedYet", "layout_", ['user' => $_SESSION[self::SESSION_USERS]]);
-            } elseif ($this->existValidateInscription()) {
-                //retourne une vue avec le message de veuillez votre inscription est en court de validation 
-                return $this->view("pages.user.awaitUserPackValidation", "layout_");
-            } else if ($this->existOneValidateInscription()) {
+            $this->control();
+            if ($this->existOneValidateInscription()) {
                 return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject(), 'gauche' => $capitauxGauche, 'droite' => $capitauxDroite]);
-            } else if ($this->userObject()->getSold() <= 0 && $this->userObject()->isLocked() == true) {
-                return $this->view("pages.user.login", "layout_", ['loked' => 'error']);
             }
         }
-        //var_dump($this->userObject()->hasPack()); exit();
     }
 
     /**
@@ -201,7 +189,10 @@ class UserController extends Controller
     public function profil()
     {
         if ($this->isUsers()) {
-            return $this->view('pages.user.me', 'layout_', ['user' => $this->userObject()]);
+            $this->control();
+            if ($this->existOneValidateInscription()) {
+                return $this->view('pages.user.me', 'layout_', ['user' => $this->userObject()]);
+            }
         }
     }
 
@@ -236,7 +227,10 @@ class UserController extends Controller
     public function tree()
     {
         if ($this->isUsers()) {
-            return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject()]);
+            $this->control();
+            if ($this->existOneValidateInscription()) {
+                return $this->view('pages.user.tree', 'layout_', ['user' => $this->userObject()]);
+            }
         }
     }
 
@@ -250,7 +244,10 @@ class UserController extends Controller
         if ($this->isUsers()) {
             $cashOutNotValideUser = $this->viewAllHistoryCashOutForUser();
             $cashOutValideUser = $this->viewAllHistoryCashOutForUser(true);
-            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject(), 'valide' => $cashOutValideUser, 'nonValide' => $cashOutNotValideUser]);
+            $this->control();
+            if ($this->existOneValidateInscription()) {
+                return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject(), 'valide' => $cashOutValideUser, 'nonValide' => $cashOutNotValideUser]);
+            }
         }
     }
     public function treeData()
@@ -270,7 +267,10 @@ class UserController extends Controller
     public function shareLink()
     {
         if ($this->isUsers()) {
-            return $this->view('pages.user.sharelink', 'layout_', ['user' => $this->userObject()]);
+            $this->control();
+            if ($this->existOneValidateInscription()) {
+                return $this->view('pages.user.sharelink', 'layout_', ['user' => $this->userObject()]);
+            }
         }
     }
 
@@ -297,7 +297,7 @@ class UserController extends Controller
                 if ($_GET['action'] == 'activation') {
                     $lien = $domaineName . "activation-$id-$token";
                     //$mail,"Reinitialisation du mot de passe","pages/mail/resetPwdMail",['nom'=>$nom,'lien'=>$lien]
-                    if ($this->envoieMail($mail,"Activation du compte", "pages/mail/activationAccoutMail",['nom'=>$nom,'lien'=>$lien])) {
+                    if ($this->envoieMail($mail, "Activation du compte", "pages/mail/activationAccoutMail", ['nom' => $nom, 'lien' => $lien])) {
                         Controller::redirect('/mail/success');
                     } else {
                         $_SESSION['action'] = 'activation';
@@ -305,7 +305,7 @@ class UserController extends Controller
                     }
                 } else if ($_GET['action'] == 'reset') {
                     $lien = $domaineName . "reset-$id-$token";
-                    if ($this->envoieMail($mail, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail",['nom'=>$nom,'lien'=>$lien])) {
+                    if ($this->envoieMail($mail, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", ['nom' => $nom, 'lien' => $lien])) {
                         Controller::redirect('/mail/success');
                     } else {
                         $_SESSION['action'] = 'reset';

@@ -169,6 +169,19 @@ class Controller
     }
 
     /**
+     * Pour controller la rendu du view
+     *
+     * @return void
+     */
+    public function control(){
+        if (!$this->userObject()->hasInscription()) {
+            return $this->view("pages.user.hasNotSubscribedYet", "layout_", ['user' => $_SESSION[self::SESSION_USERS]]);
+        } elseif ($this->existValidateInscription()) {
+            return $this->view("pages.user.awaitUserPackValidation", "layout_");
+        }
+    }
+
+    /**
      * Count Inscription valide et not valide
      *
      * @param boolean $valiadte
