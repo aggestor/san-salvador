@@ -122,7 +122,7 @@ abstract class AbstractOperationModel extends AbstractDbOccurenceModel
      * @throws ModelException
      */
     public function getMaxAdmissible (User $user, $amount) : float{
-        if($user->hasOperations()){
+        if(!$user->hasOperations()){
             /**
              * @var UserModel $userModel */
             $userModel = $this->getFactory()->getModel('User');
@@ -130,7 +130,7 @@ abstract class AbstractOperationModel extends AbstractDbOccurenceModel
         }
 
         $solde = $amount + $user->getSold();
-        die("=> {$solde} => {$user->getId()}");
+        // die("=> {$solde} => {$user->getId()}");
         if( $solde >= $user->getMaxBonus()) {
             $reste = $solde - $user->getMaxBonus();
             return $amount - $reste;
