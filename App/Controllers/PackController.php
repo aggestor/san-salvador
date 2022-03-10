@@ -58,7 +58,6 @@ class PackController extends Controller
      */
     public function sucribeOnPack()
     {
-        //var_dump($this->userObject()->isLocked());exit();
         if (Controller::sessionExist($_SESSION[self::SESSION_USERS])) {
             $id = $_SESSION[self::SESSION_USERS]->getId();
             if (!$this->userObject()->isLocked()) {
@@ -84,7 +83,6 @@ class PackController extends Controller
             Controller::redirect('/login');
         }
     }
-
 
     /**
      * Affichages de touts les pack
