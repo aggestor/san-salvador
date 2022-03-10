@@ -25,6 +25,7 @@ class PackController extends Controller
     private $inscriptionModel;
     public function __construct()
     {
+        parent::__construct();
         $this->packModel = ModelFactory::getInstance()->getModel('Pack');
         $this->inscriptionModel = ModelFactory::getInstance()->getModel('Inscription');
     }
@@ -45,10 +46,9 @@ class PackController extends Controller
                     return $this->view("pages.packages.dashboard", "layout_admin", ['pack' => $pack, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 }
             }
-            $package = $this->packModel->findAll();           
-            return $this->view('pages.packages.dashboard', 'layout_admin',['pack' => $package]);
-        }
-        else {
+            $package = $this->packModel->findAll();
+            return $this->view('pages.packages.dashboard', 'layout_admin', ['pack' => $package]);
+        } else {
             Controller::redirect('/login');
         }
     }
@@ -58,23 +58,27 @@ class PackController extends Controller
      */
     public function sucribeOnPack()
     {
+        //var_dump($this->userObject()->isLocked());exit();
         if (Controller::sessionExist($_SESSION[self::SESSION_USERS])) {
             $id = $_SESSION[self::SESSION_USERS]->getId();
-            //var_dump($this->inscriptionModel->checkAwait($id)); exit();
-            if (!$this->inscriptionModel->checkAwait($id)) {
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $validator = new PackValidation();
-                    $suscribe = $validator->sucribePackAfterValidation();
-                    if ($validator->hasError() || $validator->getMessage() != "") {
-                        $errors = $validator->getErrors();
-                        return $this->view("pages.packages.subscribe", "layout_", ['pack' => $suscribe, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
-                    } else {
-                        Controller::redirect('/user/dashboard');
+            if (!$this->userObject()->isLocked()) {
+                if (!$this->inscriptionModel->checkAwait($id)) {
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $validator = new PackValidation();
+                        $suscribe = $validator->sucribePackAfterValidation();
+                        if ($validator->hasError() || $validator->getMessage() != "") {
+                            $errors = $validator->getErrors();
+                            return $this->view("pages.packages.subscribe", "layout_", ['pack' => $suscribe, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
+                        } else {
+                            Controller::redirect('/user/dashboard');
+                        }
                     }
+                    return $this->view('pages.packages.subscribe', "layout_");
+                } else {
+                    Controller::redirect('/user/logout');
                 }
-                return $this->view('pages.packages.subscribe', "layout_");
             } else {
-                Controller::redirect('/user/dashboard');
+                return $this->view('pages.packages.blocked', "layout_");
             }
         } else {
             Controller::redirect('/login');
