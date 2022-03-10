@@ -365,7 +365,7 @@ class InscriptionModel extends AbstractOperationModel
             $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"");
 
             if ($userId === null) {
-                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation} = 0 ORDER BY record_date {$SQL_END}", array());
+                $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation} = 0 {$SQL_END}", array());
             } else {
                 $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$user}=? AND {$validation} = 0 {$SQL_END}", array($userId));
             }
