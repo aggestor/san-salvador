@@ -147,6 +147,7 @@ class User extends Member implements BinaryTreeNode
     private $sold;
 
 
+
     //le capitaux
     //=========================
     private $leftDownlineCapital = null;
@@ -510,7 +511,7 @@ class User extends Member implements BinaryTreeNode
     public function getPack(): Pack
     {
         if ($this->pack == null) {
-            $this->pack = $this->choosePack();
+            $this->pack = $this->choosePack($this->getCapital());
         }
 
         return $this->pack;
@@ -572,7 +573,11 @@ class User extends Member implements BinaryTreeNode
                 if ($operation instanceof Inscription) {
                     $this->capital += ($operation->isValidate() ? $operation->getAmount() : 0);
                 } else if ($operation instanceof CashOut) {
-                    $this->soldWithdrawal += $operation->getAmount();
+                    if($operation->isValidated()) {
+                        $this->soldWithdrawal += $operation->getAmount();
+                    } else {
+                        $this->sold += $operation->getAmount();
+                    }
                 } else if ($operation instanceof Parainage) {
                     $this->soldParainage += $operation->getAmount();
                 } else if ($operation instanceof Binary) {
@@ -583,8 +588,7 @@ class User extends Member implements BinaryTreeNode
                     throw new ModelException("Impossible de poursouvre les calculs dans le compte {$this->getId()} car une operation non prise en charge c trouve dans la collection des operations des ce compte");
                 }
             }
-
-            $this->sold = ($this->soldBinary + $this->soldParainage +  $this->soldResturn) - $this->soldWithdrawal;
+            $this->sold += ($this->soldBinary + $this->soldParainage +  $this->soldResturn) - $this->soldWithdrawal;
 
             if ($this->canChoosePack()) {
                 $this->pack = $this->choosePack($this->capital);

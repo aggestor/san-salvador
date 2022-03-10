@@ -581,6 +581,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-column: span 2 / span 2;
 }
 
+.m-1 {
+  margin: 0.25rem;
+}
+
 .m-4 {
   margin: 1rem;
 }
@@ -726,6 +730,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 0.25rem;
 }
 
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
 .mt-9 {
   margin-top: 2.25rem;
 }
@@ -740,6 +748,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .ml-4 {
   margin-left: 1rem;
+}
+
+.ml-12 {
+  margin-left: 3rem;
 }
 
 .block {
@@ -1477,6 +1489,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pb-4 {
   padding-bottom: 1rem;
+}
+
+.pl-8 {
+  padding-left: 2rem;
 }
 
 .text-left {
