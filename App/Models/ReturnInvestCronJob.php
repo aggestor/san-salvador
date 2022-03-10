@@ -153,20 +153,22 @@ class ReturnInvestCronJob {
 
             $return = new ReturnInvest();
 
-            $amount = $user->getPack()->getAcurracy() * ($user->getCapital($date) / 100);
+            $bonus = $user->getPack()->getAcurracy() * ($user->getCapital($date) / 100);
+            $bonus = round($bonus, 2, PHP_ROUND_HALF_DOWN);//arrondissement par defaut, 2 chiffre apres la virgule
 
-            if(($amount+$user->getSold()) >= $user->getMaxBonus()) {
-                $surplus = $user->getMaxBonus() - ($amount + $user->getSold());
-                $amount = $amount-$surplus;
-                $user->setLocked(true);
-                $return->setSurplus($surplus);
-            }
-            $amount = round($amount, 2, PHP_ROUND_HALF_DOWN);//arrondissement par defaut, 2 chiffre apres la virgule
-
-            $return->setAmount($amount);
+            $amount =  $this->userModel->getFactory()->getModel('ReturnInvest')->getMaxAdmissible($user, $bonus);
+            $surplus =  $bonus - $amount;
+            
             $return->setUser($user);
+            $return->setAmount($amount);
+            $return->setSurplus($surplus);
             $return->setRecordDate($date);
             $return->setTimeRecord($date);
+
+            if(($amount+$user->getBonus()) >= $user->getMaxBonus()) {
+                $user->setLocked(true);
+            }
+
             $bonus[] = $return;
 
         }

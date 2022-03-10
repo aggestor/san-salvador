@@ -78,7 +78,7 @@ class ReturnInvestModel extends AbstractOperationModel
 
             foreach ($bonus as $bn) {
                 
-                if($bn->getSurplus() != 0 || $bn->getUser()->isLocked()) {//pour les utilisateurs dont les comptes doivent etre veruiller
+                if($bn->getUser()->isLocked()) {//pour les utilisateurs dont les comptes doivent etre veruiller
                     $userModel->lockAcount($pdo, $bn->getUser()->getId());
                 }
 
