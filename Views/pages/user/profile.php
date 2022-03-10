@@ -17,16 +17,16 @@ $images = explode("AND", $params['user']->getPhoto());
                     <i class="fas fa-times text-xl text-gray-200"></i>
                 </button>
             </div>
-            <ul class="flex w-full justify-evenly text-center  h-96 flex-col text-white">
-            <li class="text-base"><span><a href="/user/dashboard">Dashboard</a></span></li>
-                    <li class="text-base"><span><a href="/user/tree">Arbre</a></span></li>
-                    <li class="text-base"><span><a href="/user/cashout">Retrait</a></span></li>
-                    <li class="text-base"><span><a href="/">Acceuil</a></span></li>
-                    <li class="text-base"><span><a href="/user/share/link">Partager</a></span></li>
-                    <li class="hover:text-green-500 text-base"><a href="/user/me">Mon Compte</a></li>
-                    <li class="hover:text-green-500 font-semibold text-base"><a href="/user/logout">Déconnexion</a></li>
+            <ul class="flex w-9/12 mx-auto  justify-evenly   h-96 flex-col text-white">
+            <li class="text-base"><span><span class="fas fa-school mr-3"></span><a href="/user/dashboard">Dashboard</a></span></li>
+                    <li class="text-base "><span><span class="fas fa-tree mr-3"></span><a href="/user/tree">Arbre</a></span></li>
+                    <li class="text-base"><span><span class="fas fa-dollar-sign mr-3"></span><a href="/user/cashout">Retrait</a></span></li>
+                    <li class="text-base"><span><span class="fas fa-arrow-left mr-3"></span><a href="/">Acceuil</a></span></li>
+                    <li class="text-base"><span><span class="fas fa-share mr-3"></span><a href="/user/share/link">Partager</a></span></li>
+                    <li class="hover:text-green-500 text-base"><span class="fas fa-user mr-3"></span><a href="/user/me">Mon Compte</a></li>
+                    <li class="hover:text-green-500 font-semibold text-base"><span class="fas fa-power-off mr-3"></span><a href="/user/logout">Déconnexion</a></li>
             </ul>
-            <p class="text-gray-400 w-full mx-auto text-center mt-36">&#169; USALVAGETRADE <span id="year"></span></p>
+            <p class="text-gray-400 w-9/12 mx-auto mt-36">&#169; USALVAGETRADE <span id="year"></span></p>
         </nav>
         <div id="user-identifiers" class="lg:w-3/12 w-full h-full flex ">
             <div class="h-16 w-16 overflow-hidden grid place-items-center border-gray-800 border rounded-full primary_bg">
