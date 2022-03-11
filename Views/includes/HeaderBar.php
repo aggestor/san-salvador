@@ -30,7 +30,7 @@
             <i class="fas fa-times text-xl text-gray-200"></i>
         </button>
     </div>
-    <ul class="flex w-full justify-evenly text-center  h-96 flex-col text-white">
+    <ul class="flex w-9/12 mx-auto justify-evenly  h-96 flex-col text-white">
        <li class="text-base"><span><a href="/">Acceuil</a></span></li>
             <li class="text-base"><span><a href="/help">Aide</a></span></li>
             <li class="text-base"><span><a href="/packages">Packs</a></span></li>
@@ -44,6 +44,6 @@
                 <li class="hover:text-green-500 font-semibold text-base"><a href="/user/logout">Déconnexion</a></li>
                 <?php endif;?>
     </ul>
-    <p class="text-gray-400 w-full mx-auto text-center mt-36">&#169; USALVAGETRADE <span id="year"></span></p>
+    <p class="text-gray-400 w-9/12 mx-auto  mt-36">&#169; USALVAGETRADE <span id="year"></span></p>
 </nav>
 </header>
