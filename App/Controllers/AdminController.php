@@ -293,7 +293,7 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            $inscription = $this->allNonValidateInscription($data[0] == 0 ? null : $data[0], $nombre_element_par_page);
+            $inscription = $this->allNonValidateInscription($nombre_element_par_page, $data[0]);
             if ($_GET['page'] > $data[1]) {
                 return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['message' => 1]);
             }
@@ -357,8 +357,8 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            $cashOut = $this->viewAllCashOutNotValide($data[0] == 0 ? null : $data[0], $nombre_element_par_page);
-            //$cashOut = $this->viewAllCashOutNotValide($nombre_element_par_page,$data[0]);
+            //$cashOut = $this->viewAllCashOutNotValide($data[0] == 0 ? null : $data[0], $nombre_element_par_page);
+            $cashOut = $this->viewAllCashOutNotValide($nombre_element_par_page, $data[0]);
             if ($_GET['page'] > $data[1]) {
                 return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['message' => 1]);
             }
@@ -378,7 +378,7 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            $cashOut = $this->viewAllCashOutValidate($data[0] == 0 ? null : $data[0], $nombre_element_par_page);
+            $cashOut = $this->viewAllCashOutValidate($nombre_element_par_page, $data[0]);
             if ($_GET['page'] > $data[1]) {
                 return $this->view("pages.admin.history", "layout_admin", ['message' => 1]);
             }
