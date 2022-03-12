@@ -573,11 +573,9 @@ class User extends Member implements BinaryTreeNode
                 if ($operation instanceof Inscription) {
                     $this->capital += ($operation->isValidate() ? $operation->getAmount() : 0);
                 } else if ($operation instanceof CashOut) {
-                    if($operation->isValidated()) {
+                    if($operation->isValidated() || $operation->getAdmin() != null) {
                         $this->soldWithdrawal += $operation->getAmount();
-                    } else {
-                        $this->sold += $operation->getAmount();
-                    }
+                    } 
                 } else if ($operation instanceof Parainage) {
                     $this->soldParainage += $operation->getAmount();
                 } else if ($operation instanceof Binary) {

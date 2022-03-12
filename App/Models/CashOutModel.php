@@ -40,8 +40,9 @@ class CashOutModel extends AbstractOperationModel
      * validation de d'un CshOut
      * @param string $id
      * @param string $adminId
+     * @param string $reference la reference de la transaction
      */
-    public function validate(string $id, string $adminId): void
+    public function validate(string $id, string $adminId, ?string $reference = null): void
     {
         if ($this->checkValidated($id, true)) {
             throw new ModelException("Impossible d'effectuer cette operation car ce CashOut est deja valider");
@@ -52,10 +53,12 @@ class CashOutModel extends AbstractOperationModel
                 $this->getTableName(),
                 [
                     Schema::CASHOUT['admin'],
+                    Schema::CASHOUT['reference']
                 ],
                 "id = ?",
                 [
                     $adminId,
+                    $reference,
                     $id
                 ]
             );
