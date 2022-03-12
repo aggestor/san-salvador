@@ -240,7 +240,7 @@ class CashOutModel extends AbstractOperationModel
             $SQL .= (Schema::CASHOUT['admin']) . ' IS ' . ($validated ? 'NOT' : '') . ' NULL ';
 
         $dateColumn = Schema::CASHOUT['recordDate'];
-        $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"");
+        $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFFSET {$offset}":"");
 
         try {
             $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} {$SQL} {$SQL_END}" , $args);
