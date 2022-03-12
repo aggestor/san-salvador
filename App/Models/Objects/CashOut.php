@@ -25,6 +25,13 @@ class CashOut extends Operation
      * @var string
      */
     private $destination;
+
+    /**
+     * La reference de la transaction
+     * typiquement un truc du genre (Transaction ID 453678 machin machin...) pour airtel money par exemple
+     * @var string
+     */
+    private $reference;
     
     /**
      * {@inheritDoc}
@@ -71,6 +78,9 @@ class CashOut extends Operation
      */
     public function isValidated () : ?bool
     {
+        if($this->validated === null){
+            return $this->getAdmin() != null;
+        }
         return $this->validated;
     }
 
@@ -94,6 +104,21 @@ class CashOut extends Operation
     public function setValidated($validated) : void
     {
         $this->validated = $validated;
+    }
+
+    /**
+     * @param string|null $reference
+     */
+    public function setReference (?string $reference) : void {
+        $this->reference = $reference;
+    }
+
+    /**
+     * Renvoie la reference de la transaction
+     * @return string|null
+     */
+    public function getReference () : ?string {
+        return $this->reference;
     }
     
     
