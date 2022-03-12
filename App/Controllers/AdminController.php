@@ -29,7 +29,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        var_dump($this->totalAmountInvested());exit();
+        //var_dump($this->totalAmountInvested());exit();
         if ($this->isAdmin()) {
             $amountBinary = $this->allBinary();;
             $amountInvest = $this->allReturnInvest();
@@ -37,7 +37,9 @@ class AdminController extends Controller
             $amountSurplus = $this->allSurplus();
             $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
             $amountCashOutValidated = $this->amountAllCashOutValide();
-            return $this->view('pages.admin.dashboard', 'layout_admin', ['binaire' => $amountBinary, 'invest' => $amountInvest, 'parainnage' => $amountParainnage, 'surplus' => $amountSurplus, 'cashoutNotValidate' => $amountCashOutNotValidated, 'cashoutValidate' => $amountCashOutValidated]);
+            $amountCapitalInvested = $this->totalAmountInvested();
+            $amountCaisse = ($amountBinary + $amountInvest + $amountParainnage + $amountSurplus) - $amountCashOutValidated;
+            return $this->view('pages.admin.dashboard', 'layout_admin', ['binaire' => $amountBinary, 'invest' => $amountInvest, 'parainnage' => $amountParainnage, 'surplus' => $amountSurplus, 'cashoutNotValidate' => $amountCashOutNotValidated, 'cashoutValidate' => $amountCashOutValidated, 'capital' => $amountCapitalInvested, 'caisse' => $amountCaisse]);
         }
     }
     /**
@@ -335,7 +337,8 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            $users = $this->allUsersHasValidateInscription($data[0], $nombre_element_par_page);
+            //var_dump($data[0],$nombre_element_par_page);exit();
+            $users = $this->allUsersHasValidateInscription($nombre_element_par_page, $data[0]);
             if ($_GET['page'] > $data[1]) {
                 return $this->view("pages.static.404");
             }
@@ -355,6 +358,7 @@ class AdminController extends Controller
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
             $cashOut = $this->viewAllCashOutNotValide($data[0] == 0 ? null : $data[0], $nombre_element_par_page);
+            //$cashOut = $this->viewAllCashOutNotValide($nombre_element_par_page,$data[0]);
             if ($_GET['page'] > $data[1]) {
                 return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['message' => 1]);
             }

@@ -117,7 +117,7 @@
                             <i class="fas fa-dollar-sign "></i>
                         </span>
                         <span class="font-semibold text-blue-500 mt-3 text-2xl my-auto">
-                            <?php echo $params['surplus'] ?>
+                            <?php echo $params['caisse'] ?>
                         </span>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                             <i class="fas fa-dollar-sign "></i>
                         </span>
                         <span class="font-semibold text-yellow-300 mt-3 text-2xl my-auto">
-                            <?= $params['cashoutValidate'] ?>
+                            <?= $params['capital'] ?>
                         </span>
                     </div>
                 </div>

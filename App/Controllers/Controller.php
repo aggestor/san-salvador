@@ -173,7 +173,8 @@ class Controller
      *
      * @return void
      */
-    public function control(){
+    public function control()
+    {
         if (!$this->userObject()->hasInscription()) {
             return $this->view("pages.user.hasNotSubscribedYet", "layout_", ['user' => $_SESSION[self::SESSION_USERS]]);
         } elseif ($this->existValidateInscription()) {
@@ -505,15 +506,21 @@ class Controller
         return array_sum($return);
     }
 
-    public function totalAmountInvested(){
-        // $allUsersHasPack=$this->allUsersHasValidateInscription();
-        // var_dump($allUsersHasPack);exit();
+    /**
+     * Methode pour retourner le montant total deja investi dans le systeme
+     *
+     * @return float|int
+     */
+    public function totalAmountInvested()
+    {
         $return = array();
-        if ($this->inscriptionModel->checkValidated()) {
-            $allUsersPacks = $this->inscriptionModel->findValidated();
-            
+        $allUsersHasPack = $this->allUsersHasValidateInscription();
+        foreach ($allUsersHasPack as $inscription) {
+            if (!$inscription->getUser()->getParent() == null && !$inscription->getUser()->getSponsor() == null) {
+                $return[] = $inscription->getAmount();
+            }
         }
-        return $return;
+        return array_sum($return);
     }
     /**
      * Destroy all session
