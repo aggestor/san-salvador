@@ -364,7 +364,7 @@ class InscriptionModel extends AbstractOperationModel
             $validation = Schema::INSCRIPTION['validate'];
           
             $dateColumn = Schema::INSCRIPTION['recordDate'];
-            $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"");
+            $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFFSET {$offset}":"");
 
             if ($userId === null) {
                 $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation} = 0 {$SQL_END}", array());
@@ -405,7 +405,7 @@ class InscriptionModel extends AbstractOperationModel
             $validation = Schema::INSCRIPTION['validate'];
           
             $dateColumn = Schema::INSCRIPTION['recordDate'];
-            $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFSSET {$offset}":"");
+            $SQL_END = " ORDER BY {$dateColumn} DESC ".(($limit != null)? " LIMIT {$limit} OFFSET {$offset}":"");
             if (is_null($userId)) {
                 $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$validation}=? {$SQL_END}", array(1));
             } else {
