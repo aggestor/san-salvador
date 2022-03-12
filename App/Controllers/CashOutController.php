@@ -37,6 +37,7 @@ class CashOutController extends Controller
                     $retrait = $validator->cashOutAfterValidation();
                     if ($validator->hasError() || $validator->getMessage() != null) {
                         $errors = $validator->getErrors();
+                        
                         return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'errors' => $errors, 'disabled' => true]);
                     } else {
                         $nom = $retrait->getUser()->getName();

@@ -64,7 +64,7 @@ class Router
     {
         //         var_dump($this->routes);
         //         exit();
-        foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+        foreach (($this->routes[$_SERVER['REQUEST_METHOD']]) as $route) {
             $matches = $route->matches($this->url);
             if ($matches !== false) {
 
