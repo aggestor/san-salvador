@@ -29,6 +29,7 @@ class AdminController extends Controller
      */
     public function index()
     {
+        var_dump($this->totalAmountInvested());exit();
         if ($this->isAdmin()) {
             $amountBinary = $this->allBinary();;
             $amountInvest = $this->allReturnInvest();
@@ -36,7 +37,6 @@ class AdminController extends Controller
             $amountSurplus = $this->allSurplus();
             $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
             $amountCashOutValidated = $this->amountAllCashOutValide();
-            $amountCashOutNotValidated = $this->amountAllCashOutNotValide();
             return $this->view('pages.admin.dashboard', 'layout_admin', ['binaire' => $amountBinary, 'invest' => $amountInvest, 'parainnage' => $amountParainnage, 'surplus' => $amountSurplus, 'cashoutNotValidate' => $amountCashOutNotValidated, 'cashoutValidate' => $amountCashOutValidated]);
         }
     }
@@ -48,26 +48,27 @@ class AdminController extends Controller
     public function create()
     {
         if ($this->isAdmin()) {
-            $allAdmin = $this->adminModel->findAll();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $allAdmin = $this->adminModel->findAll();
                 $validator = new AdiminValidator();
                 $admin = $validator->createAfterValidation();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
                     return $this->view("pages.admin.administratorsDashboard", "layout_admin", ['admin' => $admin, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage(), 'allAdmin' => $allAdmin]);
-                }
-                $mail = $admin->getEmail();
-                $token = $admin->getToken();
-                $id = $admin->getId();
-                $nom = $admin->getName();
-                $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
-                $lien = $domaineName . "admin/activation-$id-$token";
-                $_SESSION['mail'] = $mail;
-                if ($this->envoieMail($mail, "Activation et finalisation de la creation du compte", "pages/mail/activationAccoutMail",['nom'=>$nom,'lien'=>$lien])) {
-                    Controller::redirect('/mail/success');
                 } else {
-                    $_SESSION['action'] = 'activation';
-                    Controller::redirect('/admin/mail/resend');
+                    $mail = $admin->getEmail();
+                    $token = $admin->getToken();
+                    $id = $admin->getId();
+                    $nom = $admin->getName();
+                    $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
+                    $lien = $domaineName . "admin/activation-$id-$token";
+                    $_SESSION['mail'] = $mail;
+                    if ($this->envoieMail($mail, "Activation et finalisation de la creation du compte", "pages/mail/activationAccoutMail", ['nom' => $nom, 'lien' => $lien])) {
+                        Controller::redirect('/mail/success');
+                    } else {
+                        $_SESSION['action'] = 'activation';
+                        Controller::redirect('/admin/mail/resend');
+                    }
                 }
             }
             return $this->view('pages.admin.administratorsDashboard', 'layout_admin');
@@ -101,8 +102,8 @@ class AdminController extends Controller
                     $lien = $domaineName . "admin/reset-$id-$token";
                     $nom = $admin->getName();
                     $_SESSION['mail'] = $mail;
-                    
-                    if ($this->envoieMail($mail, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", ['nom'=>$nom,'lien'=>$lien])) {
+
+                    if ($this->envoieMail($mail, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", ['nom' => $nom, 'lien' => $lien])) {
                         Controller::redirect('/admin/mail/success');
                     } else {
                         $_SESSION['action'] = 'reset';
@@ -135,7 +136,7 @@ class AdminController extends Controller
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 if ($_GET['action'] == 'activation') {
                     $lien = $domaineName . "admin/activation-$id-$token";
-                    if ($this->envoieMail($mail, "Activation du compte", "pages/mail/activationAccoutMail",['nom'=>$nom,'lien'=>$lien])) {
+                    if ($this->envoieMail($mail, "Activation du compte", "pages/mail/activationAccoutMail", ['nom' => $nom, 'lien' => $lien])) {
                         Controller::redirect('admin/mail/success');
                     } else {
                         $_SESSION['action'] = 'activation';
@@ -143,7 +144,7 @@ class AdminController extends Controller
                     }
                 } else if ($_GET['action'] == 'reset') {
                     $lien = $domaineName . "admin/reset-$id-$token";
-                    if ($this->envoieMail($mail, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail",['nom'=>$nom,'lien'=>$lien])) {
+                    if ($this->envoieMail($mail, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", ['nom' => $nom, 'lien' => $lien])) {
                         Controller::redirect('admin/mail/success');
                     } else {
                         $_SESSION['action'] = 'reset';

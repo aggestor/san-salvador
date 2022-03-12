@@ -504,6 +504,17 @@ class Controller
         }
         return array_sum($return);
     }
+
+    public function totalAmountInvested(){
+        // $allUsersHasPack=$this->allUsersHasValidateInscription();
+        // var_dump($allUsersHasPack);exit();
+        $return = array();
+        if ($this->inscriptionModel->checkValidated()) {
+            $allUsersPacks = $this->inscriptionModel->findValidated();
+            
+        }
+        return $return;
+    }
     /**
      * Destroy all session
      *
