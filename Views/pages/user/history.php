@@ -155,66 +155,59 @@ $images = explode("AND", $params['user']->getPhoto());
     <?php if(isset($params['unvalidated']) OR isset($params['validated'])): ?>
         <div class="col-span-12 flex flex-col">
         <div class="lg:w-11/12 w-full mx-auto mb-4 h-12 border-b border-gray-900 flex flex-col lg:flex-row justify-between">
-            <h1 id="historyTitle" class="text-gray-300 font-semibold text-xl">Liste des retraits déjà confirmés</h1>
+            <h1 id="historyTitle" class="text-gray-300 font-semibold text-xl">Liste des retraits déjà validés</h1>
             <div class="h-12 flex justify-between">
-                <span id="validatedBtn" class=" text-gray-300 flex px-2 py-1 my-1 mx-2 rounded cursor-pointer hover:bg-slate-700 primary_bg_ place-items-center">Validés <span class="fas fa-check-circle ml-1"></span></span>
-                <span id="unvalidatedBtn" class=" text-gray-300 flex px-2 py-1 my-1 mx-2 rounded cursor-pointer hover:bg-slate-700 primary_bg_ place-items-center">Non validés <span class="fas fa-times-circle ml-1"></span></span>
+                <span id="validatedBtn" class=" text-gray-300 flex px-2 py-1 my-1 mx-2 rounded cursor-pointer hover:bg-slate-700 primary_bg_ place-items-center"> Retraits Validés <span class="fas fa-check-circle ml-1"></span></span>
+                <span id="unvalidatedBtn" class=" text-gray-300 flex px-2 py-1 my-1 mx-2 rounded cursor-pointer hover:bg-slate-700 primary_bg_ place-items-center"> Retraits Non validés <span class="fas fa-times-circle ml-1"></span></span>
             </div>
         </div>
         <div id="validated" class="w-11/12 mx-auto">
             <div class="w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
-            <div class="w-2/12">Id</div>
-            <div class="w-2/12">Montant</div>
-            <div class="w-2/12">Origine</div>
-            <div class="w-3/12">Référence</div>
-            <div class="w-2/12">Date</div>
-            <div class="w-1/12">Status</div>
-        </div>
+                <div class="w-2/12">Montant</div>
+                <div class="w-2/12">Destination</div>
+                <div class="w-2/12">Date</div>
+                <div class="w-1/12">Status</div>
+            </div>
         <?php foreach ($params['validated'] as $data) : ?>
-            <div class="w-3/12"><?= $data->getUser()->getId() ?></div>
-                <div class="w-2/12"><?= $data->getUser()->getAmount() ?>USD</div>
+            <div class="flex w-full mx-auto p-3 text-gray-300 my-2 border border-gray-800">
+                <div class="w-2/12"><?= $data->getAmount() ?>USD</div>
                 <div class="w-2/12"><?= str_replace("/", "", $data->getDestination()) ?></div>
-                <div class="w-3/12 font-semibold text-white"><?= $data->getAmount() ?> USD</div>
                 <div class="w-2/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
             </div>
         <?php endforeach; ?>
         </div>
-        <div id='unvalidated' style="display: none;" class="w-11/12 mx-auto">
+        <div id='unvalidated'  style="display: none;" class="w-11/12 mx-auto">
             <div class="w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
-                <div class="w-2/12">Id</div>
-                <div class="w-2/12">Montant</div>
-                <div class="w-2/12">Origine</div>
-                <div class="w-3/12">Référence</div>
-                <div class="w-2/12">Date</div>
-                <div class="w-1/12">Status</div>
+                <div class="w-3/12">Montant</div>
+                <div class="w-3/12">Origine</div>
+                <div class="w-3/12">Date</div>
+                <div class="w-3/12">Status</div>
             </div>
-            <?php foreach ($params['validated'] as $data) : ?>
-                <div class="w-3/12"><?= $data->getUser()->getId() ?></div>
-                    <div class="w-2/12"><?= $data->getUser()->getAmount() ?>USD</div>
-                    <div class="w-2/12"><?= str_replace("/", "", $data->getDestination()) ?></div>
+            <?php foreach ($params['unvalidated'] as $data) : ?>
+                <div class="w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
                     <div class="w-3/12 font-semibold text-white"><?= $data->getAmount() ?> USD</div>
-                    <div class="w-2/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
+                    <div class="w-3/12"><?= str_replace("/", "", $data->getDestination()) ?></div>
+                    <div class="w-3/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
+                    <div class="w-3/12 text-yellow-500">Non confirmé</div>
                 </div>
             <?php endforeach; ?>
         </div>
-        
-        
     </div>
     <?php else: ?>
         <div class="col-span-12  primary_bg grid place-items-center">
-    <div class="md:w-6/12 lg:w-8/12 flex flex-col lg:flex-row justify-center items-center border mt-16 border-gray-900 mx-auto primary_bg_ shadow rounded md:p-12 p-4">
-        <div class="md:w-10/12 w-11/12 lg:w-8/12  mx-auto md:p-3">
-            <h1 class="text-gray-200 text-3xl font-bold">Vous n'avez  effectué aucun retrait pour le moment.</h1>
-            <p class="text-gray-400 font-semibold text-lg mt-4">Tous les retrait validés ou non-validés seront affichés  sur cette page.</p>
+            <div class="md:w-6/12 lg:w-8/12 flex flex-col lg:flex-row justify-center items-center border mt-16 border-gray-900 mx-auto primary_bg_ shadow rounded md:p-12 p-4">
+                <div class="md:w-10/12 w-11/12 lg:w-8/12  mx-auto md:p-3">
+                    <h1 class="text-gray-200 text-3xl font-bold">Vous n'avez  effectué aucun retrait pour le moment.</h1>
+                    <p class="text-gray-400 font-semibold text-lg mt-4">Tous les retrait validés ou non-validés seront affichés  sur cette page.</p>
+                </div>
+                <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">
+                    <span class="w-full h-full justify-center flex items-center text-gray-900">
+                        <span class='w-40 h-40 bg-gray-500  rounded-full grid place-items-center'><i class="fas fa-dollar-sign fa-5x"></i></span>
+                    </span>
+                </div>
+            </div>
         </div>
-        <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">
-            <span class="w-full h-full justify-center flex items-center text-gray-900">
-                <span class='w-40 h-40 bg-gray-500  rounded-full grid place-items-center'><i class="fas fa-dollar-sign fa-5x"></i></span>
-            </span>
-        </div>
-    </div>
-</div>
-        <?php endif;?>
+    <?php endif;?>
 </div>
 
         </div>

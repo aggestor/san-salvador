@@ -588,12 +588,12 @@ if (passablePaths) {
 
 
 $("#validatedBtn").on("click", () => {
-  $("#validated").slideUp()
-  $("#unvalidated").slideDown()
-  $("#historyTitle").text("Liste des retraits déjà confirmés")
+  $("#validated").slideDown();
+  $("#unvalidated").slideUp();
+  $("#historyTitle").text("Liste des retraits validés")
 })
 $("#unvalidatedBtn").on("click", () => {
-  $("#validated").slideDown()
-  $("#unvalidated").slideUp()
+  $("#validated").slideUp();
+  $("#unvalidated").slideDown();
   $("#historyTitle").text("Liste des retraits non confirmés")
 })

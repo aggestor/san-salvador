@@ -494,12 +494,12 @@ if (passablePaths) {
     }, 3000);
 }
 $("#validatedBtn").on("click", () => {
-    $("#validated").slideUp();
-    $("#unvalidated").slideDown();
-    $("#historyTitle").text("Liste des retraits déjà confirmés");
-});
-$("#unvalidatedBtn").on("click", () => {
     $("#validated").slideDown();
     $("#unvalidated").slideUp();
+    $("#historyTitle").text("Liste des retraits validés");
+});
+$("#unvalidatedBtn").on("click", () => {
+    $("#validated").slideUp();
+    $("#unvalidated").slideDown();
     $("#historyTitle").text("Liste des retraits non confirmés");
 });
