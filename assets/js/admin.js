@@ -125,8 +125,8 @@ showers &&
 const hiders = document.querySelectorAll(".hideModal");
 hiders && hiders.forEach(hider => {
     hider.addEventListener("click", () => {
-        window.location.hash = "";
         $(".modal").slideUp();
+        window.location.href = "/admin/validate/cashout-" + $(hider).data("page");
     });
 });
 (function () {
