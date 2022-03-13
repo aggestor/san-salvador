@@ -379,6 +379,12 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Function personnel
+     *
+     * @param integer $nombre_element_par_page
+     * @return array
+     */
     public function checkExistErrorReference($nombre_element_par_page = 5)
     {
         $totalCount = $this->countCashOut();
@@ -438,7 +444,7 @@ class AdminController extends Controller
                         $montant = $cashOut->getAmount();
                         $destination = $cashOut->getDestination();
                         $referenceMail = $cashOut->getReference();
-                        $this->envoieMail($mail, "Validation du retrait", "pages/mail/cashOutMailValide", ['nom' => $nom, 'montant' => $montant, 'destination' => $destination, 'refrence'=>$referenceMail]);
+                        $this->envoieMail($mail, "Validation du retrait", "pages/mail/cashOutMailValide", ['nom' => $nom, 'montant' => $montant, 'destination' => $destination, 'refrence' => $referenceMail]);
                         header("location:" . $_SERVER['HTTP_REFERER']);
                     }
                 } else {
