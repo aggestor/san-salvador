@@ -369,24 +369,24 @@ class AdminController extends Controller
     public function viewAllNonValideCashOut()
     {
         if ($this->isAdmin()) {
-            $totalCount = $this->countCashOut();
-            $page = !empty($_GET['page']) ? $_GET['page'] : 1;
-            $nombre_element_par_page = 5;
-            $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            $cashOut = $this->viewAllCashOutNotValide($nombre_element_par_page, $data[0]);
-            if ($_GET['page'] > $data[1]) {
+            $datas = $this->checkExistErrorReference();
+            $cashOut = $datas[0];
+            if ($_GET['page'] > $datas[1]) {
                 return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['message' => 1]);
             }
-            $validator = new AdiminValidator();
-
-            if ($validator->hasError() || $validator->getMessage() != null) {
-                $errors = $validator->getErrors();
-                return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut, 'nombrePage' => $data[1], 'error' => $errors]);
-            }
-            return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut, 'nombrePage' => $data[1]]);
+            return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut, 'nombrePage' => $datas[1]]);
         }
     }
 
+    public function checkExistErrorReference($nombre_element_par_page = 5)
+    {
+        $totalCount = $this->countCashOut();
+        $page = !empty($_GET['page']) ? $_GET['page'] : 1;
+        $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
+        $cashOut = $this->viewAllCashOutNotValide($nombre_element_par_page, $data[0]);
+
+        return array($cashOut, $data[1]);
+    }
     /**
      * Historique des touts les retraits deja valide
      *
@@ -422,7 +422,6 @@ class AdminController extends Controller
             $idUser = $_GET['user'];
             $validator = new AdiminValidator();
             $reference = $validator->refTransactionValideCashOut();
-
             if (!is_null($reference)) {
                 /**
                  * @var CashOut
@@ -446,8 +445,12 @@ class AdminController extends Controller
                     return $this->view("pages.static.404");
                 }
             } else {
-                return $this->viewAllNonValideCashOut();
-                //Controller::redirect('/admin/validate/cashout-1');
+                $datas = $this->checkExistErrorReference();
+                $cashOut = $datas[0];
+                if ($validator->hasError() || $validator->getMessage() != null) {
+                    $errors = $validator->getErrors();
+                    return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut, 'nombrePage' => $datas[1], 'error' => $errors]);
+                }
             }
         }
     }
