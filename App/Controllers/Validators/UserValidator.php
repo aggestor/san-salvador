@@ -383,8 +383,7 @@ class UserValidator extends AbstractMemberValidator
             throw new \RuntimeException("Veuillez entrer les valeurs numeriques correctes");
         }
         $user = $this->userModel->load($_SESSION[self::SESSION_USERS]);
-
-        if ($user->getSold() < $amount) {
+        if ($user->getRealSold() < $amount) {
             throw new \RuntimeException("Valeur incorrect, le montant est superieur a votre solde");
         }
         if ($amount < self::MONTANT_MIN) {
