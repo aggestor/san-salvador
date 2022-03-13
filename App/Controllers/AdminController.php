@@ -6,6 +6,7 @@ use Root\App\Controllers\Validators\AdiminValidator;
 use Root\App\Models\AdminModel;
 use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\Admin;
+use Root\App\Models\Objects\CashOut;
 use Root\App\Models\Objects\User;
 
 class AdminController extends Controller
@@ -423,22 +424,21 @@ class AdminController extends Controller
             $validator = new AdiminValidator();
             $reference = $validator->refTransactionValideCashOut();
             if (!is_null($reference)) {
-                /**
-                 * @var CashOut
-                 */
-                $cashOut = $this->cashOutModel->findById($idCashOut);
                 if ($this->cashOutModel->checkById($idCashOut)) {
                     if ($this->cashOutModel->checkValidated()) {
+                        $this->cashOutModel->validate($idCashOut, $idAdmin, $reference);
+                        /**
+                         * @var CashOut
+                         */
+                        $cashOut = $this->cashOutModel->findById($idCashOut);
                         $cashOut->setUser($this->userModel->findById($idUser));
-
                         //Les information pour le mail
                         $nom = $cashOut->getUser()->getName();
                         $mail = $cashOut->getUser()->getEmail();
                         $montant = $cashOut->getAmount();
                         $destination = $cashOut->getDestination();
-
-                        $this->envoieMail($mail, "Validation du retrait", "pages/mail/cashOutMailValide", ['nom' => $nom, 'montant' => $montant, 'destination' => $destination]);
-                        $this->cashOutModel->validate($idCashOut, $idAdmin);
+                        $referenceMail = $cashOut->getReference();
+                        $this->envoieMail($mail, "Validation du retrait", "pages/mail/cashOutMailValide", ['nom' => $nom, 'montant' => $montant, 'destination' => $destination, 'refrence'=>$referenceMail]);
                         header("location:" . $_SERVER['HTTP_REFERER']);
                     }
                 } else {

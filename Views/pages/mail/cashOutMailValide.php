@@ -43,6 +43,7 @@
                                         <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                             Salut <strong><?= $params['nom'] ?></strong>, Votre retrait de <?= $params['montant'] . " USD " ?> chez UsalvageTrade vient d'être validé avec succès.<br>
                                             Le montant de votre requête vient d'être envoyé à cette adresse : <?php echo $params['destination'] ?><br>
+                                            La reference de la transaction : <?php echo $params['refrence'] ?><br>
                                             Merci pour votre confiance chez UsalvageTrade<br>
                                             <br>
                                         </p>
