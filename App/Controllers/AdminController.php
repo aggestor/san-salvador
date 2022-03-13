@@ -378,6 +378,7 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
+            //$cashOut = $this->viewAllCashOutValidate($nombre_element_par_page, $data[0]);
             $cashOut = $this->viewAllCashOutValidate($nombre_element_par_page, $data[0]);
             if ($_GET['page'] > $data[1]) {
                 return $this->view("pages.admin.history", "layout_admin", ['message' => 1]);

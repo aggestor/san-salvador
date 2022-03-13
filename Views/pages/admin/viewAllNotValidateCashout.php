@@ -21,7 +21,7 @@
                 <div class="w-1/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
                 <div class="flex w-1/12 justify-between">
                     <form method="POST" action="/admin/validate/cashout-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="_green_bg rounded text-gray-800 p-1.5 m-1 " type="submit"><i class="fas fa-check-circle   "></i></button></form>
-                <form method="POST" action="/admin/canceled/cashout-<?= $data->getId()?>"><button class="bg-red-500 rounded text-white p-1.5 m-1" type="submit"><i class="fas fa-times-circle    "></i></button></form>
+                    <form method="POST" action="/admin/canceled/cashout-<?= $data->getId() ?>"><button class="bg-red-500 rounded text-white p-1.5 m-1" type="submit"><i class="fas fa-times-circle    "></i></button></form>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -35,13 +35,13 @@
                 $nombre_de_pages = $params['nombrePage'];
                 if ($page < $nombre_de_pages and $page != 1) : ?>
                     <div class="w-3/12 flex justify-between">
-                        <a href="/admin/cashout-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
-                        <a href="/admin/cashout-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
+                        <a href="/admin/validate/cashout-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
+                        <a href="/admin/validate/cashout-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
                     </div>
                 <?php elseif ($page == $nombre_de_pages and $page != 1) : ?>
-                    <a href="/admin/cashout-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
+                    <a href="/admin/validate/cashout-<?= $page - 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">&larr; Retour </a>
                 <?php elseif ($page == 1 and $nombre_de_pages > 1) : ?>
-                    <a href="/admin/cashout-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
+                    <a href="/admin/validate/cashout-<?= $page + 1 ?>" class="bg-blue-600 p-2 rounded hover:bg-blue-800 cursor-pointer text-white">Suivant &rarr;</a>
                 <?php endif; ?>
             </div>
         </div>
