@@ -14,6 +14,7 @@ use RuntimeException;
 class AdiminValidator extends AbstractMemberValidator
 {
     const FIELD_PASSWORD_CONFIRM = 'confirm_password';
+    const FIELD_REF_CASHOUT = 'ref';
     /**
      * Undocumented variable
      *
@@ -185,5 +186,41 @@ class AdiminValidator extends AbstractMemberValidator
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec d'inscription" : "succes";
         $admins = $this->adminModel->findById($id);
         return $admins;
+    }
+    /**
+     * Fonction pour verifier et retourner la reference avant validation cashout
+     *
+     * @return mixed
+     */
+    public function refTransactionValideCashOut()
+    {
+        $reference = $_POST[self::FIELD_REF_CASHOUT];
+        $this->processingRefCashOut($reference);
+        if (!$this->hasError()) {
+            return $reference;
+        }
+    }
+    /**
+     * Validation reference cashout
+     *
+     * @return void
+     */
+    protected function validationRefCashOut($reference)
+    {
+        $this->notNullable($reference);
+    }
+
+    /**
+     * Traitement reference cashout
+     *
+     * @return void
+     */
+    protected function processingRefCashOut($reference)
+    {
+        try {
+            $this->validationRefCashOut($reference);
+        } catch (\RuntimeException $e) {
+            $this->addError(self::FIELD_REF_CASHOUT, $e->getMessage());
+        }
     }
 }

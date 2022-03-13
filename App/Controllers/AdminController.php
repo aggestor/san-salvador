@@ -17,10 +17,26 @@ class AdminController extends Controller
      */
     private $adminModel;
 
+    /**
+     * User Model
+     *
+     * @var UserModel
+     */
+    private $userModel;
+
+    /**
+     * CashOut Model
+     *
+     * @var CashOutModel
+     */
+    private $cashOutModel;
+
     public function __construct()
     {
         parent::__construct();
         $this->adminModel = ModelFactory::getInstance()->getModel('Admin');
+        $this->userModel = ModelFactory::getInstance()->getModel("User");
+        $this->cashOutModel = ModelFactory::getInstance()->getModel("CashOut");
     }
     /**
      * Dashboard admin
@@ -357,10 +373,15 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            //$cashOut = $this->viewAllCashOutNotValide($data[0] == 0 ? null : $data[0], $nombre_element_par_page);
             $cashOut = $this->viewAllCashOutNotValide($nombre_element_par_page, $data[0]);
             if ($_GET['page'] > $data[1]) {
                 return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['message' => 1]);
+            }
+            $validator = new AdiminValidator();
+
+            if ($validator->hasError() || $validator->getMessage() != null) {
+                $errors = $validator->getErrors();
+                return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut, 'nombrePage' => $data[1], 'error' => $errors]);
             }
             return $this->view('pages.admin.viewAllNotValidateCashout', 'layout_admin', ['cashOut' => $cashOut, 'nombrePage' => $data[1]]);
         }
@@ -396,8 +417,38 @@ class AdminController extends Controller
     public function validationCashOut()
     {
         if ($this->isAdmin()) {
-            $this->activeCashOut();
-            //header("location:" . $_SERVER['HTTP_REFERER']);
+            $idCashOut = $_GET['cashout'];
+            $idAdmin = $_SESSION[self::SESSION_ADMIN]->getId();
+            $idUser = $_GET['user'];
+            $validator = new AdiminValidator();
+            $reference = $validator->refTransactionValideCashOut();
+
+            if (!is_null($reference)) {
+                /**
+                 * @var CashOut
+                 */
+                $cashOut = $this->cashOutModel->findById($idCashOut);
+                if ($this->cashOutModel->checkById($idCashOut)) {
+                    if ($this->cashOutModel->checkValidated()) {
+                        $cashOut->setUser($this->userModel->findById($idUser));
+
+                        //Les information pour le mail
+                        $nom = $cashOut->getUser()->getName();
+                        $mail = $cashOut->getUser()->getEmail();
+                        $montant = $cashOut->getAmount();
+                        $destination = $cashOut->getDestination();
+
+                        $this->envoieMail($mail, "Validation du retrait", "pages/mail/cashOutMailValide", ['nom' => $nom, 'montant' => $montant, 'destination' => $destination]);
+                        $this->cashOutModel->validate($idCashOut, $idAdmin);
+                        header("location:" . $_SERVER['HTTP_REFERER']);
+                    }
+                } else {
+                    return $this->view("pages.static.404");
+                }
+            } else {
+                return $this->viewAllNonValideCashOut();
+                //Controller::redirect('/admin/validate/cashout-1');
+            }
         }
     }
 
