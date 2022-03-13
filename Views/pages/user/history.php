@@ -202,7 +202,7 @@ $images = explode("AND", $params['user']->getPhoto());
                     <?php foreach ($params['nonValide'] as $data): ?>
                     <tr class="my-2 border p-2 border-gray-800">
                         <td class="w-2/12 p-2"><?=$data->getAmount()?>USD</td>
-                        <td class="p-2 w-6/12 text-center"><?=$data->getReference()?></td>
+                        <td class="p-2 w-6/12 text-center"><?=$data->getDestination()?></td>
                         <td class="w-2/12 p-2 text-center"><?=$data->getRecordDate()->format("d-m-Y")?></td>
                         <td class="p-2 w-1/12 text-center"><span class='fas fa-clock text-yellow-500'></span></td>
                     </tr>
