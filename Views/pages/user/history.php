@@ -154,7 +154,7 @@ $images = explode("AND", $params['user']->getPhoto());
         </div>
         <div class="lg:col-span-10 col-span-12 h-screen-customer scroll lg:overflow-y-auto lg:overflow-x-hidden flex flex-col lg:p-3">
             <div class="w-full mt-4 h-screen-admin scroll overflow-y-scroll grid grid-cols-12">
-    <?php if(isset($params['unvalidated']) OR isset($params['validated'])): ?>
+    <?php if(isset($params['valide']) OR isset($params['nonValide'])): ?>
         <div class="col-span-12 flex flex-col">
         <div class="lg:w-11/12 w-full mx-auto mb-4 h-12 border-b border-gray-900 flex flex-col lg:flex-row justify-between">
             <h1 id="historyTitle" class="text-gray-300 font-semibold text-xl">Liste des retraits déjà validés</h1>
@@ -163,36 +163,52 @@ $images = explode("AND", $params['user']->getPhoto());
                 <span id="unvalidatedBtn" class=" text-gray-300 flex px-2 py-1 my-1 mx-2 rounded cursor-pointer hover:bg-slate-700 primary_bg_ place-items-center"> Retraits Non validés <span class="fas fa-times-circle ml-1"></span></span>
             </div>
         </div>
-        <div id="validated" class="w-11/12 mx-auto">
-            <div class="w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
-                <div class="w-2/12">Montant</div>
-                <div class="w-2/12">Destination</div>
-                <div class="w-2/12">Date</div>
-                <div class="w-1/12">Status</div>
-            </div>
-        <?php foreach ($params['validated'] as $data) : ?>
-            <div class="flex w-full mx-auto p-3 text-gray-300 my-2 border border-gray-800">
-                <div class="w-2/12"><?= $data->getAmount() ?>USD</div>
-                <div class="w-2/12"><?= str_replace("/", "", $data->getDestination()) ?></div>
-                <div class="w-2/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
-            </div>
-        <?php endforeach; ?>
+        <div id="validated" class="w-11/12 text-sm lg:text-base mx-auto">
+
+            <table class="table-auto overflow-x-auto w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_  rounded">
+                <thead>
+                    <tr>
+                        <th class="w-1/12">Montant</th>
+                        <th class="w-4/12">Destination</th>
+                        <th class="w-4/12">Référence</th>
+                        <th class="w-2/12">Date</th>
+                        <th class="w-1/12">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($params['valide'] as $data): ?>
+                    <tr class="my-2 border p-2 border-gray-800">
+                        <td class="w-1/12 p-2"><?=$data->getAmount()?>USD</td>
+                        <td class="p-2 w-4/12 text-center"><?=str_replace("/", "", $data->getDestination())?></td>
+                        <td class="p-2 w-4/12 text-center"><?=$data->getReference()?></td>
+                        <td class="w-2/12 p-2 text-center"><?=$data->getRecordDate()->format("d-m-Y")?></td>
+                        <td class="p-2 w-1/12 text-center"><span class='fas fa-check-circle text-green-500'></span></td>
+                    </tr>
+                    <?php endforeach;?>
+                </tbody>
+            </table>
         </div>
-        <div id='unvalidated'  style="display: none;" class="w-11/12 mx-auto">
-            <div class="w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
-                <div class="w-3/12">Montant</div>
-                <div class="w-3/12">Origine</div>
-                <div class="w-3/12">Date</div>
-                <div class="w-3/12">Status</div>
-            </div>
-            <?php foreach ($params['unvalidated'] as $data) : ?>
-                <div class="w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
-                    <div class="w-3/12 font-semibold text-white"><?= $data->getAmount() ?> USD</div>
-                    <div class="w-3/12"><?= str_replace("/", "", $data->getDestination()) ?></div>
-                    <div class="w-3/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
-                    <div class="w-3/12 text-yellow-500">Non confirmé</div>
-                </div>
-            <?php endforeach; ?>
+        <div id='unvalidated'  style="display: none;" class="w-11/12 text-sm lg:text-base  mx-auto">
+            <table class="table-auto overflow-x-auto w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_  rounded">
+                <thead>
+                    <tr>
+                        <th class="w-2/12">Montant</th>
+                        <th class="w-6/12">Destination</th>
+                        <th class="w-2/12">Date</th>
+                        <th class="w-2/12">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($params['nonValide'] as $data): ?>
+                    <tr class="my-2 border p-2 border-gray-800">
+                        <td class="w-2/12 p-2"><?=$data->getAmount()?>USD</td>
+                        <td class="p-2 w-6/12 text-center"><?=$data->getReference()?></td>
+                        <td class="w-2/12 p-2 text-center"><?=$data->getRecordDate()->format("d-m-Y")?></td>
+                        <td class="p-2 w-1/12 text-center"><span class='fas fa-clock text-yellow-500'></span></td>
+                    </tr>
+                    <?php endforeach;?>
+                </tbody>
+            </table>
         </div>
     </div>
     <?php else: ?>

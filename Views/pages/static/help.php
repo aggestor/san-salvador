@@ -133,10 +133,10 @@
       <div class="w-full block mb-4 mt-2">
            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">10. COMMENT PUIS-JE CONTACTER USALVAGETRADE DIRECTEMENT ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
-                Nous acceptons le paiement par:
+                Nous sommes joignable par ces contacts ci-bas:
                 <ul class="text-gray-500 md:w-9/12 w-11/12 pl-2 list-disc">
                     <li class="ml-8">WhatsApp : <span class="font-semibold text-green-500"><a  href="https://wa.me/19292245034"> +1 929-224-5034</a> </span></li>
-                    <li class="ml-8">Adresse mail :<span class="font-semibold text-green-500"><a  href="mailto:contact@usalvagetrade.com">contact@usalvagetrade.com</a> </span></li>
+                    <li class="ml-8">Adresse mail :<span class="font-semibold text-green-500"><a  href="mailto:support@usalvagetrade.com">support@usalvagetrade.com</a> </span></li>
                     <li class="ml-8"><span class="font-semibold text-green-500"><a  href="/contact">Aller sur notre page de contacts</a></span></li>
                 </ul>
             </p>

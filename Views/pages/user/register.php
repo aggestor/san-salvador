@@ -41,7 +41,7 @@
                         <div class="md:w-11/12 md:flex w-full md:justify-left mb-2 mx-auto">
                             <div class="md:w-5/12 md:mt-0 mt-1 mr-1">
                                 <div class="mx-auto focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-10 px-2 items-center flex rounded border  <?= $data =(isset($_POST['enregistrer']) && !empty($params['errors']['phone_number'])) ?"border-red-500" : " border-gray-400" ?>">
-                                <select name="country_code" class="primary_bg text-gray-400 scroll outline-none w-56 lg:w-full">
+                                <select name="country_code" class="primary_bg text-gray-400 scroll outline-none w-full">
                                     <option data-countryCode="CD" value="243" Selected>Congo Kinshasa (+243)</option>
                                     <option data-countryCode="US" value="1">USA (+1)</option>
                                     <optgroup class="primary_bg hover:bg-green-500" label="Other countries">
@@ -300,7 +300,7 @@
                         <!--PASSWORD END-->
                         <div class="md:w-11/12 flex justify-between mt-3 mx-auto">
                             <div class="lg:w-9/12 text-gray-500 text-sm">
-                                Avant de cliquer sur <i>Suivant</i>, rassurez-vous d'avoir bien rempli le formulaire ce-dessus.
+                                Avant de cliquer sur <i>Suivant</i>, rassurez-vous d'avoir bien rempli le formulaire ci-dessus.
                             </div>
                         </div>
                         <div class="md:w-11/12 w-full mx-auto mt-4">

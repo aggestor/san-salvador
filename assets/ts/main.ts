@@ -533,7 +533,7 @@ $("#showBTCGraph").click((e: Event): void => {
   $("#btcGraph").slideDown();
 });
 const passablePaths = "/user/pack/subscribe" || "/user/cashout";
-if (passablePaths) {
+if ( window.location.pathname == passablePaths ) {
   let socket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
 
   let prices: Array<string | number | any> = [];
