@@ -27,6 +27,8 @@ class UserValidator extends AbstractMemberValidator
     const FIELD_MESSAGE_CONTACT = 'message';
     const FIELD_BITCON = 'btc_address';
     const PHONE_BITCON = 'btc_phone';
+    const FIELD_IMAGE = 'image';
+    
 
     /**
      * Undocumented variable
@@ -41,8 +43,6 @@ class UserValidator extends AbstractMemberValidator
      * @var CashOutModel
      */
     private $cashOutModel;
-
-    const FIELD_IMAGE = 'image';
 
     public function __construct()
     {
@@ -187,6 +187,7 @@ class UserValidator extends AbstractMemberValidator
         $cashOut->setUser($this->userModel->findById($idUser));
         return $cashOut;
     }
+
     /**
      * Login de l'utilisateur apres validation
      * {@inheritDoc}
@@ -312,6 +313,7 @@ class UserValidator extends AbstractMemberValidator
         }
     }
 
+    
     /**
      * Validation du message de contact
      *
@@ -322,7 +324,6 @@ class UserValidator extends AbstractMemberValidator
     {
         $this->notNullable($message);
     }
-
 
     /**
      * Traitement du message de contact apres validation

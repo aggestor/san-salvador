@@ -3,6 +3,8 @@
 namespace Root\App\Controllers;
 
 use ArrayObject;
+use Root\App\Controllers\Validators\AdiminValidator;
+use Root\App\Controllers\Validators\UserValidator;
 use Root\App\Models\BinaryModel;
 use Root\App\Models\CashOutModel;
 use Root\App\Models\InscriptionModel;
@@ -318,34 +320,38 @@ class Controller
      *
      * @return void
      */
-    public function activeCashOut()
-    {
-        $idCashOut = $_GET['cashout'];
-        $idAdmin = $_SESSION[self::SESSION_ADMIN]->getId();
-        $idUser = $_GET['user'];
+    // public function activeCashOut()
+    // {
+    //     $idCashOut = $_GET['cashout'];
+    //     $idAdmin = $_SESSION[self::SESSION_ADMIN]->getId();
+    //     $idUser = $_GET['user'];
+    //     $validator = new AdiminValidator();
+    //     $reference = $validator->refTransactionValideCashOut();
 
-        /**
-         * @var CashOut
-         */
-        $cashOut = $this->cashOutModel->findById($idCashOut);
-        if ($this->cashOutModel->checkById($idCashOut)) {
-            if ($this->cashOutModel->checkValidated()) {
-                $cashOut->setUser($this->userModel->findById($idUser));
+    //     if (!is_null($reference)) {
+    //         /**
+    //          * @var CashOut
+    //          */
+    //         $cashOut = $this->cashOutModel->findById($idCashOut);
+    //         if ($this->cashOutModel->checkById($idCashOut)) {
+    //             if ($this->cashOutModel->checkValidated()) {
+    //                 $cashOut->setUser($this->userModel->findById($idUser));
 
-                //Les information pour le mail
-                $nom = $cashOut->getUser()->getName();
-                $mail = $cashOut->getUser()->getEmail();
-                $montant = $cashOut->getAmount();
-                $destination = $cashOut->getDestination();
+    //                 //Les information pour le mail
+    //                 $nom = $cashOut->getUser()->getName();
+    //                 $mail = $cashOut->getUser()->getEmail();
+    //                 $montant = $cashOut->getAmount();
+    //                 $destination = $cashOut->getDestination();
 
-                $this->envoieMail($mail, "Validation du retrait", "pages/mail/cashOutMailValide", ['nom' => $nom, 'montant' => $montant, 'destination' => $destination]);
-                $this->cashOutModel->validate($idCashOut, $idAdmin);
-                header("location:" . $_SERVER['HTTP_REFERER']);
-            }
-        } else {
-            return $this->view("pages.static.404");
-        }
-    }
+    //                 $this->envoieMail($mail, "Validation du retrait", "pages/mail/cashOutMailValide", ['nom' => $nom, 'montant' => $montant, 'destination' => $destination]);
+    //                 $this->cashOutModel->validate($idCashOut, $idAdmin);
+    //                 header("location:" . $_SERVER['HTTP_REFERER']);
+    //             }
+    //         } else {
+    //             return $this->view("pages.static.404");
+    //         }
+    //     }
+    // }
 
     public function cancelCashOut()
     {
