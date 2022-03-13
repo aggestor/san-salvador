@@ -293,7 +293,7 @@ class Controller
                 $cashOut->setUser($this->userModel->findById($idUser));
                 $return[] = $cashOut;
             }
-            return $cashOut;
+            return $return;
         }
         return $return;
     }
