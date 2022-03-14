@@ -78,7 +78,7 @@ class PackController extends Controller
                     Controller::redirect('/user/logout');
                 }
             } else {
-                return $this->view('pages.packages.blocked', "layout_");
+                return $this->view('pages.packages.blocked');
             }
         } else {
             Controller::redirect('/login');
