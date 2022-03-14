@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="md:w-11/12 mx-auto mt-4">
-                <button type="submit" name="connexion" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-lock"></i> Connexion</button>
+                <button type="submit" name="connexion" class="bg-green-500 text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-lock"></i> Connexion</button>
             </div>
         </form>
         <div class="lg:w-6/12 hidden lg:flex overflow-hidden items-center justify-center">

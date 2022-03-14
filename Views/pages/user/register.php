@@ -304,7 +304,7 @@
                             </div>
                         </div>
                         <div class="md:w-11/12 w-full mx-auto mt-4">
-                            <button name="2" type="button" class="_green_bg form-user-btn text-gray-900 p-2 md:w-9/12 w-full h-10 rounded"><i class="fas fa-arrow-down"></i> Suivant</button>
+                            <button name="2" type="button" class="bg-green-500 form-user-btn text-gray-900 p-2 md:w-9/12 w-full h-10 rounded"><i class="fas fa-arrow-down"></i> Suivant</button>
                         </div>
                         <div class="md:w-11/12 mx-auto ">
                             <span class="flex ml-1 text-gray-400">Déjà inscrit(e)? &#160;<a class="hover:text-green-500 font-semibold" href="/login">Se connecter</a></span>
@@ -314,7 +314,7 @@
                     <div class="w-full form-2 hidden flex-col mx-auto p-3">
                         <div>
                             <div style="display:none" class=" w-full grid place-items-center" id="crop"></div>
-                            <div class="w-16 h-16 rounded-full _green_bg cursor-pointer grid place-items-center mx-auto" id="camera"> <i class="fas fa-2x mx-auto fa-camera    "></i></div>
+                            <div class="w-16 h-16 rounded-full bg-green-500 cursor-pointer grid place-items-center mx-auto" id="camera"> <i class="fas fa-2x mx-auto fa-camera    "></i></div>
                         </div>
                         <div class="md:w-11/12  flex justify-between mt-3 mx-auto">
                             <div class="lg:w-9/12 text-gray-500 text-sm">
@@ -322,8 +322,8 @@
                             </div>
                         </div>
                         <div class="md:w-11/12 w-full flex justify-between mx-auto mt-4">
-                            <button type="submit" name="enregistrer" class="_green_bg  text-gray-900 p-2 w-5/12 h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
-                            <button name="-2" type="button" class="_green_bg form-user-btn text-gray-900 p-2 w-5/12 h-10 rounded"><i class="fas fa-arrow-up"></i> Retour</button>
+                            <button type="submit" name="enregistrer" class="bg-green-500  text-gray-900 p-2 w-5/12 h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
+                            <button name="-2" type="button" class="bg-green-500 form-user-btn text-gray-900 p-2 w-5/12 h-10 rounded"><i class="fas fa-arrow-up"></i> Retour</button>
                         </div>
                     </div>
                     <input type="file" id="imageToCrop" class="hidden">
