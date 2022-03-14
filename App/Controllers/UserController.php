@@ -83,7 +83,8 @@ class UserController extends Controller
                     $lien = $domaineName . "reset-$id-$token";
                     $nom = $user->getName();
                     $_SESSION['mail'] = $mail;
-                    if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", $nom)) {
+                    //$mail "Reinitialisation du mot de passe", "pages/mail/resetPwdMail"
+                    if ($this->envoieMail($mail,"Reinitialisation du mot de passe","pages/mail/resetPwdMail",['nom'=>$nom,'lien'=>$lien])) {
                         Controller::redirect('/mail/success');
                     } else {
                         $_SESSION['action'] = 'reset';
@@ -149,7 +150,8 @@ class UserController extends Controller
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 $lien = $domaineName . "activation-$id-$token";
                 $_SESSION['mail'] = $mail;
-                if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail", $nom)) {
+                //$mail,"Reinitialisation du mot de passe","pages/mail/resetPwdMail",['nom'=>$nom,'lien'=>$lien]
+                if ($this->envoieMail($mail, "Activation du compte", "pages/mail/activationAccoutMail",['nom'=>$nom,'lien'=>$lien])) {
                     Controller::redirect('/mail/success');
                 } else {
                     $_SESSION['action'] = 'activation';
@@ -216,8 +218,8 @@ class UserController extends Controller
                 $user = $validator->updateAfterValidation();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
-                    // var_dump($errors, $validator->getMessage());
-                    // exit();
+                    var_dump($errors, $validator->getMessage());
+                    exit();
                     return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject(), 'errors' => $errors]);
                 }
                 Controller::redirect('/user/me');
@@ -248,7 +250,7 @@ class UserController extends Controller
         if ($this->isUsers()) {
             $cashOutNotValideUser = $this->viewAllHistoryCashOutForUser();
             $cashOutValideUser = $this->viewAllHistoryCashOutForUser(true);
-            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject(), 'validated' => $cashOutValideUser, 'unvalidated' => $cashOutNotValideUser]);
+            return $this->view('pages.user.history', 'layout_', ['user' => $this->userObject(), 'valide' => $cashOutValideUser, 'nonValide' => $cashOutNotValideUser]);
         }
     }
     public function treeData()
@@ -294,7 +296,8 @@ class UserController extends Controller
                 $domaineName = $_SERVER['HTTP_ORIGIN'] . '/';
                 if ($_GET['action'] == 'activation') {
                     $lien = $domaineName . "activation-$id-$token";
-                    if ($this->envoieMail($mail, $lien, "Activation du compte", "pages/mail/activationAccoutMail", $nom)) {
+                    //$mail,"Reinitialisation du mot de passe","pages/mail/resetPwdMail",['nom'=>$nom,'lien'=>$lien]
+                    if ($this->envoieMail($mail,"Activation du compte", "pages/mail/activationAccoutMail",['nom'=>$nom,'lien'=>$lien])) {
                         Controller::redirect('/mail/success');
                     } else {
                         $_SESSION['action'] = 'activation';
@@ -302,7 +305,7 @@ class UserController extends Controller
                     }
                 } else if ($_GET['action'] == 'reset') {
                     $lien = $domaineName . "reset-$id-$token";
-                    if ($this->envoieMail($mail, $lien, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail", $nom)) {
+                    if ($this->envoieMail($mail, "Reinitialisation du mot de passe", "pages/mail/resetPwdMail",['nom'=>$nom,'lien'=>$lien])) {
                         Controller::redirect('/mail/success');
                     } else {
                         $_SESSION['action'] = 'reset';

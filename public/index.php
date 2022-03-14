@@ -3,6 +3,7 @@
 use Root\Autoloader;
 use Root\routes\Router;
 use Root\App\Exceptions\NotFoundException;
+use Root\App\Models\ModelFactory;
 
 include("../Autoloader.php");
 Autoloader::register();
@@ -137,11 +138,13 @@ $routes->post('/mail/resend-(reset|activation)', 'Root\App\Controllers\UserContr
     2. la reinitialisation du mot de passe avec success
     3. l'incription terminer avec succes 
     4. view pour le lien de parainage
+    5. Pour cas ou votre compte a deja atteint 300% du montant investi
  */
 $routes->get('/mail/success', 'Root\App\Controllers\Controller@mailSendSuccess');
 $routes->get('/user/password', 'Root\App\Controllers\UserController@passwordSuccess');
 $routes->get('/user/account', 'Root\App\Controllers\UserController@registerSuccess');
 $routes->get('/user/share/link', 'Root\App\Controllers\UserController@shareLink');
+//$routes->get('/user/', 'Root\App\Controllers\UserController@shareLink');
 
 
 //route d'activation du compte utilisateur
@@ -156,6 +159,7 @@ $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controller
  */
 $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
 $routes->get('/teste', function () {
+   // var_dump(ModelFactory::getInstance()->getModel('CashOut')->findValidated());
 });
 try {
     $routes->run();

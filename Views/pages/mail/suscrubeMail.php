@@ -3,8 +3,8 @@
 
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Reset Password Email Template</title>
-    <meta name="description" content="Reset Password Email Template.">
+    <title>Demande de Retrait Email Template</title>
+    <meta name="description" content="Validation de l'inscription">
     <style type="text/css">
         a:hover {
             text-decoration: underline !important;
@@ -38,14 +38,14 @@
                                 </tr>
                                 <tr>
                                     <td style="padding:0 35px;">
-                                        <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">Merci pour votre inscription sur usalvagetrade</h1>
+                                        <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">Demande de retait</h1>
                                         <span style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                         <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                            <?= $params['nom'] ?></strong>, merci pour votre inscription sur <strong>usalvagetrade</strong> .<br>
-                                            Vous êtes à la finalisation de la création de votre compte. Vous recevez ce mail enfin d'activer votre compte et de nous confirmer que ce mail est bien le votre.
-                                            <br>Cliquer sur le bouton ci-bas, pour finaliser !
+                                            Salut <strong><?= $params['nom'] ?></strong>, Votre inscription de <?= $params['montant'] . " USD " ?> chez UsalvageTrade vient d'être validé avec succès.<br>
+                                            Merci pour votre confiance chez UsalvageTrade<br>
+                                            <br>
                                         </p>
-                                        <a href="<?php echo $params['lien'] ?>" style="background:#1064ff;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Activer mon compte</a>
+                                        <a href="https://www.usalvagetrade.com/login" style="background:#1064ff;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Connectez-vous</a> <br>
                                     </td>
                                 </tr>
                                 <tr>

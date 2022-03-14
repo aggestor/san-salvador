@@ -42,9 +42,10 @@ class CashOutController extends Controller
                         $nom = $retrait->getUser()->getName();
                         $mail = $retrait->getUser()->getEmail();
                         $_SESSION['mail'] = $mail;
-                        if ($this->envoieMail($mail, "", "Demande de retrait", "pages/mail/cahOutMail", $nom)) {
+                        if ($this->envoieMail($mail, "Demande de retrait", "pages/mail/cahOutMail", ['montant' => $retrait->getAmount(),'nom'=>$nom])) {
                             Controller::redirect('/mail/success');
                         }
+                        Controller::redirect('/mail/success');
                     }
                 }
                 return $this->view('pages.user.cashout', 'layout_', ['user' => $this->userObject(), 'disabled' => true]);
