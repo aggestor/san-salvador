@@ -3,7 +3,7 @@
         <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 overflow-x-hidden w-full flex flex-col mt-2 ">
             <h1 class="md:w-11/12 mx-auto md:text-3xl text-xl text-white font-bold">FOIRE AUX QUESTIONS</span></h1>
             <p class="text-gray-400 my-3 mx-auto md:w-11/12 ">Cette page rassemble les courantes questions que nos utilisateurs peuvent avoir à se poser.
-            
+
         </div>
         <div data-aos="fade-down" data-aos-duration="1500" class="md:w-6/12 w-full overflow-x-hidden flex justify-center">
             <img src="assets/logos/faq.png" class="md:h-96 h-80 w-80 md:w-96" alt="Joining image" />
@@ -11,22 +11,22 @@
     </div>
     <div class="w-11/12 mx-auto flex flex-col">
         <div class="w-full block mt-2">
-           <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">1. COMMENT ACTIVER UN CONTRAT ?</h3>
+            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">1. COMMENT ACTIVER UN CONTRAT ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
                 Vous pouvez activer le contrat de votre choix en visitant notre page <span class="font-semibold text-green-500"><a href="/packages">Packs</a></span>, ensuite, vous cliquez sur souscrire pour déposer les fonds correspondant au montant choisit.
             </p>
         </div>
         <div class="w-full block mt-2">
-           <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">2. QUELS SONT LES BONUS À GAGNER? ?</h3>
+            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">2. QUELS SONT LES BONUS À GAGNER? ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
-                Actuellement, dans UsalvageTrade, il existe trois manières de gagner:
+                Actuellement, dans UsalvageTrade, il existe quatres manières de gagner:
             </p>
             <p class="md:w-9/12 w-11/12 ml-4">
                 <b class="text-gray-400">● Retour sur investissement (ROI)</b>, <br>
-                <div class=" ml-4  my-3 md:w-9/12 w-11/12 text-gray-500">
-                    <p>Le retour sur investissement accumulé au quotidien est déposé dans un portefeuille visible sur
-                la page d'accueil de votre backoffice.
-                Ce bonus vari selon le pack choisit et il est démontré dans le tableau ci-dessous :</p>
+            <div class=" ml-4  my-3 md:w-9/12 w-11/12 text-gray-500">
+                <p>Le retour sur investissement accumulé au quotidien est déposé dans un portefeuille visible sur
+                    la page d'accueil de votre backoffice.
+                    Ce bonus vari selon le pack choisit et il est démontré dans le tableau ci-dessous :</p>
                 <table class="md:w-9/12 w-full rounded my-3 border-gray-900 border">
                     <thead class="font-semibold text-gray-400">
                         <tr class="w-1/3">
@@ -70,75 +70,80 @@
             <span class="mb-2 text-gray-500 w-9/12 ml-4">Avec ce bonus, vous gagnez 10% sur l'argent investi au côté faible de votre réseau.
             </span>
             </p>
-      </div>
-      <div class="w-full block mt-2">
-           <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">3. QUELLES SONT LES MODALITÉS DE RETRAIT ?</h3>
-            <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
-                <ul class="text-gray-500 md:w-9/12 w-11/12 pl-2 list-disc">
-                    <li class="ml-8">Pour retirer vos gains, vous devez avoir un minimum 20$ reçu dans le cumule des bonus.</li>
-                    <li class="ml-8">Le retrait est effectué uniquement le samedi. </li>
-                    <li class="ml-8">Toutes les demandes de retrait sont traitées dans les 24 heures suivant la réception de la demande de retrait. Le délai maximum est de 48 heures ouvrables (soit deux jours ouvrables).</li>
-                    <li class="ml-8">Les frais sur chaque retrait sont de 10% du montant total du retrait.</li>
-                </ul>
+            <b class="text-gray-400">● Bonus promotionnel :</b>, <br>
+            <span class="mb-2 text-gray-500 w-9/12 ml-4">Ce bonus est une récompense donnée à un membre qui se qualifie pour la course au travail planifié sur une période bien déterminé par l'entreprise. <br>
+                Cette récompense peut être matérielle ou monétaire.
+            </span>
             </p>
-      </div>
-      <div class="w-full block mt-2">
-           <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">4. QUELLES MONNAIES/ SYSTÈME DE PAIEMENT ACCEPTEZ-VOUS ?</h3>
+        </div>
+        <div class="w-full block mt-2">
+            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">3. QUELLES SONT LES MODALITÉS DE RETRAIT ?</h3>
+            <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
+            <ul class="text-gray-500 md:w-9/12 w-11/12 pl-2 list-disc">
+                <li class="ml-8">Pour retirer vos gains, vous devez avoir un minimum 20$ reçu dans le cumule des bonus.</li>
+                <li class="ml-8">Le retrait est effectué uniquement le samedi. </li>
+                <li class="ml-8">Toutes les demandes de retrait sont traitées dans les 24 heures suivant la réception de la demande de retrait. Le délai maximum est de 48 heures ouvrables (soit deux jours ouvrables).</li>
+                <li class="ml-8">Les frais sur chaque retrait sont de 10% du montant total du retrait.</li>
+            </ul>
+            </p>
+        </div>
+        <div class="w-full block mt-2">
+            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">4. QUELLES MONNAIES/ SYSTÈME DE PAIEMENT ACCEPTEZ-VOUS ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
                 Nous acceptons le paiement par:
-                <ul class="text-gray-500 md:w-9/12 w-11/12 pl-2 list-disc">
-                    <li class="ml-8">Bitcoin</li>
-                    <li class="ml-8">Visacard</li>
-                    <li class="ml-8">AirtelMoney</li>
-                    <li class="ml-8">M-pesa</li>
-                </ul>
+            <ul class="text-gray-500 md:w-9/12 w-11/12 pl-2 list-disc">
+                <li class="ml-8">Bitcoin</li>
+                <li class="ml-8">Visacard</li>
+                <li class="ml-8">AirtelMoney</li>
+                <li class="ml-8">M-pesa</li>
+            </ul>
             </p>
-      </div>
-      <div class="w-full block mt-2">
-           <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">5. APRÈS AVOIR EFFECTUÉ LE PAIEMENT, À QUEL MOMENT MON CONTRAT SERA-T-IL ACTIVÉ ?</h3>
+        </div>
+        <div class="w-full block mt-2">
+            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">5. APRÈS AVOIR EFFECTUÉ LE PAIEMENT, À QUEL MOMENT MON CONTRAT SERA-T-IL ACTIVÉ ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
-               Votre contrat devrait être activé immédiatement si vous utilisez le E-money( Airtelmoney et M-pesa). <br>
+                Votre contrat devrait être activé immédiatement si vous utilisez le E-money( Airtelmoney et M-pesa). <br>
                 Si vous utilisez la crypto-monnaie(Bitcoin) un certain délai peut être nécessaire pour
                 obtenir des confirmations par le réseau de crypto-monnaie(blockchain). <br>
                 Pour les dépôts en
                 crypto-monnaies, nous avons besoin d'au moins trois confirmations. <br>
                 Pour le paiement par Visa card et PayPal, activation du contrat se fait dans les 48 heures.
             </p>
-      </div>
-      <div class="w-full block mt-2">
-           <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">6. PUIS-JE ACTIVER PLUSIEURS CONTRATS À LA FOIS SUR UN MÊME COMPTE ?</h3>
+        </div>
+        <div class="w-full block mt-2">
+            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">6. PUIS-JE ACTIVER PLUSIEURS CONTRATS À LA FOIS SUR UN MÊME COMPTE ?</h3>
             <p class="text-gray-500 w-9/12 ml-4">
                 Oui. Vous pouvez activer n'importe quel nombre de contrats à la fois.
             </p>
-      </div>
-      <div class="w-full block mt-2">
-           <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">7. PUIS-JE AVOIR PLUSIEURS COMPTES ?</h3>
+        </div>
+        <div class="w-full block mt-2">
+            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">7. PUIS-JE AVOIR PLUSIEURS COMPTES ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
-               Oui, pour gagner beaucoup en même temps, Vous pouvez enregistrer autant de comptes que vous le souhaitez.  <br>
-               Cependant, ils doivent avoir des noms d'utilisateur et des adresses e-mail différents.
+                Oui, pour gagner beaucoup en même temps, Vous pouvez enregistrer autant de comptes que vous le souhaitez. <br>
+                Cependant, ils doivent avoir des noms d'utilisateur et des adresses e-mail différents.
             </p>
-      </div>
-      <div class="w-full block mt-2">
-           <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">8. COMMENT PUIS-JE MODIFIER MON ADRESSE MAIL OU MON NOM D'UTILISATEUR ?</h3>
+        </div>
+        <div class="w-full block mt-2">
+            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">8. COMMENT PUIS-JE MODIFIER MON ADRESSE MAIL OU MON NOM D'UTILISATEUR ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
-               Vous ne pouvez pas modifier votre adresse e-mail et votre identifiant car cette fonction est désactivée pour des raisons de sécurité.
+                Vous ne pouvez pas modifier votre adresse e-mail et votre identifiant car cette fonction est désactivée pour des raisons de sécurité.
             </p>
-      </div>
-      <div class="w-full block mt-2">
-           <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">9. COMMENT JE PEUX CHANGER MON MOT DE PASSE ?</h3>
+        </div>
+        <div class="w-full block mt-2">
+            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">9. COMMENT JE PEUX CHANGER MON MOT DE PASSE ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
                 Vous pouvez modifier votre mot de passe directement depuis votre espace tableau de bord en le modifiant dans votre profil.
             </p>
-      </div>
-      <div class="w-full block mb-4 mt-2">
-           <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">10. COMMENT PUIS-JE CONTACTER USALVAGETRADE DIRECTEMENT ?</h3>
+        </div>
+        <div class="w-full block mb-4 mt-2">
+            <h3 class="font-semibold text-gray-300 md:text-lg text-base mb-2">10. COMMENT PUIS-JE CONTACTER USALVAGETRADE DIRECTEMENT ?</h3>
             <p class="text-gray-500 md:w-9/12 w-11/12 ml-4">
                 Nous sommes joignable par ces contacts ci-bas:
-                <ul class="text-gray-500 md:w-9/12 w-11/12 pl-2 list-disc">
-                    <li class="ml-8">WhatsApp : <span class="font-semibold text-green-500"><a  href="https://wa.me/19292245034"> +1 929-224-5034</a> </span></li>
-                    <li class="ml-8">Adresse mail :<span class="font-semibold text-green-500"><a  href="mailto:support@usalvagetrade.com">support@usalvagetrade.com</a> </span></li>
-                    <li class="ml-8"><span class="font-semibold text-green-500"><a  href="/contact">Aller sur notre page de contacts</a></span></li>
-                </ul>
+            <ul class="text-gray-500 md:w-9/12 w-11/12 pl-2 list-disc">
+                <li class="ml-8">WhatsApp : <span class="font-semibold text-green-500"><a href="https://wa.me/19292245034"> +1 929-224-5034</a> </span></li>
+                <li class="ml-8">Adresse mail :<span class="font-semibold text-green-500"><a href="mailto:support@usalvagetrade.com">support@usalvagetrade.com</a> </span></li>
+                <li class="ml-8"><span class="font-semibold text-green-500"><a href="/contact">Aller sur notre page de contacts</a></span></li>
+            </ul>
             </p>
         </div>
     </div>
