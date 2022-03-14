@@ -41,7 +41,7 @@
                     <li class="hover:text-green-500 font-semibold text-base"><a class="_green_btn" href="/login">Connexion</a></li>
                  <?php else: ?>
                     <li class="hover:text-green-500 text-base"><a href="/user/dashboard"> <span class="fas fa-user mr-2"></span> Profil</a></li>
-                <li class="hover:text-green-500 font-semibold text-base"><a href="/user/logout">Déconnexion</a></li>
+                <li class="hover:text-green-500 font-semibold text-base"><a href="/user/logout"><span class="fas fa-power-off mr-2"></span> Déconnexion</a></li>
                 <?php endif;?>
     </ul>
     <p class="text-gray-400 w-9/12 mx-auto  mt-36">&#169; USALVAGETRADE <span id="year"></span></p>
