@@ -20,6 +20,8 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
             <li class="text-base"><span><span class="fas fa-school mr-3"></span><a href="/user/dashboard">Dashboard</a></span></li>
                     <li class="text-base "><span><span class="fas fa-tree mr-3"></span><a href="/user/tree">Arbre</a></span></li>
                     <li class="text-base"><span><span class="fas fa-dollar-sign mr-3"></span><a href="/user/cashout">Retrait</a></span></li>
+                    <li class="text-base"><span><span class="fas fa-history mr-3"></span><a href="/user/history">Historique de retrait</a></span></li>
+                    <li class="text-base"><span><span class="fas fa-upload mr-3"></span><a href="/packages">Remonter de pack</a></span></li>
                     <li class="text-base"><span><span class="fas fa-arrow-left mr-3"></span><a href="/">Acceuil</a></span></li>
                     <li class="text-base"><span><span class="fas fa-share mr-3"></span><a href="/user/share/link">Partager</a></span></li>
                     <li class="hover:text-green-500 text-base"><span class="fas fa-user mr-3"></span><a href="/user/me">Mon Compte</a></li>
