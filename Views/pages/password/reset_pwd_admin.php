@@ -24,7 +24,7 @@
                 <?php endif;?>
             </div>
             <div class="md:w-11/12 mx-auto mt-4">
-                <button type="submit" name="submit" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"> <i class="fas fa-check-circle    "></i> Reinitialiser mot de passe</button>
+                <button type="submit" name="submit" class="bg-green-500 text-gray-900 p-2 w-full h-10 rounded"> <i class="fas fa-check-circle    "></i> Reinitialiser mot de passe</button>
             </div>
         </form>
     </div>

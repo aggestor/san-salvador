@@ -31,17 +31,17 @@
         </button>
     </div>
     <ul class="flex w-9/12 mx-auto justify-evenly  h-96 flex-col text-white">
-       <li class="text-base"><span><a href="/">Acceuil</a></span></li>
-            <li class="text-base"><span><a href="/help">Aide</a></span></li>
-            <li class="text-base"><span><a href="/packages">Packs</a></span></li>
-            <li class="text-base"><span><a href="/services">Services</a></span></li>
+       <li class="text-base"><span><span class="fas fa-home mr-2"></span><a href="/">Acceuil</a></span></li>
+            <li class="text-base"><span><span class="fas fa-question-circle mr-2"></span><a href="/help">Aide</a></span></li>
+            <li class="text-base"><span><span class="fas fa-boxes mr-2"></span><a href="/packages">Packs</a></span></li>
+            <li class="text-base"><span><span class="fas fa-list mr-2"></span><a href="/services">Services</a></span></li>
              <?php
                 if (!isset($_SESSION['users'])): ?>
-                    <li class="hover:text-green-500 font-semibold text-base"><a href="/register">Créer un compte</a></li>
+                    <li class="hover:text-green-500 font-semibold text-base"><a href="/register"> <span class="fas fa-user-plus mr-2"></span> Créer un compte</a></li>
                     <li class="hover:text-green-500 font-semibold text-base"><a class="_green_btn" href="/login">Connexion</a></li>
                  <?php else: ?>
-                    <li class="hover:text-green-500 text-base"><a href="/user/dashboard">Profil</a></li>
-                <li class="hover:text-green-500 font-semibold text-base"><a href="/user/logout">Déconnexion</a></li>
+                    <li class="hover:text-green-500 text-base"><a href="/user/dashboard"> <span class="fas fa-user mr-2"></span> Profil</a></li>
+                <li class="hover:text-green-500 font-semibold text-base"><a href="/user/logout"><span class="fas fa-power-off mr-2"></span> Déconnexion</a></li>
                 <?php endif;?>
     </ul>
     <p class="text-gray-400 w-9/12 mx-auto  mt-36">&#169; USALVAGETRADE <span id="year"></span></p>
