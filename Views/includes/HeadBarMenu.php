@@ -9,7 +9,7 @@
             <div class="w-3/12 rounded-full transition-all duration-500 h-11 p-1 cursor-pointer text-gray-300 hover:bg-green-500 hover:text-white relative flex my-auto">
                 <img src="/assets/logos/user.png" class="w-9 h-9 rounded-full" alt="">
                 <span class=" ml-2 font-semibold text-sm mt-2 3w"><?= $_SESSION['admin']->getName() ?></span>
-                <span class="w-3 h-3 absolute left-7 top-8 _green_bg rounded-full"></span>
+                <span class="w-3 h-3 absolute left-7 top-8 bg-green-500 rounded-full"></span>
             </div>
             <div class="w-9 ml-1 rounded-full transition-all duration-500 h-9 grid place-items-center cursor-pointer text-gray-300 hover:bg-green-500 hover:text-white my-auto">
                 <a class="" href="/admin/destroy"> <i class="fas fa-power-off"></i></a>

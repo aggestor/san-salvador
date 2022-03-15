@@ -23,7 +23,7 @@
                     <div class="w-1/12"><?= $data->getTransactionOrigi() ?></div>
                     <div class="w-2/12"><?= $data->getTransactionCode() ?></div>
                     <div>
-                        <form method="POST" action="/admin/active/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="_green_bg rounded text-gray-800 p-1.5" type="submit">Valider <i class="fas fa-check-circle    "></i></button></form>
+                        <form method="POST" action="/admin/active/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="bg-green-500 rounded text-gray-800 p-1.5" type="submit">Valider <i class="fas fa-check-circle    "></i></button></form>
                     </div>
                 </div>
             <?php endforeach; ?>

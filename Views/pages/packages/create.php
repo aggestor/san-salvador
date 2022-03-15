@@ -54,7 +54,7 @@
                 <input type="file" name="pack_image" class="hidden" id="packImageUploader">
             </div>
             <div class="md:w-11/12 my-4 mx-auto">
-                <button type="submit" name="create_pack" class="_green_bg w-9/12 hover:bg-green-500 text-gray-900 p-2 h-10 font-semibold rounded"><i class="fas fa-plus-circle mr-1"></i> Créer un pack avec des infos</button>
+                <button type="submit" name="create_pack" class="bg-green-500 w-9/12 hover:bg-green-500 text-gray-900 p-2 h-10 font-semibold rounded"><i class="fas fa-plus-circle mr-1"></i> Créer un pack avec des infos</button>
             </div>
         </div>
     </form>
