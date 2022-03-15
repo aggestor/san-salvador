@@ -41,9 +41,9 @@
                                         <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">Activation de l'inscription</h1>
                                         <span style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                         <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                            Salut <strong><?= $params['nom'] ?></strong>, Votre inscription de <?= $params['montant'] . " USD " ?> chez UsalvageTrade vient d'être activé avec succès.<br>
+                                            Salut <strong><?= $params['nom'] ?></strong>, Votre inscription de <?= $params['montant'] . " USD " ?> à UsalvageTrade vient d'être activée avec succès.<br>
                                             Vous faites désormais membre de UsalvageTrade<br>
-                                            Merci pour votre confiance. Pour vous connectez a votre compte veuillez cliquer sur le ci-dessous<br>
+                                            Merci pour votre confiance. Pour vous connectez à votre compte veuillez cliquer sur le bouton ci-dessous<br>
                                             <br>
                                         </p>
                                         <a href="https://www.usalvagetrade.com/login" style="background:#1064ff;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Connectez-vous</a> <br>
