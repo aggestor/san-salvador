@@ -154,7 +154,7 @@ $images = explode("AND", $params['user']->getPhoto());
         </div>
         <div class="lg:col-span-10 col-span-12 h-screen-customer scroll lg:overflow-y-auto lg:overflow-x-hidden flex flex-col lg:p-3">
             <div class="w-full mt-4 h-screen-admin scroll overflow-y-scroll grid grid-cols-12">
-    <?php if(isset($params['unvalidated']) OR isset($params['validated'])): ?>
+    <?php if(isset($params['valide']) OR isset($params['nonValide'])): ?>
         <div class="col-span-12 flex flex-col">
         <div class="lg:w-11/12 w-full mx-auto mb-4 h-12 border-b border-gray-900 flex flex-col lg:flex-row justify-between">
             <h1 id="historyTitle" class="text-gray-300 font-semibold text-xl">Liste des retraits déjà validés</h1>
@@ -170,7 +170,7 @@ $images = explode("AND", $params['user']->getPhoto());
                 <div class="w-2/12">Date</div>
                 <div class="w-1/12">Status</div>
             </div>
-        <?php foreach ($params['validated'] as $data) : ?>
+        <?php foreach ($params['valide'] as $data) : ?>
             <div class="flex w-full mx-auto p-3 text-gray-300 my-2 border border-gray-800">
                 <div class="w-2/12"><?= $data->getAmount() ?>USD</div>
                 <div class="w-2/12"><?= str_replace("/", "", $data->getDestination()) ?></div>
@@ -185,7 +185,7 @@ $images = explode("AND", $params['user']->getPhoto());
                 <div class="w-3/12">Date</div>
                 <div class="w-3/12">Status</div>
             </div>
-            <?php foreach ($params['unvalidated'] as $data) : ?>
+            <?php foreach ($params['nonValide'] as $data) : ?>
                 <div class="w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
                     <div class="w-3/12 font-semibold text-white"><?= $data->getAmount() ?> USD</div>
                     <div class="w-3/12"><?= str_replace("/", "", $data->getDestination()) ?></div>
