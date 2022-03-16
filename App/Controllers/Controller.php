@@ -179,7 +179,8 @@ class Controller
     {
         if (!$this->userObject()->hasInscription()) {
             return $this->view("pages.user.hasNotSubscribedYet", "layout_", ['user' => $_SESSION[self::SESSION_USERS]]);
-        } elseif ($this->existValidateInscription()) {
+        }
+        if ($this->existValidateInscription() && !$this->inscriptionModel->checkValidated($_SESSION[self::SESSION_USERS]->getId())) {
             return $this->view("pages.user.awaitUserPackValidation", "layout_");
         }
     }

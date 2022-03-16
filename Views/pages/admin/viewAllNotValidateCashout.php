@@ -33,7 +33,7 @@
                 <div class="w-1/12 font-semibold text-white"><?= $data->getAmount() ?> USD</div>
                 <div class="w-1/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
                 <div class="flex w-1/12 justify-between">
-                    <button data-act="/admin/validate/cashout-<?= $_GET['page']?>-<?= $data->getId() ?>-<?= $data->getUser()->getId()?>" class="_green_bg rounded text-gray-800 p-1.5 m-1 showModal" ><i class="fas fa-check-circle"></i></button>
+                    <button data-act="/admin/validate/cashout-<?= $_GET['page']?>-<?= $data->getId() ?>-<?= $data->getUser()->getId()?>" class="bg-green-500 rounded text-gray-800 p-1.5 m-1 showModal" ><i class="fas fa-check-circle"></i></button>
                     <form method="POST" action="/admin/canceled/cashout-<?= $data->getId() ?>"><button class="bg-red-500 rounded text-white p-1.5 m-1" type="submit"><i class="fas fa-times-circle    "></i></button></form>
                     <form style="display: <?= $data = isset($params['error']) ? '': 'none'?>" method="POST" class="h-96 shadow modal flex flex-col shadow-gray-900 rounded  w-[600px] backdrop-blur-lg top-16 left-48 absolute primary_bg_ bg-opacity-90 text-white">
                         <div class="flex justify-end w-full h-12">
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <div class="md:w-11/12 w-full mx-auto mt-4">
-                            <button name="submit" type="submit" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
+                            <button name="submit" type="submit" class="bg-green-500 text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
                         </div>
                         </div>
                     </form>

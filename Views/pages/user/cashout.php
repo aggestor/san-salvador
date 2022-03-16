@@ -459,7 +459,7 @@ $images = explode("AND", $params['user']->getPhoto());
                                     </div>
                                 </div>
                                 <div class="md:w-11/12 w-full mx-auto mt-4">
-                                    <button type="submit" name="submit" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"> Envoyer la demande <i class="fas ml-1 fa-paper-plane    "></i></button>
+                                    <button type="submit" name="submit" class="bg-green-500 text-gray-900 p-2 w-full h-10 rounded"> Envoyer la demande <i class="fas ml-1 fa-paper-plane    "></i></button>
                                 </div>
                             </div>
                         </div>

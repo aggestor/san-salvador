@@ -19,7 +19,7 @@
                 <div class="text-gray-400 p-2">
                     <div>
                         <span class="_green_text text-lg ml-2 font-semibold">Conservation</span>
-                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full _green_bg border-white border-2 mb-2 font-semibold text-white grid place-items-center">1</span>
+                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full bg-green-500 border-white border-2 mb-2 font-semibold text-white grid place-items-center">1</span>
                         <p class="w-11/12 mt-4 mx-auto">La conservation de crypto-actifs ou l’accès à des crypto-actifs (via des clés de chiffrement privées par exemple),l’achat/vente de crypto-actifs contre des monnaies ayant un cours légal (Euro, Dollar, etc.),</p>
                     </div>
 
@@ -30,7 +30,7 @@
                 <div class="text-gray-400 p-2">
                     <div>
                         <span class="_green_text text-lg ml-2 font-semibold">Echange</span>
-                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full _green_bg border-white border-2 text-lg font-semibold text-white grid place-items-center">2</span>
+                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full bg-green-500 border-white border-2 text-lg font-semibold text-white grid place-items-center">2</span>
                         <p class="w-11/12 mt-4 mx-auto">L’échange de crypto-actifs contre d’autres crypto-actifs(BTC => ETH, DOGE => BTC, etc..) </p>
                     </div>
 
@@ -42,7 +42,7 @@
                 <div class="text-gray-400 p-2">
                     <div>
                         <span class="_green_text text-lg ml-2 font-semibold">Securité</span>
-                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full _green_bg border-white border-2 text-lg font-semibold text-white grid place-items-center">3</span>
+                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full bg-green-500 border-white border-2 text-lg font-semibold text-white grid place-items-center">3</span>
                         <p class="w-11/12 mt-4 mx-auto">Le placement garanti, sécurisé et sûre en crypto-actif ou en monnaie fiat.</p>
                     </div>
 
@@ -54,7 +54,7 @@
                 <div class="text-gray-400 p-2">
                     <div>
                         <span class="_green_text text-lg ml-2 font-semibold">Exploitation</span>
-                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full _green_bg border-white border-2 text-lg font-semibold text-white grid place-items-center">4</span>
+                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full bg-green-500 border-white border-2 text-lg font-semibold text-white grid place-items-center">4</span>
                         <p class="w-11/12 mt-4 mx-auto">L'exploitation de plateformes de négociation de crypto-actifs</p>
                     </div>
 
@@ -68,7 +68,7 @@
                 <div class="text-gray-400 p-2">
                     <div>
                         <span class="_green_text text-lg ml-2 font-semibold">Réception et Transmission</span>
-                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full _green_bg border-white border-2 mb-2 font-semibold text-white grid place-items-center">5</span>
+                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full bg-green-500 border-white border-2 mb-2 font-semibold text-white grid place-items-center">5</span>
                         <p class="w-11/12 mt-4 mx-auto">La réception et la transmission d’ordre sur des crypto- actifs</p>
                     </div>
 
@@ -80,7 +80,7 @@
                 <div class="text-gray-400 p-2">
                     <div>
                         <span class="_green_text text-lg ml-2 font-semibold">Gestion</span>
-                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full _green_bg border-white border-2 text-lg font-semibold text-white grid place-items-center">6</span>
+                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full bg-green-500 border-white border-2 text-lg font-semibold text-white grid place-items-center">6</span>
                         <p class="w-11/12 mt-4 mx-auto">La gestion de portefeuille de crypto- actifs,</p>
                     </div>
 
@@ -92,7 +92,7 @@
                 <div class="text-gray-400 p-2">
                     <div>
                         <span class="_green_text text-lg ml-2 font-semibold">Conseil</span>
-                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full _green_bg border-white border-2 text-lg font-semibold text-white grid place-items-center">7</span>
+                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full bg-green-500 border-white border-2 text-lg font-semibold text-white grid place-items-center">7</span>
                         <p class="w-11/12 mt-4 mx-auto">Le conseil aux investisseurs en crypto- actifs</p>
                     </div>
 
@@ -104,7 +104,7 @@
                 <div class="text-gray-400 p-2">
                     <div>
                         <span class="_green_text text-lg ml-2 font-semibold">Autres</span>
-                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full _green_bg border-white border-2 text-lg font-semibold text-white grid place-items-center">8</span>
+                        <span class="w-8 h-8 z-20 absolute top-2 rounded-full bg-green-500 border-white border-2 text-lg font-semibold text-white grid place-items-center">8</span>
                         <p class="w-11/12 mt-4 mx-auto">En dehors des services précités, UsalvageTrade est aussi dans le commerce des appareils électronique, ventes des matières premières, transfert d'argent dans le pays ainsi que dans le monde entier...</p>
                     </div>
 

@@ -4,7 +4,7 @@
             <h1 class="text-gray-300 text-3xl font-bold">Vous ne pouvez plus faire la mise à jour de pack!!</h1>
             <p class="text-gray-400  mt-4"> Votre compte a atteint 300% de capital investi. Vous ne pouvez plus faire une mise à jour de pack ni recevoir d'autres bonus. <span class="font-semibold"><a href="/terms">Lire plus...</a></span> </p>
             <p class="text-gray-400 mt-2">Pour créer  un compte, cliquez sur le bouton ci-bas.</p>
-            <p class="mt-6 text-sm text-gray-300"><a href="/register" class="font-semibold text-black p-2  rounded cursor-pointer hover:bg-green-500 _green_bg">Créer un compte</a></p>
+            <p class="mt-6 text-sm text-gray-300"><a href="/register" class="font-semibold text-black p-2  rounded cursor-pointer hover:bg-green-500 bg-green-500">Créer un compte</a></p>
         </div>
         <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">
             <span class="h-60 w-60 text-gray-900 relative">
