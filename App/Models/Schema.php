@@ -33,8 +33,7 @@ class Schema
         "modifDate" => "last_modif_date",
         "motifTime" => "last_modif_time",
         "photo" => "images_name",
-        "token" => "user_token",
-
+        "token" => "user_token"
     ];
 
     const PACK = [
@@ -49,7 +48,7 @@ class Schema
         "timeRecord" => "record_time",
         "leval" => "laval",
         "modifDate" => "last_modif_date",
-        "modifTime" => "last_modif_time",
+        "modifTime" => "last_modif_time"
     ];
 
     const ADMIN = [
@@ -63,7 +62,7 @@ class Schema
         "motifTime" => "last_modif_time",
         "validationEmail" => "validation_Status",
         "status" => "admin_status",
-        "token" => "admin_token",
+        "token" => "admin_token"
     ];
 
     const BINARY = [
@@ -75,7 +74,7 @@ class Schema
         "timeRecord" => "record_time",
         "modifDate" => "last_modif_date",
         "motifTime" => "last_modif_time",
-        "surplus" => "surplus",
+        "surplus" => "surplus"
     ];
     
     const CASHOUT = [
@@ -88,6 +87,7 @@ class Schema
         "motifTime" => "last_modif_time",
         "validated" => "validated",
         "destination" => "destination",
+        "reference" => "reference",
         "admin" => "admin"
     ];
     const RETURN_INVEST = [
@@ -98,8 +98,7 @@ class Schema
         "timeRecord" => "record_time",
         "modifDate" => "last_modif_date",
         "motifTime" => "last_modif_time",
-        "surplus" => "surplus",
-
+        "surplus" => "surplus"
     ];
 
     const PARAINAGE = [
@@ -111,7 +110,7 @@ class Schema
         "timeRecord" => "record_time",
         "modifDate" => "last_modif_date",
         "motifTime" => "last_modif_time",
-        "surplus" => "surplus",
+        "surplus" => "surplus"
     ];
 
     const INSCRIPTION = [
@@ -127,8 +126,7 @@ class Schema
         "confirmatDate" => "confirmat_date",
         "confirmateTime" => "confirmate_time",
         "modifDate" => "last_modif_date",
-        "motifTime" => "last_modif_time",
-
+        "motifTime" => "last_modif_time"
     ];
 
     const TABLE_SCHEMA = [
@@ -139,6 +137,6 @@ class Schema
         "cashOut" => "cashout",
         "inscription" => "inscriptions",
         "returnInvest" => "return_invest",
-        "parainage" => "parenages",
+        "parainage" => "parenages"
     ];
 }

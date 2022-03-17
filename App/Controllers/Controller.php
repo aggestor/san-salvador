@@ -173,7 +173,8 @@ class Controller
      *
      * @return void
      */
-    public function control(){
+    public function control()
+    {
         if (!$this->userObject()->hasInscription()) {
             return $this->view("pages.user.hasNotSubscribedYet", "layout_", ['user' => $_SESSION[self::SESSION_USERS]]);
         } elseif ($this->existValidateInscription()) {
@@ -501,6 +502,23 @@ class Controller
         foreach ($cashOuts as $cashOut) {
             $montant = $cashOut->getAmount();
             $return[] = $montant;
+        }
+        return array_sum($return);
+    }
+
+    /**
+     * Methode pour retourner le montant total deja investi dans le systeme
+     *
+     * @return float|int
+     */
+    public function totalAmountInvested()
+    {
+        $return = array();
+        $allUsersHasPack = $this->allUsersHasValidateInscription();
+        foreach ($allUsersHasPack as $inscription) {
+            if (!$inscription->getUser()->getParent() == null && !$inscription->getUser()->getSponsor() == null) {
+                $return[] = $inscription->getAmount();
+            }
         }
         return array_sum($return);
     }

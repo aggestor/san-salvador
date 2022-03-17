@@ -168,7 +168,7 @@ class UserValidator extends AbstractMemberValidator
         $amout = $_POST[self::FIELD_CASHOUT_AMOUNT];
         $idUser = $_SESSION[self::SESSION_USERS]->getId();
         $destinationTelephone = (isset($_POST[self::FIELD_TELEPHONE]) && !empty($_POST[self::FIELD_TELEPHONE])) ? $_POST[self::FIELD_TELEPHONE] : "";
-        $destinationBitcoin =  (isset($_POST[self::FIELD_BITCON]) && !empty($_POST[self::FIELD_BITCON])) ? $_POST[self::FIELD_BITCON] : "";
+        $destinationBitcoin =  ($_POST[self::FIELD_BITCON] && !empty($_POST[self::FIELD_BITCON])) ? $_POST[self::FIELD_BITCON] : "";
         $this->processingId($cashOut, $id, true);
         $this->processingCashOut($cashOut, $amout);
         $this->processingBitcoin($cashOut,  $destinationBitcoin);
@@ -453,6 +453,13 @@ class UserValidator extends AbstractMemberValidator
         }
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param CashOut $cashOut
+     * @param mixed $bitcoin
+     * @return void
+     */
     protected function processingBitcoin(CashOut $cashOut, $bitcoin)
     {
         try {
@@ -486,13 +493,15 @@ class UserValidator extends AbstractMemberValidator
     protected function processingDestination(CashOut $cashOut, $telephone)
     {
         try {
-            $codePays = $_POST['country_code'];
+            $codePays = !empty($telephone) ? $_POST['country_code'] : "";
             $this->validationDestination($telephone);
         } catch (\RuntimeException $e) {
             $this->addError(self::FIELD_TELEPHONE, $e->getMessage());
         }
-        $numTelephone = "+" . $codePays . $telephone;
-        $cashOut->setDestination($numTelephone);
+        if (!empty($telephone)) {
+            $numTelephone = "+" . $codePays . $telephone;
+            $cashOut->setDestination($numTelephone);
+        }
     }
     /**
      * Pour la validation du numero de telephone

@@ -142,9 +142,16 @@ class User extends Member implements BinaryTreeNode
 
     /**
      * le solde actuel du compte
+     * ce solde ne prend pas en consideration tout les retrait non encore confirmer
      * @var number
      */
     private $sold;
+
+    /**
+     * solde reel actuel du compte
+     * prend en cosideration tout les operations (meme le cashout non encore confirmer)
+     */
+    private $realSold;
 
 
 
@@ -562,6 +569,7 @@ class User extends Member implements BinaryTreeNode
         $this->soldParainage = 0;
         $this->soldResturn = 0;
         $this->sold = 0;
+        $this->realSold = 0;
         $this->soldWithdrawal = 0;
 
         if ($this->hasOperations()) {
@@ -573,11 +581,10 @@ class User extends Member implements BinaryTreeNode
                 if ($operation instanceof Inscription) {
                     $this->capital += ($operation->isValidate() ? $operation->getAmount() : 0);
                 } else if ($operation instanceof CashOut) {
-                    if($operation->isValidated()) {
+                    if($operation->isValidated() || $operation->getAdmin() != null) {
                         $this->soldWithdrawal += $operation->getAmount();
-                    } else {
-                        $this->sold += $operation->getAmount();
-                    }
+                    } 
+                    $this->realSold -= $operation->getAmount();
                 } else if ($operation instanceof Parainage) {
                     $this->soldParainage += $operation->getAmount();
                 } else if ($operation instanceof Binary) {
@@ -588,7 +595,9 @@ class User extends Member implements BinaryTreeNode
                     throw new ModelException("Impossible de poursouvre les calculs dans le compte {$this->getId()} car une operation non prise en charge c trouve dans la collection des operations des ce compte");
                 }
             }
+            
             $this->sold += ($this->soldBinary + $this->soldParainage +  $this->soldResturn) - $this->soldWithdrawal;
+            $this->realSold += ($this->soldBinary + $this->soldParainage +  $this->soldResturn);
 
             if ($this->canChoosePack()) {
                 $this->pack = $this->choosePack($this->capital);
@@ -708,12 +717,25 @@ class User extends Member implements BinaryTreeNode
 
     /**
      * montant retirable a l'heure actuel
+     * tout les cashouts non encore confirmer ne sont pas prise en comprte par cette 
+     * methode. Date le cas où vous voulez le solde reel du compte utilisez pluston la methode 
+     * getReaSold
      * @return number
      */
     public function getSold()
     {
         $this->doRefreshed();
         return $this->sold;
+    }
+
+    /**
+     * Renvoie le solde reel du compte.
+     * cette methode a l'aventage de prende en compte meme les cashout non encore confirmer
+     * @return number
+     */
+    public function getRealSold () {
+        $this->doRefreshed();
+        return $this->realSold;
     }
 
 
