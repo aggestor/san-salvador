@@ -1,6 +1,6 @@
 <?php
 
-use Root\App\Models\ReturnInvestCronJob;
+
 use Root\Core\EnabledCashOut;
 
 
@@ -8,6 +8,7 @@ use Root\Autoloader;
 use Root\routes\Router;
 use Root\App\Exceptions\NotFoundException;
 use Root\App\Models\ModelFactory;
+use Root\App\Models\ReturnInvestCronJob;
 
 include("../Autoloader.php");
 Autoloader::register();
