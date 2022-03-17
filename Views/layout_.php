@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/assets/css/aos.min.css" />
     <link rel="stylesheet" href="/assets/css/global.css" />
     <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/logos/icon.png">
        <script
       type="text/javascript"
       src="https://www.gstatic.com/charts/loader.js"

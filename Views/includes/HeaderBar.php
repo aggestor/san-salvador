@@ -1,6 +1,6 @@
 <header id="header" class="h-16 secondary_bg grid py-3 sticky top-0  z-50 filter blur-2 col-span-12">
   <div id="other" class="flex  relative w-11/12 mx-auto justify-between">
-    <span class="text-gray-100 lg:text-lg my-auto text-base font-semibold">USALVAGETRADE</span>
+    <span class="text-gray-100 lg:text-lg my-auto text-base font-semibold"><img class="h-14 w-54 mb-1" src="/assets/logos/main-logo-1.png" alt="Usalvagetrade main logo"></span>
     <nav class="lg:w-6/12 hidden w-full sm:flex my-auto sm:w-7/12">
         <ul id="defaultMenu" class="flex w-full justify-around text-gray-100">
             <li class="text-base"><span><a href="/">Acceuil</a></span></li>

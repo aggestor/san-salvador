@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/assets/css/aos.min.css" />
     <link rel="stylesheet" href="/assets/css/global.css" />
     <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/logos/icon.png">
 </head>
 
 <body class="w-screen primary_bg bg-opacity-100 scroll grid grid-cols-12 overflow-y-auto ">
