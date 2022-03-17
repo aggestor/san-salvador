@@ -21,9 +21,23 @@
                     <div class="w-1/12"><?= str_replace("/", "", $data->getUser()->getPhone()) ?></div>
                     <div class="w-1/12"><?= $data->getAmount() ?></div>
                     <div class="w-1/12"><?= $data->getTransactionOrigi() ?></div>
-                    <div class="w-2/12"><?= $data->getTransactionCode() ?></div>
+                    <div class="w-2/12">
+                    <?php
+                        $str = $data->getTransactionCode();
+                        $count = strlen($str);
+                        $real_str = "";
+                        if ($count > 25  && strpos($str, " ") !== true) {
+                            $str_1 = substr($str, 0, 25);
+                            $str_2 = substr($str, 25, $count);
+                            $real_str = $str_1 . " " . $str_2;
+                        } else {
+                            $real_str = $str;
+                        }
+                        echo $real_str;
+                        ?>
+                </div>
                     <div>
-                        <form method="POST" action="/admin/active/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="_green_bg rounded text-gray-800 p-1.5" type="submit">Valider <i class="fas fa-check-circle    "></i></button></form>
+                        <form method="POST" action="/admin/active/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="bg-green-500 rounded text-gray-800 p-1.5" type="submit">Valider <i class="fas fa-check-circle    "></i></button></form>
                     </div>
                 </div>
             <?php endforeach; ?>

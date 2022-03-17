@@ -148,6 +148,9 @@ $images = explode("AND", $params['user']->getPhoto());
                     <span class="w-10/12 mt-0.5">Déconnexion</span>
                 </div>
             </div>
+            <div class="absolute bottom-0 left-4 h-16 text-gray-500">
+                <span class="text-center">Usalvagetrade &#169; <?= date("Y")?></span>
+            </div>
 
         </div>
         <div class="lg:col-span-10 col-span-12 h-screen-customer scroll lg:overflow-y-auto lg:overflow-x-hidden flex flex-col lg:p-3">
