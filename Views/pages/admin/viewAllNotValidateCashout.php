@@ -16,25 +16,37 @@
         <?php foreach ($params['cashOut'] as $data) : ?>
             <div class="w-11/12 mx-auto p-1 items-center text-gray-500  my-2 border border-gray-500 flex justify-between rounded">
                 <div class="w-1/12"><?= $data->getUser()->getName() ?></div>
-                <div class="w-2/12"><?= str_replace("/", "", $data->getDestination()) ?></div>
+                <div class="w-2/12"><?php
+                $str =  str_replace("/", "", $data->getDestination()) ;
+                $count = strlen($str);
+                $real_str = "";
+                if($count > 25){
+                    $str_1 = substr($str, 0, 25);
+                    $str_2 = substr($str, 25, $count);
+                    $real_str = $str_1." ".$str_2;
+                }else{
+                    $real_str = $str;
+                }
+                echo $real_str;
+                ?></div>
                 <div class="w-2/12"><?= $data->getUser()->getEmail() ?></div>
                 <div class="w-1/12 font-semibold text-white"><?= $data->getAmount() ?> USD</div>
                 <div class="w-1/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
                 <div class="flex w-1/12 justify-between">
                     <button data-act="/admin/validate/cashout-<?= $_GET['page']?>-<?= $data->getId() ?>-<?= $data->getUser()->getId()?>" class="_green_bg rounded text-gray-800 p-1.5 m-1 showModal" ><i class="fas fa-check-circle"></i></button>
                     <form method="POST" action="/admin/canceled/cashout-<?= $data->getId() ?>"><button class="bg-red-500 rounded text-white p-1.5 m-1" type="submit"><i class="fas fa-times-circle    "></i></button></form>
-                    <form style="display: none;" method="POST" class="h-96 shadow modal flex flex-col shadow-gray-900 rounded  w-[600px] backdrop-blur-lg top-16 left-48 absolute primary_bg_ bg-opacity-90 text-white">
+                    <form style="display: <?= $data = isset($params['error']) ? '': 'none'?>" method="POST" class="h-96 shadow modal flex flex-col shadow-gray-900 rounded  w-[600px] backdrop-blur-lg top-16 left-48 absolute primary_bg_ bg-opacity-90 text-white">
                         <div class="flex justify-end w-full h-12">
-                            <span class="fas hideModal fa-times-circle fa-2x mt-2 cursor-pointer h-10 w-10 rounded text-gray-400"></span>
+                            <span data-page="<?= $_GET['page']?>" class="fas hideModal fa-times-circle fa-2x mt-2 cursor-pointer h-10 w-10 rounded text-gray-400"></span>
                         </div>
                         <div class="flex flex-col h-full w-9/12 mx-auto items-center justify-center">
                         <!--PASSWORD BEGIN-->
                         <div class="md:w-11/12 mx-auto w-full mb-2">
-                            <div class="w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-32 px-2 items-center flex rounded border <?= $data =  (isset($_POST['submit']) && !empty($params['errors']['ref'])) ?"border-red-500" : " border-gray-400" ?>">
-                                <textarea id="ref" name="ref" type="text" placeholder="Reference de transaction" class="bg-transparent focus:text-green-500 h-28 resize-none focus:outline-none ml-2 w-full" autocomplete="on" ><?= $data = (isset($_POST['submit'])&& !$params['errors']['ref']) ? $params['ref'] : "" ?></textarea>
+                            <div class="w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-32 px-2 items-center flex rounded border <?= $data =  (isset($_POST['submit']) && !empty($params['error']['ref'])) ?"border-red-500" : " border-gray-400" ?>">
+                                <textarea id="ref" name="ref" type="text" placeholder="Reference de transaction" class="bg-transparent focus:text-green-500 h-28 resize-none focus:outline-none ml-2 w-full" autocomplete="on" ><?= $data = (isset($_POST['submit'])&& !$params['error']['ref']) ? $params['ref'] : "" ?></textarea>
                             </div>
-                            <?php if (isset($_POST['submit']) && !empty($params['errors']['ref'])): ?>
-                                <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['ref']; ?></span>
+                            <?php if (isset($_POST['submit']) && !empty($params['error']['ref'])): ?>
+                                <span class="-mt-2 text-red-500 text-xs"><?php echo $params['error']['ref']; ?></span>
                             <?php endif;?>
                         </div>
                         <!--PASSWORD END-->
