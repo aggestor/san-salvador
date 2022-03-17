@@ -153,11 +153,11 @@ class ReturnInvestCronJob {
 
             $return = new ReturnInvest();
 
-            $bonus = $user->getPack()->getAcurracy() * ($user->getCapital($date) / 100);
-            $bonus = round($bonus, 2, PHP_ROUND_HALF_DOWN);//arrondissement par defaut, 2 chiffre apres la virgule
+            $bonusAmount = $user->getPack()->getAcurracy() * ($user->getCapital($date) / 100);
+            $bonusAmount = round($bonus, 2, PHP_ROUND_HALF_DOWN);//arrondissement par defaut, 2 chiffre apres la virgule
 
-            $amount =  $this->userModel->getFactory()->getModel('ReturnInvest')->getMaxAdmissible($user, $bonus);
-            $surplus =  $bonus - $amount;
+            $amount =  $this->userModel->getFactory()->getModel('ReturnInvest')->getMaxAdmissible($user, $bonusAmount);
+            $surplus =  $bonusAmount - $amount;
             
             $return->setUser($user);
             $return->setAmount($amount);
