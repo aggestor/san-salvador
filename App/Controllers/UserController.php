@@ -175,6 +175,7 @@ class UserController extends Controller
             $capitauxGauche = $user->getLeftDownlineCapital();
             $capitauxDroite = $user->getRightDownlineCapital();
             $this->control();
+            //var_dump($this->existOneValidateInscription());exit();
             if ($this->existOneValidateInscription()) {
                 return $this->view("pages.user.profile", "layout_", ['user' => $this->userObject(), 'gauche' => $capitauxGauche, 'droite' => $capitauxDroite]);
             }

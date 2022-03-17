@@ -4,7 +4,7 @@
             <h1 class="_green_text text-3xl font-bold">Souscription en cours de validation...</h1>
             <p class="text-gray-400 font-semibold text-lg mt-4">Votre soucription est encours de validation. Merci pour votre confiance, USALVAGETRADE.</p>
             <p class="text-gray-400  mt-6 text-sm"><b>Note :</b> Cette étape peut prendre plusieurs minutes...</p>
-            <p class="mt-6 text-sm text-gray-300"><a href="/user/logout" class="font-semibold text-black p-2  rounded cursor-pointer hover:bg-green-500 _green_bg">Revenir plutard</a></p>
+            <p class="mt-6 text-sm text-gray-300"><a href="/user/logout" class="font-semibold text-black p-2  rounded cursor-pointer hover:bg-green-500 bg-green-500">Revenir plutard</a></p>
 
         </div>
         <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">

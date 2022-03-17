@@ -264,7 +264,7 @@
                 </div>
             </div>
             <div class="md:w-11/12 mx-auto mt-4">
-                <button type="submit" name="edit" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
+                <button type="submit" name="edit" class="bg-greeen-500 text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
             </div>
         </form>
     </div>

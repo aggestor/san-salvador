@@ -179,7 +179,8 @@ class Controller
     {
         if (!$this->userObject()->hasInscription()) {
             return $this->view("pages.user.hasNotSubscribedYet", "layout_", ['user' => $_SESSION[self::SESSION_USERS]]);
-        } elseif ($this->existValidateInscription()) {
+        }
+        if ($this->existValidateInscription() && !$this->inscriptionModel->checkValidated($_SESSION[self::SESSION_USERS]->getId())) {
             return $this->view("pages.user.awaitUserPackValidation", "layout_");
         }
     }
@@ -534,7 +535,7 @@ class Controller
     public function envoieMail($to,  string $sujet = null, $path, array $params = null)
     {
         $headers[] = 'MIME-Version: 1.0';
-        $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+        $headers[] = 'Content-type: text/html; charset=utf-8';
         // En-têtes additionnels
         $headers[] = 'From: contact@usalvagetrade.com';
         $headers[] = 'Repay-To: contact@usalvagetrade.com';
