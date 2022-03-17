@@ -4,6 +4,7 @@ use Root\Autoloader;
 use Root\routes\Router;
 use Root\App\Exceptions\NotFoundException;
 use Root\App\Models\ModelFactory;
+use Root\App\Models\ReturnInvestCronJob;
 
 include("../Autoloader.php");
 Autoloader::register();
@@ -159,7 +160,7 @@ $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controller
  */
 $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
 $routes->get('/teste', function () {
-    // var_dump(ModelFactory::getInstance()->getModel('CashOut')->findValidated());
+    // ReturnInvestCronJob::run();
 });
 try {
     $routes->run();
