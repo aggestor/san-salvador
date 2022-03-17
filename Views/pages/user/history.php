@@ -163,7 +163,7 @@ $images = explode("AND", $params['user']->getPhoto());
                 <span id="unvalidatedBtn" class=" text-gray-300 flex px-2 py-1 my-1 mx-2 rounded cursor-pointer hover:bg-slate-700 primary_bg_ place-items-center"> Retraits Non validés <span class="fas fa-times-circle ml-1"></span></span>
             </div>
         </div>
-        <div id="validated" class="w-11/12 mx-auto">
+        <div id="validated" class="w-11/12 text-sm lg:text-base mx-auto">
             <div class="w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
                 <div class="w-2/12">Montant</div>
                 <div class="w-2/12">Destination</div>
@@ -178,7 +178,7 @@ $images = explode("AND", $params['user']->getPhoto());
             </div>
         <?php endforeach; ?>
         </div>
-        <div id='unvalidated'  style="display: none;" class="w-11/12 mx-auto">
+        <div id='unvalidated'  style="display: none;" class="w-11/12 text-sm lg:text-base  mx-auto">
             <div class="w-full mx-auto p-3 text-gray-300  mt-6 mb-3 border border-gray-700 primary_bg_ flex justify-between rounded">
                 <div class="w-3/12">Montant</div>
                 <div class="w-3/12">Origine</div>
