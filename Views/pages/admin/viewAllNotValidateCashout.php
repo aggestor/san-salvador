@@ -1,4 +1,5 @@
-<div class="w-full mt-4 h-screen-admin scroll overflow-y-scroll grid grid-cols-12">
+<div class="w-full mt-4 relative h-screen-admin scroll overflow-y-scroll grid grid-cols-12">
+    <?php if(isset($params['cashOut'])):?>
     <div class="col-span-12 flex flex-col">
         <div class="w-11/12 mx-auto mb-4 h-12 border-b border-gray-900 flex justify-between">
             <h1 class="text-gray-300 font-semibold text-xl">Toutes les demandes de retrait en attente.</h1>
@@ -20,11 +21,37 @@
                 <div class="w-1/12 font-semibold text-white"><?= $data->getAmount() ?> USD</div>
                 <div class="w-1/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
                 <div class="flex w-1/12 justify-between">
-                    <form method="POST" action="/admin/validate/cashout-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="_green_bg rounded text-gray-800 p-1.5 m-1 " type="submit"><i class="fas fa-check-circle   "></i></button></form>
+                    <button data-act="/admin/validate/cashout-<?= $data->getId() ?>-<?= $data->getUser()->getId() ?>" class="_green_bg rounded text-gray-800 p-1.5 m-1 showModal" ><i class="fas fa-check-circle"></i></button>
                     <form method="POST" action="/admin/canceled/cashout-<?= $data->getId() ?>"><button class="bg-red-500 rounded text-white p-1.5 m-1" type="submit"><i class="fas fa-times-circle    "></i></button></form>
+                    <form style="display: none;" method="POST" class="h-96 shadow modal flex flex-col shadow-gray-900 rounded  w-[600px] backdrop-blur-lg top-16 left-48 absolute primary_bg_ bg-opacity-90 text-white">
+                        <div class="flex justify-end w-full h-12">
+                            <span class="fas hideModal fa-times-circle fa-2x mt-2 cursor-pointer h-10 w-10 rounded text-gray-400"></span>
+                        </div>
+                        <div class="flex flex-col h-full w-9/12 mx-auto items-center justify-center">
+                        <!--PASSWORD BEGIN-->
+                        <div class="md:w-11/12 mx-auto w-full mb-2">
+                            <div class="w-full focus-within:font-semibold text-gray-300 focus-within:text-green-600 group focus-within:border-green-500 h-32 px-2 items-center flex rounded border <?= $data =  (isset($_POST['submit']) && !empty($params['errors']['ref'])) ?"border-red-500" : " border-gray-400" ?>">
+                                <textarea id="ref" name="ref" type="text" placeholder="Reference de transaction" class="bg-transparent focus:text-green-500 h-28 resize-none focus:outline-none ml-2 w-full" autocomplete="on" ><?= $data = (isset($_POST['submit'])&& !$params['errors']['ref']) ? $params['ref'] : "" ?></textarea>
+                            </div>
+                            <?php if (isset($_POST['submit']) && !empty($params['errors']['ref'])): ?>
+                                <span class="-mt-2 text-red-500 text-xs"><?php echo $params['errors']['ref']; ?></span>
+                            <?php endif;?>
+                        </div>
+                        <!--PASSWORD END-->
+                        <div class="md:w-11/12 flex justify-between mt-3 mx-auto">
+                            <div class="lg:w-9/12 text-gray-500 text-sm">
+                                Avant de cliquer sur <i>Suivant</i>, rassurez-vous d'avoir bien rempli le champ ci-dessus.
+                            </div>
+                        </div>
+                        <div class="md:w-11/12 w-full mx-auto mt-4">
+                            <button name="submit" type="submit" class="_green_bg text-gray-900 p-2 w-full h-10 rounded"><i class="fas fa-save"></i> Enregistrer</button>
+                        </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php endforeach;?>
+        
         <div class="w-11/12 h-auto text-gray-400  mx-auto items-center">
             <div class="mb-4">
                 Page <?= $_GET['page'] . " sur <b class='text-gray-200'> " . $params['nombrePage'] . "</b>" ?>
@@ -46,4 +73,19 @@
             </div>
         </div>
     </div>
+    <?php else : ?>
+        <div class="col-span-12  primary_bg grid place-items-center">
+            <div class="md:w-6/12 lg:w-8/12 flex flex-col lg:flex-row justify-center items-center border mt-16 border-gray-900 mx-auto primary_bg_ shadow rounded md:p-12 p-4">
+                <div class="md:w-10/12 w-11/12 lg:w-6/12  mx-auto md:p-3">
+                    <h1 class="text-gray-200 text-3xl font-bold">Aucun démande de retrait pour le moment.</h1>
+                    <p class="text-gray-400 font-semibold text-lg mt-4">Toutes les demandes de retrait seront affichés sur cette page.</p>
+                </div>
+                <div class="lg:w-6/12 h-72 hidden lg:flex overflow-hidden items-center justify-center">
+                    <span class="w-full h-full justify-center flex items-center text-gray-900">
+                        <span class='w-40 h-40 bg-gray-500  rounded-full grid place-items-center'><i class="fas fa-dollar-sign fa-5x"></i></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>

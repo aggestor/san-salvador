@@ -45,7 +45,7 @@
             </div>
             <div class="w-full grid place-items-center my-3">
                 <ul class="flex flex-col">
-                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="mailto:contact@usalvagetrade.com">contact@usalvagetrade.com</a></li>
+                    <li class="hover:text-green-500 p-2 text-gray-400"><a href="mailto:support@usalvagetrade.com">support@usalvagetrade.com</a></li>
                 </ul>
             </div>
         </div>

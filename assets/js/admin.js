@@ -108,3 +108,32 @@ const timeHandler = () => {
     }
 };
 setInterval(() => timeHandler(), 5000);
+const showers = document.querySelectorAll(".showModal");
+showers &&
+    showers.forEach((shower) => {
+        shower.addEventListener("click", (e) => {
+            e.preventDefault();
+            const target = e.target;
+            if (target) {
+                $(".modal").attr("action", shower.dataset["act"]);
+                if (shower.dataset['act'])
+                    window.location.hash = shower.dataset["act"];
+                $(".modal").slideDown();
+            }
+        });
+    });
+const hiders = document.querySelectorAll(".hideModal");
+hiders && hiders.forEach(hider => {
+    hider.addEventListener("click", () => {
+        window.location.hash = "";
+        $(".modal").slideUp();
+    });
+});
+(function () {
+    const hash = window.location.hash;
+    if (hash) {
+        const data = hash.split("#")[1];
+        console.log(data);
+        $(`[data-act="${data}"]`).click();
+    }
+})();
