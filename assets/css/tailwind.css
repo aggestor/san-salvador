@@ -1024,6 +1024,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 50%;
 }
 
+.w-1 {
+  width: 0.25rem;
+}
+
+.table-auto {
+  table-layout: auto;
+}
+
+.table-fixed {
+  table-layout: fixed;
+}
+
 .transform {
   transform: var(--tw-transform);
 }
@@ -1077,6 +1089,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .flex-col {
   flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .flex-nowrap {
@@ -1141,6 +1157,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   overflow: hidden;
 }
 
+.overflow-scroll {
+  overflow: scroll;
+}
+
 .overflow-x-auto {
   overflow-x: auto;
 }
@@ -1157,8 +1177,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   overflow-y: hidden;
 }
 
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+
 .overflow-y-scroll {
   overflow-y: scroll;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .rounded-full {
