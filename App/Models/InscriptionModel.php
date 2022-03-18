@@ -168,6 +168,7 @@ class InscriptionModel extends AbstractOperationModel
                 if ($userModel->isRoot($user->getParent())) {
                     $binary->setAmount($bonus);
                     $binary->setSurplus(0);
+                    $binary->setUser($user->getParent());
                     $this->sendBinary($pdo, $binary);
                 }
 
