@@ -354,7 +354,7 @@ class Controller
             }
             return array_sum($return);
         }
-        return $return;
+        return 0;
     }
 
     /**
@@ -377,7 +377,7 @@ class Controller
             }
             return round(array_sum($return), 2);
         }
-        return $return;
+        return 0;
     }
 
     /**
@@ -401,7 +401,7 @@ class Controller
             }
             return array_sum($return);
         }
-        return $return;
+        return 0;
     }
 
     /**
