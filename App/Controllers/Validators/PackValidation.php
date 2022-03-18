@@ -9,6 +9,7 @@ use Root\App\Models\ModelFactory;
 use Root\App\Models\Objects\Inscription;
 use Root\App\Models\Objects\Pack;
 use Root\App\Models\PackModel;
+use Root\App\Models\UserModel;
 use Root\Core\GenerateId;
 use Root\Models\InscriptionModel;
 
@@ -33,6 +34,13 @@ class PackValidation extends AbstractValidator
      * @var InscriptionModel
      */
     private $inscriptionModel;
+
+    /**
+     * UserModel
+     *
+     * @var UserModel
+     */
+    private $userModel;
     /**
      * Constructeur
      */
@@ -40,6 +48,7 @@ class PackValidation extends AbstractValidator
     {
         $this->packModel = ModelFactory::getInstance()->getModel('Pack');
         $this->inscriptionModel = ModelFactory::getInstance()->getModel('Inscription');
+        $this->userModel = ModelFactory::getInstance()->getModel('User');
     }
     /**
      * Creation du pack apres validation
@@ -174,6 +183,7 @@ class PackValidation extends AbstractValidator
      */
     protected function validationAmountOnSuscribePack($montant)
     {
+        var_dump("ooooookkkkk");exit;
         $this->notNullable($montant);
         if (!is_numeric($montant)) {
             throw new \RuntimeException("Veuillez entrer une valeur numerique");
