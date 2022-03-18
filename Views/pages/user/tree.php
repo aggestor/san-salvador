@@ -2,7 +2,7 @@
 $images = explode("AND", $params['user']->getPhoto());
 ?>
 
-<div class="col-span-12  primary_bg">
+<div style="overflow: hidden;" class="col-span-12  primary_bg">
     <div class="w-full flex justify-between lg:h-24 h-auto flex-col lg:flex-row p-2 primary_bg_ border-gray-800 border-b">
         <div class="flex lg:hidden my-2 justify-between">
             <h1 class="text-gray-200 font-semibold">USALVAGETRADE</h1>
@@ -10,7 +10,7 @@ $images = explode("AND", $params['user']->getPhoto());
                 <i class="fas fa-bars text-xl text-gray-200"></i>
             </button>
         </div>
-        <nav id="mobile" class="hidden flex-col fixed w-screen h-screen z-1000 top-0 secondary_bg">
+        <nav id="mobile" style="z-index: 60;" class="hidden flex-col fixed w-screen h-screen z-1000 top-0 secondary_bg">
             <div class="flex justify-end w-11/12 mx-auto">
                 <button id="times" class="w-8 h-8  sm:hidden flex justify-center items-center border rounded mt-4 text-white">
                     <i class="fas fa-times text-xl text-gray-200"></i>
@@ -153,6 +153,14 @@ $images = explode("AND", $params['user']->getPhoto());
         </div>
 
         <div class="lg:col-span-10 col-span-12 h-screen-customer items-center justify-center flex flex-col p-3">
+            <div class="w-2/12 lg:w-54 flex top-48 right-3 z-50 shadow text-white bg-blue-500 rounded overflow-hidden h-8 fixed">
+                <span id="zoomOut" class="w-1/2 hover:bg-blue-600 cursor-pointer grid place-items-center">
+                    <span class="fas fa-minus"></span>
+                </span>
+                <span id="zoomIn" class="w-1/2 grid hover:bg-blue-600 cursor-pointer place-items-center">
+                    <span class="fas fa-plus"></span>
+                </span>
+            </div>
             <div id="binaryTreeContainer" class="w-11/12 h-auto overflow-auto mx-auto">
             </div>
             <!-- <div id="no-data" class="w-11/12 text-center flex flex-col mx-auto">
