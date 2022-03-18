@@ -103,8 +103,12 @@ class InscriptionModel extends AbstractOperationModel
          */
         $userModel = $this->getFactory()->getModel("User");
         $user = $userModel->load($inscription->getUser()->getId());
-        $user->setParent($userModel->load($user->getParent()->getId()));
-        $user->setSponsor($userModel->findSponsor($user->getId()));
+        if($userModel->hasParent($user->getId())) {
+            $user->setParent($userModel->load($user->getParent()->getId()));
+        }
+        if($userModel->hasSponsor($user->getId())){
+            $user->setSponsor($userModel->findSponsor($user->getId()));
+        }
 
         try {
             $pdo = Queries::getPDOInstance();
