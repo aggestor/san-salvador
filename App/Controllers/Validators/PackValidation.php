@@ -184,17 +184,19 @@ class PackValidation extends AbstractValidator
     protected function validationAmountOnSuscribePack($montant)
     {
         $this->notNullable($montant);
-        $user=$this->userModel->load($_SESSION[self::SESSION_USERS]);
-        $capitauxValide=$user->getCapital();
-        //$capitauxNonValide=$this->inscriptionModel->get
-        var_dump($this->userModel->load($_SESSION[self::SESSION_USERS])->getCapital());exit;
+        $user = $this->userModel->load($_SESSION[self::SESSION_USERS]);
+        $capitauxValide = $user->getCapital();
+        $capitauxNonValide = $user->getWaitingCapital();
+        $totCapitaux = $capitauxNonValide + $capitauxValide + $montant;
+        // var_dump($this->packModel->findByAmount($totCapitaux));
+        // exit;
         if (!is_numeric($montant)) {
             throw new \RuntimeException("Veuillez entrer une valeur numerique");
         }
         if (!preg_match("#^[0-9]*$#", $montant)) {
             throw new \RuntimeException("Veuillez entrer les valeurs numeriques correctes");
         }
-        if (!$this->packModel->checkByAmount($montant)) {
+        if (!$this->packModel->checkByAmount($montant) || !$this->packModel->checkByAmount($totCapitaux)) {
             throw new \RuntimeException("Ce montant ne correspond pas a aucune des nos pack");
         }
     }
