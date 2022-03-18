@@ -120,6 +120,12 @@ class User extends Member implements BinaryTreeNode
     private $capital;
 
     /**
+     * Renvoie le capital en attante
+     * @var float
+     */
+    private $waitingCapital;
+
+    /**
      * @var number
      */
     private $soldBinary;
@@ -565,6 +571,7 @@ class User extends Member implements BinaryTreeNode
         }
 
         $this->capital = 0;
+        $this->waitingCapital = 0;
         $this->soldBinary = 0;
         $this->soldParainage = 0;
         $this->soldResturn = 0;
@@ -579,7 +586,11 @@ class User extends Member implements BinaryTreeNode
              */
             foreach ($this->getOperations() as $operation) {
                 if ($operation instanceof Inscription) {
-                    $this->capital += ($operation->isValidate() ? $operation->getAmount() : 0);
+                    if($operation->isValidate()) {
+                        $this->capital +=  $operation->getAmount();
+                    } else {
+                        $this->waitingCapital += $operation->getAmount();
+                    }
                 } else if ($operation instanceof CashOut) {
                     if($operation->isValidated() || $operation->getAdmin() != null) {
                         $this->soldWithdrawal += $operation->getAmount();
@@ -642,6 +653,15 @@ class User extends Member implements BinaryTreeNode
         }
         $this->doRefreshed();
         return $this->capital;
+    }
+
+    /**
+     * Renvoie la sommes des capitaux en attente de validation
+     * @return float
+     */
+    public function getWaitingCapital () : float {
+        $this->doRefreshed();
+        return $this->waitingCapital;
     }
 
     /**
