@@ -137,3 +137,42 @@ hiders && hiders.forEach(hider => {
         $(`[data-act="${data}"]`).click();
     }
 })();
+function setTitles() {
+    const path = window.location.pathname;
+    const menus = document.querySelectorAll("#userMenu div[data-path]");
+    menus.forEach((menu) => {
+        let menuPath = menu.getAttribute("data-path");
+        menuPath = "/admin" + menuPath;
+        const title = " | USALVAGETRADE";
+        if (menuPath == path) {
+            $(menu).attr("class", "flex p-2 my-2 from-green-500 to-gray-900 text-white transition-all duration-500   cursor-pointer bg-gradient-to-r hover:from-green-500 hover:to-gray-900 hover:text-white");
+            switch (menuPath) {
+                case "/admin/dashboard":
+                    document.title = "Tableau de bord des administrateurs" + title;
+                    break;
+                case "/admin/login":
+                    document.title = "Connexion des administratuers" + title;
+                    break;
+                case "/admin/administrator":
+                    document.title = "Tous les administrateurs" + title;
+                    break;
+                case "/admin/pack":
+                    document.title = "Packs disponibles dans les systemes" + title;
+                    break;
+                case "/admin/users-page-1":
+                    document.title = "Tous les utilisateurs" + title;
+                    break;
+                case "/admin/history-1":
+                    document.title = "Historique de retraits valides" + title;
+                    break;
+                case "/admin/validate/cashout-1":
+                    document.title = "Historique de retraits non validés" + title;
+                    break;
+                case "/admin/active/inscription-1":
+                    document.title = "Liste de validations de retraits" + title;
+                    break;
+            }
+        }
+    });
+}
+setTitles();

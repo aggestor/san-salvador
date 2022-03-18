@@ -322,6 +322,11 @@ function menuHighLighter(): void {
     "/terms",
     "/user/pack/subscribe",
     "/user/share/link",
+    "/user/dashboard",
+    "/user/history",
+    "/user/tree",
+    "/user/me",
+    "/user/cashout",
   ];
   const path = window.location.pathname;
   const menus = document.querySelectorAll("#defaultMenu li span a");
@@ -375,6 +380,18 @@ function menuHighLighter(): void {
         break;
       case "/user/dashboard":
         setHeadImportantData({ title: "Profil de l'utilisateur" });
+        break;
+      case "/user/history":
+        setHeadImportantData({ title: "Historique de tous les retraits" });
+        break;
+      case "/user/tree":
+        setHeadImportantData({ title: "Arbre de reseau de l'utilisateur" });
+        break;
+      case "/user/me":
+        setHeadImportantData({ title: "Informations sur l'utilisateur" });
+        break;
+      case "/user/cashout":
+        setHeadImportantData({ title: "Retrait de fonds" });
         break;
       default:
         setHeadImportantData({ title: "Page non trouvé" });
@@ -609,10 +626,10 @@ $("#unvalidatedBtn").on("click", () => {
 })
 
 $("#zoomIn").on("click", () => {
-  scaleInitial *= 1.25
+  scaleInitial *= 2
   drawBinaryTree(binaryTreeData)
 })
 $("#zoomOut").on("click", () => {
-  scaleInitial *= 0.5
+  scaleInitial *=0.5
    drawBinaryTree(binaryTreeData);
 })
