@@ -46,9 +46,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //var_dump($this->totalAmountInvested());exit();
+        //var_dump($this->allBinary());exit();
         if ($this->isAdmin()) {
-            $amountBinary = $this->allBinary();;
+            $amountBinary = $this->allBinary();
             $amountInvest = $this->allReturnInvest();
             $amountParainnage = $this->allParainage();
             $amountSurplus = $this->allSurplus();
@@ -56,6 +56,8 @@ class AdminController extends Controller
             $amountCashOutValidated = $this->amountAllCashOutValide();
             $amountCapitalInvested = $this->totalAmountInvested();
             $amountCaisse = ($amountBinary + $amountInvest + $amountParainnage + $amountSurplus) - $amountCashOutValidated;
+            //$amountCaisse = 0;
+
             return $this->view('pages.admin.dashboard', 'layout_admin', ['binaire' => $amountBinary, 'invest' => $amountInvest, 'parainnage' => $amountParainnage, 'surplus' => $amountSurplus, 'cashoutNotValidate' => $amountCashOutNotValidated, 'cashoutValidate' => $amountCashOutValidated, 'capital' => $amountCapitalInvested, 'caisse' => $amountCaisse]);
         }
     }
