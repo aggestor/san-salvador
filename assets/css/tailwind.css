@@ -577,14 +577,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   z-index: 20;
 }
 
-.z-30 {
-  z-index: 30;
-}
-
-.z-40 {
-  z-index: 40;
-}
-
 .col-span-10 {
   grid-column: span 10 / span 10;
 }
@@ -2120,8 +2112,8 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 1.75rem;
   }
 
-  .lg\:w-36 {
-    width: 9rem;
+  .lg\:w-24 {
+    width: 6rem;
   }
 
   .lg\:grid-cols-12 {

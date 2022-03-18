@@ -153,7 +153,7 @@ $images = explode("AND", $params['user']->getPhoto());
         </div>
 
         <div class="lg:col-span-10 col-span-12 h-screen-customer items-center justify-center flex flex-col p-3">
-            <div class="w-2/12 lg:w-54 flex top-48 right-3 z-50 shadow text-white bg-blue-500 rounded overflow-hidden h-8 fixed">
+            <div class="w-2/12 lg:w-24 flex top-48 right-3 z-50 shadow text-white bg-blue-500 rounded overflow-hidden h-8 fixed">
                 <span id="zoomOut" class="w-1/2 hover:bg-blue-600 cursor-pointer grid place-items-center">
                     <span class="fas fa-minus"></span>
                 </span>
