@@ -136,10 +136,11 @@ class UserModel extends AbstractMemberModel
     }
 
     /**
-     * demande de valisation du compte d'un utiilsateur
-     * @param string $id
+     * demande de validation du compte d'un utiilsateur,
+     * cette methode est utiliser pour cofirmer la reception de l'email par l'utilisateur
+     * @param string $id l'identifiant du compte utilisateur
      */
-    public function validateAccount($id): void
+    public function validateAccount(string $id): void
     {
         try {
             Queries::updateData(
@@ -156,6 +157,8 @@ class UserModel extends AbstractMemberModel
 
     /**
      * verouillage definitive d'un compte
+     * N.B: eviter d'acceder a cette methode implicitement. seul les calculateurs de l'evolution du compte d'un
+     * utilisateur on le droit d'y acceder pour verouiller le compte d'un user dans le cas ou le compte est saturer
      * @param \PDO $pdo
      * @param string $id
      * @throws ModelException
@@ -186,7 +189,9 @@ class UserModel extends AbstractMemberModel
     }
 
     /**
-     * mis en jour du token de l'utilisateur
+     * mis en jour du token de l'utilisateur,
+     * le tocken est utile lors de la confirmation de l'email
+     * et lors dela mis en jour s du mot de passe, apre oublie de cel-ci
      * @param string $token
      * @param string $id
      */
@@ -205,7 +210,8 @@ class UserModel extends AbstractMemberModel
     }
 
     /**
-     * revuperation des utilisateurs dont leurs compte correspond au premier statut en parametre
+     * recuperation des utilisateurs dont leurs compte correspond au statut en parametre,
+     * un compte est considerer comme veruiller, s'il a deja attein 300% de son capital investie
      * @param bool $lock, true pour de compte active, false pour les comptes verrouiller
      * @param int $limit
      * @param int $offset
@@ -238,6 +244,7 @@ class UserModel extends AbstractMemberModel
 
     /**
      * verification des comptes ayant le status en premier parametre, dans l'intervale specifier en 2 eme 3 eme parametre
+     * un compte est considerer veruiller lors qu'il a deja atteint 300% de son capital investie
      * @param boolean $lock
      * @param int $limit
      * @param int $offset
@@ -311,73 +318,42 @@ class UserModel extends AbstractMemberModel
     }
 
     /**
+     * comptage du nombre des users qui sont  dans le reseau d'un user
      * @param string $userId
-     * @return int
-     */
-    public function countLeftRightSides(string $userId): int
-    {
-        try {
-            $count = 0;
-
-            if ($this->hasSides($userId)) {
-                $count += $this->countLeftSide($userId);
-                $count += $this->countRightSide($userId);
-            }
-
-            return $count;
-        } catch (\PDOException $th) {
-            throw new ModelException($th->getMessage());
-        }
-    }
-
-    /**
-     * comptage des nombre des 
-     * @param string $userId
-     * @param int $side
+     * @param int $side foot du User. pour faire abstraction au foot, une valeur null sufit (ce le comportement par defaut)
      * @throws ModelException
      * @return int
      */
-    public function countSide(string $userId, int $side): int
+    public function countDownLineStack(string $userId, ?int $side = null): int
     {
+        if($side  != User::FOOT_LEFT && $side != User::FOOT_RIGHT && $side !== null){
+            throw new ModelException("Side invalide => {$side}");
+        }
+
         $count = 0;
-        try {
-            switch ($side) {
-                case User::FOOT_LEFT: {
-                        if ($this->hasLeftSide($userId)) {
-                            $user = $this->findLeftSide($userId);
-                            $count++;
-
-                            if ($this->hasSides($user->getId())) {
-                                $count += $this->countLeftRightSides($user->getId());
-                            }
-                        }
-                    }
-                    break;
-
-                case User::FOOT_RIGHT: {
-                        if ($this->hasRightSide($userId)) {
-                            $user = $this->findRightSide($userId);
-                            $count++;
-
-                            if ($this->hasSides($user->getId())) {
-                                $count += $this->countLeftRightSides($user->getId());
-                            }
-                        }
-                    }
-                    break;
-
-                default: {
-                        throw new ModelException("Side inconnue => {$side}");
-                    }
+        if ($side == User::FOOT_LEFT){
+            if($this->hasLeftSide($userId)) {
+                $count++;
+                $user = $this->findLeftSide($userId);
+                $count += $this->countDownLineStack($user->getId());
             }
-        } catch (\PDOException $th) {
-            throw new ModelException($th->getMessage());
+        } elseif ($side == User::FOOT_LEFT){
+            if($this->hasRightSide($userId)) {
+                $count++;
+                $user = $this->findRightSide($userId);
+                $count += $this->countDownLineStack($user->getId());
+            }
+        } else {
+            $count += $this->countDownLineStack($userId, User::FOOT_LEFT);
+            $count += $this->countDownLineStack($userId, User::FOOT_RIGHT);
         }
         return $count;
     }
 
     /**
      * revoie le nombre d'anfant directe de l'utilisateur en parametre
+     * comptage des enfants directement en dessous d'un user
+     * un compte utilisteur ne put avoie que deux enfants
      * @param string $userId
      * @return int
      * @throws ModelException
@@ -385,36 +361,39 @@ class UserModel extends AbstractMemberModel
     public function countSides(string $userId): int
     {
         $count = 0;
-        if ($this->hasLeftSide($userId)) {
-            $count++;
-        }
-
-        if ($this->hasRightSide($userId)) {
-            $count++;
+        try {
+            $sponsor = Schema::USER['sponsor'];
+            $statement = Queries::executeQuery("SELECT COUNT (*) AS nombre FROM {$this->getTableName()} WHERE {$sponsor} = ? ", [$userId]);
+            if ($row = $statement->fetch()) {
+                $count = $row['nombre'];
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $th) {
+            throw new ModelException($th->getMessage());
         }
         return $count;
     }
 
     /**
-     * comptage des anfants d'un utilisateur sur son pied droid
+     * comptage des anfants du reseau d'un utilisateur sur son pied droid
      * @param string $userId
      * @return int
      * @throws ModelException
      */
-    public function countRightSide(string $userId): int
+    public function countDownlineRightStack(string $userId): int
     {
-        return $this->countSide($userId, User::FOOT_RIGHT);
+        return $this->countDownLineStack($userId, User::FOOT_RIGHT);
     }
 
     /**
-     * comptage des anfant d'un utilisateur sur le pied gauche
+     * comptage des anfant du reseau d'un utilisateur sur le pied gauche
      * @param string $userId
      * @return int
      * @throws ModelException
      */
-    public function countLeftSide(string $userId): int
+    public function countDownlineLeftStack(string $userId): int
     {
-        return $this->countSide($userId, User::FOOT_LEFT);
+        return $this->countDownLineStack($userId, User::FOOT_LEFT);
     }
 
     /**
@@ -505,7 +484,7 @@ class UserModel extends AbstractMemberModel
     /**
      * Renvoie la pile des utilisateurs du reseau de l'utilisateur dont l'id est en premier parametre,
      * sur le side en deuxieme parametre.
-     * Lors du chargement des informations du compte, il est possible de recuperer directement tout les operations deja effectuer dans le compte
+     * Lors du chargement des informations du compte, il est possible de recuperer directement tout les operations deja effectuer par le compte
      * soit de s'en foudre. ce le role du parametre $load.
      * @param string $userId
      * @param int $side
@@ -518,26 +497,24 @@ class UserModel extends AbstractMemberModel
         $user = null;
         switch ($side) {
             case User::FOOT_LEFT: {
-                    if ($this->hasLeftSide($userId)) {
-                        $user = $this->findLeftSide($userId);
-                    } else {
-                        throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
-                    }
+                if ($this->hasLeftSide($userId)) {
+                    $user = $this->findLeftSide($userId);
+                } else {
+                    throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
                 }
-                break;
+            }break;
 
             case User::FOOT_RIGHT: {
-                    if ($this->hasRightSide($userId)) {
-                        $user = $this->findRightSide($userId);
-                    } else {
-                        throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
-                    }
+                if ($this->hasRightSide($userId)) {
+                    $user = $this->findRightSide($userId);
+                } else {
+                    throw new ModelException("aucun downline pour sur le pied {$side} de {$userId}");
                 }
-                break;
+            }break;
 
             default: {
-                    throw new ModelException("Side inconue => {$side}");
-                }
+                throw new ModelException("Side inconue => {$side}");
+            }
         }
 
         if ($load) { //pour le chargement de tout les informations des comptes des utilisateurs
@@ -664,13 +641,16 @@ class UserModel extends AbstractMemberModel
     }
 
     /**
-     * revoir le sponsor directe d'un utilisateur
+     * renvoir le sponsor directe d'un utilisateur
      * @param string $userId
      * @return User
      */
     public function findSponsor(string $userId)
     {
         $user = $this->findById($userId);
+        if($user->getSponsor() == null){
+            throw new ModelException("Le compte {$user->getId()} n'as pas de sponsor");
+        }
         return $this->findById($user->getSponsor()->getId());
     }
 
@@ -682,11 +662,14 @@ class UserModel extends AbstractMemberModel
     public function findParent(string $userId)
     {
         $user = $this->findById($userId);
+        if($user->getParent() == null){
+            throw new ModelException("Le compte {$user->getId()} n'as pas de parent");
+        }
         return $this->findById($user->getParent()->getId());
     }
 
     /**
-     * verifcation si un utilisateur deja sposoriser aumoin une personne
+     * verification si un utilisateur deja sposoriser aumoin une personne
      * @param string $userId
      * @return bool
      */
@@ -747,11 +730,7 @@ class UserModel extends AbstractMemberModel
     public function hasParent(string $userId): bool
     {
         $user = $this->findById($userId);
-
-        if ($user->getParent() != null) {
-            return true;
-        }
-        return false;
+        return ($user->getParent() != null);
     }
 
     /**
@@ -762,11 +741,7 @@ class UserModel extends AbstractMemberModel
     public function hasSponsor(string $userId): bool
     {
         $user = $this->findById($userId);
-
-        if ($user->getParent() != null) {
-            return true;
-        }
-        return false;
+        return ($user->getSponsor() != null);
     }
 
     /**
