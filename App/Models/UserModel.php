@@ -363,7 +363,7 @@ class UserModel extends AbstractMemberModel
         $count = 0;
         try {
             $sponsor = Schema::USER['sponsor'];
-            $statement = Queries::executeQuery("SELECT COUNT (*) AS nombre FROM {$this->getTableName()} WHERE {$sponsor} = ? ", [$userId]);
+            $statement = Queries::executeQuery("SELECT COUNT({$sponsor}) AS nombre FROM {$this->getTableName()} WHERE {$sponsor} = ? ", [$userId]);
             if ($row = $statement->fetch()) {
                 $count = $row['nombre'];
             }

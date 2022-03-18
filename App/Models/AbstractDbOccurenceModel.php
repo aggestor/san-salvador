@@ -146,15 +146,13 @@ abstract class AbstractDbOccurenceModel
         $return = null;
         try {
 
-            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$columnName}=? LIMIT 1", array($value));
-            //var_dump($statement->fetch()); exit();
+            $statement = Queries::executeQuery("SELECT * FROM {$this->getTableName()} WHERE {$columnName}=? LIMIT 1 OFFSET 0", array($value));
             if ($row = $statement->fetch()) {
                 $return = $this->getDBOccurence($row);
                 $statement->closeCursor();
             } else {
                 $statement->closeCursor();
-                return $return;
-                // throw new ModelException("Aucun resultat pour la requette executer");
+                throw new ModelException("Aucun resultat pour la requette executer: {$columnName} => {$value}");
             }
         } catch (\PDOException $e) {
             throw new ModelException("Une erreur est survenue lors de la communication avec la BDD", intval($e->getCode()), $e);
