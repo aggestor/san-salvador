@@ -537,8 +537,8 @@ class Controller
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=utf-8';
         // En-têtes additionnels
-        $headers[] = 'From: contact@usalvagetrade.com';
-        $headers[] = 'Repay-To: contact@usalvagetrade.com';
+        $headers[] = "From: \"UsalvageTrade\"<contact@usalvagetrade.com>";
+        $headers[] = 'Repay-To: support@usalvagetrade.com';
         $headers[] = 'X-Mailer: PHP/' . phpversion();
 
         $sujet = $sujet;

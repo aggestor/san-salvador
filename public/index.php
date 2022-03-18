@@ -164,6 +164,9 @@ $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controller
  */
 $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
 $routes->get('/teste', function () {
+    if (EnabledCashOut::isEnabled(getdate(), true)) {
+        ReturnInvestCronJob::run();
+    }
 });
 try {
     $routes->run();
