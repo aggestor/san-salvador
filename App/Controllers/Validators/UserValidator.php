@@ -631,7 +631,7 @@ class UserValidator extends AbstractMemberValidator
                 ($this->userModel->hasSide($user->getParent()->getId(), $side) ? $this->userModel->findSide($user->getParent()->getId(), $side) : null) : null;
 
             $node = $node == null ?
-                (($idSponsor == null && empty($idSponsor)) ?
+                (($idSponsor == null || empty($idSponsor)) ?
                     ($user->hasParentNode() ? $user->getParent() : $this->userModel->findRoot()) :
                     $this->userModel->findById($idSponsor)) : $node;
 
@@ -655,7 +655,7 @@ class UserValidator extends AbstractMemberValidator
             }
 
             throw new \RuntimeException("Impossible de determinner sur quel pied affecter ton compte");
-        } catch (\RuntimeException $e) {
+        } catch (\Exception $e) {
             $this->addError(self::FIELD_SPONSOR, $e->getMessage());
             $user->setSponsor($idSponsor);
         }
