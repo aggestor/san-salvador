@@ -175,7 +175,7 @@ class InscriptionModel extends AbstractOperationModel
                 //on remonte de l'arbre pour donner le bonus binaire aux uplines
                 $node = $user;
                 $sponsorParent = $userModel->hasSponsor($user->getParent()->getId()) ? $userModel->findSponsor($user->getParent()->getId()) : null;
-                while ($userModel->hasSponsor($node->getId()) && (!$userModel->isRoot($node->getId()) &&  $node->getSponsor()->getId() != $sponsorParent->getId())) {
+                while ($node->getSponsor() != null && $sponsorParent != null && $userModel->hasSponsor($node->getId()) && (!$userModel->isRoot($node->getSponsor()->getId()) &&  $node->getSponsor()->getId() != $sponsorParent->getId())) {
                     
                     $node = $userModel->findSponsor($node->getId());
 
