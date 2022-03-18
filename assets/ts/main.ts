@@ -472,6 +472,12 @@ class BinaryTree {
     this.getAllChildrenFrom(this.data);
   }
 } 
+const mediaQuery = window.matchMedia("(max-width:992px)")
+let scaleInitial = 0.8;
+
+if (mediaQuery.matches) {
+  scaleInitial = 0.6
+}
 /**
  * Uses the library to draw our tree and gets the data from ajax response
  * @param data Tree object data 
@@ -483,8 +489,10 @@ function drawBinaryTree(data: treeDataType) {
     bt.drawTree();
     const chart = new OrgChart(document.getElementById("binaryTreeContainer"), {
       enableSearch: false,
-      enableDragDrop: true,
+      enableDragDrop: false,
+      nodeTreeMenu: false,
       mouseScrool: OrgChart.none,
+      scaleInitial,
       nodeBinding: {
         field_0: "name",
         img_0: "img",
@@ -493,12 +501,14 @@ function drawBinaryTree(data: treeDataType) {
     });
   }
 }
+let binaryTreeData : treeDataType;
 window.location.pathname === "/user/tree" &&
   $.post({
     method: "GET",
     url: "/user/tree-data",
     success: (data: returnedData) => {
       const parsedData = JSON.parse(data);
+      binaryTreeData = parsedData
       drawBinaryTree(parsedData);
     },
   });
@@ -596,4 +606,13 @@ $("#unvalidatedBtn").on("click", () => {
   $("#validated").slideUp();
   $("#unvalidated").slideDown();
   $("#historyTitle").text("Liste des retraits non confirmés")
+})
+
+$("#zoomIn").on("click", () => {
+  scaleInitial *= 1.25
+  drawBinaryTree(binaryTreeData)
+})
+$("#zoomOut").on("click", () => {
+  scaleInitial *= 0.5
+   drawBinaryTree(binaryTreeData);
 })
