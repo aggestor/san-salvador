@@ -333,6 +333,32 @@ class Controller
             return $this->view("pages.static.404");
         }
     }
+
+    /**
+     * Methode pour retourner la liste des users ayant deja un souscrit a un pack
+     * @param integer|null $limit
+     * @param integer|null $offset
+     * @return array
+     */
+    public function usersValidate(?int $limit = null, ?int $offset = 0)
+    {
+        if ($this->userModel->checkCertifieds()) {
+            $users = $this->userModel->findCertifieds($limit, $offset);
+            return $users;
+        }
+    }
+
+    /**
+     * Methode pour compter des users ayant deja un souscrit a un pack
+     * @return int 
+     */
+    public function countUsersValidate()
+    {
+        if ($this->userModel->checkCertifieds()) {
+            return $this->userModel->countCertifieds();
+        }
+        return 0;
+    }
     /**
      * Fonction pour retourner la sommes des tous les montants binaires du systeme
      *
