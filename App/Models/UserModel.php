@@ -900,4 +900,82 @@ class UserModel extends AbstractMemberModel
 
         throw new ModelException("Aucun compte pour l'intervale choisie");
     }
+
+    /**
+     * Comptage des utilisateurs qui ont deja investie
+     * @return int
+     * @throws ModelException dans le cas où il y a une erreur lors de la communication avec le SGBD
+     */
+    public function countCertifieds () : int  {
+        $count  = 0;
+        $tableName = Schema::TABLE_SCHEMA['inscription'];
+        $userIdCollname = Schema::INSCRIPTION['user'];
+        $SQL = "SELECT COUNT(*) AS nombre FROM {$this->getTableName()} WHERE id IN(SELECT DISTINCT {$userIdCollname} FROM {$tableName})";
+        try {
+            $statement = Queries::executeQuery($SQL);
+            if($row = $statement->fetch()){
+                $count = $row['nombre'];
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException($e->getMessage(), intval($e->getCode(), 10), $e);
+        }
+        return $count;
+    }
+
+    /**
+     * verifie s'il y a des utilisateurs qui ont deja investie
+     * $limit et $offset permet de limiter la zone de teste
+     * @param int|null $limit 
+     * @param int $offset 
+     * @return bool
+     * @throws ModelException
+     */
+    public function checkCertifieds (?int $limit = null, int $offset = 0) : bool {
+        $check  = false;
+        $tableName = Schema::TABLE_SCHEMA['inscription'];
+        $userIdCollname = Schema::INSCRIPTION['user'];
+        $SQL_LIMIT = $limit !== null? "LIMIT {$limit} OFFSET {$offset}":"";
+        $SQL = "SELECT * FROM {$this->getTableName()} WHERE id IN(SELECT DISTINCT {$userIdCollname} FROM {$tableName}) {$SQL_LIMIT}";
+        try {
+            $statement = Queries::executeQuery($SQL);
+            if($statement->fetch()){
+                $check = true;
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException($e->getMessage(), intval($e->getCode(), 10), $e);
+        }
+        return $check;
+    }
+
+    /**
+     * Selection des utilisateurs qui ont deja investie
+     * @param int|null $limit pour limiter les resultat lors de la selection
+     * @param int $offset pour sauter un nombre x de resultant dans la selection
+     * @return User[]
+     * @throws ModelException dans le cas où il y a une erreur lors de la communication avec le SGBD
+     * ou s'il n'y a aucun resultat pour l'intervale de selection.
+     */
+    public function findCertifieds (?int $limit = null, int $offset = 0) : array {
+        $users  = [];
+        $tableName = Schema::TABLE_SCHEMA['inscription'];
+        $userIdCollname = Schema::INSCRIPTION['user'];
+        $SQL_LIMIT = $limit !== null? "LIMIT {$limit} OFFSET {$offset}":"";
+        $SQL = "SELECT * FROM {$this->getTableName()} WHERE id IN(SELECT DISTINCT {$userIdCollname} FROM {$tableName}) {$SQL_LIMIT}";
+        try {
+            $statement = Queries::executeQuery($SQL);
+            while ($row = $statement->fetch()) {
+                $users[] = $this->getDBOccurence($row);
+            }
+            $statement->closeCursor();
+        } catch (\PDOException $e) {
+            throw new ModelException($e->getMessage(), intval($e->getCode(), 10), $e);
+        }
+
+        if(empty($users)){
+            throw new ModelException("Aucun resultat pour l'intervale de selection. {$SQL_LIMIT}");
+        }
+        return $users;
+    }
 }
