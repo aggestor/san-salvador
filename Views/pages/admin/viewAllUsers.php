@@ -13,10 +13,10 @@
         </div>
         <?php foreach ($params['allUsers'] as $data) : ?>
             <div class="w-11/12 mx-auto p-1 items-center text-gray-500  my-2 border border-gray-800 flex justify-between rounded">
-                <div class="w-2/12"><?= $data->getUser()->getId() ?></div>
-                <div class="w-3/12"><?= $data->getUser()->getName() ?></div>
-                <div class="w-3/12"><?= str_replace("/", "", $data->getUser()->getPhone()); ?></div>
-                <div class="w-3/12"><?= $data->getUser()->getEmail() ?></div>
+                <div class="w-2/12"><?= $data->getId() ?></div>
+                <div class="w-3/12"><?= $data->getName() ?></div>
+                <div class="w-3/12"><?= str_replace("/", "", $data->getPhone()); ?></div>
+                <div class="w-3/12"><?= $data->getEmail() ?></div>
                 <div class="w-2/12"><?= $data->getRecordDate()->format("d-m-Y") ?></div>
             </div>
         <?php endforeach; ?>
