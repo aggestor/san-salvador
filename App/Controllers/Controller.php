@@ -194,6 +194,7 @@ class Controller
     public function countInscription(bool $valiadte = true)
     {
         if ($this->inscriptionModel->checkValidated()) {
+            //var_dump($this->inscriptionModel->countValidate($valiadte));exit;
             return $this->inscriptionModel->countValidate($valiadte);
         }
         return 0;
@@ -412,10 +413,10 @@ class Controller
     public function allSurplus()
     {
         $totalSurplus = 0;
-        $surplusBinary = array();
+        $surplusBinaryReturn = array();
         $surplusParainage = array();
         $surplusReturnInvest = array();
-        if ($this->parainageModel->checkAll() || $this->returnInvestModel->checkAll() || $this->binaryModel->checkAll()) {
+        if ($this->parainageModel->checkAll()) {
             /**
              * @var Parainage
              */
@@ -425,29 +426,32 @@ class Controller
                 $surplus = $parainage->getSurplus();
                 $surplusParainage[] = $surplus;
             }
+        }
 
+        if ($this->returnInvestModel->checkAll()) {
             /**
              * @var ReturnInvest
              */
             $returnInvests = $this->returnInvestModel->findAll();
             foreach ($returnInvests as $returnInvest) {
-                $returnInvest->setUser($this->userModel->findById($parainage->getUser()->getId()));
+                $returnInvest->setUser($this->userModel->findById($returnInvest->getUser()->getId()));
                 $surplusInvest = $returnInvest->getSurplus();
                 $surplusReturnInvest[] = $surplusInvest;
             }
+        }
 
+        if ($this->binaryModel->checkAll()) {
             /**
              * @var Binary
              */
             $binarys = $this->binaryModel->findAll();
             foreach ($binarys as $binary) {
-                $binary->setUser($this->userModel->findById($parainage->getUser()->getId()));
+                $binary->setUser($this->userModel->findById($binary->getUser()->getId()));
                 $surplusBinary = $binary->getSurplus();
                 $surplusBinaryReturn[] = $surplusBinary;
             }
-            $totalSurplus = array_sum($surplusParainage) + array_sum($surplusReturnInvest) + array_sum($surplusBinaryReturn);
-            return $totalSurplus;
         }
+        $totalSurplus = array_sum($surplusParainage) + array_sum($surplusReturnInvest) + array_sum($surplusBinaryReturn);
         return $totalSurplus;
     }
 

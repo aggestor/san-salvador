@@ -46,7 +46,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //var_dump($this->allBinary());exit();
         if ($this->isAdmin()) {
             $amountBinary = $this->allBinary();
             $amountInvest = $this->allReturnInvest();
@@ -56,8 +55,6 @@ class AdminController extends Controller
             $amountCashOutValidated = $this->amountAllCashOutValide();
             $amountCapitalInvested = $this->totalAmountInvested();
             $amountCaisse = ($amountBinary + $amountInvest + $amountParainnage + $amountSurplus) - $amountCashOutValidated;
-            //$amountCaisse = 0;
-
             return $this->view('pages.admin.dashboard', 'layout_admin', ['binaire' => $amountBinary, 'invest' => $amountInvest, 'parainnage' => $amountParainnage, 'surplus' => $amountSurplus, 'cashoutNotValidate' => $amountCashOutNotValidated, 'cashoutValidate' => $amountCashOutValidated, 'capital' => $amountCapitalInvested, 'caisse' => $amountCaisse]);
         }
     }
@@ -356,7 +353,7 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            //var_dump($data[0],$nombre_element_par_page);exit();
+            //var_dump($totalCount);exit();
             $users = $this->allUsersHasValidateInscription($nombre_element_par_page, $data[0]);
             if ($_GET['page'] > $data[1]) {
                 return $this->view("pages.static.404");
