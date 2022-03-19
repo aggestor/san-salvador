@@ -194,6 +194,7 @@ class Controller
     public function countInscription(bool $valiadte = true)
     {
         if ($this->inscriptionModel->checkValidated()) {
+            //var_dump($this->inscriptionModel->countValidate($valiadte));exit;
             return $this->inscriptionModel->countValidate($valiadte);
         }
         return 0;

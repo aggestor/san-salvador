@@ -353,7 +353,7 @@ class AdminController extends Controller
             $page = !empty($_GET['page']) ? $_GET['page'] : 1;
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
-            //var_dump($data[0],$nombre_element_par_page);exit();
+            //var_dump($totalCount);exit();
             $users = $this->allUsersHasValidateInscription($nombre_element_par_page, $data[0]);
             if ($_GET['page'] > $data[1]) {
                 return $this->view("pages.static.404");
