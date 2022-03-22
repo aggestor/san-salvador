@@ -202,7 +202,8 @@ class UserValidator extends AbstractMemberValidator
         $this->processingEmail($user, $mail, true, true);
         $this->processingPassword($user, $password);
 
-        $users = !empty($mail) ? $this->userModel->findByMail($mail) : null;
+        //die('ooooo');
+        $users = !empty($mail) && $this->userModel->checkByMail($mail) ? $this->userModel->findByMail($mail) : null;
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec de la connexion" : "Connexion faite avec success";
         return $users;
     }

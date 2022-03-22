@@ -30,14 +30,13 @@ class UserController extends Controller
      */
     public function login()
     {
-        //return $this->view("pages.user.login", "layout_");
-
         if (!$this->redirectUser()) {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $validator = new UserValidator();
                 $user = $validator->loginProcess();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
+                    //var_dump($validator->getMessage());exit();
                     return $this->view("pages.user.login", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 }
                 $_SESSION[self::SESSION_USERS] = $user;
