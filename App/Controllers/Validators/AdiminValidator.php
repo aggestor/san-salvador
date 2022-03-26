@@ -105,7 +105,7 @@ class AdiminValidator extends AbstractMemberValidator
         $this->processingEmail($admin, $mail, true);
         $this->processingPassword($admin, $password);
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec de la connexion" : "Connexion faite avec success";
-        $admin = !empty($mail) ? $this->adminModel->findByMail($mail) : null;
+        $admin = !empty($mail) && $this->adminModel->checkByMail($mail) ? $this->adminModel->findByMail($mail) : null;
         return $admin;
     }
     public function changeStatusAfterValidation()
