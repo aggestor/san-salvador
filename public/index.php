@@ -167,9 +167,11 @@ $routes->get('/teste', function () {
     // $f = ModelFactory::getInstance();
     // var_dump($f->getModel("User")->countCertifieds());
     // var_dump($f->getModel("User")->findCertifieds());
-    if (EnabledCashOut::isEnabled(getdate(), true)) {
-        ReturnInvestCronJob::run();
-    }
+    // if (EnabledCashOut::isEnabled(getdate(), true)) {
+    //     ReturnInvestCronJob::run();
+    // }
+
+    // require_once dirname(__DIR__).DIRECTORY_SEPARATOR.'Core'.DIRECTORY_SEPARATOR.'cron.php';
 });
 try {
     $routes->run();
