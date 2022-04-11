@@ -209,8 +209,8 @@ class UserController extends Controller
                 $user = $validator->updateAfterValidation();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
-                    //var_dump($errors, $validator->getMessage());
-                    exit();
+                    // var_dump($errors, $validator->getMessage());
+                    // exit();
                     return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject(), 'errors' => $errors]);
                 }
                 Controller::redirect('/user/me');
