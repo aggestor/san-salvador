@@ -1,5 +1,5 @@
 <div class="w-full mt-4 h-screen-admin scroll overflow-y-scroll grid grid-cols-12">
-    <?php if (isset($params['allInscription'])) : ?>
+<?php if (!isset($params['message'])) : ?>
         <div class="col-span-12 flex flex-col">
             <div class="w-11/12 mx-auto mb-4 h-12 border-b border-gray-900 flex justify-between">
                 <h1 class="text-gray-300 font-semibold text-xl">Toutes les inscriptions en attente.</h1>
@@ -15,7 +15,7 @@
                 <div class="w-1/12">Action</div>
             </div>
             <?php foreach ($params['allInscription'] as $data) : ?>
-                <div class="w-11/12 mx-auto p-1 items-center text-gray-500  my-2 border border-gray-500 flex justify-between rounded">
+                <div class="w-11/12 mx-auto p-1 items-center text-gray-500 text-sm  my-2 border border-gray-500 flex justify-between rounded">
                     <div class="w-1/12"><?= $data->getUser()->getName() ?></div>
                     <div class="w-2/12"><?= $data->getUser()->getEmail() ?></div>
                     <div class="w-1/12"><?= str_replace("/", "", $data->getUser()->getPhone()) ?></div>
@@ -36,9 +36,15 @@
                         echo $real_str;
                         ?>
                 </div>
+                <div class="flex w-1/12 space-x-1 justify-between">
                     <div>
-                        <form method="POST" action="/admin/active/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="bg-green-500 rounded text-gray-800 p-1.5" type="submit">Valider <i class="fas fa-check-circle    "></i></button></form>
+                        <form method="POST" action="/admin/active/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="bg-red-500 rounded text-gray-800 p-1.5" type="submit"><i class="fas fa-times-circle    "></i></button></form>
                     </div>
+                    <div class="mr-1">
+                        <form method="POST" action="/admin/canceled/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="bg-green-500 rounded text-gray-900 p-1.5" type="submit"><i class="fas fa-check-circle    "></i></button></form>
+                    </div>
+                    
+                </div>
                 </div>
             <?php endforeach; ?>
             <div class="w-11/12 h-auto text-gray-400  mx-auto items-center">
