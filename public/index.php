@@ -50,6 +50,7 @@ $routes->get('/admin/pack', 'Root\App\Controllers\PackController@addPack');
 //route d'activation de l'inscrption
 $routes->get('/admin/active/inscription-([0-9]+)', 'Root\App\Controllers\AdminController@viewAllNonActiveInscription', 'page');
 $routes->post('/admin/active/inscription-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@activeInscriptions', 'inscription;user');
+$routes->post('/admin/canceled/inscription-([a-zA-Z0-9]{11})', 'Root\App\Controllers\AdminController@canceledInscription', 'inscription');
 //route pour l'authentification de l'utilisateur en post
 $routes->get('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
 $routes->post('/admin/activation-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controllers\AdminController@accountActivation', 'id;token');
@@ -164,9 +165,7 @@ $routes->post('/reset-([a-zA-Z0-9]{11})-([a-zA-Z0-9]{60})', 'Root\App\Controller
  */
 $routes->get('/admin/administrator/dashboard', 'Root\App\Controllers\TestController@admins');
 $routes->get('/teste', function () {
-
     Controller::redirect("/");
-
 });
 try {
     $routes->run();

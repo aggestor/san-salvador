@@ -253,6 +253,18 @@ class Controller
     }
 
     /**
+     * Annulation de l'inscription
+     *
+     * @return void
+     */
+    public function canceledInscription(){
+        $idInscription = $_GET['inscription'];
+        if ($this->inscriptionModel->checkById($idInscription)) {
+            $this->inscriptionModel->delete($idInscription);
+        }
+    }
+
+    /**
      * touts les retrait en attente de validation
      * @return array
      */

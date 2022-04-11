@@ -298,6 +298,20 @@ class AdminController extends Controller
     }
 
     /**
+     * Annulation de l'inscription
+     *
+     * @return void
+     */
+    public function canceledInscription()
+    {
+        //var_dump("okok");exit();
+        if ($this->isAdmin()) {
+            $this->canceledInscription();
+            header("location:" . $_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    /**
      * Pour l'affichage des inscription en attente de de validation
      *
      * @return void
