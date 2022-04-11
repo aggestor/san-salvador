@@ -36,7 +36,7 @@ class UserController extends Controller
                 $user = $validator->loginProcess();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
-                    //var_dump($validator->getMessage());exit();
+                    //var_dump($validator->getMessage(),$errors);exit();
                     return $this->view("pages.user.login", "layout_", ['user' => $user, 'errors' => $errors, 'caption' => $validator->getCaption(), 'message' => $validator->getMessage()]);
                 }
                 $_SESSION[self::SESSION_USERS] = $user;
@@ -209,7 +209,7 @@ class UserController extends Controller
                 $user = $validator->updateAfterValidation();
                 if ($validator->hasError() || $validator->getMessage() != null) {
                     $errors = $validator->getErrors();
-                    var_dump($errors, $validator->getMessage());
+                    //var_dump($errors, $validator->getMessage());
                     exit();
                     return $this->view('pages.user.edit', 'layout_', ['user' => $this->userObject(), 'errors' => $errors]);
                 }
@@ -367,6 +367,7 @@ class UserController extends Controller
             $contact = $validator->sendContactMessageAfterValidation();
             if ($validator->hasError() || $validator->getMessage()) {
                 $errors = $validator->getErrors();
+                //var_dump($validator->getMessage(),$errors);exit;
                 return $this->view('pages.user.contact', 'layouts', ['errors' => $errors]);
             }
         }

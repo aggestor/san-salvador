@@ -28,7 +28,7 @@ class UserValidator extends AbstractMemberValidator
     const FIELD_BITCON = 'btc_address';
     const PHONE_BITCON = 'btc_phone';
     const FIELD_IMAGE = 'image';
-    
+
 
     /**
      * Undocumented variable
@@ -202,7 +202,6 @@ class UserValidator extends AbstractMemberValidator
         $this->processingEmail($user, $mail, true, true);
         $this->processingPassword($user, $password);
 
-        //die('ooooo');
         $users = !empty($mail) && $this->userModel->checkByMail($mail) ? $this->userModel->findByMail($mail) : null;
         $this->caption = ($this->hasError() || $this->getMessage() != null) ? "Echec de la connexion" : "Connexion faite avec success";
         return $users;
@@ -308,13 +307,12 @@ class UserValidator extends AbstractMemberValidator
             $headers[] = 'X-Mailer: PHP/' . phpversion();
             $to = 'support@usalvagetrade.com';
             $sujet = $message;
-            if (mail($to, $sujet, $message, implode("\r\n", $headers))) {
-                Controller::redirect('/contact');
-            }
+            mail($to, $sujet, $message, implode("\r\n", $headers));
+            header('Location:/contact');
         }
     }
 
-    
+
     /**
      * Validation du message de contact
      *
