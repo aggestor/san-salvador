@@ -516,8 +516,9 @@ class UserValidator extends AbstractMemberValidator
             throw new \RuntimeException("Votre numero de telphone est invalide");
         }
         if ($onUpdate) {
-            $user = $this->userModel->findByPhone($numTelephone);
-            if ($user->getId() != $_SESSION[self::SESSION_USERS]->getId()) {
+            $user = $this->userModel->checkByPhone($numTelephone) ? $this->userModel->findByPhone($numTelephone) : null;
+
+            if (!is_null($user) && $user->getId() != $_SESSION[self::SESSION_USERS]->getId()) {
                 throw new \RuntimeException("Ce numero de telephone est deja utlise pour une autre compte");
             }
         } else {
