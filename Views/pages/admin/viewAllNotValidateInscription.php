@@ -38,7 +38,7 @@
                 </div>
                 <div class="flex w-1/12 space-x-1 justify-between">
                     <div>
-                        <form method="POST" action="/admin/canceled/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="bg-red-500 rounded text-gray-800 p-1.5" type="submit"><i class="fas fa-times-circle    "></i></button></form>
+                        <form method="POST" action="/admin/canceled/inscription-<?= $data->getId()?>"><button class="bg-red-500 rounded text-gray-800 p-1.5" type="submit"><i class="fas fa-times-circle    "></i></button></form>
                     </div>
                     <div class="mr-1">
                         <form method="POST" action="/admin/active/inscription-<?= $data->getId() . "-" . $data->getUser()->getId() ?>"><button class="bg-green-500 rounded text-gray-900 p-1.5" type="submit"><i class="fas fa-check-circle    "></i></button></form>
