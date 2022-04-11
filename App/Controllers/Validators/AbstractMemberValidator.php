@@ -155,7 +155,7 @@ abstract class AbstractMemberValidator extends AbstractValidator
              * @var AbstractMemberModel $model
              */
             $model = $fac->getModel($ref->getShortName());
-            $mail = $model->findByMail($member->getEmail());
+            $mail = $model->checkByMail($member->getEmail()) ? $model->findByMail($member->getEmail()) : null;
             $pass_has = !is_null($mail) ? $mail->getPassword() : "";
             if (!password_verify($password, $pass_has)) {
                 throw new \RuntimeException("L'adresse e-mail et/ou le mot de passe est incorrect");
