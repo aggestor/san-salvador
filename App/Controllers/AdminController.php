@@ -324,7 +324,7 @@ class AdminController extends Controller
             $nombre_element_par_page = 5;
             $data = Controller::drowData($totalCount, $page, $nombre_element_par_page);
             $inscription = $this->allNonValidateInscription($nombre_element_par_page, $data[0]);
-            if ($_GET['page'] > $data[1]) {
+            if ($_GET['page'] <= $data[1]) {
                 return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['message' => 1]);
             }
             return $this->view('pages.admin.viewAllNotValidateInscription', 'layout_admin', ['allInscription' => $inscription, 'nombrePage' => $data[1]]);
