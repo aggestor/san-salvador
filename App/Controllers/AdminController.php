@@ -304,10 +304,8 @@ class AdminController extends Controller
      */
     public function canceledInscription()
     {
-        //var_dump("okok");exit();
         if ($this->isAdmin()) {
-            $this->canceledInscription();
-            header("location:" . $_SERVER['HTTP_REFERER']);
+            $this->annulerInscription();
         }
     }
 
