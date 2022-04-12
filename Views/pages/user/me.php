@@ -174,8 +174,11 @@ $images = explode("AND", $_SESSION['users']->getPhoto());
                         <div class="text-gray-600"><?= str_replace("/", "", $params['user']->getPhone()) ?></div>
                     </div>
                     <div class="w-10/12 mx-auto h-16">
+                        <div class="text-gray-300 font-semibold">Membre depuis</div>
+                        <div class="text-gray-600"><?= $_SESSION['users']->getrecordDate()->format("F Y") ?></div>
+                    </div>
+                    <div class="w-10/12 mx-auto h-16">
                         <a href="/user/edit" class="p-2 hover:bg-blue-700 cursor-pointer rounded bg-blue-600 text-white text-center">Modifier</a>
-
                     </div>
                 </div>
             </div>
