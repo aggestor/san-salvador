@@ -257,10 +257,12 @@ class Controller
      *
      * @return void
      */
-    public function canceledInscription(){
+    public function annulerInscription()
+    {
         $idInscription = $_GET['inscription'];
         if ($this->inscriptionModel->checkById($idInscription)) {
             $this->inscriptionModel->delete($idInscription);
+            header("location:" . $_SERVER['HTTP_REFERER']);
         }
     }
 
